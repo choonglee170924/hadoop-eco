@@ -1,3 +1,16 @@
+# CUSTOMIZED
+
+- 2021-12-20 
+    - QueuedStatementResource.java 
+      - postStatement(...)
+      - getConnection()
+  - pom.xml
+    - log4j 관련 수정함
+
+
+
+
+
 # Presto [![Build Status](https://travis-ci.com/prestosql/presto.svg?branch=master)](https://travis-ci.com/prestosql/presto)
 
 Presto is a distributed SQL query engine for big data.
