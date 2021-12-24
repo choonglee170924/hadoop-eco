@@ -1,0 +1,3257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0"
+  
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="VEnum" type="VEnum"/>
+  <xs:element name="VEnumElement" type="VEnumElement"/>
+  <xs:element name="VList" type="VList"/>
+  <xs:element name="VTrxLogAttr" type="VTrxLogAttr"/>
+  <xs:element name="rangerBaseModelObject" type="rangerBaseModelObject"/>
+  <xs:element name="rangerPluginInfo" type="rangerPluginInfo"/>
+  <xs:element name="rangerPolicy" type="rangerPolicy"/>
+  <xs:element name="rangerDataMaskPolicyItem" type="rangerDataMaskPolicyItem"/>
+  <xs:element name="rangerPolicyItem" type="rangerPolicyItem"/>
+  <xs:element name="rangerPolicyItemAccess" type="rangerPolicyItemAccess"/>
+  <xs:element name="rangerPolicyItemCondition" type="rangerPolicyItemCondition"/>
+  <xs:element name="rangerPolicyItemDataMaskInfo" type="rangerPolicyItemDataMaskInfo"/>
+  <xs:element name="rangerPolicyItemRowFilterInfo" type="rangerPolicyItemRowFilterInfo"/>
+  <xs:element name="rangerPolicyResource" type="rangerPolicyResource"/>
+  <xs:element name="rangerRowFilterPolicyItem" type="rangerRowFilterPolicyItem"/>
+  <xs:element name="rangerService" type="rangerService"/>
+  <xs:element name="rangerServiceDef" type="rangerServiceDef"/>
+  <xs:element name="rangerAccessTypeDef" type="rangerAccessTypeDef"/>
+  <xs:element name="rangerContextEnricherDef" type="rangerContextEnricherDef"/>
+  <xs:element name="rangerDataMaskDef" type="rangerDataMaskDef"/>
+  <xs:element name="rangerDataMaskTypeDef" type="rangerDataMaskTypeDef"/>
+  <xs:element name="rangerEnumDef" type="rangerEnumDef"/>
+  <xs:element name="rangerEnumElementDef" type="rangerEnumElementDef"/>
+  <xs:element name="rangerPolicyConditionDef" type="rangerPolicyConditionDef"/>
+  <xs:element name="rangerResourceDef" type="rangerResourceDef"/>
+  <xs:element name="rangerRowFilterDef" type="rangerRowFilterDef"/>
+  <xs:element name="rangerServiceConfigDef" type="rangerServiceConfigDef"/>
+  <xs:element name="rangerServiceResource" type="rangerServiceResource"/>
+  <xs:element name="rangerTag" type="rangerTag"/>
+  <xs:element name="rangerTagDef" type="rangerTagDef"/>
+  <xs:element name="rangerTagAttributeDef" type="rangerTagAttributeDef"/>
+  <xs:element name="rangerTagResourceMap" type="rangerTagResourceMap"/>
+  <xs:element name="rangerValidityRecurrence" type="rangerValidityRecurrence"/>
+  <xs:element name="recurrenceSchedule" type="recurrenceSchedule"/>
+  <xs:element name="validityInterval" type="validityInterval"/>
+  <xs:element name="rangerValiditySchedule" type="rangerValiditySchedule"/>
+  <xs:element name="resourceLookupContext" type="resourceLookupContext"/>
+  <xs:element name="grantRevokeRequest" type="grantRevokeRequest"/>
+  <xs:element name="servicePolicies" type="servicePolicies"/>
+  <xs:element name="tagPolicies" type="tagPolicies"/>
+  <xs:element name="serviceTags" type="serviceTags"/>
+  <xs:element name="rangerExportPolicyList" type="rangerExportPolicyList"/>
+  <xs:element name="rangerPluginInfoList" type="rangerPluginInfoList"/>
+  <xs:element name="rangerPolicyList" type="rangerPolicyList"/>
+  <xs:element name="rangerServiceDefList" type="rangerServiceDefList"/>
+  <xs:element name="rangerServiceList" type="rangerServiceList"/>
+  <xs:element name="VXAccessAudit" type="VXAccessAudit"/>
+  <xs:element name="VXAccessAuditList" type="VXAccessAuditList"/>
+  <xs:element name="VXAsset" type="VXAsset"/>
+  <xs:element name="VXAssetList" type="VXAssetList"/>
+  <xs:element name="VXAuditMap" type="VXAuditMap"/>
+  <xs:element name="VXAuditMapList" type="VXAuditMapList"/>
+  <xs:element name="VXAuditRecord" type="VXAuditRecord"/>
+  <xs:element name="VXAuditRecordList" type="VXAuditRecordList"/>
+  <xs:element name="VXAuthSession" type="VXAuthSession"/>
+  <xs:element name="VXAuthSessionList" type="VXAuthSessionList"/>
+  <xs:element name="VXCredentialStore" type="VXCredentialStore"/>
+  <xs:element name="VXCredentialStoreList" type="VXCredentialStoreList"/>
+  <xs:element name="VXDataObject" type="VXDataObject"/>
+  <xs:element name="VXFileSyncSourceInfo" type="VXFileSyncSourceInfo"/>
+  <xs:element name="VXGroup" type="VXGroup"/>
+  <xs:element name="VXGroupGroup" type="VXGroupGroup"/>
+  <xs:element name="VXGroupGroupList" type="VXGroupGroupList"/>
+  <xs:element name="VXGroupList" type="VXGroupList"/>
+  <xs:element name="VXGroupPermission" type="VXGroupPermission"/>
+  <xs:element name="VXGroupPermissionList" type="VXGroupPermissionList"/>
+  <xs:element name="VXGroupUser" type="VXGroupUser"/>
+  <xs:element name="VXGroupUserInfo" type="VXGroupUserInfo"/>
+  <xs:element name="VXGroupUserList" type="VXGroupUserList"/>
+  <xs:element name="VXKmsKey" type="VXKmsKey"/>
+  <xs:element name="VXKmsKeyList" type="VXKmsKeyList"/>
+  <xs:element name="VXLdapSyncSourceInfo" type="VXLdapSyncSourceInfo"/>
+  <xs:element name="VXLong" type="VXLong"/>
+  <xs:element name="VXMessage" type="VXMessage"/>
+  <xs:element name="VXModuleDef" type="VXModuleDef"/>
+  <xs:element name="VXModuleDefList" type="VXModuleDefList"/>
+  <xs:element name="VXPasswordChange" type="VXPasswordChange"/>
+  <xs:element name="VXPermMap" type="VXPermMap"/>
+  <xs:element name="VXPermMapList" type="VXPermMapList"/>
+  <xs:element name="VXPermObj" type="VXPermObj"/>
+  <xs:element name="VXPermObjList" type="VXPermObjList"/>
+  <xs:element name="VXPolicy" type="VXPolicy"/>
+  <xs:element name="VXPolicyExportAudit" type="VXPolicyExportAudit"/>
+  <xs:element name="VXPolicyExportAuditList" type="VXPolicyExportAuditList"/>
+  <xs:element name="VXPolicyLabel" type="VXPolicyLabel"/>
+  <xs:element name="VXPolicyLabelList" type="VXPolicyLabelList"/>
+  <xs:element name="VXPolicyList" type="VXPolicyList"/>
+  <xs:element name="VXPortalUser" type="VXPortalUser"/>
+  <xs:element name="VXPortalUserList" type="VXPortalUserList"/>
+  <xs:element name="VXRepository" type="VXRepository"/>
+  <xs:element name="VXRepositoryList" type="VXRepositoryList"/>
+  <xs:element name="VXResource" type="VXResource"/>
+  <xs:element name="VXResourceList" type="VXResourceList"/>
+  <xs:element name="VXResponse" type="VXResponse"/>
+  <xs:element name="VXString" type="VXString"/>
+  <xs:element name="VXStringList" type="VXStringList"/>
+  <xs:element name="VXTrxLog" type="VXTrxLog"/>
+  <xs:element name="VXTrxLogList" type="VXTrxLogList"/>
+  <xs:element name="VXUgsyncAuditInfo" type="VXUgsyncAuditInfo"/>
+  <xs:element name="VXUgsyncAuditInfoList" type="VXUgsyncAuditInfoList"/>
+  <xs:element name="VXUnixSyncSourceInfo" type="VXUnixSyncSourceInfo"/>
+  <xs:element name="VXUser" type="VXUser"/>
+  <xs:element name="VXUserGroupInfo" type="VXUserGroupInfo"/>
+  <xs:element name="VXUserList" type="VXUserList"/>
+  <xs:element name="VXUserPermission" type="VXUserPermission"/>
+  <xs:element name="VXUserPermissionList" type="VXUserPermissionList"/>
+<xs:complexType name="RESTResponse">
+       <xs:sequence>
+              <xs:element name="statusCode" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="httpStatusCode" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="messageList" type="message" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="msgDesc" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="message">
+       <xs:sequence>
+              <xs:element name="fieldName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="message" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKey" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="objectId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VEnum">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="enumName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>enumName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="elementList" type="VEnumElement" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>elementList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VEnumElement">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="elementName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="enumName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKey" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="elementValue" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>elementValue</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="elementLabel" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>elementLabel</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VList" abstract="true">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="startIndex" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="pageSize" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="totalCount" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="resultSize" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resultSize</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="sortType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="sortBy" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VTrxLogAttr">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="viewBaseBean">
+ </xs:complexType>
+
+<xs:complexType name="rangerBaseModelObject">
+       <xs:sequence>
+              <xs:element name="updatedBy" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="guid" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="createTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="createdBy" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="version" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="updateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="isEnabled" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="id" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPluginInfo">
+       <xs:sequence>
+              <xs:element name="info" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="id" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="hostName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="ipAddress" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="updateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="createTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="appType" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicy">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="resourceSignature" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="service" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="policyType" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validitySchedules" type="rangerValiditySchedule" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="allowExceptions" type="rangerPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="options" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="serviceType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rowFilterPolicyItems" type="rangerRowFilterPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="isAuditEnabled" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="resources" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="rangerPolicyResource"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="policyLabels" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="policyItems" type="rangerPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="denyPolicyItems" type="rangerPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="denyExceptions" type="rangerPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="dataMaskPolicyItems" type="rangerDataMaskPolicyItem" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="policyPriority" type="xs:int" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerDataMaskPolicyItem">
+   <xs:complexContent>
+    <xs:extension base="rangerPolicyItem">
+      <xs:sequence>
+              <xs:element name="dataMaskInfo" type="rangerPolicyItemDataMaskInfo" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyItem">
+       <xs:sequence>
+              <xs:element name="groups" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="delegateAdmin" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="users" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="conditions" type="rangerPolicyItemCondition" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="accesses" type="rangerPolicyItemAccess" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyItemAccess">
+       <xs:sequence>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="isAllowed" type="xs:boolean" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyItemCondition">
+       <xs:sequence>
+              <xs:element name="values" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyItemDataMaskInfo">
+       <xs:sequence>
+              <xs:element name="dataMaskType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="conditionExpr" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="valueExpr" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyItemRowFilterInfo">
+       <xs:sequence>
+              <xs:element name="filterExpr" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyResource">
+       <xs:sequence>
+              <xs:element name="values" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="isRecursive" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="isExcludes" type="xs:boolean" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerRowFilterPolicyItem">
+   <xs:complexContent>
+    <xs:extension base="rangerPolicyItem">
+      <xs:sequence>
+              <xs:element name="rowFilterInfo" type="rangerPolicyItemRowFilterInfo" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerService">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="policyVersion" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="tagVersion" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="policyUpdateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="configs" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="tagService" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="tagUpdateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerServiceDef">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="implClass" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="enums" type="rangerEnumDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="rowFilterDef" type="rangerRowFilterDef" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="options" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="configs" type="rangerServiceConfigDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="contextEnrichers" type="rangerContextEnricherDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="resources" type="rangerResourceDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="accessTypes" type="rangerAccessTypeDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="policyConditions" type="rangerPolicyConditionDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyDescription" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="dataMaskDef" type="rangerDataMaskDef" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerAccessTypeDef">
+       <xs:sequence>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="impliedGrants" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerContextEnricherDef">
+       <xs:sequence>
+              <xs:element name="enricherOptions" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="enricher" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerDataMaskDef">
+       <xs:sequence>
+              <xs:element name="accessTypes" type="rangerAccessTypeDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="resources" type="rangerResourceDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="maskTypes" type="rangerDataMaskTypeDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerDataMaskTypeDef">
+       <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="dataMaskOptions" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="rbKeyDescription" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="transformer" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerEnumDef">
+       <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="defaultIndex" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="elements" type="rangerEnumElementDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerEnumElementDef">
+       <xs:sequence>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyConditionDef">
+       <xs:sequence>
+              <xs:element name="uiHint" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyDescription" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyValidationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="evaluator" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationRegEx" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="evaluatorOptions" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerResourceDef">
+       <xs:sequence>
+              <xs:element name="level" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="recursiveSupported" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyValidationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="parent" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="matcherOptions" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="mandatory" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="excludesSupported" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationRegEx" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="matcher" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="accessTypeRestrictions" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="lookupSupported" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="isValidLeaf" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="uiHint" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyDescription" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerRowFilterDef">
+       <xs:sequence>
+              <xs:element name="resources" type="rangerResourceDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="accessTypes" type="rangerAccessTypeDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerServiceConfigDef">
+       <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="subType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="label" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="mandatory" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="uiHint" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validationRegEx" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyDescription" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="rbKeyValidationMessage" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="defaultValue" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="itemId" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerServiceResource">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="resourceElements" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="rangerPolicyResource"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="resourceSignature" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceName" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerTag">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="owner" type="xs:short" minOccurs="0">
+              </xs:element>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="validityPeriods" type="rangerValiditySchedule" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="options" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="attributes" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerTagDef">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="source" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="attributeDefs" type="rangerTagAttributeDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerTagAttributeDef">
+       <xs:sequence>
+              <xs:element name="type" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerTagResourceMap">
+   <xs:complexContent>
+    <xs:extension base="rangerBaseModelObject">
+      <xs:sequence>
+              <xs:element name="tagId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="resourceId" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerValidityRecurrence">
+       <xs:sequence>
+              <xs:element name="schedule" type="recurrenceSchedule" minOccurs="0">
+              </xs:element>
+              <xs:element name="interval" type="validityInterval" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="recurrenceSchedule">
+       <xs:sequence>
+              <xs:element name="month" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="dayOfWeek" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="hour" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="minute" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="year" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="dayOfMonth" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="validityInterval">
+       <xs:sequence>
+              <xs:element name="hours" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="minutes" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="days" type="xs:int" minOccurs="1">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerValiditySchedule">
+       <xs:sequence>
+              <xs:element name="timeZone" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="recurrences" type="rangerValidityRecurrence" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="endTime" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="startTime" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resourceLookupContext">
+       <xs:sequence>
+              <xs:element name="resources" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="resourceName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="userInput" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="grantRevokeRequest">
+       <xs:sequence>
+              <xs:element name="users" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="grantorGroups" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="resource" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="requestData" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="clientIPAddress" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="clusterName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="delegateAdmin" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="groups" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="enableAudit" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="clientType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="grantor" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="replaceExistingPermissions" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="isRecursive" type="xs:boolean" minOccurs="0">
+              </xs:element>
+              <xs:element name="accessTypes" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="sessionId" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="servicePolicies">
+       <xs:sequence>
+              <xs:element name="serviceId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="policyUpdateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="tagPolicies" type="tagPolicies" minOccurs="0">
+              </xs:element>
+              <xs:element name="policies" type="rangerPolicy" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="auditMode" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="policyVersion" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceDef" type="rangerServiceDef" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tagPolicies">
+       <xs:sequence>
+              <xs:element name="policies" type="rangerPolicy" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="policyVersion" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceDef" type="rangerServiceDef" minOccurs="0">
+              </xs:element>
+              <xs:element name="policyUpdateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="auditMode" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="serviceTags">
+       <xs:sequence>
+              <xs:element name="tagUpdateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="serviceName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="op" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="resourceToTagIds" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:long"/>
+            <xs:element name="value" minOccurs="1" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="serviceResources" type="rangerServiceResource" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="tagDefinitions" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:long"/>
+            <xs:element name="value" minOccurs="1" type="rangerTagDef"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="tags" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:long"/>
+            <xs:element name="value" minOccurs="1" type="rangerTag"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+              <xs:element name="tagVersion" type="xs:long" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="rangerExportPolicyList">
+   <xs:complexContent>
+    <xs:extension base="rangerPolicyList">
+      <xs:sequence>
+              <xs:element name="metaDataInfo" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerPluginInfoList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="pluginInfoList" type="rangerPluginInfo" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerPolicyList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="policies" type="rangerPolicy" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerServiceDefList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="serviceDefs" type="rangerServiceDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="rangerServiceList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="services" type="rangerService" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAccessAudit">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="auditType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>auditType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="accessResult" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>accessResult</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="accessType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>accessType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="aclEnforcer" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>aclEnforcer</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="agentId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>agentId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="clientIP" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>clientIP</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="clientType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>clientType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="policyId" type="xs:long" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>policyId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repoName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repoName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repoType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repoType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="serviceType" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="resultReason" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resultReason</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="sessionId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>sessionId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="eventTime" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>eventTime</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestUser" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestUser</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="action" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>action</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestData" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestData</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourcePath" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourcePath</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="sequenceNumber" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="eventCount" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="eventDuration" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="tags" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="clusterName" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAccessAuditList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXAccessAudits" type="VXAccessAudit" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAsset">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="activeStatus" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>activeStatus</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="assetType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>assetType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="config" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>config</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="supportNative" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>supportNative</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAssetList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXAssets" type="VXAsset" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAuditMap">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="resourceId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="auditType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>auditType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAuditMapList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXAuditMaps" type="VXAuditMap" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAuditRecord">
+       <xs:sequence>
+              <xs:element name="date" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>date</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resource" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resource</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="action" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>action</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="result" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>result</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="user" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>user</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="enforcer" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="resourceType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="assetType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>assetType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VXAuditRecordList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXAuditRecords" type="VXAuditRecord" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAuthSession">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="loginId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>loginId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="emailAddress" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>emailAddress</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isTestUser" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isTestUser</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="firstName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>firstName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="lastName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>lastName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="publicScreenName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>publicScreenName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="familyScreenName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>familyScreenName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="authTime" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>authTime</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="authStatus" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>authStatus</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="authType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>authType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="authProvider" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>authProvider</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="deviceType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>deviceType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestIP" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestIP</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="cityName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>cityName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="stateName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>stateName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="countryName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>countryName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestUserAgent" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestUserAgent</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXAuthSessionList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXAuthSessions" type="VXAuthSession" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXCredentialStore">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXCredentialStoreList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXCredentialStores" type="VXCredentialStore" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXDataObject">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="id" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>id</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="createDate" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>createDate</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="updateDate" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>updateDate</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="owner" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>owner</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="updatedBy" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>updatedBy</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXFileSyncSourceInfo">
+       <xs:sequence>
+              <xs:element name="fileName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="syncTime" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="lastModified" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="totalUsersSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="totalGroupsSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VXGroup">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="credStoreId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>credStoreId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isVisible" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="groupSource" type="xs:int" minOccurs="1">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupGroup">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentGroupId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentGroupId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupGroupList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXGroupGroups" type="VXGroupGroup" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXGroups" type="VXGroup" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupPermission">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="groupId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="groupName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="moduleId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="isAllowed" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="moduleName" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupPermissionList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXGroupPermission" type="VXGroupPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupUser">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentGroupId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentGroupId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupUserInfo">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="xgroupInfo" type="VXGroup" minOccurs="0">
+              </xs:element>
+              <xs:element name="xuserInfo" type="VXUser" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXGroupUserList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXGroupUsers" type="VXGroupUser" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXKmsKey">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="cipher" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="length" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="versions" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="material" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="versionName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="created" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="attributes" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXKmsKeyList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXKeys" type="VXKmsKey" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXLdapSyncSourceInfo">
+       <xs:sequence>
+              <xs:element name="ldapUrl" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="userSearchFilter" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="groupSearchFilter" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="groupHierarchyLevel" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="totalUsersSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="totalGroupsSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="groupSearchFirstEnabled" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="groupSearchEnabled" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="userSearchEnabled" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VXLong">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="value" type="xs:long" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>value</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXMessage">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="rbKey" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>rbKey</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="message" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>message</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="objectId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>objectId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="fieldName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>fieldName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXModuleDef">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="userPermList" type="VXUserPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="groupPermList" type="VXGroupPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="createTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="updateTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="addedById" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="updatedById" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="module" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="url" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXModuleDefList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXModuleDef" type="VXModuleDef" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPasswordChange">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="id" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>id</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="loginId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>loginId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="emailAddress" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>emailAddress</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resetCode" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resetCode</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="oldPassword" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>oldPassword</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="updPassword" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>updPassword</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPermMap">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="permGroup" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>permGroup</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="permFor" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>permFor</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="permType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>permType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="grantOrRevoke" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>grantOrRevoke</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isRecursive" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isRecursive</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isWildCard" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isWildCard</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="ipAddress" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPermMapList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXPermMaps" type="VXPermMap" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPermObj">
+       <xs:sequence>
+              <xs:element name="userList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="groupList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="permList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="ipAddress" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VXPermObjList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXPermObjs" type="VXPermObj" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicy">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="policyName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>policyName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repositoryName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repositoryType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="permMapList" type="VXPermObj" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userPermList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="tables" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>tables</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columnFamilies" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columnFamilies</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columns" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columns</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="databases" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>databases</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="udfs" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>udfs</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="tableType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>tableType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columnType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columnType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="topologies" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>topologies</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="services" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>services</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isEnabled" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isEnable</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isRecursive" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isRecursive</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isAuditEnabled" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isAuditEnabled</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="version" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>version</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="grantor" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="replacePerm" type="xs:boolean" minOccurs="1">
+              </xs:element>
+              <xs:element name="policyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicyExportAudit">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="clientIP" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>clientIP</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="agentId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>agentId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestedEpoch" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestedEpoch</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="lastUpdated" type="xs:dateTime" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>lastUpdated</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repositoryName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="exportedJson" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>exportedJson</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="httpRetCode" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>httpRetCode</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="syncStatus" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="clusterName" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicyExportAuditList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXPolicyExportAudits" type="VXPolicyExportAudit" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicyLabel">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="policyLabel" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicyLabelList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vxPolicyLabels" type="VXPolicyLabel" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPolicyList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXPolicies" type="VXPolicy" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPortalUser">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="loginId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>loginId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="password" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>password</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="status" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>status</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="emailAddress" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>emailAddress</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="firstName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>firstName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="lastName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>lastName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="publicScreenName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>publicScreenName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userSource" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userSource</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="notes" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>notes</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="userRoleList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userRoleList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupIdList" type="xs:long" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="userPermList" type="VXUserPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+              <xs:element name="groupPermissions" type="VXGroupPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXPortalUserList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXPortalUsers" type="VXPortalUser" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXRepository">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>repositoryType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="config" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>config</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isActive" type="xs:boolean" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isActive</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="version" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>version</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXRepositoryList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXRepositories" type="VXRepository" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXResource">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="policyName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="assetId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>assetId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentPath" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentPath</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isEncrypt" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isEncrypt</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="permMapList" type="VXPermMap" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>permMapList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="auditList" type="VXAuditMap" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>auditList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isRecursive" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>isRecursive</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceGroup" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceGroup</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="databases" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>databases</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="tables" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>tables</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columnFamilies" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columnFamilies</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columns" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columns</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="udfs" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>udfs</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="assetName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>assetName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="assetType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>assetType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="resourceStatus" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>resourceStatus</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="tableType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>tableType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="columnType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>columnType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="topologies" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>topologies</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="services" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>services</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="checkParentPermission" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>checkParentPermission</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="guid" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>guid</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXResourceList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXResources" type="VXResource" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXResponse">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="statusCode" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>statusCode</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="msgDesc" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>msgDesc</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="messageList" type="VXMessage" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>messageList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXString">
+   <xs:complexContent>
+    <xs:extension base="viewBaseBean">
+      <xs:sequence>
+              <xs:element name="value" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>value</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXStringList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXStrings" type="VXString" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXTrxLog">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="objectClassType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>objectClassType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="objectId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>objectId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentObjectId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentObjectId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentObjectClassType" type="xs:int" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentObjectClassType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="parentObjectName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>parentObjectName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="objectName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>objectName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="attributeName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>attributeName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="previousValue" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>previousValue</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="newValue" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>newValue</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="transactionId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>transactionId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="action" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>action</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="sessionId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>sessionId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="requestId" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>requestId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="sessionType" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>sessionType</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXTrxLogList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXTrxLogs" type="VXTrxLog" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUgsyncAuditInfo">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="eventTime" type="xs:dateTime" minOccurs="0">
+              </xs:element>
+              <xs:element name="userName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="noOfNewUsers" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="noOfModifiedUsers" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="noOfNewGroups" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="noOfModifiedGroups" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="syncSource" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="ldapSyncSourceInfo" type="VXLdapSyncSourceInfo" minOccurs="0">
+              </xs:element>
+              <xs:element name="fileSyncSourceInfo" type="VXFileSyncSourceInfo" minOccurs="0">
+              </xs:element>
+              <xs:element name="unixSyncSourceInfo" type="VXUnixSyncSourceInfo" minOccurs="0">
+              </xs:element>
+              <xs:element name="sessionId" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="syncSourceInfo" minOccurs="0">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="key" minOccurs="1" type="xs:string"/>
+            <xs:element name="value" minOccurs="1" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUgsyncAuditInfoList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vxUgsyncAuditInfoList" type="VXUgsyncAuditInfo" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUnixSyncSourceInfo">
+       <xs:sequence>
+              <xs:element name="fileName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="syncTime" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="lastModified" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="unixBackend" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="minUserId" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="minGroupId" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="totalUsersSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+              <xs:element name="totalGroupsSynced" type="xs:long" minOccurs="1">
+              </xs:element>
+      </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VXUser">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>name</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="firstName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>firstName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="lastName" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>lastName</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="emailAddress" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>emailAddress</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="password" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>password</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>description</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="credStoreId" type="xs:long" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>credStoreId</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupIdList" type="xs:long" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>groupIdList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="isVisible" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="userSource" type="xs:int" minOccurs="1">
+              </xs:element>
+              <xs:element name="userRoleList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  <![CDATA[Returns the value for the member attribute <b>userRoleList</b>]]>
+                </xs:documentation>
+              </xs:annotation>
+              </xs:element>
+              <xs:element name="groupNameList" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUserGroupInfo">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="xuserInfo" type="VXUser" minOccurs="0">
+              </xs:element>
+              <xs:element name="xgroupInfo" type="VXGroup" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUserList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXUsers" type="VXUser" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUserPermission">
+   <xs:complexContent>
+    <xs:extension base="VXDataObject">
+      <xs:sequence>
+              <xs:element name="userId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="moduleId" type="xs:long" minOccurs="0">
+              </xs:element>
+              <xs:element name="isAllowed" type="xs:int" minOccurs="0">
+              </xs:element>
+              <xs:element name="userName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="moduleName" type="xs:string" minOccurs="0">
+              </xs:element>
+              <xs:element name="loginId" type="xs:string" minOccurs="0">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="VXUserPermissionList">
+   <xs:complexContent>
+    <xs:extension base="VList">
+      <xs:sequence>
+              <xs:element name="vXUserPermission" type="VXUserPermission" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+</xs:schema>
