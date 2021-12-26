@@ -1,0 +1,32 @@
+----------------------------------------------------------------
+Fri Aug 02 12:33:35 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-016c-532d-f040-00000c3e4510 
+on database directory memory:/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms/derbyDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
+Loaded from file:/Users/vperiasamy/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_211-b12
+user.dir=/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.14.5
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Aug 02 12:33:36 EDT 2019:
+Shutting down instance a816c00e-016c-532d-f040-00000c3e4510 on database directory memory:/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms/derbyDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
+----------------------------------------------------------------
+Fri Aug 02 12:33:37 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance 5bd340ca-016c-532d-f040-00000c3e4510 
+on database directory memory:/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms/derbyDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
+Loaded from file:/Users/vperiasamy/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_211-b12
+user.dir=/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.14.5
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Aug 02 12:33:37 EDT 2019:
+Shutting down instance 5bd340ca-016c-532d-f040-00000c3e4510 on database directory memory:/Users/vperiasamy/Workspace/apache-release/2.0.0/build-prep/ranger/kms/derbyDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
