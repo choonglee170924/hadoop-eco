@@ -89,6 +89,10 @@ module Model
   class RecurrenceSchedule 
 
     # (no documentation provided)
+    attr_accessor :month
+    # (no documentation provided)
+    attr_accessor :year
+    # (no documentation provided)
     attr_accessor :minute
     # (no documentation provided)
     attr_accessor :dayOfWeek
@@ -96,20 +100,16 @@ module Model
     attr_accessor :hour
     # (no documentation provided)
     attr_accessor :dayOfMonth
-    # (no documentation provided)
-    attr_accessor :month
-    # (no documentation provided)
-    attr_accessor :year
 
     # the json hash for this RecurrenceSchedule
     def to_jaxb_json_hash
       _h = {}
+      _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['year'] = year.to_jaxb_json_hash unless year.nil?
       _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
       _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
-      _h['month'] = month.to_jaxb_json_hash unless month.nil?
-      _h['year'] = year.to_jaxb_json_hash unless year.nil?
       return _h
     end
 
@@ -120,6 +120,44 @@ module Model
 
     #initializes this RecurrenceSchedule with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['month'].nil?
+          _oa = _o['month']
+            if(_oa.is_a? Hash)
+              @month = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @month =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @month = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @month.push String.from_json(_item)
+                 else
+                   @month.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @month = _oa
+            end
+          end
+        if !_o['year'].nil?
+          _oa = _o['year']
+            if(_oa.is_a? Hash)
+              @year = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @year =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @year = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @year.push String.from_json(_item)
+                 else
+                   @year.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @year = _oa
+            end
+          end
         if !_o['minute'].nil?
           _oa = _o['minute']
             if(_oa.is_a? Hash)
@@ -196,44 +234,6 @@ module Model
                 @dayOfMonth = _oa
             end
           end
-        if !_o['month'].nil?
-          _oa = _o['month']
-            if(_oa.is_a? Hash)
-              @month = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @month =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @month = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @month.push String.from_json(_item)
-                 else
-                   @month.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @month = _oa
-            end
-          end
-        if !_o['year'].nil?
-          _oa = _o['year']
-            if(_oa.is_a? Hash)
-              @year = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @year =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @year = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @year.push String.from_json(_item)
-                 else
-                   @year.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @year = _oa
-            end
-          end
     end
 
     # constructs a RecurrenceSchedule from a (parsed) JSON hash
@@ -272,45 +272,45 @@ module Model
   class RangerPolicyConditionDef 
 
     # (no documentation provided)
-    attr_accessor :rbKeyDescription
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :evaluator
-    # (no documentation provided)
-    attr_accessor :uiHint
-    # (no documentation provided)
-    attr_accessor :itemId
-    # (no documentation provided)
-    attr_accessor :rbKeyValidationMessage
-    # (no documentation provided)
-    attr_accessor :rbKeyLabel
-    # (no documentation provided)
-    attr_accessor :validationRegEx
-    # (no documentation provided)
-    attr_accessor :validationMessage
     # (no documentation provided)
     attr_accessor :description
     # (no documentation provided)
     attr_accessor :evaluatorOptions
     # (no documentation provided)
+    attr_accessor :validationMessage
+    # (no documentation provided)
+    attr_accessor :uiHint
+    # (no documentation provided)
+    attr_accessor :validationRegEx
+    # (no documentation provided)
+    attr_accessor :rbKeyDescription
+    # (no documentation provided)
+    attr_accessor :itemId
+    # (no documentation provided)
+    attr_accessor :name
+    # (no documentation provided)
+    attr_accessor :rbKeyLabel
+    # (no documentation provided)
     attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :rbKeyValidationMessage
 
     # the json hash for this RangerPolicyConditionDef
     def to_jaxb_json_hash
       _h = {}
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['evaluator'] = evaluator.to_jaxb_json_hash unless evaluator.nil?
-      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
-      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
-      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['evaluatorOptions'] = evaluatorOptions.to_jaxb_json_hash unless evaluatorOptions.nil?
+      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
+      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
+      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
       return _h
     end
 
@@ -321,44 +321,6 @@ module Model
 
     #initializes this RangerPolicyConditionDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
-            if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
-                 else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyDescription = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['evaluator'].nil?
           _oa = _o['evaluator']
             if(_oa.is_a? Hash)
@@ -376,120 +338,6 @@ module Model
                }
             else
                 @evaluator = _oa
-            end
-          end
-        if !_o['uiHint'].nil?
-          _oa = _o['uiHint']
-            if(_oa.is_a? Hash)
-              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @uiHint =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @uiHint = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @uiHint.push String.from_json(_item)
-                 else
-                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @uiHint = _oa
-            end
-          end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
-            if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
-                 else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @itemId = _oa
-            end
-          end
-        if !_o['rbKeyValidationMessage'].nil?
-          _oa = _o['rbKeyValidationMessage']
-            if(_oa.is_a? Hash)
-              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyValidationMessage = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyValidationMessage.push String.from_json(_item)
-                 else
-                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyValidationMessage = _oa
-            end
-          end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
-            if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
-                 else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyLabel = _oa
-            end
-          end
-        if !_o['validationRegEx'].nil?
-          _oa = _o['validationRegEx']
-            if(_oa.is_a? Hash)
-              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationRegEx = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationRegEx.push String.from_json(_item)
-                 else
-                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationRegEx = _oa
-            end
-          end
-        if !_o['validationMessage'].nil?
-          _oa = _o['validationMessage']
-            if(_oa.is_a? Hash)
-              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationMessage =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationMessage = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationMessage.push String.from_json(_item)
-                 else
-                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationMessage = _oa
             end
           end
         if !_o['description'].nil?
@@ -530,6 +378,139 @@ module Model
                 @evaluatorOptions = _oa
             end
           end
+        if !_o['validationMessage'].nil?
+          _oa = _o['validationMessage']
+            if(_oa.is_a? Hash)
+              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationMessage =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @validationMessage = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @validationMessage.push String.from_json(_item)
+                 else
+                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @validationMessage = _oa
+            end
+          end
+        if !_o['uiHint'].nil?
+          _oa = _o['uiHint']
+            if(_oa.is_a? Hash)
+              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @uiHint =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @uiHint = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @uiHint.push String.from_json(_item)
+                 else
+                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @uiHint = _oa
+            end
+          end
+        if !_o['validationRegEx'].nil?
+          _oa = _o['validationRegEx']
+            if(_oa.is_a? Hash)
+              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @validationRegEx = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @validationRegEx.push String.from_json(_item)
+                 else
+                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @validationRegEx = _oa
+            end
+          end
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
+            if(_oa.is_a? Hash)
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyDescription = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyDescription.push String.from_json(_item)
+                 else
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyDescription = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
+            if(_oa.is_a? Hash)
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyLabel = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyLabel.push String.from_json(_item)
+                 else
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyLabel = _oa
+            end
+          end
         if !_o['label'].nil?
           _oa = _o['label']
             if(_oa.is_a? Hash)
@@ -547,6 +528,25 @@ module Model
                }
             else
                 @label = _oa
+            end
+          end
+        if !_o['rbKeyValidationMessage'].nil?
+          _oa = _o['rbKeyValidationMessage']
+            if(_oa.is_a? Hash)
+              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyValidationMessage = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyValidationMessage.push String.from_json(_item)
+                 else
+                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyValidationMessage = _oa
             end
           end
     end
@@ -777,18 +777,18 @@ module Model
   class ValidityInterval 
 
     # (no documentation provided)
-    attr_accessor :hours
-    # (no documentation provided)
     attr_accessor :days
     # (no documentation provided)
     attr_accessor :minutes
+    # (no documentation provided)
+    attr_accessor :hours
 
     # the json hash for this ValidityInterval
     def to_jaxb_json_hash
       _h = {}
-      _h['hours'] = hours.to_jaxb_json_hash unless hours.nil?
       _h['days'] = days.to_jaxb_json_hash unless days.nil?
       _h['minutes'] = minutes.to_jaxb_json_hash unless minutes.nil?
+      _h['hours'] = hours.to_jaxb_json_hash unless hours.nil?
       return _h
     end
 
@@ -799,25 +799,6 @@ module Model
 
     #initializes this ValidityInterval with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['hours'].nil?
-          _oa = _o['hours']
-            if(_oa.is_a? Hash)
-              @hours = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @hours =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @hours = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @hours.push Fixnum.from_json(_item)
-                 else
-                   @hours.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @hours = _oa
-            end
-          end
         if !_o['days'].nil?
           _oa = _o['days']
             if(_oa.is_a? Hash)
@@ -854,6 +835,25 @@ module Model
                }
             else
                 @minutes = _oa
+            end
+          end
+        if !_o['hours'].nil?
+          _oa = _o['hours']
+            if(_oa.is_a? Hash)
+              @hours = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @hours =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @hours = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @hours.push Fixnum.from_json(_item)
+                 else
+                   @hours.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @hours = _oa
             end
           end
     end
@@ -894,51 +894,51 @@ module Model
   class RangerServiceConfigDef 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
     attr_accessor :rbKeyDescription
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :mandatory
-    # (no documentation provided)
-    attr_accessor :subType
-    # (no documentation provided)
-    attr_accessor :defaultValue
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :label
     # (no documentation provided)
     attr_accessor :validationRegEx
     # (no documentation provided)
-    attr_accessor :uiHint
-    # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :mandatory
     # (no documentation provided)
     attr_accessor :rbKeyValidationMessage
     # (no documentation provided)
-    attr_accessor :rbKeyLabel
-    # (no documentation provided)
     attr_accessor :validationMessage
+    # (no documentation provided)
+    attr_accessor :subType
+    # (no documentation provided)
+    attr_accessor :defaultValue
+    # (no documentation provided)
+    attr_accessor :name
+    # (no documentation provided)
+    attr_accessor :type
+    # (no documentation provided)
+    attr_accessor :uiHint
+    # (no documentation provided)
+    attr_accessor :rbKeyLabel
 
     # the json hash for this RangerServiceConfigDef
     def to_jaxb_json_hash
       _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
-      _h['subType'] = subType.to_jaxb_json_hash unless subType.nil?
-      _h['defaultValue'] = defaultValue.to_jaxb_json_hash unless defaultValue.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
       _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
-      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
       _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
+      _h['subType'] = subType.to_jaxb_json_hash unless subType.nil?
+      _h['defaultValue'] = defaultValue.to_jaxb_json_hash unless defaultValue.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       return _h
     end
 
@@ -949,44 +949,6 @@ module Model
 
     #initializes this RangerServiceConfigDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['description'].nil?
-          _oa = _o['description']
-            if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @description = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
-                 else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @description = _oa
-            end
-          end
         if !_o['rbKeyDescription'].nil?
           _oa = _o['rbKeyDescription']
             if(_oa.is_a? Hash)
@@ -1025,61 +987,23 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['mandatory'].nil?
-          _oa = _o['mandatory']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @mandatory = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @mandatory.push Boolean.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @mandatory = _oa
-            end
-          end
-        if !_o['subType'].nil?
-          _oa = _o['subType']
-            if(_oa.is_a? Hash)
-              @subType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @subType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @subType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @subType.push String.from_json(_item)
-                 else
-                   @subType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @subType = _oa
-            end
-          end
-        if !_o['defaultValue'].nil?
-          _oa = _o['defaultValue']
-            if(_oa.is_a? Hash)
-              @defaultValue = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @defaultValue =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @defaultValue = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @defaultValue.push String.from_json(_item)
-                 else
-                   @defaultValue.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @defaultValue = _oa
+                @description = _oa
             end
           end
         if !_o['label'].nil?
@@ -1120,42 +1044,23 @@ module Model
                 @validationRegEx = _oa
             end
           end
-        if !_o['uiHint'].nil?
-          _oa = _o['uiHint']
+        if !_o['mandatory'].nil?
+          _oa = _o['mandatory']
             if(_oa.is_a? Hash)
-              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @uiHint =  String.from_json(_oa) unless _oa['@class']
+              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @uiHint = Array.new
+              @mandatory = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @uiHint.push String.from_json(_item)
+                   @mandatory.push Boolean.from_json(_item)
                  else
-                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @uiHint = _oa
-            end
-          end
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
+                @mandatory = _oa
             end
           end
         if !_o['rbKeyValidationMessage'].nil?
@@ -1177,25 +1082,6 @@ module Model
                 @rbKeyValidationMessage = _oa
             end
           end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
-            if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
-                 else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyLabel = _oa
-            end
-          end
         if !_o['validationMessage'].nil?
           _oa = _o['validationMessage']
             if(_oa.is_a? Hash)
@@ -1213,6 +1099,120 @@ module Model
                }
             else
                 @validationMessage = _oa
+            end
+          end
+        if !_o['subType'].nil?
+          _oa = _o['subType']
+            if(_oa.is_a? Hash)
+              @subType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @subType =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @subType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @subType.push String.from_json(_item)
+                 else
+                   @subType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @subType = _oa
+            end
+          end
+        if !_o['defaultValue'].nil?
+          _oa = _o['defaultValue']
+            if(_oa.is_a? Hash)
+              @defaultValue = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @defaultValue =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @defaultValue = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @defaultValue.push String.from_json(_item)
+                 else
+                   @defaultValue.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @defaultValue = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
+        if !_o['type'].nil?
+          _oa = _o['type']
+            if(_oa.is_a? Hash)
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @type = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @type.push String.from_json(_item)
+                 else
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @type = _oa
+            end
+          end
+        if !_o['uiHint'].nil?
+          _oa = _o['uiHint']
+            if(_oa.is_a? Hash)
+              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @uiHint =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @uiHint = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @uiHint.push String.from_json(_item)
+                 else
+                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @uiHint = _oa
+            end
+          end
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
+            if(_oa.is_a? Hash)
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyLabel = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyLabel.push String.from_json(_item)
+                 else
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyLabel = _oa
             end
           end
     end
@@ -1257,13 +1257,13 @@ module Datatype
     # (no documentation provided)
     attr_accessor :messageList
     # (no documentation provided)
-    attr_accessor :msgDesc
-    # (no documentation provided)
     attr_accessor :httpStatusCode
+    # (no documentation provided)
+    attr_accessor :message
     # (no documentation provided)
     attr_accessor :statusCode
     # (no documentation provided)
-    attr_accessor :message
+    attr_accessor :msgDesc
 
     # the json hash for this RESTResponse
     def to_jaxb_json_hash
@@ -1273,10 +1273,10 @@ module Datatype
         messageList.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['messageList'] = _ha
       end
-      _h['msgDesc'] = msgDesc.to_jaxb_json_hash unless msgDesc.nil?
       _h['httpStatusCode'] = httpStatusCode.to_jaxb_json_hash unless httpStatusCode.nil?
-      _h['statusCode'] = statusCode.to_jaxb_json_hash unless statusCode.nil?
       _h['message'] = message.to_jaxb_json_hash unless message.nil?
+      _h['statusCode'] = statusCode.to_jaxb_json_hash unless statusCode.nil?
+      _h['msgDesc'] = msgDesc.to_jaxb_json_hash unless msgDesc.nil?
       return _h
     end
 
@@ -1306,25 +1306,6 @@ module Datatype
                 @messageList = _oa
             end
           end
-        if !_o['msgDesc'].nil?
-          _oa = _o['msgDesc']
-            if(_oa.is_a? Hash)
-              @msgDesc = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @msgDesc =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @msgDesc = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @msgDesc.push String.from_json(_item)
-                 else
-                   @msgDesc.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @msgDesc = _oa
-            end
-          end
         if !_o['httpStatusCode'].nil?
           _oa = _o['httpStatusCode']
             if(_oa.is_a? Hash)
@@ -1342,6 +1323,25 @@ module Datatype
                }
             else
                 @httpStatusCode = _oa
+            end
+          end
+        if !_o['message'].nil?
+          _oa = _o['message']
+            if(_oa.is_a? Hash)
+              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @message =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @message = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @message.push String.from_json(_item)
+                 else
+                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @message = _oa
             end
           end
         if !_o['statusCode'].nil?
@@ -1363,23 +1363,23 @@ module Datatype
                 @statusCode = _oa
             end
           end
-        if !_o['message'].nil?
-          _oa = _o['message']
+        if !_o['msgDesc'].nil?
+          _oa = _o['msgDesc']
             if(_oa.is_a? Hash)
-              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @message =  String.from_json(_oa) unless _oa['@class']
+              @msgDesc = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @msgDesc =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @message = Array.new
+              @msgDesc = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @message.push String.from_json(_item)
+                   @msgDesc.push String.from_json(_item)
                  else
-                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @msgDesc.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @message = _oa
+                @msgDesc = _oa
             end
           end
     end
@@ -1422,29 +1422,29 @@ module Model
   class RangerDataMaskDef 
 
     # (no documentation provided)
-    attr_accessor :resources
+    attr_accessor :maskTypes
     # (no documentation provided)
     attr_accessor :accessTypes
     # (no documentation provided)
-    attr_accessor :maskTypes
+    attr_accessor :resources
 
     # the json hash for this RangerDataMaskDef
     def to_jaxb_json_hash
       _h = {}
-      if !resources.nil?
+      if !maskTypes.nil?
         _ha = Array.new
-        resources.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['resources'] = _ha
+        maskTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['maskTypes'] = _ha
       end
       if !accessTypes.nil?
         _ha = Array.new
         accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['accessTypes'] = _ha
       end
-      if !maskTypes.nil?
+      if !resources.nil?
         _ha = Array.new
-        maskTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['maskTypes'] = _ha
+        resources.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['resources'] = _ha
       end
       return _h
     end
@@ -1456,23 +1456,23 @@ module Model
 
     #initializes this RangerDataMaskDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['resources'].nil?
-          _oa = _o['resources']
+        if !_o['maskTypes'].nil?
+          _oa = _o['maskTypes']
             if(_oa.is_a? Hash)
-              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resources =  Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_oa) unless _oa['@class']
+              @maskTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @maskTypes =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskTypeDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resources = Array.new
+              @maskTypes = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resources.push Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_item)
+                   @maskTypes.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskTypeDef.from_json(_item)
                  else
-                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @maskTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resources = _oa
+                @maskTypes = _oa
             end
           end
         if !_o['accessTypes'].nil?
@@ -1494,23 +1494,23 @@ module Model
                 @accessTypes = _oa
             end
           end
-        if !_o['maskTypes'].nil?
-          _oa = _o['maskTypes']
+        if !_o['resources'].nil?
+          _oa = _o['resources']
             if(_oa.is_a? Hash)
-              @maskTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @maskTypes =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskTypeDef.from_json(_oa) unless _oa['@class']
+              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resources =  Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @maskTypes = Array.new
+              @resources = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @maskTypes.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskTypeDef.from_json(_item)
+                   @resources.push Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_item)
                  else
-                   @maskTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @maskTypes = _oa
+                @resources = _oa
             end
           end
     end
@@ -1933,9 +1933,9 @@ module Model
     # (no documentation provided)
     attr_accessor :recurrences
     # (no documentation provided)
-    attr_accessor :timeZone
-    # (no documentation provided)
     attr_accessor :endTime
+    # (no documentation provided)
+    attr_accessor :timeZone
     # (no documentation provided)
     attr_accessor :startTime
 
@@ -1947,8 +1947,8 @@ module Model
         recurrences.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['recurrences'] = _ha
       end
-      _h['timeZone'] = timeZone.to_jaxb_json_hash unless timeZone.nil?
       _h['endTime'] = endTime.to_jaxb_json_hash unless endTime.nil?
+      _h['timeZone'] = timeZone.to_jaxb_json_hash unless timeZone.nil?
       _h['startTime'] = startTime.to_jaxb_json_hash unless startTime.nil?
       return _h
     end
@@ -1979,25 +1979,6 @@ module Model
                 @recurrences = _oa
             end
           end
-        if !_o['timeZone'].nil?
-          _oa = _o['timeZone']
-            if(_oa.is_a? Hash)
-              @timeZone = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @timeZone =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @timeZone = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @timeZone.push String.from_json(_item)
-                 else
-                   @timeZone.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @timeZone = _oa
-            end
-          end
         if !_o['endTime'].nil?
           _oa = _o['endTime']
             if(_oa.is_a? Hash)
@@ -2015,6 +1996,25 @@ module Model
                }
             else
                 @endTime = _oa
+            end
+          end
+        if !_o['timeZone'].nil?
+          _oa = _o['timeZone']
+            if(_oa.is_a? Hash)
+              @timeZone = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @timeZone =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @timeZone = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @timeZone.push String.from_json(_item)
+                 else
+                   @timeZone.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @timeZone = _oa
             end
           end
         if !_o['startTime'].nil?
@@ -2169,34 +2169,34 @@ module Util
   class TagPolicies 
 
     # (no documentation provided)
-    attr_accessor :policyVersion
-    # (no documentation provided)
-    attr_accessor :policyUpdateTime
-    # (no documentation provided)
     attr_accessor :serviceId
+    # (no documentation provided)
+    attr_accessor :auditMode
     # (no documentation provided)
     attr_accessor :policies
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
+    attr_accessor :policyUpdateTime
+    # (no documentation provided)
     attr_accessor :serviceDef
     # (no documentation provided)
-    attr_accessor :auditMode
+    attr_accessor :policyVersion
 
     # the json hash for this TagPolicies
     def to_jaxb_json_hash
       _h = {}
-      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
-      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
       _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
+      _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
       if !policies.nil?
         _ha = Array.new
         policies.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policies'] = _ha
       end
       _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
       _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
-      _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
+      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
       return _h
     end
 
@@ -2207,44 +2207,6 @@ module Util
 
     #initializes this TagPolicies with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['policyVersion'].nil?
-          _oa = _o['policyVersion']
-            if(_oa.is_a? Hash)
-              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyVersion.push Bignum.from_json(_item)
-                 else
-                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyVersion = _oa
-            end
-          end
-        if !_o['policyUpdateTime'].nil?
-          _oa = _o['policyUpdateTime']
-            if(_oa.is_a? Hash)
-              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyUpdateTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyUpdateTime.push Time.from_json(_item)
-                 else
-                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyUpdateTime = _oa
-            end
-          end
         if !_o['serviceId'].nil?
           _oa = _o['serviceId']
             if(_oa.is_a? Hash)
@@ -2262,6 +2224,25 @@ module Util
                }
             else
                 @serviceId = _oa
+            end
+          end
+        if !_o['auditMode'].nil?
+          _oa = _o['auditMode']
+            if(_oa.is_a? Hash)
+              @auditMode = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @auditMode =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @auditMode = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @auditMode.push String.from_json(_item)
+                 else
+                   @auditMode.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @auditMode = _oa
             end
           end
         if !_o['policies'].nil?
@@ -2302,6 +2283,25 @@ module Util
                 @serviceName = _oa
             end
           end
+        if !_o['policyUpdateTime'].nil?
+          _oa = _o['policyUpdateTime']
+            if(_oa.is_a? Hash)
+              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyUpdateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyUpdateTime.push Time.from_json(_item)
+                 else
+                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyUpdateTime = _oa
+            end
+          end
         if !_o['serviceDef'].nil?
           _oa = _o['serviceDef']
             if(_oa.is_a? Hash)
@@ -2321,23 +2321,23 @@ module Util
                 @serviceDef = _oa
             end
           end
-        if !_o['auditMode'].nil?
-          _oa = _o['auditMode']
+        if !_o['policyVersion'].nil?
+          _oa = _o['policyVersion']
             if(_oa.is_a? Hash)
-              @auditMode = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @auditMode =  String.from_json(_oa) unless _oa['@class']
+              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @auditMode = Array.new
+              @policyVersion = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @auditMode.push String.from_json(_item)
+                   @policyVersion.push Bignum.from_json(_item)
                  else
-                   @auditMode.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @auditMode = _oa
+                @policyVersion = _oa
             end
           end
     end
@@ -2378,33 +2378,33 @@ module Model
   class RangerDataMaskTypeDef 
 
     # (no documentation provided)
-    attr_accessor :itemId
+    attr_accessor :rbKeyDescription
     # (no documentation provided)
     attr_accessor :dataMaskOptions
     # (no documentation provided)
-    attr_accessor :rbKeyLabel
+    attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :rbKeyDescription
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :label
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :transformer
     # (no documentation provided)
-    attr_accessor :description
+    attr_accessor :rbKeyLabel
+    # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerDataMaskTypeDef
     def to_jaxb_json_hash
       _h = {}
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['dataMaskOptions'] = dataMaskOptions.to_jaxb_json_hash unless dataMaskOptions.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
-      _h['transformer'] = transformer.to_jaxb_json_hash unless transformer.nil?
+      _h['dataMaskOptions'] = dataMaskOptions.to_jaxb_json_hash unless dataMaskOptions.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['transformer'] = transformer.to_jaxb_json_hash unless transformer.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -2415,23 +2415,23 @@ module Model
 
     #initializes this RangerDataMaskTypeDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
             if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
+              @rbKeyDescription = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
+                   @rbKeyDescription.push String.from_json(_item)
                  else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @itemId = _oa
+                @rbKeyDescription = _oa
             end
           end
         if !_o['dataMaskOptions'].nil?
@@ -2453,80 +2453,42 @@ module Model
                 @dataMaskOptions = _oa
             end
           end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
             if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
+              @itemId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
+                   @itemId.push Bignum.from_json(_item)
                  else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyLabel = _oa
+                @itemId = _oa
             end
           end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyDescription = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['label'].nil?
-          _oa = _o['label']
-            if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @label = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
-                 else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @label = _oa
+                @description = _oa
             end
           end
         if !_o['transformer'].nil?
@@ -2548,23 +2510,61 @@ module Model
                 @transformer = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
             if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @description = Array.new
+              @rbKeyLabel = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
+                   @rbKeyLabel.push String.from_json(_item)
                  else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @description = _oa
+                @rbKeyLabel = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -2605,18 +2605,18 @@ module Model
   class RangerPolicyItemDataMaskInfo 
 
     # (no documentation provided)
+    attr_accessor :valueExpr
+    # (no documentation provided)
     attr_accessor :dataMaskType
     # (no documentation provided)
     attr_accessor :conditionExpr
-    # (no documentation provided)
-    attr_accessor :valueExpr
 
     # the json hash for this RangerPolicyItemDataMaskInfo
     def to_jaxb_json_hash
       _h = {}
+      _h['valueExpr'] = valueExpr.to_jaxb_json_hash unless valueExpr.nil?
       _h['dataMaskType'] = dataMaskType.to_jaxb_json_hash unless dataMaskType.nil?
       _h['conditionExpr'] = conditionExpr.to_jaxb_json_hash unless conditionExpr.nil?
-      _h['valueExpr'] = valueExpr.to_jaxb_json_hash unless valueExpr.nil?
       return _h
     end
 
@@ -2627,6 +2627,25 @@ module Model
 
     #initializes this RangerPolicyItemDataMaskInfo with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['valueExpr'].nil?
+          _oa = _o['valueExpr']
+            if(_oa.is_a? Hash)
+              @valueExpr = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @valueExpr =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @valueExpr = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @valueExpr.push String.from_json(_item)
+                 else
+                   @valueExpr.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @valueExpr = _oa
+            end
+          end
         if !_o['dataMaskType'].nil?
           _oa = _o['dataMaskType']
             if(_oa.is_a? Hash)
@@ -2663,25 +2682,6 @@ module Model
                }
             else
                 @conditionExpr = _oa
-            end
-          end
-        if !_o['valueExpr'].nil?
-          _oa = _o['valueExpr']
-            if(_oa.is_a? Hash)
-              @valueExpr = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @valueExpr =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @valueExpr = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @valueExpr.push String.from_json(_item)
-                 else
-                   @valueExpr.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @valueExpr = _oa
             end
           end
     end
@@ -2866,47 +2866,151 @@ module Plugin
 module Model
 
   # (no documentation provided)
-  class RangerPolicyItemRowFilterInfo 
+  class RangerPolicyItem 
 
     # (no documentation provided)
-    attr_accessor :filterExpr
+    attr_accessor :accesses
+    # (no documentation provided)
+    attr_accessor :conditions
+    # (no documentation provided)
+    attr_accessor :delegateAdmin
+    # (no documentation provided)
+    attr_accessor :users
+    # (no documentation provided)
+    attr_accessor :groups
 
-    # the json hash for this RangerPolicyItemRowFilterInfo
+    # the json hash for this RangerPolicyItem
     def to_jaxb_json_hash
       _h = {}
-      _h['filterExpr'] = filterExpr.to_jaxb_json_hash unless filterExpr.nil?
+      if !accesses.nil?
+        _ha = Array.new
+        accesses.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accesses'] = _ha
+      end
+      if !conditions.nil?
+        _ha = Array.new
+        conditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['conditions'] = _ha
+      end
+      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
+      if !users.nil?
+        _ha = Array.new
+        users.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['users'] = _ha
+      end
+      if !groups.nil?
+        _ha = Array.new
+        groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['groups'] = _ha
+      end
       return _h
     end
 
-    # the json (string form) for this RangerPolicyItemRowFilterInfo
+    # the json (string form) for this RangerPolicyItem
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this RangerPolicyItemRowFilterInfo with a json hash
+    #initializes this RangerPolicyItem with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['filterExpr'].nil?
-          _oa = _o['filterExpr']
+        if !_o['accesses'].nil?
+          _oa = _o['accesses']
             if(_oa.is_a? Hash)
-              @filterExpr = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @filterExpr =  String.from_json(_oa) unless _oa['@class']
+              @accesses = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accesses =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemAccess.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @filterExpr = Array.new
+              @accesses = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @filterExpr.push String.from_json(_item)
+                   @accesses.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemAccess.from_json(_item)
                  else
-                   @filterExpr.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @accesses.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @filterExpr = _oa
+                @accesses = _oa
+            end
+          end
+        if !_o['conditions'].nil?
+          _oa = _o['conditions']
+            if(_oa.is_a? Hash)
+              @conditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @conditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemCondition.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @conditions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @conditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemCondition.from_json(_item)
+                 else
+                   @conditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @conditions = _oa
+            end
+          end
+        if !_o['delegateAdmin'].nil?
+          _oa = _o['delegateAdmin']
+            if(_oa.is_a? Hash)
+              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @delegateAdmin = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @delegateAdmin.push Boolean.from_json(_item)
+                 else
+                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @delegateAdmin = _oa
+            end
+          end
+        if !_o['users'].nil?
+          _oa = _o['users']
+            if(_oa.is_a? Hash)
+              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @users =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @users = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @users.push String.from_json(_item)
+                 else
+                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @users = _oa
+            end
+          end
+        if !_o['groups'].nil?
+          _oa = _o['groups']
+            if(_oa.is_a? Hash)
+              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @groups =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @groups = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @groups.push String.from_json(_item)
+                 else
+                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @groups = _oa
             end
           end
     end
 
-    # constructs a RangerPolicyItemRowFilterInfo from a (parsed) JSON hash
+    # constructs a RangerPolicyItem from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -3042,151 +3146,47 @@ module Plugin
 module Model
 
   # (no documentation provided)
-  class RangerPolicyItem 
+  class RangerPolicyItemRowFilterInfo 
 
     # (no documentation provided)
-    attr_accessor :groups
-    # (no documentation provided)
-    attr_accessor :delegateAdmin
-    # (no documentation provided)
-    attr_accessor :accesses
-    # (no documentation provided)
-    attr_accessor :users
-    # (no documentation provided)
-    attr_accessor :conditions
+    attr_accessor :filterExpr
 
-    # the json hash for this RangerPolicyItem
+    # the json hash for this RangerPolicyItemRowFilterInfo
     def to_jaxb_json_hash
       _h = {}
-      if !groups.nil?
-        _ha = Array.new
-        groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['groups'] = _ha
-      end
-      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
-      if !accesses.nil?
-        _ha = Array.new
-        accesses.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accesses'] = _ha
-      end
-      if !users.nil?
-        _ha = Array.new
-        users.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['users'] = _ha
-      end
-      if !conditions.nil?
-        _ha = Array.new
-        conditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['conditions'] = _ha
-      end
+      _h['filterExpr'] = filterExpr.to_jaxb_json_hash unless filterExpr.nil?
       return _h
     end
 
-    # the json (string form) for this RangerPolicyItem
+    # the json (string form) for this RangerPolicyItemRowFilterInfo
     def to_json
       to_jaxb_json_hash.to_json
     end
 
-    #initializes this RangerPolicyItem with a json hash
+    #initializes this RangerPolicyItemRowFilterInfo with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['groups'].nil?
-          _oa = _o['groups']
+        if !_o['filterExpr'].nil?
+          _oa = _o['filterExpr']
             if(_oa.is_a? Hash)
-              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @groups =  String.from_json(_oa) unless _oa['@class']
+              @filterExpr = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @filterExpr =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @groups = Array.new
+              @filterExpr = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @groups.push String.from_json(_item)
+                   @filterExpr.push String.from_json(_item)
                  else
-                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @filterExpr.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @groups = _oa
-            end
-          end
-        if !_o['delegateAdmin'].nil?
-          _oa = _o['delegateAdmin']
-            if(_oa.is_a? Hash)
-              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @delegateAdmin = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @delegateAdmin.push Boolean.from_json(_item)
-                 else
-                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @delegateAdmin = _oa
-            end
-          end
-        if !_o['accesses'].nil?
-          _oa = _o['accesses']
-            if(_oa.is_a? Hash)
-              @accesses = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accesses =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemAccess.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @accesses = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accesses.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemAccess.from_json(_item)
-                 else
-                   @accesses.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @accesses = _oa
-            end
-          end
-        if !_o['users'].nil?
-          _oa = _o['users']
-            if(_oa.is_a? Hash)
-              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @users =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @users = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @users.push String.from_json(_item)
-                 else
-                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @users = _oa
-            end
-          end
-        if !_o['conditions'].nil?
-          _oa = _o['conditions']
-            if(_oa.is_a? Hash)
-              @conditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @conditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemCondition.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @conditions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @conditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemCondition.from_json(_item)
-                 else
-                   @conditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @conditions = _oa
+                @filterExpr = _oa
             end
           end
     end
 
-    # constructs a RangerPolicyItem from a (parsed) JSON hash
+    # constructs a RangerPolicyItemRowFilterInfo from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -3222,21 +3222,21 @@ module Model
   class RangerPolicyResource 
 
     # (no documentation provided)
-    attr_accessor :values
-    # (no documentation provided)
     attr_accessor :isRecursive
+    # (no documentation provided)
+    attr_accessor :values
     # (no documentation provided)
     attr_accessor :isExcludes
 
     # the json hash for this RangerPolicyResource
     def to_jaxb_json_hash
       _h = {}
+      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
       if !values.nil?
         _ha = Array.new
         values.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['values'] = _ha
       end
-      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
       _h['isExcludes'] = isExcludes.to_jaxb_json_hash unless isExcludes.nil?
       return _h
     end
@@ -3248,25 +3248,6 @@ module Model
 
     #initializes this RangerPolicyResource with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['values'].nil?
-          _oa = _o['values']
-            if(_oa.is_a? Hash)
-              @values = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @values =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @values = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @values.push String.from_json(_item)
-                 else
-                   @values.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @values = _oa
-            end
-          end
         if !_o['isRecursive'].nil?
           _oa = _o['isRecursive']
             if(_oa.is_a? Hash)
@@ -3284,6 +3265,25 @@ module Model
                }
             else
                 @isRecursive = _oa
+            end
+          end
+        if !_o['values'].nil?
+          _oa = _o['values']
+            if(_oa.is_a? Hash)
+              @values = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @values =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @values = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @values.push String.from_json(_item)
+                 else
+                   @values.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @values = _oa
             end
           end
         if !_o['isExcludes'].nil?
@@ -3343,37 +3343,37 @@ module Util
   class ServiceTags 
 
     # (no documentation provided)
+    attr_accessor :tags
+    # (no documentation provided)
+    attr_accessor :serviceResources
+    # (no documentation provided)
+    attr_accessor :tagUpdateTime
+    # (no documentation provided)
+    attr_accessor :tagDefinitions
+    # (no documentation provided)
+    attr_accessor :serviceName
+    # (no documentation provided)
     attr_accessor :resourceToTagIds
     # (no documentation provided)
     attr_accessor :tagVersion
     # (no documentation provided)
-    attr_accessor :serviceResources
-    # (no documentation provided)
-    attr_accessor :serviceName
-    # (no documentation provided)
     attr_accessor :op
-    # (no documentation provided)
-    attr_accessor :tagDefinitions
-    # (no documentation provided)
-    attr_accessor :tagUpdateTime
-    # (no documentation provided)
-    attr_accessor :tags
 
     # the json hash for this ServiceTags
     def to_jaxb_json_hash
       _h = {}
-      _h['resourceToTagIds'] = resourceToTagIds.to_jaxb_json_hash unless resourceToTagIds.nil?
-      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
+      _h['tags'] = tags.to_jaxb_json_hash unless tags.nil?
       if !serviceResources.nil?
         _ha = Array.new
         serviceResources.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['serviceResources'] = _ha
       end
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
-      _h['op'] = op.to_jaxb_json_hash unless op.nil?
-      _h['tagDefinitions'] = tagDefinitions.to_jaxb_json_hash unless tagDefinitions.nil?
       _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
-      _h['tags'] = tags.to_jaxb_json_hash unless tags.nil?
+      _h['tagDefinitions'] = tagDefinitions.to_jaxb_json_hash unless tagDefinitions.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['resourceToTagIds'] = resourceToTagIds.to_jaxb_json_hash unless resourceToTagIds.nil?
+      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
+      _h['op'] = op.to_jaxb_json_hash unless op.nil?
       return _h
     end
 
@@ -3384,6 +3384,101 @@ module Util
 
     #initializes this ServiceTags with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['tags'].nil?
+          _oa = _o['tags']
+            if(_oa.is_a? Hash)
+              @tags = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tags =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tags = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tags.push Hash.from_json(_item)
+                 else
+                   @tags.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tags = _oa
+            end
+          end
+        if !_o['serviceResources'].nil?
+          _oa = _o['serviceResources']
+            if(_oa.is_a? Hash)
+              @serviceResources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceResources =  Org::Apache::Ranger::Plugin::Model::RangerServiceResource.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceResources = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceResources.push Org::Apache::Ranger::Plugin::Model::RangerServiceResource.from_json(_item)
+                 else
+                   @serviceResources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceResources = _oa
+            end
+          end
+        if !_o['tagUpdateTime'].nil?
+          _oa = _o['tagUpdateTime']
+            if(_oa.is_a? Hash)
+              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagUpdateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagUpdateTime.push Time.from_json(_item)
+                 else
+                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagUpdateTime = _oa
+            end
+          end
+        if !_o['tagDefinitions'].nil?
+          _oa = _o['tagDefinitions']
+            if(_oa.is_a? Hash)
+              @tagDefinitions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagDefinitions =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagDefinitions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagDefinitions.push Hash.from_json(_item)
+                 else
+                   @tagDefinitions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagDefinitions = _oa
+            end
+          end
+        if !_o['serviceName'].nil?
+          _oa = _o['serviceName']
+            if(_oa.is_a? Hash)
+              @serviceName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceName.push String.from_json(_item)
+                 else
+                   @serviceName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceName = _oa
+            end
+          end
         if !_o['resourceToTagIds'].nil?
           _oa = _o['resourceToTagIds']
             if(_oa.is_a? Hash)
@@ -3422,44 +3517,6 @@ module Util
                 @tagVersion = _oa
             end
           end
-        if !_o['serviceResources'].nil?
-          _oa = _o['serviceResources']
-            if(_oa.is_a? Hash)
-              @serviceResources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceResources =  Org::Apache::Ranger::Plugin::Model::RangerServiceResource.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @serviceResources = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceResources.push Org::Apache::Ranger::Plugin::Model::RangerServiceResource.from_json(_item)
-                 else
-                   @serviceResources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @serviceResources = _oa
-            end
-          end
-        if !_o['serviceName'].nil?
-          _oa = _o['serviceName']
-            if(_oa.is_a? Hash)
-              @serviceName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceName =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @serviceName = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceName.push String.from_json(_item)
-                 else
-                   @serviceName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @serviceName = _oa
-            end
-          end
         if !_o['op'].nil?
           _oa = _o['op']
             if(_oa.is_a? Hash)
@@ -3477,63 +3534,6 @@ module Util
                }
             else
                 @op = _oa
-            end
-          end
-        if !_o['tagDefinitions'].nil?
-          _oa = _o['tagDefinitions']
-            if(_oa.is_a? Hash)
-              @tagDefinitions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagDefinitions =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagDefinitions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagDefinitions.push Hash.from_json(_item)
-                 else
-                   @tagDefinitions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagDefinitions = _oa
-            end
-          end
-        if !_o['tagUpdateTime'].nil?
-          _oa = _o['tagUpdateTime']
-            if(_oa.is_a? Hash)
-              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagUpdateTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagUpdateTime.push Time.from_json(_item)
-                 else
-                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagUpdateTime = _oa
-            end
-          end
-        if !_o['tags'].nil?
-          _oa = _o['tags']
-            if(_oa.is_a? Hash)
-              @tags = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tags =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tags = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tags.push Hash.from_json(_item)
-                 else
-                   @tags.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tags = _oa
             end
           end
     end
@@ -3574,20 +3574,20 @@ module Model
   class RangerContextEnricherDef 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
     attr_accessor :enricher
+    # (no documentation provided)
+    attr_accessor :name
     # (no documentation provided)
     attr_accessor :enricherOptions
 
     # the json hash for this RangerContextEnricherDef
     def to_jaxb_json_hash
       _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
       _h['enricher'] = enricher.to_jaxb_json_hash unless enricher.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['enricherOptions'] = enricherOptions.to_jaxb_json_hash unless enricherOptions.nil?
       return _h
     end
@@ -3599,25 +3599,6 @@ module Model
 
     #initializes this RangerContextEnricherDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['itemId'].nil?
           _oa = _o['itemId']
             if(_oa.is_a? Hash)
@@ -3654,6 +3635,25 @@ module Model
                }
             else
                 @enricher = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
         if !_o['enricherOptions'].nil?
@@ -3938,74 +3938,74 @@ module Model
     # (no documentation provided)
     attr_accessor :excludesSupported
     # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :matcher
-    # (no documentation provided)
-    attr_accessor :label
-    # (no documentation provided)
-    attr_accessor :validationRegEx
-    # (no documentation provided)
     attr_accessor :validationMessage
-    # (no documentation provided)
-    attr_accessor :level
-    # (no documentation provided)
-    attr_accessor :parent
-    # (no documentation provided)
-    attr_accessor :mandatory
-    # (no documentation provided)
-    attr_accessor :rbKeyDescription
-    # (no documentation provided)
-    attr_accessor :rbKeyValidationMessage
-    # (no documentation provided)
-    attr_accessor :isValidLeaf
     # (no documentation provided)
     attr_accessor :accessTypeRestrictions
     # (no documentation provided)
-    attr_accessor :type
-    # (no documentation provided)
-    attr_accessor :lookupSupported
-    # (no documentation provided)
-    attr_accessor :uiHint
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :matcherOptions
     # (no documentation provided)
-    attr_accessor :recursiveSupported
+    attr_accessor :level
+    # (no documentation provided)
+    attr_accessor :validationRegEx
+    # (no documentation provided)
+    attr_accessor :rbKeyValidationMessage
+    # (no documentation provided)
+    attr_accessor :lookupSupported
+    # (no documentation provided)
+    attr_accessor :name
+    # (no documentation provided)
+    attr_accessor :itemId
+    # (no documentation provided)
+    attr_accessor :parent
+    # (no documentation provided)
+    attr_accessor :isValidLeaf
+    # (no documentation provided)
+    attr_accessor :type
+    # (no documentation provided)
+    attr_accessor :uiHint
     # (no documentation provided)
     attr_accessor :rbKeyLabel
     # (no documentation provided)
-    attr_accessor :itemId
+    attr_accessor :recursiveSupported
+    # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :mandatory
+    # (no documentation provided)
+    attr_accessor :matcher
+    # (no documentation provided)
+    attr_accessor :rbKeyDescription
 
     # the json hash for this RangerResourceDef
     def to_jaxb_json_hash
       _h = {}
       _h['excludesSupported'] = excludesSupported.to_jaxb_json_hash unless excludesSupported.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['matcher'] = matcher.to_jaxb_json_hash unless matcher.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
-      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
       _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
-      _h['level'] = level.to_jaxb_json_hash unless level.nil?
-      _h['parent'] = parent.to_jaxb_json_hash unless parent.nil?
-      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
-      _h['isValidLeaf'] = isValidLeaf.to_jaxb_json_hash unless isValidLeaf.nil?
       if !accessTypeRestrictions.nil?
         _ha = Array.new
         accessTypeRestrictions.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['accessTypeRestrictions'] = _ha
       end
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
-      _h['lookupSupported'] = lookupSupported.to_jaxb_json_hash unless lookupSupported.nil?
-      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['matcherOptions'] = matcherOptions.to_jaxb_json_hash unless matcherOptions.nil?
-      _h['recursiveSupported'] = recursiveSupported.to_jaxb_json_hash unless recursiveSupported.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['level'] = level.to_jaxb_json_hash unless level.nil?
+      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
+      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
+      _h['lookupSupported'] = lookupSupported.to_jaxb_json_hash unless lookupSupported.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['parent'] = parent.to_jaxb_json_hash unless parent.nil?
+      _h['isValidLeaf'] = isValidLeaf.to_jaxb_json_hash unless isValidLeaf.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['recursiveSupported'] = recursiveSupported.to_jaxb_json_hash unless recursiveSupported.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
+      _h['matcher'] = matcher.to_jaxb_json_hash unless matcher.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
       return _h
     end
 
@@ -4035,101 +4035,6 @@ module Model
                 @excludesSupported = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
-            if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @description = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
-                 else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @description = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['matcher'].nil?
-          _oa = _o['matcher']
-            if(_oa.is_a? Hash)
-              @matcher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @matcher =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @matcher = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @matcher.push String.from_json(_item)
-                 else
-                   @matcher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @matcher = _oa
-            end
-          end
-        if !_o['label'].nil?
-          _oa = _o['label']
-            if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @label = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
-                 else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @label = _oa
-            end
-          end
-        if !_o['validationRegEx'].nil?
-          _oa = _o['validationRegEx']
-            if(_oa.is_a? Hash)
-              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationRegEx = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationRegEx.push String.from_json(_item)
-                 else
-                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationRegEx = _oa
-            end
-          end
         if !_o['validationMessage'].nil?
           _oa = _o['validationMessage']
             if(_oa.is_a? Hash)
@@ -4147,120 +4052,6 @@ module Model
                }
             else
                 @validationMessage = _oa
-            end
-          end
-        if !_o['level'].nil?
-          _oa = _o['level']
-            if(_oa.is_a? Hash)
-              @level = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @level =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @level = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @level.push Fixnum.from_json(_item)
-                 else
-                   @level.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @level = _oa
-            end
-          end
-        if !_o['parent'].nil?
-          _oa = _o['parent']
-            if(_oa.is_a? Hash)
-              @parent = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @parent =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @parent = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @parent.push String.from_json(_item)
-                 else
-                   @parent.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @parent = _oa
-            end
-          end
-        if !_o['mandatory'].nil?
-          _oa = _o['mandatory']
-            if(_oa.is_a? Hash)
-              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @mandatory = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @mandatory.push Boolean.from_json(_item)
-                 else
-                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @mandatory = _oa
-            end
-          end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
-            if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
-                 else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyDescription = _oa
-            end
-          end
-        if !_o['rbKeyValidationMessage'].nil?
-          _oa = _o['rbKeyValidationMessage']
-            if(_oa.is_a? Hash)
-              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyValidationMessage = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyValidationMessage.push String.from_json(_item)
-                 else
-                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyValidationMessage = _oa
-            end
-          end
-        if !_o['isValidLeaf'].nil?
-          _oa = _o['isValidLeaf']
-            if(_oa.is_a? Hash)
-              @isValidLeaf = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @isValidLeaf =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @isValidLeaf = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @isValidLeaf.push Boolean.from_json(_item)
-                 else
-                   @isValidLeaf.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @isValidLeaf = _oa
             end
           end
         if !_o['accessTypeRestrictions'].nil?
@@ -4282,61 +4073,23 @@ module Model
                 @accessTypeRestrictions = _oa
             end
           end
-        if !_o['type'].nil?
-          _oa = _o['type']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @type = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @type = _oa
-            end
-          end
-        if !_o['lookupSupported'].nil?
-          _oa = _o['lookupSupported']
-            if(_oa.is_a? Hash)
-              @lookupSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @lookupSupported =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @lookupSupported = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @lookupSupported.push Boolean.from_json(_item)
-                 else
-                   @lookupSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @lookupSupported = _oa
-            end
-          end
-        if !_o['uiHint'].nil?
-          _oa = _o['uiHint']
-            if(_oa.is_a? Hash)
-              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @uiHint =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @uiHint = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @uiHint.push String.from_json(_item)
-                 else
-                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @uiHint = _oa
+                @description = _oa
             end
           end
         if !_o['matcherOptions'].nil?
@@ -4358,23 +4111,194 @@ module Model
                 @matcherOptions = _oa
             end
           end
-        if !_o['recursiveSupported'].nil?
-          _oa = _o['recursiveSupported']
+        if !_o['level'].nil?
+          _oa = _o['level']
             if(_oa.is_a? Hash)
-              @recursiveSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @recursiveSupported =  Boolean.from_json(_oa) unless _oa['@class']
+              @level = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @level =  Fixnum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @recursiveSupported = Array.new
+              @level = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @recursiveSupported.push Boolean.from_json(_item)
+                   @level.push Fixnum.from_json(_item)
                  else
-                   @recursiveSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @level.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @recursiveSupported = _oa
+                @level = _oa
+            end
+          end
+        if !_o['validationRegEx'].nil?
+          _oa = _o['validationRegEx']
+            if(_oa.is_a? Hash)
+              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @validationRegEx = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @validationRegEx.push String.from_json(_item)
+                 else
+                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @validationRegEx = _oa
+            end
+          end
+        if !_o['rbKeyValidationMessage'].nil?
+          _oa = _o['rbKeyValidationMessage']
+            if(_oa.is_a? Hash)
+              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyValidationMessage = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyValidationMessage.push String.from_json(_item)
+                 else
+                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyValidationMessage = _oa
+            end
+          end
+        if !_o['lookupSupported'].nil?
+          _oa = _o['lookupSupported']
+            if(_oa.is_a? Hash)
+              @lookupSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @lookupSupported =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @lookupSupported = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @lookupSupported.push Boolean.from_json(_item)
+                 else
+                   @lookupSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @lookupSupported = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
+            end
+          end
+        if !_o['parent'].nil?
+          _oa = _o['parent']
+            if(_oa.is_a? Hash)
+              @parent = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @parent =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @parent = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @parent.push String.from_json(_item)
+                 else
+                   @parent.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @parent = _oa
+            end
+          end
+        if !_o['isValidLeaf'].nil?
+          _oa = _o['isValidLeaf']
+            if(_oa.is_a? Hash)
+              @isValidLeaf = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @isValidLeaf =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @isValidLeaf = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @isValidLeaf.push Boolean.from_json(_item)
+                 else
+                   @isValidLeaf.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @isValidLeaf = _oa
+            end
+          end
+        if !_o['type'].nil?
+          _oa = _o['type']
+            if(_oa.is_a? Hash)
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @type = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @type.push String.from_json(_item)
+                 else
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @type = _oa
+            end
+          end
+        if !_o['uiHint'].nil?
+          _oa = _o['uiHint']
+            if(_oa.is_a? Hash)
+              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @uiHint =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @uiHint = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @uiHint.push String.from_json(_item)
+                 else
+                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @uiHint = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -4396,23 +4320,99 @@ module Model
                 @rbKeyLabel = _oa
             end
           end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
+        if !_o['recursiveSupported'].nil?
+          _oa = _o['recursiveSupported']
             if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+              @recursiveSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @recursiveSupported =  Boolean.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
+              @recursiveSupported = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
+                   @recursiveSupported.push Boolean.from_json(_item)
                  else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @recursiveSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @itemId = _oa
+                @recursiveSupported = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
+        if !_o['mandatory'].nil?
+          _oa = _o['mandatory']
+            if(_oa.is_a? Hash)
+              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @mandatory = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @mandatory.push Boolean.from_json(_item)
+                 else
+                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @mandatory = _oa
+            end
+          end
+        if !_o['matcher'].nil?
+          _oa = _o['matcher']
+            if(_oa.is_a? Hash)
+              @matcher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @matcher =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @matcher = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @matcher.push String.from_json(_item)
+                 else
+                   @matcher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @matcher = _oa
+            end
+          end
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
+            if(_oa.is_a? Hash)
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyDescription = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyDescription.push String.from_json(_item)
+                 else
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyDescription = _oa
             end
           end
     end
@@ -4453,37 +4453,37 @@ module Util
   class ServicePolicies 
 
     # (no documentation provided)
-    attr_accessor :serviceDef
-    # (no documentation provided)
-    attr_accessor :serviceId
+    attr_accessor :policyVersion
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
-    attr_accessor :tagPolicies
-    # (no documentation provided)
     attr_accessor :policyUpdateTime
     # (no documentation provided)
-    attr_accessor :policyVersion
+    attr_accessor :tagPolicies
     # (no documentation provided)
-    attr_accessor :policies
+    attr_accessor :serviceId
     # (no documentation provided)
     attr_accessor :auditMode
+    # (no documentation provided)
+    attr_accessor :serviceDef
+    # (no documentation provided)
+    attr_accessor :policies
 
     # the json hash for this ServicePolicies
     def to_jaxb_json_hash
       _h = {}
-      _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
-      _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
-      _h['tagPolicies'] = tagPolicies.to_jaxb_json_hash unless tagPolicies.nil?
-      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
       _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
+      _h['tagPolicies'] = tagPolicies.to_jaxb_json_hash unless tagPolicies.nil?
+      _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
+      _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
+      _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
       if !policies.nil?
         _ha = Array.new
         policies.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policies'] = _ha
       end
-      _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
       return _h
     end
 
@@ -4494,42 +4494,23 @@ module Util
 
     #initializes this ServicePolicies with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['serviceDef'].nil?
-          _oa = _o['serviceDef']
+        if !_o['policyVersion'].nil?
+          _oa = _o['policyVersion']
             if(_oa.is_a? Hash)
-              @serviceDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceDef =  Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_oa) unless _oa['@class']
+              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @serviceDef = Array.new
+              @policyVersion = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceDef.push Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_item)
+                   @policyVersion.push Bignum.from_json(_item)
                  else
-                   @serviceDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @serviceDef = _oa
-            end
-          end
-        if !_o['serviceId'].nil?
-          _oa = _o['serviceId']
-            if(_oa.is_a? Hash)
-              @serviceId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @serviceId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceId.push Bignum.from_json(_item)
-                 else
-                   @serviceId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @serviceId = _oa
+                @policyVersion = _oa
             end
           end
         if !_o['serviceName'].nil?
@@ -4551,25 +4532,6 @@ module Util
                 @serviceName = _oa
             end
           end
-        if !_o['tagPolicies'].nil?
-          _oa = _o['tagPolicies']
-            if(_oa.is_a? Hash)
-              @tagPolicies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagPolicies =  Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagPolicies = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagPolicies.push Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_item)
-                 else
-                   @tagPolicies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagPolicies = _oa
-            end
-          end
         if !_o['policyUpdateTime'].nil?
           _oa = _o['policyUpdateTime']
             if(_oa.is_a? Hash)
@@ -4589,42 +4551,42 @@ module Util
                 @policyUpdateTime = _oa
             end
           end
-        if !_o['policyVersion'].nil?
-          _oa = _o['policyVersion']
+        if !_o['tagPolicies'].nil?
+          _oa = _o['tagPolicies']
             if(_oa.is_a? Hash)
-              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
+              @tagPolicies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagPolicies =  Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @policyVersion = Array.new
+              @tagPolicies = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyVersion.push Bignum.from_json(_item)
+                   @tagPolicies.push Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_item)
                  else
-                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @tagPolicies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @policyVersion = _oa
+                @tagPolicies = _oa
             end
           end
-        if !_o['policies'].nil?
-          _oa = _o['policies']
+        if !_o['serviceId'].nil?
+          _oa = _o['serviceId']
             if(_oa.is_a? Hash)
-              @policies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policies =  Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_oa) unless _oa['@class']
+              @serviceId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceId =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @policies = Array.new
+              @serviceId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policies.push Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_item)
+                   @serviceId.push Bignum.from_json(_item)
                  else
-                   @policies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @serviceId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @policies = _oa
+                @serviceId = _oa
             end
           end
         if !_o['auditMode'].nil?
@@ -4644,6 +4606,44 @@ module Util
                }
             else
                 @auditMode = _oa
+            end
+          end
+        if !_o['serviceDef'].nil?
+          _oa = _o['serviceDef']
+            if(_oa.is_a? Hash)
+              @serviceDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceDef =  Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceDef = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceDef.push Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_item)
+                 else
+                   @serviceDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceDef = _oa
+            end
+          end
+        if !_o['policies'].nil?
+          _oa = _o['policies']
+            if(_oa.is_a? Hash)
+              @policies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policies =  Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policies = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policies.push Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_item)
+                 else
+                   @policies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policies = _oa
             end
           end
     end
@@ -4684,70 +4684,70 @@ module Util
   class GrantRevokeRequest 
 
     # (no documentation provided)
-    attr_accessor :replaceExistingPermissions
+    attr_accessor :sessionId
     # (no documentation provided)
     attr_accessor :clientType
     # (no documentation provided)
     attr_accessor :clusterName
     # (no documentation provided)
-    attr_accessor :grantorGroups
-    # (no documentation provided)
-    attr_accessor :accessTypes
-    # (no documentation provided)
-    attr_accessor :sessionId
-    # (no documentation provided)
-    attr_accessor :enableAudit
-    # (no documentation provided)
-    attr_accessor :resource
+    attr_accessor :delegateAdmin
     # (no documentation provided)
     attr_accessor :groups
     # (no documentation provided)
     attr_accessor :requestData
     # (no documentation provided)
-    attr_accessor :delegateAdmin
-    # (no documentation provided)
-    attr_accessor :grantor
-    # (no documentation provided)
-    attr_accessor :users
-    # (no documentation provided)
     attr_accessor :clientIPAddress
     # (no documentation provided)
     attr_accessor :isRecursive
+    # (no documentation provided)
+    attr_accessor :grantorGroups
+    # (no documentation provided)
+    attr_accessor :grantor
+    # (no documentation provided)
+    attr_accessor :accessTypes
+    # (no documentation provided)
+    attr_accessor :resource
+    # (no documentation provided)
+    attr_accessor :replaceExistingPermissions
+    # (no documentation provided)
+    attr_accessor :enableAudit
+    # (no documentation provided)
+    attr_accessor :users
 
     # the json hash for this GrantRevokeRequest
     def to_jaxb_json_hash
       _h = {}
-      _h['replaceExistingPermissions'] = replaceExistingPermissions.to_jaxb_json_hash unless replaceExistingPermissions.nil?
+      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
       _h['clientType'] = clientType.to_jaxb_json_hash unless clientType.nil?
       _h['clusterName'] = clusterName.to_jaxb_json_hash unless clusterName.nil?
-      if !grantorGroups.nil?
-        _ha = Array.new
-        grantorGroups.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['grantorGroups'] = _ha
-      end
-      if !accessTypes.nil?
-        _ha = Array.new
-        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accessTypes'] = _ha
-      end
-      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
-      _h['enableAudit'] = enableAudit.to_jaxb_json_hash unless enableAudit.nil?
-      _h['resource'] = resource.to_jaxb_json_hash unless resource.nil?
+      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
       if !groups.nil?
         _ha = Array.new
         groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['groups'] = _ha
       end
       _h['requestData'] = requestData.to_jaxb_json_hash unless requestData.nil?
-      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
+      _h['clientIPAddress'] = clientIPAddress.to_jaxb_json_hash unless clientIPAddress.nil?
+      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
+      if !grantorGroups.nil?
+        _ha = Array.new
+        grantorGroups.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['grantorGroups'] = _ha
+      end
       _h['grantor'] = grantor.to_jaxb_json_hash unless grantor.nil?
+      if !accessTypes.nil?
+        _ha = Array.new
+        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accessTypes'] = _ha
+      end
+      _h['resource'] = resource.to_jaxb_json_hash unless resource.nil?
+      _h['replaceExistingPermissions'] = replaceExistingPermissions.to_jaxb_json_hash unless replaceExistingPermissions.nil?
+      _h['enableAudit'] = enableAudit.to_jaxb_json_hash unless enableAudit.nil?
       if !users.nil?
         _ha = Array.new
         users.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['users'] = _ha
       end
-      _h['clientIPAddress'] = clientIPAddress.to_jaxb_json_hash unless clientIPAddress.nil?
-      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
       return _h
     end
 
@@ -4758,23 +4758,23 @@ module Util
 
     #initializes this GrantRevokeRequest with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['replaceExistingPermissions'].nil?
-          _oa = _o['replaceExistingPermissions']
+        if !_o['sessionId'].nil?
+          _oa = _o['sessionId']
             if(_oa.is_a? Hash)
-              @replaceExistingPermissions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @replaceExistingPermissions =  Boolean.from_json(_oa) unless _oa['@class']
+              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @sessionId =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @replaceExistingPermissions = Array.new
+              @sessionId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @replaceExistingPermissions.push Boolean.from_json(_item)
+                   @sessionId.push String.from_json(_item)
                  else
-                   @replaceExistingPermissions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @replaceExistingPermissions = _oa
+                @sessionId = _oa
             end
           end
         if !_o['clientType'].nil?
@@ -4815,99 +4815,23 @@ module Util
                 @clusterName = _oa
             end
           end
-        if !_o['grantorGroups'].nil?
-          _oa = _o['grantorGroups']
+        if !_o['delegateAdmin'].nil?
+          _oa = _o['delegateAdmin']
             if(_oa.is_a? Hash)
-              @grantorGroups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @grantorGroups =  String.from_json(_oa) unless _oa['@class']
+              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @grantorGroups = Array.new
+              @delegateAdmin = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @grantorGroups.push String.from_json(_item)
+                   @delegateAdmin.push Boolean.from_json(_item)
                  else
-                   @grantorGroups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @grantorGroups = _oa
-            end
-          end
-        if !_o['accessTypes'].nil?
-          _oa = _o['accessTypes']
-            if(_oa.is_a? Hash)
-              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessTypes =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @accessTypes = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessTypes.push String.from_json(_item)
-                 else
-                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @accessTypes = _oa
-            end
-          end
-        if !_o['sessionId'].nil?
-          _oa = _o['sessionId']
-            if(_oa.is_a? Hash)
-              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @sessionId =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @sessionId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @sessionId.push String.from_json(_item)
-                 else
-                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @sessionId = _oa
-            end
-          end
-        if !_o['enableAudit'].nil?
-          _oa = _o['enableAudit']
-            if(_oa.is_a? Hash)
-              @enableAudit = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enableAudit =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enableAudit = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enableAudit.push Boolean.from_json(_item)
-                 else
-                   @enableAudit.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enableAudit = _oa
-            end
-          end
-        if !_o['resource'].nil?
-          _oa = _o['resource']
-            if(_oa.is_a? Hash)
-              @resource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resource =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resource = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resource.push Hash.from_json(_item)
-                 else
-                   @resource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resource = _oa
+                @delegateAdmin = _oa
             end
           end
         if !_o['groups'].nil?
@@ -4948,63 +4872,6 @@ module Util
                 @requestData = _oa
             end
           end
-        if !_o['delegateAdmin'].nil?
-          _oa = _o['delegateAdmin']
-            if(_oa.is_a? Hash)
-              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @delegateAdmin = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @delegateAdmin.push Boolean.from_json(_item)
-                 else
-                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @delegateAdmin = _oa
-            end
-          end
-        if !_o['grantor'].nil?
-          _oa = _o['grantor']
-            if(_oa.is_a? Hash)
-              @grantor = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @grantor =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @grantor = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @grantor.push String.from_json(_item)
-                 else
-                   @grantor.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @grantor = _oa
-            end
-          end
-        if !_o['users'].nil?
-          _oa = _o['users']
-            if(_oa.is_a? Hash)
-              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @users =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @users = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @users.push String.from_json(_item)
-                 else
-                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @users = _oa
-            end
-          end
         if !_o['clientIPAddress'].nil?
           _oa = _o['clientIPAddress']
             if(_oa.is_a? Hash)
@@ -5041,6 +4908,139 @@ module Util
                }
             else
                 @isRecursive = _oa
+            end
+          end
+        if !_o['grantorGroups'].nil?
+          _oa = _o['grantorGroups']
+            if(_oa.is_a? Hash)
+              @grantorGroups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @grantorGroups =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @grantorGroups = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @grantorGroups.push String.from_json(_item)
+                 else
+                   @grantorGroups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @grantorGroups = _oa
+            end
+          end
+        if !_o['grantor'].nil?
+          _oa = _o['grantor']
+            if(_oa.is_a? Hash)
+              @grantor = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @grantor =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @grantor = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @grantor.push String.from_json(_item)
+                 else
+                   @grantor.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @grantor = _oa
+            end
+          end
+        if !_o['accessTypes'].nil?
+          _oa = _o['accessTypes']
+            if(_oa.is_a? Hash)
+              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessTypes =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @accessTypes = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @accessTypes.push String.from_json(_item)
+                 else
+                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @accessTypes = _oa
+            end
+          end
+        if !_o['resource'].nil?
+          _oa = _o['resource']
+            if(_oa.is_a? Hash)
+              @resource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resource =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resource = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resource.push Hash.from_json(_item)
+                 else
+                   @resource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resource = _oa
+            end
+          end
+        if !_o['replaceExistingPermissions'].nil?
+          _oa = _o['replaceExistingPermissions']
+            if(_oa.is_a? Hash)
+              @replaceExistingPermissions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @replaceExistingPermissions =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @replaceExistingPermissions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @replaceExistingPermissions.push Boolean.from_json(_item)
+                 else
+                   @replaceExistingPermissions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @replaceExistingPermissions = _oa
+            end
+          end
+        if !_o['enableAudit'].nil?
+          _oa = _o['enableAudit']
+            if(_oa.is_a? Hash)
+              @enableAudit = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enableAudit =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @enableAudit = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @enableAudit.push Boolean.from_json(_item)
+                 else
+                   @enableAudit.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @enableAudit = _oa
+            end
+          end
+        if !_o['users'].nil?
+          _oa = _o['users']
+            if(_oa.is_a? Hash)
+              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @users =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @users = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @users.push String.from_json(_item)
+                 else
+                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @users = _oa
             end
           end
     end
@@ -5081,18 +5081,18 @@ module Service
   class ResourceLookupContext 
 
     # (no documentation provided)
-    attr_accessor :userInput
-    # (no documentation provided)
     attr_accessor :resources
     # (no documentation provided)
     attr_accessor :resourceName
+    # (no documentation provided)
+    attr_accessor :userInput
 
     # the json hash for this ResourceLookupContext
     def to_jaxb_json_hash
       _h = {}
-      _h['userInput'] = userInput.to_jaxb_json_hash unless userInput.nil?
       _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
       _h['resourceName'] = resourceName.to_jaxb_json_hash unless resourceName.nil?
+      _h['userInput'] = userInput.to_jaxb_json_hash unless userInput.nil?
       return _h
     end
 
@@ -5103,25 +5103,6 @@ module Service
 
     #initializes this ResourceLookupContext with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['userInput'].nil?
-          _oa = _o['userInput']
-            if(_oa.is_a? Hash)
-              @userInput = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @userInput =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @userInput = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @userInput.push String.from_json(_item)
-                 else
-                   @userInput.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @userInput = _oa
-            end
-          end
         if !_o['resources'].nil?
           _oa = _o['resources']
             if(_oa.is_a? Hash)
@@ -5158,6 +5139,25 @@ module Service
                }
             else
                 @resourceName = _oa
+            end
+          end
+        if !_o['userInput'].nil?
+          _oa = _o['userInput']
+            if(_oa.is_a? Hash)
+              @userInput = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @userInput =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @userInput = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @userInput.push String.from_json(_item)
+                 else
+                   @userInput.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @userInput = _oa
             end
           end
     end
@@ -5200,24 +5200,24 @@ module Datatype
   class Message 
 
     # (no documentation provided)
-    attr_accessor :fieldName
+    attr_accessor :rbKey
     # (no documentation provided)
-    attr_accessor :message
+    attr_accessor :fieldName
     # (no documentation provided)
     attr_accessor :name
     # (no documentation provided)
-    attr_accessor :objectId
+    attr_accessor :message
     # (no documentation provided)
-    attr_accessor :rbKey
+    attr_accessor :objectId
 
     # the json hash for this Message
     def to_jaxb_json_hash
       _h = {}
-      _h['fieldName'] = fieldName.to_jaxb_json_hash unless fieldName.nil?
-      _h['message'] = message.to_jaxb_json_hash unless message.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['objectId'] = objectId.to_jaxb_json_hash unless objectId.nil?
       _h['rbKey'] = rbKey.to_jaxb_json_hash unless rbKey.nil?
+      _h['fieldName'] = fieldName.to_jaxb_json_hash unless fieldName.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['message'] = message.to_jaxb_json_hash unless message.nil?
+      _h['objectId'] = objectId.to_jaxb_json_hash unless objectId.nil?
       return _h
     end
 
@@ -5228,6 +5228,25 @@ module Datatype
 
     #initializes this Message with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['rbKey'].nil?
+          _oa = _o['rbKey']
+            if(_oa.is_a? Hash)
+              @rbKey = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKey =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKey = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKey.push String.from_json(_item)
+                 else
+                   @rbKey.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKey = _oa
+            end
+          end
         if !_o['fieldName'].nil?
           _oa = _o['fieldName']
             if(_oa.is_a? Hash)
@@ -5245,25 +5264,6 @@ module Datatype
                }
             else
                 @fieldName = _oa
-            end
-          end
-        if !_o['message'].nil?
-          _oa = _o['message']
-            if(_oa.is_a? Hash)
-              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @message =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @message = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @message.push String.from_json(_item)
-                 else
-                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @message = _oa
             end
           end
         if !_o['name'].nil?
@@ -5285,6 +5285,25 @@ module Datatype
                 @name = _oa
             end
           end
+        if !_o['message'].nil?
+          _oa = _o['message']
+            if(_oa.is_a? Hash)
+              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @message =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @message = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @message.push String.from_json(_item)
+                 else
+                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @message = _oa
+            end
+          end
         if !_o['objectId'].nil?
           _oa = _o['objectId']
             if(_oa.is_a? Hash)
@@ -5302,25 +5321,6 @@ module Datatype
                }
             else
                 @objectId = _oa
-            end
-          end
-        if !_o['rbKey'].nil?
-          _oa = _o['rbKey']
-            if(_oa.is_a? Hash)
-              @rbKey = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKey =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKey = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKey.push String.from_json(_item)
-                 else
-                   @rbKey.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKey = _oa
             end
           end
     end
@@ -5363,28 +5363,28 @@ module Model
   class RangerAccessTypeDef 
 
     # (no documentation provided)
-    attr_accessor :rbKeyLabel
-    # (no documentation provided)
     attr_accessor :impliedGrants
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
     attr_accessor :name
     # (no documentation provided)
-    attr_accessor :label
+    attr_accessor :rbKeyLabel
 
     # the json hash for this RangerAccessTypeDef
     def to_jaxb_json_hash
       _h = {}
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       if !impliedGrants.nil?
         _ha = Array.new
         impliedGrants.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['impliedGrants'] = _ha
       end
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       return _h
     end
 
@@ -5395,25 +5395,6 @@ module Model
 
     #initializes this RangerAccessTypeDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
-            if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
-                 else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyLabel = _oa
-            end
-          end
         if !_o['impliedGrants'].nil?
           _oa = _o['impliedGrants']
             if(_oa.is_a? Hash)
@@ -5452,6 +5433,25 @@ module Model
                 @itemId = _oa
             end
           end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
         if !_o['name'].nil?
           _oa = _o['name']
             if(_oa.is_a? Hash)
@@ -5471,23 +5471,23 @@ module Model
                 @name = _oa
             end
           end
-        if !_o['label'].nil?
-          _oa = _o['label']
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
             if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @label = Array.new
+              @rbKeyLabel = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
+                   @rbKeyLabel.push String.from_json(_item)
                  else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @label = _oa
+                @rbKeyLabel = _oa
             end
           end
     end
@@ -5731,9 +5731,9 @@ module Model
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :elements
+    # (no documentation provided)
+    attr_accessor :name
     # (no documentation provided)
     attr_accessor :defaultIndex
 
@@ -5741,12 +5741,12 @@ module Model
     def to_jaxb_json_hash
       _h = {}
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       if !elements.nil?
         _ha = Array.new
         elements.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['elements'] = _ha
       end
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['defaultIndex'] = defaultIndex.to_jaxb_json_hash unless defaultIndex.nil?
       return _h
     end
@@ -5777,25 +5777,6 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['elements'].nil?
           _oa = _o['elements']
             if(_oa.is_a? Hash)
@@ -5813,6 +5794,25 @@ module Model
                }
             else
                 @elements = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
         if !_o['defaultIndex'].nil?
@@ -5971,69 +5971,69 @@ module Model
   class RangerPluginInfo 
 
     # (no documentation provided)
-    attr_accessor :latestTagVersion
-    # (no documentation provided)
-    attr_accessor :policyDownloadedVersion
-    # (no documentation provided)
-    attr_accessor :appType
-    # (no documentation provided)
-    attr_accessor :info
-    # (no documentation provided)
-    attr_accessor :tagActivationTime
+    attr_accessor :lastPolicyUpdateTime
     # (no documentation provided)
     attr_accessor :lastTagUpdateTime
     # (no documentation provided)
-    attr_accessor :latestPolicyVersion
-    # (no documentation provided)
-    attr_accessor :createTime
-    # (no documentation provided)
-    attr_accessor :ipAddress
-    # (no documentation provided)
-    attr_accessor :policyActiveVersion
-    # (no documentation provided)
-    attr_accessor :policyDownloadTime
-    # (no documentation provided)
-    attr_accessor :policyActivationTime
-    # (no documentation provided)
     attr_accessor :hostName
     # (no documentation provided)
-    attr_accessor :lastPolicyUpdateTime
-    # (no documentation provided)
-    attr_accessor :tagActiveVersion
-    # (no documentation provided)
-    attr_accessor :id
+    attr_accessor :appType
     # (no documentation provided)
     attr_accessor :tagDownloadedVersion
     # (no documentation provided)
-    attr_accessor :serviceName
+    attr_accessor :policyActiveVersion
+    # (no documentation provided)
+    attr_accessor :createTime
+    # (no documentation provided)
+    attr_accessor :id
+    # (no documentation provided)
+    attr_accessor :tagDownloadTime
+    # (no documentation provided)
+    attr_accessor :tagActiveVersion
+    # (no documentation provided)
+    attr_accessor :ipAddress
+    # (no documentation provided)
+    attr_accessor :tagActivationTime
+    # (no documentation provided)
+    attr_accessor :policyDownloadedVersion
     # (no documentation provided)
     attr_accessor :updateTime
     # (no documentation provided)
-    attr_accessor :tagDownloadTime
+    attr_accessor :info
+    # (no documentation provided)
+    attr_accessor :latestPolicyVersion
+    # (no documentation provided)
+    attr_accessor :latestTagVersion
+    # (no documentation provided)
+    attr_accessor :policyActivationTime
+    # (no documentation provided)
+    attr_accessor :policyDownloadTime
+    # (no documentation provided)
+    attr_accessor :serviceName
 
     # the json hash for this RangerPluginInfo
     def to_jaxb_json_hash
       _h = {}
-      _h['latestTagVersion'] = latestTagVersion.to_jaxb_json_hash unless latestTagVersion.nil?
-      _h['policyDownloadedVersion'] = policyDownloadedVersion.to_jaxb_json_hash unless policyDownloadedVersion.nil?
-      _h['appType'] = appType.to_jaxb_json_hash unless appType.nil?
-      _h['info'] = info.to_jaxb_json_hash unless info.nil?
-      _h['tagActivationTime'] = tagActivationTime.to_jaxb_json_hash unless tagActivationTime.nil?
-      _h['lastTagUpdateTime'] = lastTagUpdateTime.to_jaxb_json_hash unless lastTagUpdateTime.nil?
-      _h['latestPolicyVersion'] = latestPolicyVersion.to_jaxb_json_hash unless latestPolicyVersion.nil?
-      _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
-      _h['ipAddress'] = ipAddress.to_jaxb_json_hash unless ipAddress.nil?
-      _h['policyActiveVersion'] = policyActiveVersion.to_jaxb_json_hash unless policyActiveVersion.nil?
-      _h['policyDownloadTime'] = policyDownloadTime.to_jaxb_json_hash unless policyDownloadTime.nil?
-      _h['policyActivationTime'] = policyActivationTime.to_jaxb_json_hash unless policyActivationTime.nil?
-      _h['hostName'] = hostName.to_jaxb_json_hash unless hostName.nil?
       _h['lastPolicyUpdateTime'] = lastPolicyUpdateTime.to_jaxb_json_hash unless lastPolicyUpdateTime.nil?
-      _h['tagActiveVersion'] = tagActiveVersion.to_jaxb_json_hash unless tagActiveVersion.nil?
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['lastTagUpdateTime'] = lastTagUpdateTime.to_jaxb_json_hash unless lastTagUpdateTime.nil?
+      _h['hostName'] = hostName.to_jaxb_json_hash unless hostName.nil?
+      _h['appType'] = appType.to_jaxb_json_hash unless appType.nil?
       _h['tagDownloadedVersion'] = tagDownloadedVersion.to_jaxb_json_hash unless tagDownloadedVersion.nil?
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
-      _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
+      _h['policyActiveVersion'] = policyActiveVersion.to_jaxb_json_hash unless policyActiveVersion.nil?
+      _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
       _h['tagDownloadTime'] = tagDownloadTime.to_jaxb_json_hash unless tagDownloadTime.nil?
+      _h['tagActiveVersion'] = tagActiveVersion.to_jaxb_json_hash unless tagActiveVersion.nil?
+      _h['ipAddress'] = ipAddress.to_jaxb_json_hash unless ipAddress.nil?
+      _h['tagActivationTime'] = tagActivationTime.to_jaxb_json_hash unless tagActivationTime.nil?
+      _h['policyDownloadedVersion'] = policyDownloadedVersion.to_jaxb_json_hash unless policyDownloadedVersion.nil?
+      _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
+      _h['info'] = info.to_jaxb_json_hash unless info.nil?
+      _h['latestPolicyVersion'] = latestPolicyVersion.to_jaxb_json_hash unless latestPolicyVersion.nil?
+      _h['latestTagVersion'] = latestTagVersion.to_jaxb_json_hash unless latestTagVersion.nil?
+      _h['policyActivationTime'] = policyActivationTime.to_jaxb_json_hash unless policyActivationTime.nil?
+      _h['policyDownloadTime'] = policyDownloadTime.to_jaxb_json_hash unless policyDownloadTime.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       return _h
     end
 
@@ -6044,99 +6044,23 @@ module Model
 
     #initializes this RangerPluginInfo with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['latestTagVersion'].nil?
-          _oa = _o['latestTagVersion']
+        if !_o['lastPolicyUpdateTime'].nil?
+          _oa = _o['lastPolicyUpdateTime']
             if(_oa.is_a? Hash)
-              @latestTagVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @latestTagVersion =  Bignum.from_json(_oa) unless _oa['@class']
+              @lastPolicyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @lastPolicyUpdateTime =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @latestTagVersion = Array.new
+              @lastPolicyUpdateTime = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @latestTagVersion.push Bignum.from_json(_item)
+                   @lastPolicyUpdateTime.push Bignum.from_json(_item)
                  else
-                   @latestTagVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @lastPolicyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @latestTagVersion = _oa
-            end
-          end
-        if !_o['policyDownloadedVersion'].nil?
-          _oa = _o['policyDownloadedVersion']
-            if(_oa.is_a? Hash)
-              @policyDownloadedVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyDownloadedVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyDownloadedVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyDownloadedVersion.push Bignum.from_json(_item)
-                 else
-                   @policyDownloadedVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyDownloadedVersion = _oa
-            end
-          end
-        if !_o['appType'].nil?
-          _oa = _o['appType']
-            if(_oa.is_a? Hash)
-              @appType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @appType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @appType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @appType.push String.from_json(_item)
-                 else
-                   @appType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @appType = _oa
-            end
-          end
-        if !_o['info'].nil?
-          _oa = _o['info']
-            if(_oa.is_a? Hash)
-              @info = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @info =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @info = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @info.push Hash.from_json(_item)
-                 else
-                   @info.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @info = _oa
-            end
-          end
-        if !_o['tagActivationTime'].nil?
-          _oa = _o['tagActivationTime']
-            if(_oa.is_a? Hash)
-              @tagActivationTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagActivationTime =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagActivationTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagActivationTime.push Bignum.from_json(_item)
-                 else
-                   @tagActivationTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagActivationTime = _oa
+                @lastPolicyUpdateTime = _oa
             end
           end
         if !_o['lastTagUpdateTime'].nil?
@@ -6158,120 +6082,6 @@ module Model
                 @lastTagUpdateTime = _oa
             end
           end
-        if !_o['latestPolicyVersion'].nil?
-          _oa = _o['latestPolicyVersion']
-            if(_oa.is_a? Hash)
-              @latestPolicyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @latestPolicyVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @latestPolicyVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @latestPolicyVersion.push Bignum.from_json(_item)
-                 else
-                   @latestPolicyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @latestPolicyVersion = _oa
-            end
-          end
-        if !_o['createTime'].nil?
-          _oa = _o['createTime']
-            if(_oa.is_a? Hash)
-              @createTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @createTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @createTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @createTime.push Time.from_json(_item)
-                 else
-                   @createTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @createTime = _oa
-            end
-          end
-        if !_o['ipAddress'].nil?
-          _oa = _o['ipAddress']
-            if(_oa.is_a? Hash)
-              @ipAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @ipAddress =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @ipAddress = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @ipAddress.push String.from_json(_item)
-                 else
-                   @ipAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @ipAddress = _oa
-            end
-          end
-        if !_o['policyActiveVersion'].nil?
-          _oa = _o['policyActiveVersion']
-            if(_oa.is_a? Hash)
-              @policyActiveVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyActiveVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyActiveVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyActiveVersion.push Bignum.from_json(_item)
-                 else
-                   @policyActiveVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyActiveVersion = _oa
-            end
-          end
-        if !_o['policyDownloadTime'].nil?
-          _oa = _o['policyDownloadTime']
-            if(_oa.is_a? Hash)
-              @policyDownloadTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyDownloadTime =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyDownloadTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyDownloadTime.push Bignum.from_json(_item)
-                 else
-                   @policyDownloadTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyDownloadTime = _oa
-            end
-          end
-        if !_o['policyActivationTime'].nil?
-          _oa = _o['policyActivationTime']
-            if(_oa.is_a? Hash)
-              @policyActivationTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyActivationTime =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyActivationTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyActivationTime.push Bignum.from_json(_item)
-                 else
-                   @policyActivationTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyActivationTime = _oa
-            end
-          end
         if !_o['hostName'].nil?
           _oa = _o['hostName']
             if(_oa.is_a? Hash)
@@ -6291,61 +6101,23 @@ module Model
                 @hostName = _oa
             end
           end
-        if !_o['lastPolicyUpdateTime'].nil?
-          _oa = _o['lastPolicyUpdateTime']
+        if !_o['appType'].nil?
+          _oa = _o['appType']
             if(_oa.is_a? Hash)
-              @lastPolicyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @lastPolicyUpdateTime =  Bignum.from_json(_oa) unless _oa['@class']
+              @appType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @appType =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @lastPolicyUpdateTime = Array.new
+              @appType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @lastPolicyUpdateTime.push Bignum.from_json(_item)
+                   @appType.push String.from_json(_item)
                  else
-                   @lastPolicyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @appType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @lastPolicyUpdateTime = _oa
-            end
-          end
-        if !_o['tagActiveVersion'].nil?
-          _oa = _o['tagActiveVersion']
-            if(_oa.is_a? Hash)
-              @tagActiveVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagActiveVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagActiveVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagActiveVersion.push Bignum.from_json(_item)
-                 else
-                   @tagActiveVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagActiveVersion = _oa
-            end
-          end
-        if !_o['id'].nil?
-          _oa = _o['id']
-            if(_oa.is_a? Hash)
-              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @id =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @id = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @id.push Bignum.from_json(_item)
-                 else
-                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @id = _oa
+                @appType = _oa
             end
           end
         if !_o['tagDownloadedVersion'].nil?
@@ -6367,23 +6139,156 @@ module Model
                 @tagDownloadedVersion = _oa
             end
           end
-        if !_o['serviceName'].nil?
-          _oa = _o['serviceName']
+        if !_o['policyActiveVersion'].nil?
+          _oa = _o['policyActiveVersion']
             if(_oa.is_a? Hash)
-              @serviceName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceName =  String.from_json(_oa) unless _oa['@class']
+              @policyActiveVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyActiveVersion =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @serviceName = Array.new
+              @policyActiveVersion = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceName.push String.from_json(_item)
+                   @policyActiveVersion.push Bignum.from_json(_item)
                  else
-                   @serviceName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyActiveVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @serviceName = _oa
+                @policyActiveVersion = _oa
+            end
+          end
+        if !_o['createTime'].nil?
+          _oa = _o['createTime']
+            if(_oa.is_a? Hash)
+              @createTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @createTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @createTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @createTime.push Time.from_json(_item)
+                 else
+                   @createTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @createTime = _oa
+            end
+          end
+        if !_o['id'].nil?
+          _oa = _o['id']
+            if(_oa.is_a? Hash)
+              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @id =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @id = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @id.push Bignum.from_json(_item)
+                 else
+                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @id = _oa
+            end
+          end
+        if !_o['tagDownloadTime'].nil?
+          _oa = _o['tagDownloadTime']
+            if(_oa.is_a? Hash)
+              @tagDownloadTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagDownloadTime =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagDownloadTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagDownloadTime.push Bignum.from_json(_item)
+                 else
+                   @tagDownloadTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagDownloadTime = _oa
+            end
+          end
+        if !_o['tagActiveVersion'].nil?
+          _oa = _o['tagActiveVersion']
+            if(_oa.is_a? Hash)
+              @tagActiveVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagActiveVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagActiveVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagActiveVersion.push Bignum.from_json(_item)
+                 else
+                   @tagActiveVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagActiveVersion = _oa
+            end
+          end
+        if !_o['ipAddress'].nil?
+          _oa = _o['ipAddress']
+            if(_oa.is_a? Hash)
+              @ipAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @ipAddress =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @ipAddress = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @ipAddress.push String.from_json(_item)
+                 else
+                   @ipAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @ipAddress = _oa
+            end
+          end
+        if !_o['tagActivationTime'].nil?
+          _oa = _o['tagActivationTime']
+            if(_oa.is_a? Hash)
+              @tagActivationTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagActivationTime =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagActivationTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagActivationTime.push Bignum.from_json(_item)
+                 else
+                   @tagActivationTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagActivationTime = _oa
+            end
+          end
+        if !_o['policyDownloadedVersion'].nil?
+          _oa = _o['policyDownloadedVersion']
+            if(_oa.is_a? Hash)
+              @policyDownloadedVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyDownloadedVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyDownloadedVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyDownloadedVersion.push Bignum.from_json(_item)
+                 else
+                   @policyDownloadedVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyDownloadedVersion = _oa
             end
           end
         if !_o['updateTime'].nil?
@@ -6405,23 +6310,118 @@ module Model
                 @updateTime = _oa
             end
           end
-        if !_o['tagDownloadTime'].nil?
-          _oa = _o['tagDownloadTime']
+        if !_o['info'].nil?
+          _oa = _o['info']
             if(_oa.is_a? Hash)
-              @tagDownloadTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagDownloadTime =  Bignum.from_json(_oa) unless _oa['@class']
+              @info = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @info =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagDownloadTime = Array.new
+              @info = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagDownloadTime.push Bignum.from_json(_item)
+                   @info.push Hash.from_json(_item)
                  else
-                   @tagDownloadTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @info.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagDownloadTime = _oa
+                @info = _oa
+            end
+          end
+        if !_o['latestPolicyVersion'].nil?
+          _oa = _o['latestPolicyVersion']
+            if(_oa.is_a? Hash)
+              @latestPolicyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @latestPolicyVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @latestPolicyVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @latestPolicyVersion.push Bignum.from_json(_item)
+                 else
+                   @latestPolicyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @latestPolicyVersion = _oa
+            end
+          end
+        if !_o['latestTagVersion'].nil?
+          _oa = _o['latestTagVersion']
+            if(_oa.is_a? Hash)
+              @latestTagVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @latestTagVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @latestTagVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @latestTagVersion.push Bignum.from_json(_item)
+                 else
+                   @latestTagVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @latestTagVersion = _oa
+            end
+          end
+        if !_o['policyActivationTime'].nil?
+          _oa = _o['policyActivationTime']
+            if(_oa.is_a? Hash)
+              @policyActivationTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyActivationTime =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyActivationTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyActivationTime.push Bignum.from_json(_item)
+                 else
+                   @policyActivationTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyActivationTime = _oa
+            end
+          end
+        if !_o['policyDownloadTime'].nil?
+          _oa = _o['policyDownloadTime']
+            if(_oa.is_a? Hash)
+              @policyDownloadTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyDownloadTime =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyDownloadTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyDownloadTime.push Bignum.from_json(_item)
+                 else
+                   @policyDownloadTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyDownloadTime = _oa
+            end
+          end
+        if !_o['serviceName'].nil?
+          _oa = _o['serviceName']
+            if(_oa.is_a? Hash)
+              @serviceName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceName.push String.from_json(_item)
+                 else
+                   @serviceName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceName = _oa
             end
           end
     end
@@ -6804,31 +6804,31 @@ module Model
     # (no documentation provided)
     attr_accessor :id
     # (no documentation provided)
-    attr_accessor :isEnabled
-    # (no documentation provided)
     attr_accessor :version
     # (no documentation provided)
-    attr_accessor :updateTime
+    attr_accessor :isEnabled
     # (no documentation provided)
     attr_accessor :createTime
     # (no documentation provided)
+    attr_accessor :updateTime
+    # (no documentation provided)
     attr_accessor :updatedBy
     # (no documentation provided)
-    attr_accessor :createdBy
-    # (no documentation provided)
     attr_accessor :guid
+    # (no documentation provided)
+    attr_accessor :createdBy
 
     # the json hash for this RangerBaseModelObject
     def to_jaxb_json_hash
       _h = {}
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['isEnabled'] = isEnabled.to_jaxb_json_hash unless isEnabled.nil?
       _h['version'] = version.to_jaxb_json_hash unless version.nil?
-      _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
+      _h['isEnabled'] = isEnabled.to_jaxb_json_hash unless isEnabled.nil?
       _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
+      _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
       _h['updatedBy'] = updatedBy.to_jaxb_json_hash unless updatedBy.nil?
-      _h['createdBy'] = createdBy.to_jaxb_json_hash unless createdBy.nil?
       _h['guid'] = guid.to_jaxb_json_hash unless guid.nil?
+      _h['createdBy'] = createdBy.to_jaxb_json_hash unless createdBy.nil?
       return _h
     end
 
@@ -6858,25 +6858,6 @@ module Model
                 @id = _oa
             end
           end
-        if !_o['isEnabled'].nil?
-          _oa = _o['isEnabled']
-            if(_oa.is_a? Hash)
-              @isEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @isEnabled =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @isEnabled = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @isEnabled.push Boolean.from_json(_item)
-                 else
-                   @isEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @isEnabled = _oa
-            end
-          end
         if !_o['version'].nil?
           _oa = _o['version']
             if(_oa.is_a? Hash)
@@ -6896,23 +6877,23 @@ module Model
                 @version = _oa
             end
           end
-        if !_o['updateTime'].nil?
-          _oa = _o['updateTime']
+        if !_o['isEnabled'].nil?
+          _oa = _o['isEnabled']
             if(_oa.is_a? Hash)
-              @updateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @updateTime =  Time.from_json(_oa) unless _oa['@class']
+              @isEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @isEnabled =  Boolean.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @updateTime = Array.new
+              @isEnabled = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @updateTime.push Time.from_json(_item)
+                   @isEnabled.push Boolean.from_json(_item)
                  else
-                   @updateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @isEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @updateTime = _oa
+                @isEnabled = _oa
             end
           end
         if !_o['createTime'].nil?
@@ -6934,6 +6915,25 @@ module Model
                 @createTime = _oa
             end
           end
+        if !_o['updateTime'].nil?
+          _oa = _o['updateTime']
+            if(_oa.is_a? Hash)
+              @updateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @updateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @updateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @updateTime.push Time.from_json(_item)
+                 else
+                   @updateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @updateTime = _oa
+            end
+          end
         if !_o['updatedBy'].nil?
           _oa = _o['updatedBy']
             if(_oa.is_a? Hash)
@@ -6953,25 +6953,6 @@ module Model
                 @updatedBy = _oa
             end
           end
-        if !_o['createdBy'].nil?
-          _oa = _o['createdBy']
-            if(_oa.is_a? Hash)
-              @createdBy = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @createdBy =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @createdBy = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @createdBy.push String.from_json(_item)
-                 else
-                   @createdBy.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @createdBy = _oa
-            end
-          end
         if !_o['guid'].nil?
           _oa = _o['guid']
             if(_oa.is_a? Hash)
@@ -6989,6 +6970,25 @@ module Model
                }
             else
                 @guid = _oa
+            end
+          end
+        if !_o['createdBy'].nil?
+          _oa = _o['createdBy']
+            if(_oa.is_a? Hash)
+              @createdBy = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @createdBy =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @createdBy = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @createdBy.push String.from_json(_item)
+                 else
+                   @createdBy.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @createdBy = _oa
             end
           end
     end
@@ -7031,9 +7031,9 @@ module Model
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :name
     # (no documentation provided)
     attr_accessor :rbKeyLabel
 
@@ -7041,8 +7041,8 @@ module Model
     def to_jaxb_json_hash
       _h = {}
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       return _h
     end
@@ -7073,25 +7073,6 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['label'].nil?
           _oa = _o['label']
             if(_oa.is_a? Hash)
@@ -7109,6 +7090,25 @@ module Model
                }
             else
                 @label = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -8132,28 +8132,47 @@ module Model
   class RangerTagDef < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
+    attr_accessor :source
+    # (no documentation provided)
     attr_accessor :attributeDefs
     # (no documentation provided)
     attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :source
 
     # the json hash for this RangerTagDef
     def to_jaxb_json_hash
       _h = super
+      _h['source'] = source.to_jaxb_json_hash unless source.nil?
       if !attributeDefs.nil?
         _ha = Array.new
         attributeDefs.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['attributeDefs'] = _ha
       end
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['source'] = source.to_jaxb_json_hash unless source.nil?
       return _h
     end
 
     #initializes this RangerTagDef with a json hash
     def init_jaxb_json_hash(_o)
       super _o
+        if !_o['source'].nil?
+          _oa = _o['source']
+            if(_oa.is_a? Hash)
+              @source = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @source =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @source = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @source.push String.from_json(_item)
+                 else
+                   @source.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @source = _oa
+            end
+          end
         if !_o['attributeDefs'].nil?
           _oa = _o['attributeDefs']
             if(_oa.is_a? Hash)
@@ -8190,25 +8209,6 @@ module Model
                }
             else
                 @name = _oa
-            end
-          end
-        if !_o['source'].nil?
-          _oa = _o['source']
-            if(_oa.is_a? Hash)
-              @source = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @source =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @source = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @source.push String.from_json(_item)
-                 else
-                   @source.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @source = _oa
             end
           end
     end
@@ -10035,16 +10035,16 @@ module Model
     # (no documentation provided)
     attr_accessor :resourceElements
     # (no documentation provided)
-    attr_accessor :resourceSignature
-    # (no documentation provided)
     attr_accessor :serviceName
+    # (no documentation provided)
+    attr_accessor :resourceSignature
 
     # the json hash for this RangerServiceResource
     def to_jaxb_json_hash
       _h = super
       _h['resourceElements'] = resourceElements.to_jaxb_json_hash unless resourceElements.nil?
-      _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
       _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
       return _h
     end
 
@@ -10070,25 +10070,6 @@ module Model
                 @resourceElements = _oa
             end
           end
-        if !_o['resourceSignature'].nil?
-          _oa = _o['resourceSignature']
-            if(_oa.is_a? Hash)
-              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resourceSignature = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceSignature.push String.from_json(_item)
-                 else
-                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resourceSignature = _oa
-            end
-          end
         if !_o['serviceName'].nil?
           _oa = _o['serviceName']
             if(_oa.is_a? Hash)
@@ -10106,6 +10087,25 @@ module Model
                }
             else
                 @serviceName = _oa
+            end
+          end
+        if !_o['resourceSignature'].nil?
+          _oa = _o['resourceSignature']
+            if(_oa.is_a? Hash)
+              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resourceSignature = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resourceSignature.push String.from_json(_item)
+                 else
+                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resourceSignature = _oa
             end
           end
     end
@@ -10434,97 +10434,59 @@ module Model
   class RangerService < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :tagService
     # (no documentation provided)
     attr_accessor :tagVersion
     # (no documentation provided)
-    attr_accessor :configs
+    attr_accessor :name
     # (no documentation provided)
-    attr_accessor :tagService
+    attr_accessor :type
     # (no documentation provided)
-    attr_accessor :tagUpdateTime
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :policyUpdateTime
     # (no documentation provided)
+    attr_accessor :tagUpdateTime
+    # (no documentation provided)
     attr_accessor :policyVersion
+    # (no documentation provided)
+    attr_accessor :configs
 
     # the json hash for this RangerService
     def to_jaxb_json_hash
       _h = super
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
-      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
-      _h['configs'] = configs.to_jaxb_json_hash unless configs.nil?
       _h['tagService'] = tagService.to_jaxb_json_hash unless tagService.nil?
-      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
+      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
+      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
       _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
+      _h['configs'] = configs.to_jaxb_json_hash unless configs.nil?
       return _h
     end
 
     #initializes this RangerService with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['name'].nil?
-          _oa = _o['name']
+        if !_o['tagService'].nil?
+          _oa = _o['tagService']
             if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
+              @tagService = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagService =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @name = Array.new
+              @tagService = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
+                   @tagService.push String.from_json(_item)
                  else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @tagService.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @name = _oa
-            end
-          end
-        if !_o['description'].nil?
-          _oa = _o['description']
-            if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @description = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
-                 else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @description = _oa
-            end
-          end
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
+                @tagService = _oa
             end
           end
         if !_o['tagVersion'].nil?
@@ -10546,61 +10508,61 @@ module Model
                 @tagVersion = _oa
             end
           end
-        if !_o['configs'].nil?
-          _oa = _o['configs']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @configs =  Hash.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @configs = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @configs.push Hash.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @configs = _oa
+                @name = _oa
             end
           end
-        if !_o['tagService'].nil?
-          _oa = _o['tagService']
+        if !_o['type'].nil?
+          _oa = _o['type']
             if(_oa.is_a? Hash)
-              @tagService = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagService =  String.from_json(_oa) unless _oa['@class']
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagService = Array.new
+              @type = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagService.push String.from_json(_item)
+                   @type.push String.from_json(_item)
                  else
-                   @tagService.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagService = _oa
+                @type = _oa
             end
           end
-        if !_o['tagUpdateTime'].nil?
-          _oa = _o['tagUpdateTime']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagUpdateTime = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagUpdateTime.push Time.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagUpdateTime = _oa
+                @description = _oa
             end
           end
         if !_o['policyUpdateTime'].nil?
@@ -10622,6 +10584,25 @@ module Model
                 @policyUpdateTime = _oa
             end
           end
+        if !_o['tagUpdateTime'].nil?
+          _oa = _o['tagUpdateTime']
+            if(_oa.is_a? Hash)
+              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagUpdateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagUpdateTime.push Time.from_json(_item)
+                 else
+                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagUpdateTime = _oa
+            end
+          end
         if !_o['policyVersion'].nil?
           _oa = _o['policyVersion']
             if(_oa.is_a? Hash)
@@ -10639,6 +10620,25 @@ module Model
                }
             else
                 @policyVersion = _oa
+            end
+          end
+        if !_o['configs'].nil?
+          _oa = _o['configs']
+            if(_oa.is_a? Hash)
+              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @configs =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @configs = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @configs.push Hash.from_json(_item)
+                 else
+                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @configs = _oa
             end
           end
     end
@@ -11906,27 +11906,27 @@ module Model
   class RangerTag < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :owner
-    # (no documentation provided)
-    attr_accessor :validityPeriods
+    attr_accessor :type
     # (no documentation provided)
     attr_accessor :attributes
     # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :validityPeriods
+    # (no documentation provided)
+    attr_accessor :owner
     # (no documentation provided)
     attr_accessor :options
 
     # the json hash for this RangerTag
     def to_jaxb_json_hash
       _h = super
-      _h['owner'] = owner.to_jaxb_json_hash unless owner.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['attributes'] = attributes.to_jaxb_json_hash unless attributes.nil?
       if !validityPeriods.nil?
         _ha = Array.new
         validityPeriods.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['validityPeriods'] = _ha
       end
-      _h['attributes'] = attributes.to_jaxb_json_hash unless attributes.nil?
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['owner'] = owner.to_jaxb_json_hash unless owner.nil?
       _h['options'] = options.to_jaxb_json_hash unless options.nil?
       return _h
     end
@@ -11934,42 +11934,23 @@ module Model
     #initializes this RangerTag with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['owner'].nil?
-          _oa = _o['owner']
+        if !_o['type'].nil?
+          _oa = _o['type']
             if(_oa.is_a? Hash)
-              @owner = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @owner =  Fixnum.from_json(_oa) unless _oa['@class']
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @owner = Array.new
+              @type = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @owner.push Fixnum.from_json(_item)
+                   @type.push String.from_json(_item)
                  else
-                   @owner.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @owner = _oa
-            end
-          end
-        if !_o['validityPeriods'].nil?
-          _oa = _o['validityPeriods']
-            if(_oa.is_a? Hash)
-              @validityPeriods = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validityPeriods =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validityPeriods = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validityPeriods.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
-                 else
-                   @validityPeriods.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validityPeriods = _oa
+                @type = _oa
             end
           end
         if !_o['attributes'].nil?
@@ -11991,23 +11972,42 @@ module Model
                 @attributes = _oa
             end
           end
-        if !_o['type'].nil?
-          _oa = _o['type']
+        if !_o['validityPeriods'].nil?
+          _oa = _o['validityPeriods']
             if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
+              @validityPeriods = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validityPeriods =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @type = Array.new
+              @validityPeriods = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
+                   @validityPeriods.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
                  else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validityPeriods.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @type = _oa
+                @validityPeriods = _oa
+            end
+          end
+        if !_o['owner'].nil?
+          _oa = _o['owner']
+            if(_oa.is_a? Hash)
+              @owner = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @owner =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @owner = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @owner.push Fixnum.from_json(_item)
+                 else
+                   @owner.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @owner = _oa
             end
           end
         if !_o['options'].nil?
@@ -14326,31 +14326,49 @@ module Ranger
 module Entity
 
   # (no documentation provided)
-  class XXTagAttribute < Org::Apache::Ranger::Entity::XXDBBase 
+  class XXPortalUser < Org::Apache::Ranger::Entity::XXDBBase 
 
     # Long - value of member attribute &lt;b&gt;id&lt;/b&gt;.
     attr_accessor :id
-    # the tagId
-    attr_accessor :tagId
-    # the name
-    attr_accessor :name
-    # the value
-    attr_accessor :value
     # (no documentation provided)
     attr_accessor :myClassType
+    # String - value of member attribute &lt;b&gt;firstName&lt;/b&gt;.
+    attr_accessor :firstName
+    # String - value of member attribute &lt;b&gt;lastName&lt;/b&gt;.
+    attr_accessor :lastName
+    # String - value of member attribute &lt;b&gt;publicScreenName&lt;/b&gt;.
+    attr_accessor :publicScreenName
+    # String - value of member attribute &lt;b&gt;loginId&lt;/b&gt;.
+    attr_accessor :loginId
+    # String - value of member attribute &lt;b&gt;password&lt;/b&gt;.
+    attr_accessor :password
+    # String - value of member attribute &lt;b&gt;emailAddress&lt;/b&gt;.
+    attr_accessor :emailAddress
+    # int - value of member attribute &lt;b&gt;status&lt;/b&gt;.
+    attr_accessor :status
+    # int - value of member attribute &lt;b&gt;userSource&lt;/b&gt;.
+    attr_accessor :userSource
+    # String - value of member attribute &lt;b&gt;notes&lt;/b&gt;.
+    attr_accessor :notes
 
-    # the json hash for this XXTagAttribute
+    # the json hash for this XXPortalUser
     def to_jaxb_json_hash
       _h = super
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['tagId'] = tagId.to_jaxb_json_hash unless tagId.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['value'] = value.to_jaxb_json_hash unless value.nil?
       _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
+      _h['firstName'] = firstName.to_jaxb_json_hash unless firstName.nil?
+      _h['lastName'] = lastName.to_jaxb_json_hash unless lastName.nil?
+      _h['publicScreenName'] = publicScreenName.to_jaxb_json_hash unless publicScreenName.nil?
+      _h['loginId'] = loginId.to_jaxb_json_hash unless loginId.nil?
+      _h['password'] = password.to_jaxb_json_hash unless password.nil?
+      _h['emailAddress'] = emailAddress.to_jaxb_json_hash unless emailAddress.nil?
+      _h['status'] = status.to_jaxb_json_hash unless status.nil?
+      _h['userSource'] = userSource.to_jaxb_json_hash unless userSource.nil?
+      _h['notes'] = notes.to_jaxb_json_hash unless notes.nil?
       return _h
     end
 
-    #initializes this XXTagAttribute with a json hash
+    #initializes this XXPortalUser with a json hash
     def init_jaxb_json_hash(_o)
       super _o
         if !_o['id'].nil?
@@ -14372,63 +14390,6 @@ module Entity
                 @id = _oa
             end
           end
-        if !_o['tagId'].nil?
-          _oa = _o['tagId']
-            if(_oa.is_a? Hash)
-              @tagId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagId.push Bignum.from_json(_item)
-                 else
-                   @tagId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagId = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['value'].nil?
-          _oa = _o['value']
-            if(_oa.is_a? Hash)
-              @value = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @value =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @value = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @value.push String.from_json(_item)
-                 else
-                   @value.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @value = _oa
-            end
-          end
         if !_o['myClassType'].nil?
           _oa = _o['myClassType']
             if(_oa.is_a? Hash)
@@ -14448,9 +14409,180 @@ module Entity
                 @myClassType = _oa
             end
           end
+        if !_o['firstName'].nil?
+          _oa = _o['firstName']
+            if(_oa.is_a? Hash)
+              @firstName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @firstName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @firstName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @firstName.push String.from_json(_item)
+                 else
+                   @firstName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @firstName = _oa
+            end
+          end
+        if !_o['lastName'].nil?
+          _oa = _o['lastName']
+            if(_oa.is_a? Hash)
+              @lastName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @lastName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @lastName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @lastName.push String.from_json(_item)
+                 else
+                   @lastName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @lastName = _oa
+            end
+          end
+        if !_o['publicScreenName'].nil?
+          _oa = _o['publicScreenName']
+            if(_oa.is_a? Hash)
+              @publicScreenName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @publicScreenName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @publicScreenName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @publicScreenName.push String.from_json(_item)
+                 else
+                   @publicScreenName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @publicScreenName = _oa
+            end
+          end
+        if !_o['loginId'].nil?
+          _oa = _o['loginId']
+            if(_oa.is_a? Hash)
+              @loginId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @loginId =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @loginId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @loginId.push String.from_json(_item)
+                 else
+                   @loginId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @loginId = _oa
+            end
+          end
+        if !_o['password'].nil?
+          _oa = _o['password']
+            if(_oa.is_a? Hash)
+              @password = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @password =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @password = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @password.push String.from_json(_item)
+                 else
+                   @password.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @password = _oa
+            end
+          end
+        if !_o['emailAddress'].nil?
+          _oa = _o['emailAddress']
+            if(_oa.is_a? Hash)
+              @emailAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @emailAddress =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @emailAddress = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @emailAddress.push String.from_json(_item)
+                 else
+                   @emailAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @emailAddress = _oa
+            end
+          end
+        if !_o['status'].nil?
+          _oa = _o['status']
+            if(_oa.is_a? Hash)
+              @status = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @status =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @status = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @status.push Fixnum.from_json(_item)
+                 else
+                   @status.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @status = _oa
+            end
+          end
+        if !_o['userSource'].nil?
+          _oa = _o['userSource']
+            if(_oa.is_a? Hash)
+              @userSource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @userSource =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @userSource = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @userSource.push Fixnum.from_json(_item)
+                 else
+                   @userSource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @userSource = _oa
+            end
+          end
+        if !_o['notes'].nil?
+          _oa = _o['notes']
+            if(_oa.is_a? Hash)
+              @notes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @notes =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @notes = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @notes.push String.from_json(_item)
+                 else
+                   @notes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @notes = _oa
+            end
+          end
     end
 
-    # constructs a XXTagAttribute from a (parsed) JSON hash
+    # constructs a XXPortalUser from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -14479,76 +14611,37 @@ module Ranger
 module Entity
 
   # (no documentation provided)
-  class XXAccessAuditBase < Org::Apache::Ranger::Entity::XXDBBase 
+  class XXContextEnricherDef < Org::Apache::Ranger::Entity::XXDBBase 
 
-    # Long - value of member attribute &lt;b&gt;id&lt;/b&gt;.
+    # Date - value of member attribute &lt;b&gt;id&lt;/b&gt; .
     attr_accessor :id
-    # (no documentation provided)
-    attr_accessor :myClassType
-    # int - value of member attribute &lt;b&gt;auditType&lt;/b&gt;.
-    attr_accessor :auditType
-    # int - value of member attribute &lt;b&gt;accessResult&lt;/b&gt;.
-    attr_accessor :accessResult
-    # String - value of member attribute &lt;b&gt;accessType&lt;/b&gt;.
-    attr_accessor :accessType
-    # String - value of member attribute &lt;b&gt;aclEnforcer&lt;/b&gt;.
-    attr_accessor :aclEnforcer
-    # String - value of member attribute &lt;b&gt;agentId&lt;/b&gt;.
-    attr_accessor :agentId
-    # String - value of member attribute &lt;b&gt;clientIP&lt;/b&gt;.
-    attr_accessor :clientIP
-    # String - value of member attribute &lt;b&gt;clientType&lt;/b&gt;.
-    attr_accessor :clientType
-    # long - value of member attribute &lt;b&gt;policyId&lt;/b&gt;.
-    attr_accessor :policyId
-    # String - value of member attribute &lt;b&gt;repoName&lt;/b&gt;.
-    attr_accessor :repoName
-    # int - value of member attribute &lt;b&gt;repoType&lt;/b&gt;.
-    attr_accessor :repoType
-    # String - value of member attribute &lt;b&gt;resultReason&lt;/b&gt;.
-    attr_accessor :resultReason
-    # String - value of member attribute &lt;b&gt;sessionId&lt;/b&gt;.
-    attr_accessor :sessionId
-    # Date - value of member attribute &lt;b&gt;eventTime&lt;/b&gt;.
-    attr_accessor :eventTime
-    # String - value of member attribute &lt;b&gt;requestUser&lt;/b&gt;.
-    attr_accessor :requestUser
-    # String - value of member attribute &lt;b&gt;action&lt;/b&gt;.
-    attr_accessor :action
-    # String - value of member attribute &lt;b&gt;requestData&lt;/b&gt;.
-    attr_accessor :requestData
-    # String - value of member attribute &lt;b&gt;resourcePath&lt;/b&gt;.
-    attr_accessor :resourcePath
-    # String - value of member attribute &lt;b&gt;resourceType&lt;/b&gt;.
-    attr_accessor :resourceType
+    # Long - value of member attribute &lt;b&gt;itemId&lt;/b&gt; .
+    attr_accessor :itemId
+    # Date - value of member attribute &lt;b&gt;defId&lt;/b&gt; .
+    attr_accessor :defid
+    # Date - value of member attribute &lt;b&gt;name&lt;/b&gt; .
+    attr_accessor :name
+    # String - value of member attribute &lt;b&gt;enricher&lt;/b&gt; .
+    attr_accessor :enricher
+    # Date - value of member attribute &lt;b&gt;evaluatorOptions&lt;/b&gt; .
+    attr_accessor :enricherOptions
+    # Integer - value of member attribute &lt;b&gt;order&lt;/b&gt; .
+    attr_accessor :order
 
-    # the json hash for this XXAccessAuditBase
+    # the json hash for this XXContextEnricherDef
     def to_jaxb_json_hash
       _h = super
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
-      _h['auditType'] = auditType.to_jaxb_json_hash unless auditType.nil?
-      _h['accessResult'] = accessResult.to_jaxb_json_hash unless accessResult.nil?
-      _h['accessType'] = accessType.to_jaxb_json_hash unless accessType.nil?
-      _h['aclEnforcer'] = aclEnforcer.to_jaxb_json_hash unless aclEnforcer.nil?
-      _h['agentId'] = agentId.to_jaxb_json_hash unless agentId.nil?
-      _h['clientIP'] = clientIP.to_jaxb_json_hash unless clientIP.nil?
-      _h['clientType'] = clientType.to_jaxb_json_hash unless clientType.nil?
-      _h['policyId'] = policyId.to_jaxb_json_hash unless policyId.nil?
-      _h['repoName'] = repoName.to_jaxb_json_hash unless repoName.nil?
-      _h['repoType'] = repoType.to_jaxb_json_hash unless repoType.nil?
-      _h['resultReason'] = resultReason.to_jaxb_json_hash unless resultReason.nil?
-      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
-      _h['eventTime'] = eventTime.to_jaxb_json_hash unless eventTime.nil?
-      _h['requestUser'] = requestUser.to_jaxb_json_hash unless requestUser.nil?
-      _h['action'] = action.to_jaxb_json_hash unless action.nil?
-      _h['requestData'] = requestData.to_jaxb_json_hash unless requestData.nil?
-      _h['resourcePath'] = resourcePath.to_jaxb_json_hash unless resourcePath.nil?
-      _h['resourceType'] = resourceType.to_jaxb_json_hash unless resourceType.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['defid'] = defid.to_jaxb_json_hash unless defid.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['enricher'] = enricher.to_jaxb_json_hash unless enricher.nil?
+      _h['enricherOptions'] = enricherOptions.to_jaxb_json_hash unless enricherOptions.nil?
+      _h['order'] = order.to_jaxb_json_hash unless order.nil?
       return _h
     end
 
-    #initializes this XXAccessAuditBase with a json hash
+    #initializes this XXContextEnricherDef with a json hash
     def init_jaxb_json_hash(_o)
       super _o
         if !_o['id'].nil?
@@ -14570,370 +14663,123 @@ module Entity
                 @id = _oa
             end
           end
-        if !_o['myClassType'].nil?
-          _oa = _o['myClassType']
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
             if(_oa.is_a? Hash)
-              @myClassType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @myClassType =  Fixnum.from_json(_oa) unless _oa['@class']
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @myClassType = Array.new
+              @itemId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @myClassType.push Fixnum.from_json(_item)
+                   @itemId.push Bignum.from_json(_item)
                  else
-                   @myClassType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @myClassType = _oa
+                @itemId = _oa
             end
           end
-        if !_o['auditType'].nil?
-          _oa = _o['auditType']
+        if !_o['defid'].nil?
+          _oa = _o['defid']
             if(_oa.is_a? Hash)
-              @auditType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @auditType =  Fixnum.from_json(_oa) unless _oa['@class']
+              @defid = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @defid =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @auditType = Array.new
+              @defid = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @auditType.push Fixnum.from_json(_item)
+                   @defid.push Bignum.from_json(_item)
                  else
-                   @auditType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @defid.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @auditType = _oa
+                @defid = _oa
             end
           end
-        if !_o['accessResult'].nil?
-          _oa = _o['accessResult']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @accessResult = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessResult =  Fixnum.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @accessResult = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessResult.push Fixnum.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @accessResult.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @accessResult = _oa
+                @name = _oa
             end
           end
-        if !_o['accessType'].nil?
-          _oa = _o['accessType']
+        if !_o['enricher'].nil?
+          _oa = _o['enricher']
             if(_oa.is_a? Hash)
-              @accessType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessType =  String.from_json(_oa) unless _oa['@class']
+              @enricher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enricher =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @accessType = Array.new
+              @enricher = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessType.push String.from_json(_item)
+                   @enricher.push String.from_json(_item)
                  else
-                   @accessType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @enricher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @accessType = _oa
+                @enricher = _oa
             end
           end
-        if !_o['aclEnforcer'].nil?
-          _oa = _o['aclEnforcer']
+        if !_o['enricherOptions'].nil?
+          _oa = _o['enricherOptions']
             if(_oa.is_a? Hash)
-              @aclEnforcer = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @aclEnforcer =  String.from_json(_oa) unless _oa['@class']
+              @enricherOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enricherOptions =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @aclEnforcer = Array.new
+              @enricherOptions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @aclEnforcer.push String.from_json(_item)
+                   @enricherOptions.push String.from_json(_item)
                  else
-                   @aclEnforcer.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @enricherOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @aclEnforcer = _oa
+                @enricherOptions = _oa
             end
           end
-        if !_o['agentId'].nil?
-          _oa = _o['agentId']
+        if !_o['order'].nil?
+          _oa = _o['order']
             if(_oa.is_a? Hash)
-              @agentId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @agentId =  String.from_json(_oa) unless _oa['@class']
+              @order = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @order =  Fixnum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @agentId = Array.new
+              @order = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @agentId.push String.from_json(_item)
+                   @order.push Fixnum.from_json(_item)
                  else
-                   @agentId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @order.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @agentId = _oa
-            end
-          end
-        if !_o['clientIP'].nil?
-          _oa = _o['clientIP']
-            if(_oa.is_a? Hash)
-              @clientIP = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @clientIP =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @clientIP = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @clientIP.push String.from_json(_item)
-                 else
-                   @clientIP.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @clientIP = _oa
-            end
-          end
-        if !_o['clientType'].nil?
-          _oa = _o['clientType']
-            if(_oa.is_a? Hash)
-              @clientType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @clientType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @clientType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @clientType.push String.from_json(_item)
-                 else
-                   @clientType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @clientType = _oa
-            end
-          end
-        if !_o['policyId'].nil?
-          _oa = _o['policyId']
-            if(_oa.is_a? Hash)
-              @policyId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyId.push Bignum.from_json(_item)
-                 else
-                   @policyId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyId = _oa
-            end
-          end
-        if !_o['repoName'].nil?
-          _oa = _o['repoName']
-            if(_oa.is_a? Hash)
-              @repoName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @repoName =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @repoName = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @repoName.push String.from_json(_item)
-                 else
-                   @repoName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @repoName = _oa
-            end
-          end
-        if !_o['repoType'].nil?
-          _oa = _o['repoType']
-            if(_oa.is_a? Hash)
-              @repoType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @repoType =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @repoType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @repoType.push Fixnum.from_json(_item)
-                 else
-                   @repoType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @repoType = _oa
-            end
-          end
-        if !_o['resultReason'].nil?
-          _oa = _o['resultReason']
-            if(_oa.is_a? Hash)
-              @resultReason = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resultReason =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resultReason = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resultReason.push String.from_json(_item)
-                 else
-                   @resultReason.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resultReason = _oa
-            end
-          end
-        if !_o['sessionId'].nil?
-          _oa = _o['sessionId']
-            if(_oa.is_a? Hash)
-              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @sessionId =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @sessionId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @sessionId.push String.from_json(_item)
-                 else
-                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @sessionId = _oa
-            end
-          end
-        if !_o['eventTime'].nil?
-          _oa = _o['eventTime']
-            if(_oa.is_a? Hash)
-              @eventTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @eventTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @eventTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @eventTime.push Time.from_json(_item)
-                 else
-                   @eventTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @eventTime = _oa
-            end
-          end
-        if !_o['requestUser'].nil?
-          _oa = _o['requestUser']
-            if(_oa.is_a? Hash)
-              @requestUser = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @requestUser =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @requestUser = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @requestUser.push String.from_json(_item)
-                 else
-                   @requestUser.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @requestUser = _oa
-            end
-          end
-        if !_o['action'].nil?
-          _oa = _o['action']
-            if(_oa.is_a? Hash)
-              @action = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @action =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @action = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @action.push String.from_json(_item)
-                 else
-                   @action.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @action = _oa
-            end
-          end
-        if !_o['requestData'].nil?
-          _oa = _o['requestData']
-            if(_oa.is_a? Hash)
-              @requestData = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @requestData =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @requestData = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @requestData.push String.from_json(_item)
-                 else
-                   @requestData.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @requestData = _oa
-            end
-          end
-        if !_o['resourcePath'].nil?
-          _oa = _o['resourcePath']
-            if(_oa.is_a? Hash)
-              @resourcePath = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourcePath =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resourcePath = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourcePath.push String.from_json(_item)
-                 else
-                   @resourcePath.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resourcePath = _oa
-            end
-          end
-        if !_o['resourceType'].nil?
-          _oa = _o['resourceType']
-            if(_oa.is_a? Hash)
-              @resourceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resourceType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceType.push String.from_json(_item)
-                 else
-                   @resourceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resourceType = _oa
+                @order = _oa
             end
           end
     end
 
-    # constructs a XXAccessAuditBase from a (parsed) JSON hash
+    # constructs a XXContextEnricherDef from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -16189,37 +16035,28 @@ module Ranger
 module Entity
 
   # (no documentation provided)
-  class XXContextEnricherDef < Org::Apache::Ranger::Entity::XXDBBase 
+  class XXPolicyResourceMap < Org::Apache::Ranger::Entity::XXDBBase 
 
     # Date - value of member attribute &lt;b&gt;id&lt;/b&gt; .
     attr_accessor :id
-    # Long - value of member attribute &lt;b&gt;itemId&lt;/b&gt; .
-    attr_accessor :itemId
-    # Date - value of member attribute &lt;b&gt;defId&lt;/b&gt; .
-    attr_accessor :defid
-    # Date - value of member attribute &lt;b&gt;name&lt;/b&gt; .
-    attr_accessor :name
-    # String - value of member attribute &lt;b&gt;enricher&lt;/b&gt; .
-    attr_accessor :enricher
-    # Date - value of member attribute &lt;b&gt;evaluatorOptions&lt;/b&gt; .
-    attr_accessor :enricherOptions
-    # Integer - value of member attribute &lt;b&gt;order&lt;/b&gt; .
+    # Date - value of member attribute &lt;b&gt;resourceId&lt;/b&gt; .
+    attr_accessor :resourceid
+    # Date - value of member attribute &lt;b&gt;value&lt;/b&gt; .
+    attr_accessor :value
+    # Date - value of member attribute &lt;b&gt;order&lt;/b&gt; .
     attr_accessor :order
 
-    # the json hash for this XXContextEnricherDef
+    # the json hash for this XXPolicyResourceMap
     def to_jaxb_json_hash
       _h = super
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['defid'] = defid.to_jaxb_json_hash unless defid.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['enricher'] = enricher.to_jaxb_json_hash unless enricher.nil?
-      _h['enricherOptions'] = enricherOptions.to_jaxb_json_hash unless enricherOptions.nil?
+      _h['resourceid'] = resourceid.to_jaxb_json_hash unless resourceid.nil?
+      _h['value'] = value.to_jaxb_json_hash unless value.nil?
       _h['order'] = order.to_jaxb_json_hash unless order.nil?
       return _h
     end
 
-    #initializes this XXContextEnricherDef with a json hash
+    #initializes this XXPolicyResourceMap with a json hash
     def init_jaxb_json_hash(_o)
       super _o
         if !_o['id'].nil?
@@ -16241,99 +16078,42 @@ module Entity
                 @id = _oa
             end
           end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
+        if !_o['resourceid'].nil?
+          _oa = _o['resourceid']
             if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+              @resourceid = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceid =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
+              @resourceid = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
+                   @resourceid.push Bignum.from_json(_item)
                  else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @resourceid.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @itemId = _oa
+                @resourceid = _oa
             end
           end
-        if !_o['defid'].nil?
-          _oa = _o['defid']
+        if !_o['value'].nil?
+          _oa = _o['value']
             if(_oa.is_a? Hash)
-              @defid = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @defid =  Bignum.from_json(_oa) unless _oa['@class']
+              @value = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @value =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @defid = Array.new
+              @value = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @defid.push Bignum.from_json(_item)
+                   @value.push String.from_json(_item)
                  else
-                   @defid.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @value.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @defid = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['enricher'].nil?
-          _oa = _o['enricher']
-            if(_oa.is_a? Hash)
-              @enricher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enricher =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enricher = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enricher.push String.from_json(_item)
-                 else
-                   @enricher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enricher = _oa
-            end
-          end
-        if !_o['enricherOptions'].nil?
-          _oa = _o['enricherOptions']
-            if(_oa.is_a? Hash)
-              @enricherOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enricherOptions =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enricherOptions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enricherOptions.push String.from_json(_item)
-                 else
-                   @enricherOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enricherOptions = _oa
+                @value = _oa
             end
           end
         if !_o['order'].nil?
@@ -16357,7 +16137,7 @@ module Entity
           end
     end
 
-    # constructs a XXContextEnricherDef from a (parsed) JSON hash
+    # constructs a XXPolicyResourceMap from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -17405,159 +17185,6 @@ module Ranger
 module Entity
 
   # (no documentation provided)
-  class XXGroupPermission < Org::Apache::Ranger::Entity::XXDBBase 
-
-    # the id
-    attr_accessor :id
-    # the groupId
-    attr_accessor :groupId
-    # the moduleId
-    attr_accessor :moduleId
-    # the isAllowed
-    attr_accessor :isAllowed
-    # (no documentation provided)
-    attr_accessor :myClassType
-
-    # the json hash for this XXGroupPermission
-    def to_jaxb_json_hash
-      _h = super
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['groupId'] = groupId.to_jaxb_json_hash unless groupId.nil?
-      _h['moduleId'] = moduleId.to_jaxb_json_hash unless moduleId.nil?
-      _h['isAllowed'] = isAllowed.to_jaxb_json_hash unless isAllowed.nil?
-      _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
-      return _h
-    end
-
-    #initializes this XXGroupPermission with a json hash
-    def init_jaxb_json_hash(_o)
-      super _o
-        if !_o['id'].nil?
-          _oa = _o['id']
-            if(_oa.is_a? Hash)
-              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @id =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @id = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @id.push Bignum.from_json(_item)
-                 else
-                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @id = _oa
-            end
-          end
-        if !_o['groupId'].nil?
-          _oa = _o['groupId']
-            if(_oa.is_a? Hash)
-              @groupId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @groupId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @groupId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @groupId.push Bignum.from_json(_item)
-                 else
-                   @groupId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @groupId = _oa
-            end
-          end
-        if !_o['moduleId'].nil?
-          _oa = _o['moduleId']
-            if(_oa.is_a? Hash)
-              @moduleId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @moduleId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @moduleId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @moduleId.push Bignum.from_json(_item)
-                 else
-                   @moduleId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @moduleId = _oa
-            end
-          end
-        if !_o['isAllowed'].nil?
-          _oa = _o['isAllowed']
-            if(_oa.is_a? Hash)
-              @isAllowed = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @isAllowed =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @isAllowed = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @isAllowed.push Fixnum.from_json(_item)
-                 else
-                   @isAllowed.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @isAllowed = _oa
-            end
-          end
-        if !_o['myClassType'].nil?
-          _oa = _o['myClassType']
-            if(_oa.is_a? Hash)
-              @myClassType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @myClassType =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @myClassType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @myClassType.push Fixnum.from_json(_item)
-                 else
-                   @myClassType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @myClassType = _oa
-            end
-          end
-    end
-
-    # constructs a XXGroupPermission from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-module Org
-
-module Apache
-
-module Ranger
-
-module Entity
-
-  # (no documentation provided)
   class XXPolicyItemAccess < Org::Apache::Ranger::Entity::XXDBBase 
 
     # Date - value of member attribute &lt;b&gt;id&lt;/b&gt; .
@@ -17733,6 +17360,159 @@ module Ranger
 module Entity
 
   # (no documentation provided)
+  class XXGroupPermission < Org::Apache::Ranger::Entity::XXDBBase 
+
+    # the id
+    attr_accessor :id
+    # the groupId
+    attr_accessor :groupId
+    # the moduleId
+    attr_accessor :moduleId
+    # the isAllowed
+    attr_accessor :isAllowed
+    # (no documentation provided)
+    attr_accessor :myClassType
+
+    # the json hash for this XXGroupPermission
+    def to_jaxb_json_hash
+      _h = super
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['groupId'] = groupId.to_jaxb_json_hash unless groupId.nil?
+      _h['moduleId'] = moduleId.to_jaxb_json_hash unless moduleId.nil?
+      _h['isAllowed'] = isAllowed.to_jaxb_json_hash unless isAllowed.nil?
+      _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
+      return _h
+    end
+
+    #initializes this XXGroupPermission with a json hash
+    def init_jaxb_json_hash(_o)
+      super _o
+        if !_o['id'].nil?
+          _oa = _o['id']
+            if(_oa.is_a? Hash)
+              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @id =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @id = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @id.push Bignum.from_json(_item)
+                 else
+                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @id = _oa
+            end
+          end
+        if !_o['groupId'].nil?
+          _oa = _o['groupId']
+            if(_oa.is_a? Hash)
+              @groupId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @groupId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @groupId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @groupId.push Bignum.from_json(_item)
+                 else
+                   @groupId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @groupId = _oa
+            end
+          end
+        if !_o['moduleId'].nil?
+          _oa = _o['moduleId']
+            if(_oa.is_a? Hash)
+              @moduleId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @moduleId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @moduleId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @moduleId.push Bignum.from_json(_item)
+                 else
+                   @moduleId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @moduleId = _oa
+            end
+          end
+        if !_o['isAllowed'].nil?
+          _oa = _o['isAllowed']
+            if(_oa.is_a? Hash)
+              @isAllowed = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @isAllowed =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @isAllowed = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @isAllowed.push Fixnum.from_json(_item)
+                 else
+                   @isAllowed.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @isAllowed = _oa
+            end
+          end
+        if !_o['myClassType'].nil?
+          _oa = _o['myClassType']
+            if(_oa.is_a? Hash)
+              @myClassType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @myClassType =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @myClassType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @myClassType.push Fixnum.from_json(_item)
+                 else
+                   @myClassType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @myClassType = _oa
+            end
+          end
+    end
+
+    # constructs a XXGroupPermission from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+module Org
+
+module Apache
+
+module Ranger
+
+module Entity
+
+  # (no documentation provided)
   class XXPolicyItemUserPerm < Org::Apache::Ranger::Entity::XXDBBase 
 
     # Date - value of member attribute &lt;b&gt;id&lt;/b&gt; .
@@ -17864,180 +17644,76 @@ module Ranger
 module Entity
 
   # (no documentation provided)
-  class XXPolicyResourceMap < Org::Apache::Ranger::Entity::XXDBBase 
-
-    # Date - value of member attribute &lt;b&gt;id&lt;/b&gt; .
-    attr_accessor :id
-    # Date - value of member attribute &lt;b&gt;resourceId&lt;/b&gt; .
-    attr_accessor :resourceid
-    # Date - value of member attribute &lt;b&gt;value&lt;/b&gt; .
-    attr_accessor :value
-    # Date - value of member attribute &lt;b&gt;order&lt;/b&gt; .
-    attr_accessor :order
-
-    # the json hash for this XXPolicyResourceMap
-    def to_jaxb_json_hash
-      _h = super
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['resourceid'] = resourceid.to_jaxb_json_hash unless resourceid.nil?
-      _h['value'] = value.to_jaxb_json_hash unless value.nil?
-      _h['order'] = order.to_jaxb_json_hash unless order.nil?
-      return _h
-    end
-
-    #initializes this XXPolicyResourceMap with a json hash
-    def init_jaxb_json_hash(_o)
-      super _o
-        if !_o['id'].nil?
-          _oa = _o['id']
-            if(_oa.is_a? Hash)
-              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @id =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @id = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @id.push Bignum.from_json(_item)
-                 else
-                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @id = _oa
-            end
-          end
-        if !_o['resourceid'].nil?
-          _oa = _o['resourceid']
-            if(_oa.is_a? Hash)
-              @resourceid = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceid =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resourceid = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceid.push Bignum.from_json(_item)
-                 else
-                   @resourceid.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resourceid = _oa
-            end
-          end
-        if !_o['value'].nil?
-          _oa = _o['value']
-            if(_oa.is_a? Hash)
-              @value = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @value =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @value = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @value.push String.from_json(_item)
-                 else
-                   @value.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @value = _oa
-            end
-          end
-        if !_o['order'].nil?
-          _oa = _o['order']
-            if(_oa.is_a? Hash)
-              @order = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @order =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @order = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @order.push Fixnum.from_json(_item)
-                 else
-                   @order.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @order = _oa
-            end
-          end
-    end
-
-    # constructs a XXPolicyResourceMap from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-module Org
-
-module Apache
-
-module Ranger
-
-module Entity
-
-  # (no documentation provided)
-  class XXPortalUser < Org::Apache::Ranger::Entity::XXDBBase 
+  class XXAccessAuditBase < Org::Apache::Ranger::Entity::XXDBBase 
 
     # Long - value of member attribute &lt;b&gt;id&lt;/b&gt;.
     attr_accessor :id
     # (no documentation provided)
     attr_accessor :myClassType
-    # String - value of member attribute &lt;b&gt;firstName&lt;/b&gt;.
-    attr_accessor :firstName
-    # String - value of member attribute &lt;b&gt;lastName&lt;/b&gt;.
-    attr_accessor :lastName
-    # String - value of member attribute &lt;b&gt;publicScreenName&lt;/b&gt;.
-    attr_accessor :publicScreenName
-    # String - value of member attribute &lt;b&gt;loginId&lt;/b&gt;.
-    attr_accessor :loginId
-    # String - value of member attribute &lt;b&gt;password&lt;/b&gt;.
-    attr_accessor :password
-    # String - value of member attribute &lt;b&gt;emailAddress&lt;/b&gt;.
-    attr_accessor :emailAddress
-    # int - value of member attribute &lt;b&gt;status&lt;/b&gt;.
-    attr_accessor :status
-    # int - value of member attribute &lt;b&gt;userSource&lt;/b&gt;.
-    attr_accessor :userSource
-    # String - value of member attribute &lt;b&gt;notes&lt;/b&gt;.
-    attr_accessor :notes
+    # int - value of member attribute &lt;b&gt;auditType&lt;/b&gt;.
+    attr_accessor :auditType
+    # int - value of member attribute &lt;b&gt;accessResult&lt;/b&gt;.
+    attr_accessor :accessResult
+    # String - value of member attribute &lt;b&gt;accessType&lt;/b&gt;.
+    attr_accessor :accessType
+    # String - value of member attribute &lt;b&gt;aclEnforcer&lt;/b&gt;.
+    attr_accessor :aclEnforcer
+    # String - value of member attribute &lt;b&gt;agentId&lt;/b&gt;.
+    attr_accessor :agentId
+    # String - value of member attribute &lt;b&gt;clientIP&lt;/b&gt;.
+    attr_accessor :clientIP
+    # String - value of member attribute &lt;b&gt;clientType&lt;/b&gt;.
+    attr_accessor :clientType
+    # long - value of member attribute &lt;b&gt;policyId&lt;/b&gt;.
+    attr_accessor :policyId
+    # String - value of member attribute &lt;b&gt;repoName&lt;/b&gt;.
+    attr_accessor :repoName
+    # int - value of member attribute &lt;b&gt;repoType&lt;/b&gt;.
+    attr_accessor :repoType
+    # String - value of member attribute &lt;b&gt;resultReason&lt;/b&gt;.
+    attr_accessor :resultReason
+    # String - value of member attribute &lt;b&gt;sessionId&lt;/b&gt;.
+    attr_accessor :sessionId
+    # Date - value of member attribute &lt;b&gt;eventTime&lt;/b&gt;.
+    attr_accessor :eventTime
+    # String - value of member attribute &lt;b&gt;requestUser&lt;/b&gt;.
+    attr_accessor :requestUser
+    # String - value of member attribute &lt;b&gt;action&lt;/b&gt;.
+    attr_accessor :action
+    # String - value of member attribute &lt;b&gt;requestData&lt;/b&gt;.
+    attr_accessor :requestData
+    # String - value of member attribute &lt;b&gt;resourcePath&lt;/b&gt;.
+    attr_accessor :resourcePath
+    # String - value of member attribute &lt;b&gt;resourceType&lt;/b&gt;.
+    attr_accessor :resourceType
 
-    # the json hash for this XXPortalUser
+    # the json hash for this XXAccessAuditBase
     def to_jaxb_json_hash
       _h = super
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
       _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
-      _h['firstName'] = firstName.to_jaxb_json_hash unless firstName.nil?
-      _h['lastName'] = lastName.to_jaxb_json_hash unless lastName.nil?
-      _h['publicScreenName'] = publicScreenName.to_jaxb_json_hash unless publicScreenName.nil?
-      _h['loginId'] = loginId.to_jaxb_json_hash unless loginId.nil?
-      _h['password'] = password.to_jaxb_json_hash unless password.nil?
-      _h['emailAddress'] = emailAddress.to_jaxb_json_hash unless emailAddress.nil?
-      _h['status'] = status.to_jaxb_json_hash unless status.nil?
-      _h['userSource'] = userSource.to_jaxb_json_hash unless userSource.nil?
-      _h['notes'] = notes.to_jaxb_json_hash unless notes.nil?
+      _h['auditType'] = auditType.to_jaxb_json_hash unless auditType.nil?
+      _h['accessResult'] = accessResult.to_jaxb_json_hash unless accessResult.nil?
+      _h['accessType'] = accessType.to_jaxb_json_hash unless accessType.nil?
+      _h['aclEnforcer'] = aclEnforcer.to_jaxb_json_hash unless aclEnforcer.nil?
+      _h['agentId'] = agentId.to_jaxb_json_hash unless agentId.nil?
+      _h['clientIP'] = clientIP.to_jaxb_json_hash unless clientIP.nil?
+      _h['clientType'] = clientType.to_jaxb_json_hash unless clientType.nil?
+      _h['policyId'] = policyId.to_jaxb_json_hash unless policyId.nil?
+      _h['repoName'] = repoName.to_jaxb_json_hash unless repoName.nil?
+      _h['repoType'] = repoType.to_jaxb_json_hash unless repoType.nil?
+      _h['resultReason'] = resultReason.to_jaxb_json_hash unless resultReason.nil?
+      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
+      _h['eventTime'] = eventTime.to_jaxb_json_hash unless eventTime.nil?
+      _h['requestUser'] = requestUser.to_jaxb_json_hash unless requestUser.nil?
+      _h['action'] = action.to_jaxb_json_hash unless action.nil?
+      _h['requestData'] = requestData.to_jaxb_json_hash unless requestData.nil?
+      _h['resourcePath'] = resourcePath.to_jaxb_json_hash unless resourcePath.nil?
+      _h['resourceType'] = resourceType.to_jaxb_json_hash unless resourceType.nil?
       return _h
     end
 
-    #initializes this XXPortalUser with a json hash
+    #initializes this XXAccessAuditBase with a json hash
     def init_jaxb_json_hash(_o)
       super _o
         if !_o['id'].nil?
@@ -18078,180 +17754,504 @@ module Entity
                 @myClassType = _oa
             end
           end
-        if !_o['firstName'].nil?
-          _oa = _o['firstName']
+        if !_o['auditType'].nil?
+          _oa = _o['auditType']
             if(_oa.is_a? Hash)
-              @firstName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @firstName =  String.from_json(_oa) unless _oa['@class']
+              @auditType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @auditType =  Fixnum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @firstName = Array.new
+              @auditType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @firstName.push String.from_json(_item)
+                   @auditType.push Fixnum.from_json(_item)
                  else
-                   @firstName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @auditType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @firstName = _oa
+                @auditType = _oa
             end
           end
-        if !_o['lastName'].nil?
-          _oa = _o['lastName']
+        if !_o['accessResult'].nil?
+          _oa = _o['accessResult']
             if(_oa.is_a? Hash)
-              @lastName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @lastName =  String.from_json(_oa) unless _oa['@class']
+              @accessResult = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessResult =  Fixnum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @lastName = Array.new
+              @accessResult = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @lastName.push String.from_json(_item)
+                   @accessResult.push Fixnum.from_json(_item)
                  else
-                   @lastName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @accessResult.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @lastName = _oa
+                @accessResult = _oa
             end
           end
-        if !_o['publicScreenName'].nil?
-          _oa = _o['publicScreenName']
+        if !_o['accessType'].nil?
+          _oa = _o['accessType']
             if(_oa.is_a? Hash)
-              @publicScreenName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @publicScreenName =  String.from_json(_oa) unless _oa['@class']
+              @accessType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessType =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @publicScreenName = Array.new
+              @accessType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @publicScreenName.push String.from_json(_item)
+                   @accessType.push String.from_json(_item)
                  else
-                   @publicScreenName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @accessType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @publicScreenName = _oa
+                @accessType = _oa
             end
           end
-        if !_o['loginId'].nil?
-          _oa = _o['loginId']
+        if !_o['aclEnforcer'].nil?
+          _oa = _o['aclEnforcer']
             if(_oa.is_a? Hash)
-              @loginId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @loginId =  String.from_json(_oa) unless _oa['@class']
+              @aclEnforcer = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @aclEnforcer =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @loginId = Array.new
+              @aclEnforcer = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @loginId.push String.from_json(_item)
+                   @aclEnforcer.push String.from_json(_item)
                  else
-                   @loginId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @aclEnforcer.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @loginId = _oa
+                @aclEnforcer = _oa
             end
           end
-        if !_o['password'].nil?
-          _oa = _o['password']
+        if !_o['agentId'].nil?
+          _oa = _o['agentId']
             if(_oa.is_a? Hash)
-              @password = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @password =  String.from_json(_oa) unless _oa['@class']
+              @agentId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @agentId =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @password = Array.new
+              @agentId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @password.push String.from_json(_item)
+                   @agentId.push String.from_json(_item)
                  else
-                   @password.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @agentId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @password = _oa
+                @agentId = _oa
             end
           end
-        if !_o['emailAddress'].nil?
-          _oa = _o['emailAddress']
+        if !_o['clientIP'].nil?
+          _oa = _o['clientIP']
             if(_oa.is_a? Hash)
-              @emailAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @emailAddress =  String.from_json(_oa) unless _oa['@class']
+              @clientIP = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @clientIP =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @emailAddress = Array.new
+              @clientIP = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @emailAddress.push String.from_json(_item)
+                   @clientIP.push String.from_json(_item)
                  else
-                   @emailAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @clientIP.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @emailAddress = _oa
+                @clientIP = _oa
             end
           end
-        if !_o['status'].nil?
-          _oa = _o['status']
+        if !_o['clientType'].nil?
+          _oa = _o['clientType']
             if(_oa.is_a? Hash)
-              @status = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @status =  Fixnum.from_json(_oa) unless _oa['@class']
+              @clientType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @clientType =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @status = Array.new
+              @clientType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @status.push Fixnum.from_json(_item)
+                   @clientType.push String.from_json(_item)
                  else
-                   @status.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @clientType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @status = _oa
+                @clientType = _oa
             end
           end
-        if !_o['userSource'].nil?
-          _oa = _o['userSource']
+        if !_o['policyId'].nil?
+          _oa = _o['policyId']
             if(_oa.is_a? Hash)
-              @userSource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @userSource =  Fixnum.from_json(_oa) unless _oa['@class']
+              @policyId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyId =  Bignum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @userSource = Array.new
+              @policyId = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @userSource.push Fixnum.from_json(_item)
+                   @policyId.push Bignum.from_json(_item)
                  else
-                   @userSource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @userSource = _oa
+                @policyId = _oa
             end
           end
-        if !_o['notes'].nil?
-          _oa = _o['notes']
+        if !_o['repoName'].nil?
+          _oa = _o['repoName']
             if(_oa.is_a? Hash)
-              @notes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @notes =  String.from_json(_oa) unless _oa['@class']
+              @repoName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @repoName =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @notes = Array.new
+              @repoName = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @notes.push String.from_json(_item)
+                   @repoName.push String.from_json(_item)
                  else
-                   @notes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @repoName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @notes = _oa
+                @repoName = _oa
+            end
+          end
+        if !_o['repoType'].nil?
+          _oa = _o['repoType']
+            if(_oa.is_a? Hash)
+              @repoType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @repoType =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @repoType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @repoType.push Fixnum.from_json(_item)
+                 else
+                   @repoType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @repoType = _oa
+            end
+          end
+        if !_o['resultReason'].nil?
+          _oa = _o['resultReason']
+            if(_oa.is_a? Hash)
+              @resultReason = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resultReason =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resultReason = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resultReason.push String.from_json(_item)
+                 else
+                   @resultReason.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resultReason = _oa
+            end
+          end
+        if !_o['sessionId'].nil?
+          _oa = _o['sessionId']
+            if(_oa.is_a? Hash)
+              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @sessionId =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @sessionId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @sessionId.push String.from_json(_item)
+                 else
+                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @sessionId = _oa
+            end
+          end
+        if !_o['eventTime'].nil?
+          _oa = _o['eventTime']
+            if(_oa.is_a? Hash)
+              @eventTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @eventTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @eventTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @eventTime.push Time.from_json(_item)
+                 else
+                   @eventTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @eventTime = _oa
+            end
+          end
+        if !_o['requestUser'].nil?
+          _oa = _o['requestUser']
+            if(_oa.is_a? Hash)
+              @requestUser = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @requestUser =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @requestUser = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @requestUser.push String.from_json(_item)
+                 else
+                   @requestUser.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @requestUser = _oa
+            end
+          end
+        if !_o['action'].nil?
+          _oa = _o['action']
+            if(_oa.is_a? Hash)
+              @action = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @action =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @action = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @action.push String.from_json(_item)
+                 else
+                   @action.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @action = _oa
+            end
+          end
+        if !_o['requestData'].nil?
+          _oa = _o['requestData']
+            if(_oa.is_a? Hash)
+              @requestData = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @requestData =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @requestData = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @requestData.push String.from_json(_item)
+                 else
+                   @requestData.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @requestData = _oa
+            end
+          end
+        if !_o['resourcePath'].nil?
+          _oa = _o['resourcePath']
+            if(_oa.is_a? Hash)
+              @resourcePath = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourcePath =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resourcePath = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resourcePath.push String.from_json(_item)
+                 else
+                   @resourcePath.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resourcePath = _oa
+            end
+          end
+        if !_o['resourceType'].nil?
+          _oa = _o['resourceType']
+            if(_oa.is_a? Hash)
+              @resourceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceType =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resourceType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resourceType.push String.from_json(_item)
+                 else
+                   @resourceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resourceType = _oa
             end
           end
     end
 
-    # constructs a XXPortalUser from a (parsed) JSON hash
+    # constructs a XXAccessAuditBase from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+module Org
+
+module Apache
+
+module Ranger
+
+module Entity
+
+  # (no documentation provided)
+  class XXTagAttribute < Org::Apache::Ranger::Entity::XXDBBase 
+
+    # Long - value of member attribute &lt;b&gt;id&lt;/b&gt;.
+    attr_accessor :id
+    # the tagId
+    attr_accessor :tagId
+    # the name
+    attr_accessor :name
+    # the value
+    attr_accessor :value
+    # (no documentation provided)
+    attr_accessor :myClassType
+
+    # the json hash for this XXTagAttribute
+    def to_jaxb_json_hash
+      _h = super
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['tagId'] = tagId.to_jaxb_json_hash unless tagId.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['value'] = value.to_jaxb_json_hash unless value.nil?
+      _h['myClassType'] = myClassType.to_jaxb_json_hash unless myClassType.nil?
+      return _h
+    end
+
+    #initializes this XXTagAttribute with a json hash
+    def init_jaxb_json_hash(_o)
+      super _o
+        if !_o['id'].nil?
+          _oa = _o['id']
+            if(_oa.is_a? Hash)
+              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @id =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @id = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @id.push Bignum.from_json(_item)
+                 else
+                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @id = _oa
+            end
+          end
+        if !_o['tagId'].nil?
+          _oa = _o['tagId']
+            if(_oa.is_a? Hash)
+              @tagId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagId.push Bignum.from_json(_item)
+                 else
+                   @tagId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagId = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
+        if !_o['value'].nil?
+          _oa = _o['value']
+            if(_oa.is_a? Hash)
+              @value = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @value =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @value = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @value.push String.from_json(_item)
+                 else
+                   @value.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @value = _oa
+            end
+          end
+        if !_o['myClassType'].nil?
+          _oa = _o['myClassType']
+            if(_oa.is_a? Hash)
+              @myClassType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @myClassType =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @myClassType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @myClassType.push Fixnum.from_json(_item)
+                 else
+                   @myClassType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @myClassType = _oa
+            end
+          end
+    end
+
+    # constructs a XXTagAttribute from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -18285,57 +18285,77 @@ module Model
   class RangerPolicy < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :isAuditEnabled
+    attr_accessor :rowFilterPolicyItems
+    # (no documentation provided)
+    attr_accessor :allowExceptions
+    # (no documentation provided)
+    attr_accessor :policyPriority
+    # (no documentation provided)
+    attr_accessor :dataMaskPolicyItems
+    # (no documentation provided)
+    attr_accessor :serviceType
+    # (no documentation provided)
+    attr_accessor :denyExceptions
     # (no documentation provided)
     attr_accessor :policyItems
     # (no documentation provided)
     attr_accessor :resourceSignature
     # (no documentation provided)
-    attr_accessor :validitySchedules
+    attr_accessor :description
+    # (no documentation provided)
+    attr_accessor :isAuditEnabled
+    # (no documentation provided)
+    attr_accessor :resources
+    # (no documentation provided)
+    attr_accessor :name
     # (no documentation provided)
     attr_accessor :policyLabels
     # (no documentation provided)
     attr_accessor :denyPolicyItems
     # (no documentation provided)
-    attr_accessor :rowFilterPolicyItems
-    # (no documentation provided)
-    attr_accessor :dataMaskPolicyItems
-    # (no documentation provided)
-    attr_accessor :policyPriority
-    # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
-    attr_accessor :serviceType
+    attr_accessor :policyType
     # (no documentation provided)
     attr_accessor :service
     # (no documentation provided)
-    attr_accessor :allowExceptions
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :denyExceptions
-    # (no documentation provided)
-    attr_accessor :resources
+    attr_accessor :validitySchedules
     # (no documentation provided)
     attr_accessor :options
-    # (no documentation provided)
-    attr_accessor :policyType
 
     # the json hash for this RangerPolicy
     def to_jaxb_json_hash
       _h = super
-      _h['isAuditEnabled'] = isAuditEnabled.to_jaxb_json_hash unless isAuditEnabled.nil?
+      if !rowFilterPolicyItems.nil?
+        _ha = Array.new
+        rowFilterPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['rowFilterPolicyItems'] = _ha
+      end
+      if !allowExceptions.nil?
+        _ha = Array.new
+        allowExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['allowExceptions'] = _ha
+      end
+      _h['policyPriority'] = policyPriority.to_jaxb_json_hash unless policyPriority.nil?
+      if !dataMaskPolicyItems.nil?
+        _ha = Array.new
+        dataMaskPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['dataMaskPolicyItems'] = _ha
+      end
+      _h['serviceType'] = serviceType.to_jaxb_json_hash unless serviceType.nil?
+      if !denyExceptions.nil?
+        _ha = Array.new
+        denyExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['denyExceptions'] = _ha
+      end
       if !policyItems.nil?
         _ha = Array.new
         policyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policyItems'] = _ha
       end
       _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
-      if !validitySchedules.nil?
-        _ha = Array.new
-        validitySchedules.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['validitySchedules'] = _ha
-      end
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['isAuditEnabled'] = isAuditEnabled.to_jaxb_json_hash unless isAuditEnabled.nil?
+      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       if !policyLabels.nil?
         _ha = Array.new
         policyLabels.each { | _item | _ha.push _item.to_jaxb_json_hash }
@@ -18346,57 +18366,132 @@ module Model
         denyPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['denyPolicyItems'] = _ha
       end
-      if !rowFilterPolicyItems.nil?
-        _ha = Array.new
-        rowFilterPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['rowFilterPolicyItems'] = _ha
-      end
-      if !dataMaskPolicyItems.nil?
-        _ha = Array.new
-        dataMaskPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['dataMaskPolicyItems'] = _ha
-      end
-      _h['policyPriority'] = policyPriority.to_jaxb_json_hash unless policyPriority.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['serviceType'] = serviceType.to_jaxb_json_hash unless serviceType.nil?
-      _h['service'] = service.to_jaxb_json_hash unless service.nil?
-      if !allowExceptions.nil?
-        _ha = Array.new
-        allowExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['allowExceptions'] = _ha
-      end
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      if !denyExceptions.nil?
-        _ha = Array.new
-        denyExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['denyExceptions'] = _ha
-      end
-      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
-      _h['options'] = options.to_jaxb_json_hash unless options.nil?
       _h['policyType'] = policyType.to_jaxb_json_hash unless policyType.nil?
+      _h['service'] = service.to_jaxb_json_hash unless service.nil?
+      if !validitySchedules.nil?
+        _ha = Array.new
+        validitySchedules.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['validitySchedules'] = _ha
+      end
+      _h['options'] = options.to_jaxb_json_hash unless options.nil?
       return _h
     end
 
     #initializes this RangerPolicy with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['isAuditEnabled'].nil?
-          _oa = _o['isAuditEnabled']
+        if !_o['rowFilterPolicyItems'].nil?
+          _oa = _o['rowFilterPolicyItems']
             if(_oa.is_a? Hash)
-              @isAuditEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @isAuditEnabled =  Boolean.from_json(_oa) unless _oa['@class']
+              @rowFilterPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rowFilterPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerRowFilterPolicyItem.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @isAuditEnabled = Array.new
+              @rowFilterPolicyItems = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @isAuditEnabled.push Boolean.from_json(_item)
+                   @rowFilterPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerRowFilterPolicyItem.from_json(_item)
                  else
-                   @isAuditEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rowFilterPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @isAuditEnabled = _oa
+                @rowFilterPolicyItems = _oa
+            end
+          end
+        if !_o['allowExceptions'].nil?
+          _oa = _o['allowExceptions']
+            if(_oa.is_a? Hash)
+              @allowExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @allowExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @allowExceptions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @allowExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
+                 else
+                   @allowExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @allowExceptions = _oa
+            end
+          end
+        if !_o['policyPriority'].nil?
+          _oa = _o['policyPriority']
+            if(_oa.is_a? Hash)
+              @policyPriority = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyPriority =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyPriority = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyPriority.push Fixnum.from_json(_item)
+                 else
+                   @policyPriority.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyPriority = _oa
+            end
+          end
+        if !_o['dataMaskPolicyItems'].nil?
+          _oa = _o['dataMaskPolicyItems']
+            if(_oa.is_a? Hash)
+              @dataMaskPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @dataMaskPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @dataMaskPolicyItems = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @dataMaskPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_item)
+                 else
+                   @dataMaskPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @dataMaskPolicyItems = _oa
+            end
+          end
+        if !_o['serviceType'].nil?
+          _oa = _o['serviceType']
+            if(_oa.is_a? Hash)
+              @serviceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceType =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceType.push String.from_json(_item)
+                 else
+                   @serviceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceType = _oa
+            end
+          end
+        if !_o['denyExceptions'].nil?
+          _oa = _o['denyExceptions']
+            if(_oa.is_a? Hash)
+              @denyExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @denyExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @denyExceptions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @denyExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
+                 else
+                   @denyExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @denyExceptions = _oa
             end
           end
         if !_o['policyItems'].nil?
@@ -18437,23 +18532,80 @@ module Model
                 @resourceSignature = _oa
             end
           end
-        if !_o['validitySchedules'].nil?
-          _oa = _o['validitySchedules']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @validitySchedules = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validitySchedules =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @validitySchedules = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validitySchedules.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @validitySchedules.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @validitySchedules = _oa
+                @description = _oa
+            end
+          end
+        if !_o['isAuditEnabled'].nil?
+          _oa = _o['isAuditEnabled']
+            if(_oa.is_a? Hash)
+              @isAuditEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @isAuditEnabled =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @isAuditEnabled = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @isAuditEnabled.push Boolean.from_json(_item)
+                 else
+                   @isAuditEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @isAuditEnabled = _oa
+            end
+          end
+        if !_o['resources'].nil?
+          _oa = _o['resources']
+            if(_oa.is_a? Hash)
+              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resources =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resources = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resources.push Hash.from_json(_item)
+                 else
+                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resources = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
         if !_o['policyLabels'].nil?
@@ -18494,99 +18646,23 @@ module Model
                 @denyPolicyItems = _oa
             end
           end
-        if !_o['rowFilterPolicyItems'].nil?
-          _oa = _o['rowFilterPolicyItems']
+        if !_o['policyType'].nil?
+          _oa = _o['policyType']
             if(_oa.is_a? Hash)
-              @rowFilterPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rowFilterPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerRowFilterPolicyItem.from_json(_oa) unless _oa['@class']
+              @policyType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyType =  Fixnum.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rowFilterPolicyItems = Array.new
+              @policyType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rowFilterPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerRowFilterPolicyItem.from_json(_item)
+                   @policyType.push Fixnum.from_json(_item)
                  else
-                   @rowFilterPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rowFilterPolicyItems = _oa
-            end
-          end
-        if !_o['dataMaskPolicyItems'].nil?
-          _oa = _o['dataMaskPolicyItems']
-            if(_oa.is_a? Hash)
-              @dataMaskPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @dataMaskPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @dataMaskPolicyItems = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @dataMaskPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_item)
-                 else
-                   @dataMaskPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @dataMaskPolicyItems = _oa
-            end
-          end
-        if !_o['policyPriority'].nil?
-          _oa = _o['policyPriority']
-            if(_oa.is_a? Hash)
-              @policyPriority = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyPriority =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyPriority = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyPriority.push Fixnum.from_json(_item)
-                 else
-                   @policyPriority.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyPriority = _oa
-            end
-          end
-        if !_o['description'].nil?
-          _oa = _o['description']
-            if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @description = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
-                 else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @description = _oa
-            end
-          end
-        if !_o['serviceType'].nil?
-          _oa = _o['serviceType']
-            if(_oa.is_a? Hash)
-              @serviceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @serviceType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceType.push String.from_json(_item)
-                 else
-                   @serviceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @serviceType = _oa
+                @policyType = _oa
             end
           end
         if !_o['service'].nil?
@@ -18608,80 +18684,23 @@ module Model
                 @service = _oa
             end
           end
-        if !_o['allowExceptions'].nil?
-          _oa = _o['allowExceptions']
+        if !_o['validitySchedules'].nil?
+          _oa = _o['validitySchedules']
             if(_oa.is_a? Hash)
-              @allowExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @allowExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
+              @validitySchedules = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validitySchedules =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @allowExceptions = Array.new
+              @validitySchedules = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @allowExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
+                   @validitySchedules.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
                  else
-                   @allowExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validitySchedules.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @allowExceptions = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['denyExceptions'].nil?
-          _oa = _o['denyExceptions']
-            if(_oa.is_a? Hash)
-              @denyExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @denyExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @denyExceptions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @denyExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
-                 else
-                   @denyExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @denyExceptions = _oa
-            end
-          end
-        if !_o['resources'].nil?
-          _oa = _o['resources']
-            if(_oa.is_a? Hash)
-              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resources =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resources = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resources.push Hash.from_json(_item)
-                 else
-                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resources = _oa
+                @validitySchedules = _oa
             end
           end
         if !_o['options'].nil?
@@ -18701,25 +18720,6 @@ module Model
                }
             else
                 @options = _oa
-            end
-          end
-        if !_o['policyType'].nil?
-          _oa = _o['policyType']
-            if(_oa.is_a? Hash)
-              @policyType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyType =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyType.push Fixnum.from_json(_item)
-                 else
-                   @policyType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyType = _oa
             end
           end
     end
@@ -18869,77 +18869,77 @@ module Model
   class RangerServiceDef < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :label
-    # (no documentation provided)
-    attr_accessor :rbKeyDescription
-    # (no documentation provided)
-    attr_accessor :enums
-    # (no documentation provided)
-    attr_accessor :options
-    # (no documentation provided)
-    attr_accessor :accessTypes
-    # (no documentation provided)
-    attr_accessor :name
+    attr_accessor :rbKeyLabel
     # (no documentation provided)
     attr_accessor :resources
     # (no documentation provided)
-    attr_accessor :rbKeyLabel
+    attr_accessor :rbKeyDescription
     # (no documentation provided)
     attr_accessor :dataMaskDef
     # (no documentation provided)
-    attr_accessor :policyConditions
+    attr_accessor :options
+    # (no documentation provided)
+    attr_accessor :enums
+    # (no documentation provided)
+    attr_accessor :name
+    # (no documentation provided)
+    attr_accessor :label
     # (no documentation provided)
     attr_accessor :implClass
+    # (no documentation provided)
+    attr_accessor :configs
+    # (no documentation provided)
+    attr_accessor :policyConditions
+    # (no documentation provided)
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :contextEnrichers
     # (no documentation provided)
     attr_accessor :rowFilterDef
     # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
-    attr_accessor :configs
+    attr_accessor :accessTypes
 
     # the json hash for this RangerServiceDef
     def to_jaxb_json_hash
       _h = super
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      if !enums.nil?
-        _ha = Array.new
-        enums.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['enums'] = _ha
-      end
-      _h['options'] = options.to_jaxb_json_hash unless options.nil?
-      if !accessTypes.nil?
-        _ha = Array.new
-        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accessTypes'] = _ha
-      end
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       if !resources.nil?
         _ha = Array.new
         resources.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['resources'] = _ha
       end
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
       _h['dataMaskDef'] = dataMaskDef.to_jaxb_json_hash unless dataMaskDef.nil?
+      _h['options'] = options.to_jaxb_json_hash unless options.nil?
+      if !enums.nil?
+        _ha = Array.new
+        enums.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['enums'] = _ha
+      end
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['implClass'] = implClass.to_jaxb_json_hash unless implClass.nil?
+      if !configs.nil?
+        _ha = Array.new
+        configs.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['configs'] = _ha
+      end
       if !policyConditions.nil?
         _ha = Array.new
         policyConditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policyConditions'] = _ha
       end
-      _h['implClass'] = implClass.to_jaxb_json_hash unless implClass.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       if !contextEnrichers.nil?
         _ha = Array.new
         contextEnrichers.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['contextEnrichers'] = _ha
       end
       _h['rowFilterDef'] = rowFilterDef.to_jaxb_json_hash unless rowFilterDef.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      if !configs.nil?
+      if !accessTypes.nil?
         _ha = Array.new
-        configs.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['configs'] = _ha
+        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accessTypes'] = _ha
       end
       return _h
     end
@@ -18947,118 +18947,23 @@ module Model
     #initializes this RangerServiceDef with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['label'].nil?
-          _oa = _o['label']
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
             if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @label = Array.new
+              @rbKeyLabel = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
+                   @rbKeyLabel.push String.from_json(_item)
                  else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @label = _oa
-            end
-          end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
-            if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
-                 else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyDescription = _oa
-            end
-          end
-        if !_o['enums'].nil?
-          _oa = _o['enums']
-            if(_oa.is_a? Hash)
-              @enums = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enums =  Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enums = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enums.push Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_item)
-                 else
-                   @enums.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enums = _oa
-            end
-          end
-        if !_o['options'].nil?
-          _oa = _o['options']
-            if(_oa.is_a? Hash)
-              @options = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @options =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @options = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @options.push Hash.from_json(_item)
-                 else
-                   @options.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @options = _oa
-            end
-          end
-        if !_o['accessTypes'].nil?
-          _oa = _o['accessTypes']
-            if(_oa.is_a? Hash)
-              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessTypes =  Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @accessTypes = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessTypes.push Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_item)
-                 else
-                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @accessTypes = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
+                @rbKeyLabel = _oa
             end
           end
         if !_o['resources'].nil?
@@ -19080,23 +18985,23 @@ module Model
                 @resources = _oa
             end
           end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
             if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
+              @rbKeyDescription = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
+                   @rbKeyDescription.push String.from_json(_item)
                  else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyLabel = _oa
+                @rbKeyDescription = _oa
             end
           end
         if !_o['dataMaskDef'].nil?
@@ -19118,23 +19023,80 @@ module Model
                 @dataMaskDef = _oa
             end
           end
-        if !_o['policyConditions'].nil?
-          _oa = _o['policyConditions']
+        if !_o['options'].nil?
+          _oa = _o['options']
             if(_oa.is_a? Hash)
-              @policyConditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyConditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_oa) unless _oa['@class']
+              @options = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @options =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @policyConditions = Array.new
+              @options = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyConditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_item)
+                   @options.push Hash.from_json(_item)
                  else
-                   @policyConditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @options.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @policyConditions = _oa
+                @options = _oa
+            end
+          end
+        if !_o['enums'].nil?
+          _oa = _o['enums']
+            if(_oa.is_a? Hash)
+              @enums = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enums =  Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @enums = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @enums.push Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_item)
+                 else
+                   @enums.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @enums = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
             end
           end
         if !_o['implClass'].nil?
@@ -19154,6 +19116,63 @@ module Model
                }
             else
                 @implClass = _oa
+            end
+          end
+        if !_o['configs'].nil?
+          _oa = _o['configs']
+            if(_oa.is_a? Hash)
+              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @configs =  Org::Apache::Ranger::Plugin::Model::RangerServiceConfigDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @configs = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @configs.push Org::Apache::Ranger::Plugin::Model::RangerServiceConfigDef.from_json(_item)
+                 else
+                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @configs = _oa
+            end
+          end
+        if !_o['policyConditions'].nil?
+          _oa = _o['policyConditions']
+            if(_oa.is_a? Hash)
+              @policyConditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyConditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyConditions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyConditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_item)
+                 else
+                   @policyConditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyConditions = _oa
+            end
+          end
+        if !_o['description'].nil?
+          _oa = _o['description']
+            if(_oa.is_a? Hash)
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @description = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @description.push String.from_json(_item)
+                 else
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @description = _oa
             end
           end
         if !_o['contextEnrichers'].nil?
@@ -19194,42 +19213,23 @@ module Model
                 @rowFilterDef = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
+        if !_o['accessTypes'].nil?
+          _oa = _o['accessTypes']
             if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
+              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessTypes =  Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @description = Array.new
+              @accessTypes = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
+                   @accessTypes.push Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_item)
                  else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @description = _oa
-            end
-          end
-        if !_o['configs'].nil?
-          _oa = _o['configs']
-            if(_oa.is_a? Hash)
-              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @configs =  Org::Apache::Ranger::Plugin::Model::RangerServiceConfigDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @configs = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @configs.push Org::Apache::Ranger::Plugin::Model::RangerServiceConfigDef.from_json(_item)
-                 else
-                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @configs = _oa
+                @accessTypes = _oa
             end
           end
     end
@@ -19620,40 +19620,21 @@ module Model
   class RangerTagResourceMap < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :tagId
-    # (no documentation provided)
     attr_accessor :resourceId
+    # (no documentation provided)
+    attr_accessor :tagId
 
     # the json hash for this RangerTagResourceMap
     def to_jaxb_json_hash
       _h = super
-      _h['tagId'] = tagId.to_jaxb_json_hash unless tagId.nil?
       _h['resourceId'] = resourceId.to_jaxb_json_hash unless resourceId.nil?
+      _h['tagId'] = tagId.to_jaxb_json_hash unless tagId.nil?
       return _h
     end
 
     #initializes this RangerTagResourceMap with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['tagId'].nil?
-          _oa = _o['tagId']
-            if(_oa.is_a? Hash)
-              @tagId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagId.push Bignum.from_json(_item)
-                 else
-                   @tagId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagId = _oa
-            end
-          end
         if !_o['resourceId'].nil?
           _oa = _o['resourceId']
             if(_oa.is_a? Hash)
@@ -19671,6 +19652,25 @@ module Model
                }
             else
                 @resourceId = _oa
+            end
+          end
+        if !_o['tagId'].nil?
+          _oa = _o['tagId']
+            if(_oa.is_a? Hash)
+              @tagId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagId.push Bignum.from_json(_item)
+                 else
+                   @tagId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagId = _oa
             end
           end
     end
@@ -32466,21 +32466,21 @@ module Model
   class RangerEnumElementDef 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :itemId
-    # (no documentation provided)
     attr_accessor :label
     # (no documentation provided)
     attr_accessor :rbKeyLabel
+    # (no documentation provided)
+    attr_accessor :itemId
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerEnumElementDef
     def to_jaxb_json_hash
       _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
       _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -32491,44 +32491,6 @@ module Model
 
     #initializes this RangerEnumElementDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
-            if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
-                 else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @itemId = _oa
-            end
-          end
         if !_o['label'].nil?
           _oa = _o['label']
             if(_oa.is_a? Hash)
@@ -32565,6 +32527,44 @@ module Model
                }
             else
                 @rbKeyLabel = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -32674,26 +32674,26 @@ module Model
   class RecurrenceSchedule 
 
     # (no documentation provided)
-    attr_accessor :hour
-    # (no documentation provided)
-    attr_accessor :minute
-    # (no documentation provided)
     attr_accessor :dayOfMonth
     # (no documentation provided)
     attr_accessor :month
     # (no documentation provided)
+    attr_accessor :minute
+    # (no documentation provided)
     attr_accessor :year
+    # (no documentation provided)
+    attr_accessor :hour
     # (no documentation provided)
     attr_accessor :dayOfWeek
 
     # the json hash for this RecurrenceSchedule
     def to_jaxb_json_hash
       _h = {}
-      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
-      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['dayOfMonth'] = dayOfMonth.to_jaxb_json_hash unless dayOfMonth.nil?
       _h['month'] = month.to_jaxb_json_hash unless month.nil?
+      _h['minute'] = minute.to_jaxb_json_hash unless minute.nil?
       _h['year'] = year.to_jaxb_json_hash unless year.nil?
+      _h['hour'] = hour.to_jaxb_json_hash unless hour.nil?
       _h['dayOfWeek'] = dayOfWeek.to_jaxb_json_hash unless dayOfWeek.nil?
       return _h
     end
@@ -32705,44 +32705,6 @@ module Model
 
     #initializes this RecurrenceSchedule with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['hour'].nil?
-          _oa = _o['hour']
-            if(_oa.is_a? Hash)
-              @hour = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @hour =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @hour = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @hour.push String.from_json(_item)
-                 else
-                   @hour.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @hour = _oa
-            end
-          end
-        if !_o['minute'].nil?
-          _oa = _o['minute']
-            if(_oa.is_a? Hash)
-              @minute = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @minute =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @minute = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @minute.push String.from_json(_item)
-                 else
-                   @minute.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @minute = _oa
-            end
-          end
         if !_o['dayOfMonth'].nil?
           _oa = _o['dayOfMonth']
             if(_oa.is_a? Hash)
@@ -32781,6 +32743,25 @@ module Model
                 @month = _oa
             end
           end
+        if !_o['minute'].nil?
+          _oa = _o['minute']
+            if(_oa.is_a? Hash)
+              @minute = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @minute =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @minute = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @minute.push String.from_json(_item)
+                 else
+                   @minute.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @minute = _oa
+            end
+          end
         if !_o['year'].nil?
           _oa = _o['year']
             if(_oa.is_a? Hash)
@@ -32798,6 +32779,25 @@ module Model
                }
             else
                 @year = _oa
+            end
+          end
+        if !_o['hour'].nil?
+          _oa = _o['hour']
+            if(_oa.is_a? Hash)
+              @hour = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @hour =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @hour = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @hour.push String.from_json(_item)
+                 else
+                   @hour.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @hour = _oa
             end
           end
         if !_o['dayOfWeek'].nil?
@@ -33388,33 +33388,33 @@ module Model
   class RangerBaseModelObject 
 
     # (no documentation provided)
+    attr_accessor :createTime
+    # (no documentation provided)
     attr_accessor :createdBy
-    # (no documentation provided)
-    attr_accessor :version
-    # (no documentation provided)
-    attr_accessor :updatedBy
     # (no documentation provided)
     attr_accessor :id
     # (no documentation provided)
+    attr_accessor :version
+    # (no documentation provided)
     attr_accessor :updateTime
+    # (no documentation provided)
+    attr_accessor :updatedBy
     # (no documentation provided)
     attr_accessor :guid
     # (no documentation provided)
     attr_accessor :isEnabled
-    # (no documentation provided)
-    attr_accessor :createTime
 
     # the json hash for this RangerBaseModelObject
     def to_jaxb_json_hash
       _h = {}
+      _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
       _h['createdBy'] = createdBy.to_jaxb_json_hash unless createdBy.nil?
-      _h['version'] = version.to_jaxb_json_hash unless version.nil?
-      _h['updatedBy'] = updatedBy.to_jaxb_json_hash unless updatedBy.nil?
       _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['version'] = version.to_jaxb_json_hash unless version.nil?
       _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
+      _h['updatedBy'] = updatedBy.to_jaxb_json_hash unless updatedBy.nil?
       _h['guid'] = guid.to_jaxb_json_hash unless guid.nil?
       _h['isEnabled'] = isEnabled.to_jaxb_json_hash unless isEnabled.nil?
-      _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
       return _h
     end
 
@@ -33425,6 +33425,25 @@ module Model
 
     #initializes this RangerBaseModelObject with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['createTime'].nil?
+          _oa = _o['createTime']
+            if(_oa.is_a? Hash)
+              @createTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @createTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @createTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @createTime.push Time.from_json(_item)
+                 else
+                   @createTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @createTime = _oa
+            end
+          end
         if !_o['createdBy'].nil?
           _oa = _o['createdBy']
             if(_oa.is_a? Hash)
@@ -33442,44 +33461,6 @@ module Model
                }
             else
                 @createdBy = _oa
-            end
-          end
-        if !_o['version'].nil?
-          _oa = _o['version']
-            if(_oa.is_a? Hash)
-              @version = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @version =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @version = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @version.push Bignum.from_json(_item)
-                 else
-                   @version.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @version = _oa
-            end
-          end
-        if !_o['updatedBy'].nil?
-          _oa = _o['updatedBy']
-            if(_oa.is_a? Hash)
-              @updatedBy = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @updatedBy =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @updatedBy = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @updatedBy.push String.from_json(_item)
-                 else
-                   @updatedBy.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @updatedBy = _oa
             end
           end
         if !_o['id'].nil?
@@ -33501,6 +33482,25 @@ module Model
                 @id = _oa
             end
           end
+        if !_o['version'].nil?
+          _oa = _o['version']
+            if(_oa.is_a? Hash)
+              @version = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @version =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @version = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @version.push Bignum.from_json(_item)
+                 else
+                   @version.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @version = _oa
+            end
+          end
         if !_o['updateTime'].nil?
           _oa = _o['updateTime']
             if(_oa.is_a? Hash)
@@ -33518,6 +33518,25 @@ module Model
                }
             else
                 @updateTime = _oa
+            end
+          end
+        if !_o['updatedBy'].nil?
+          _oa = _o['updatedBy']
+            if(_oa.is_a? Hash)
+              @updatedBy = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @updatedBy =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @updatedBy = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @updatedBy.push String.from_json(_item)
+                 else
+                   @updatedBy.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @updatedBy = _oa
             end
           end
         if !_o['guid'].nil?
@@ -33556,25 +33575,6 @@ module Model
                }
             else
                 @isEnabled = _oa
-            end
-          end
-        if !_o['createTime'].nil?
-          _oa = _o['createTime']
-            if(_oa.is_a? Hash)
-              @createTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @createTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @createTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @createTime.push Time.from_json(_item)
-                 else
-                   @createTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @createTime = _oa
             end
           end
     end
@@ -34189,45 +34189,45 @@ module Model
   class RangerPolicyConditionDef 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :rbKeyValidationMessage
+    attr_accessor :validationMessage
     # (no documentation provided)
     attr_accessor :label
     # (no documentation provided)
-    attr_accessor :validationRegEx
-    # (no documentation provided)
     attr_accessor :uiHint
     # (no documentation provided)
-    attr_accessor :validationMessage
+    attr_accessor :evaluatorOptions
+    # (no documentation provided)
+    attr_accessor :rbKeyDescription
+    # (no documentation provided)
+    attr_accessor :rbKeyValidationMessage
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :evaluatorOptions
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :rbKeyLabel
     # (no documentation provided)
     attr_accessor :evaluator
     # (no documentation provided)
-    attr_accessor :description
+    attr_accessor :name
     # (no documentation provided)
-    attr_accessor :rbKeyDescription
+    attr_accessor :validationRegEx
 
     # the json hash for this RangerPolicyConditionDef
     def to_jaxb_json_hash
       _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
-      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
-      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
       _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
       _h['evaluatorOptions'] = evaluatorOptions.to_jaxb_json_hash unless evaluatorOptions.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['evaluator'] = evaluator.to_jaxb_json_hash unless evaluator.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
       return _h
     end
 
@@ -34238,42 +34238,23 @@ module Model
 
     #initializes this RangerPolicyConditionDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['name'].nil?
-          _oa = _o['name']
+        if !_o['validationMessage'].nil?
+          _oa = _o['validationMessage']
             if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
+              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationMessage =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @name = Array.new
+              @validationMessage = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
+                   @validationMessage.push String.from_json(_item)
                  else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @name = _oa
-            end
-          end
-        if !_o['rbKeyValidationMessage'].nil?
-          _oa = _o['rbKeyValidationMessage']
-            if(_oa.is_a? Hash)
-              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyValidationMessage = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyValidationMessage.push String.from_json(_item)
-                 else
-                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyValidationMessage = _oa
+                @validationMessage = _oa
             end
           end
         if !_o['label'].nil?
@@ -34295,25 +34276,6 @@ module Model
                 @label = _oa
             end
           end
-        if !_o['validationRegEx'].nil?
-          _oa = _o['validationRegEx']
-            if(_oa.is_a? Hash)
-              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationRegEx = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationRegEx.push String.from_json(_item)
-                 else
-                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationRegEx = _oa
-            end
-          end
         if !_o['uiHint'].nil?
           _oa = _o['uiHint']
             if(_oa.is_a? Hash)
@@ -34333,23 +34295,61 @@ module Model
                 @uiHint = _oa
             end
           end
-        if !_o['validationMessage'].nil?
-          _oa = _o['validationMessage']
+        if !_o['evaluatorOptions'].nil?
+          _oa = _o['evaluatorOptions']
             if(_oa.is_a? Hash)
-              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationMessage =  String.from_json(_oa) unless _oa['@class']
+              @evaluatorOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @evaluatorOptions =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @validationMessage = Array.new
+              @evaluatorOptions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationMessage.push String.from_json(_item)
+                   @evaluatorOptions.push Hash.from_json(_item)
                  else
-                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @evaluatorOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @validationMessage = _oa
+                @evaluatorOptions = _oa
+            end
+          end
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
+            if(_oa.is_a? Hash)
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyDescription = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyDescription.push String.from_json(_item)
+                 else
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyDescription = _oa
+            end
+          end
+        if !_o['rbKeyValidationMessage'].nil?
+          _oa = _o['rbKeyValidationMessage']
+            if(_oa.is_a? Hash)
+              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyValidationMessage = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyValidationMessage.push String.from_json(_item)
+                 else
+                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyValidationMessage = _oa
             end
           end
         if !_o['itemId'].nil?
@@ -34371,23 +34371,23 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['evaluatorOptions'].nil?
-          _oa = _o['evaluatorOptions']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @evaluatorOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @evaluatorOptions =  Hash.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @evaluatorOptions = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @evaluatorOptions.push Hash.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @evaluatorOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @evaluatorOptions = _oa
+                @description = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -34428,42 +34428,42 @@ module Model
                 @evaluator = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @description = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @description = _oa
+                @name = _oa
             end
           end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
+        if !_o['validationRegEx'].nil?
+          _oa = _o['validationRegEx']
             if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
+              @validationRegEx = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
+                   @validationRegEx.push String.from_json(_item)
                  else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyDescription = _oa
+                @validationRegEx = _oa
             end
           end
     end
@@ -34573,47 +34573,28 @@ module Model
   class RangerTagDef < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :attributeDefs
     # (no documentation provided)
     attr_accessor :source
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerTagDef
     def to_jaxb_json_hash
       _h = super
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       if !attributeDefs.nil?
         _ha = Array.new
         attributeDefs.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['attributeDefs'] = _ha
       end
       _h['source'] = source.to_jaxb_json_hash unless source.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
     #initializes this RangerTagDef with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['attributeDefs'].nil?
           _oa = _o['attributeDefs']
             if(_oa.is_a? Hash)
@@ -34650,6 +34631,25 @@ module Model
                }
             else
                 @source = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -35970,15 +35970,15 @@ module Model
   class RangerValidityRecurrence 
 
     # (no documentation provided)
-    attr_accessor :schedule
-    # (no documentation provided)
     attr_accessor :interval
+    # (no documentation provided)
+    attr_accessor :schedule
 
     # the json hash for this RangerValidityRecurrence
     def to_jaxb_json_hash
       _h = {}
-      _h['schedule'] = schedule.to_jaxb_json_hash unless schedule.nil?
       _h['interval'] = interval.to_jaxb_json_hash unless interval.nil?
+      _h['schedule'] = schedule.to_jaxb_json_hash unless schedule.nil?
       return _h
     end
 
@@ -35989,25 +35989,6 @@ module Model
 
     #initializes this RangerValidityRecurrence with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['schedule'].nil?
-          _oa = _o['schedule']
-            if(_oa.is_a? Hash)
-              @schedule = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @schedule =  Org::Apache::Ranger::Plugin::Model::RecurrenceSchedule.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @schedule = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @schedule.push Org::Apache::Ranger::Plugin::Model::RecurrenceSchedule.from_json(_item)
-                 else
-                   @schedule.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @schedule = _oa
-            end
-          end
         if !_o['interval'].nil?
           _oa = _o['interval']
             if(_oa.is_a? Hash)
@@ -36025,6 +36006,25 @@ module Model
                }
             else
                 @interval = _oa
+            end
+          end
+        if !_o['schedule'].nil?
+          _oa = _o['schedule']
+            if(_oa.is_a? Hash)
+              @schedule = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @schedule =  Org::Apache::Ranger::Plugin::Model::RecurrenceSchedule.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @schedule = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @schedule.push Org::Apache::Ranger::Plugin::Model::RecurrenceSchedule.from_json(_item)
+                 else
+                   @schedule.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @schedule = _oa
             end
           end
     end
@@ -37070,18 +37070,18 @@ module Model
   class ValidityInterval 
 
     # (no documentation provided)
-    attr_accessor :days
-    # (no documentation provided)
     attr_accessor :hours
     # (no documentation provided)
     attr_accessor :minutes
+    # (no documentation provided)
+    attr_accessor :days
 
     # the json hash for this ValidityInterval
     def to_jaxb_json_hash
       _h = {}
-      _h['days'] = days.to_jaxb_json_hash unless days.nil?
       _h['hours'] = hours.to_jaxb_json_hash unless hours.nil?
       _h['minutes'] = minutes.to_jaxb_json_hash unless minutes.nil?
+      _h['days'] = days.to_jaxb_json_hash unless days.nil?
       return _h
     end
 
@@ -37092,25 +37092,6 @@ module Model
 
     #initializes this ValidityInterval with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['days'].nil?
-          _oa = _o['days']
-            if(_oa.is_a? Hash)
-              @days = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @days =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @days = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @days.push Fixnum.from_json(_item)
-                 else
-                   @days.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @days = _oa
-            end
-          end
         if !_o['hours'].nil?
           _oa = _o['hours']
             if(_oa.is_a? Hash)
@@ -37149,9 +37130,97 @@ module Model
                 @minutes = _oa
             end
           end
+        if !_o['days'].nil?
+          _oa = _o['days']
+            if(_oa.is_a? Hash)
+              @days = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @days =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @days = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @days.push Fixnum.from_json(_item)
+                 else
+                   @days.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @days = _oa
+            end
+          end
     end
 
     # constructs a ValidityInterval from a (parsed) JSON hash
+    def self.from_json(o)
+      if o.nil?
+        return nil
+      else
+        inst = new
+        inst.init_jaxb_json_hash o
+        return inst
+      end
+    end
+  end
+
+end
+
+end
+
+end
+
+end
+
+end
+
+module Org
+
+module Apache
+
+module Ranger
+
+module Plugin
+
+module Model
+
+  # (no documentation provided)
+  class RangerRowFilterPolicyItem < Org::Apache::Ranger::Plugin::Model::RangerPolicyItem 
+
+    # (no documentation provided)
+    attr_accessor :rowFilterInfo
+
+    # the json hash for this RangerRowFilterPolicyItem
+    def to_jaxb_json_hash
+      _h = super
+      _h['rowFilterInfo'] = rowFilterInfo.to_jaxb_json_hash unless rowFilterInfo.nil?
+      return _h
+    end
+
+    #initializes this RangerRowFilterPolicyItem with a json hash
+    def init_jaxb_json_hash(_o)
+      super _o
+        if !_o['rowFilterInfo'].nil?
+          _oa = _o['rowFilterInfo']
+            if(_oa.is_a? Hash)
+              @rowFilterInfo = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rowFilterInfo =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemRowFilterInfo.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rowFilterInfo = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rowFilterInfo.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemRowFilterInfo.from_json(_item)
+                 else
+                   @rowFilterInfo.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rowFilterInfo = _oa
+            end
+          end
+    end
+
+    # constructs a RangerRowFilterPolicyItem from a (parsed) JSON hash
     def self.from_json(o)
       if o.nil?
         return nil
@@ -37253,105 +37322,36 @@ module Plugin
 module Model
 
   # (no documentation provided)
-  class RangerRowFilterPolicyItem < Org::Apache::Ranger::Plugin::Model::RangerPolicyItem 
-
-    # (no documentation provided)
-    attr_accessor :rowFilterInfo
-
-    # the json hash for this RangerRowFilterPolicyItem
-    def to_jaxb_json_hash
-      _h = super
-      _h['rowFilterInfo'] = rowFilterInfo.to_jaxb_json_hash unless rowFilterInfo.nil?
-      return _h
-    end
-
-    #initializes this RangerRowFilterPolicyItem with a json hash
-    def init_jaxb_json_hash(_o)
-      super _o
-        if !_o['rowFilterInfo'].nil?
-          _oa = _o['rowFilterInfo']
-            if(_oa.is_a? Hash)
-              @rowFilterInfo = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rowFilterInfo =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItemRowFilterInfo.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rowFilterInfo = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rowFilterInfo.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItemRowFilterInfo.from_json(_item)
-                 else
-                   @rowFilterInfo.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rowFilterInfo = _oa
-            end
-          end
-    end
-
-    # constructs a RangerRowFilterPolicyItem from a (parsed) JSON hash
-    def self.from_json(o)
-      if o.nil?
-        return nil
-      else
-        inst = new
-        inst.init_jaxb_json_hash o
-        return inst
-      end
-    end
-  end
-
-end
-
-end
-
-end
-
-end
-
-end
-
-module Org
-
-module Apache
-
-module Ranger
-
-module Plugin
-
-module Model
-
-  # (no documentation provided)
   class RangerPluginInfo 
 
     # (no documentation provided)
+    attr_accessor :updateTime
+    # (no documentation provided)
+    attr_accessor :id
+    # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
-    attr_accessor :updateTime
+    attr_accessor :appType
     # (no documentation provided)
     attr_accessor :hostName
     # (no documentation provided)
     attr_accessor :createTime
     # (no documentation provided)
-    attr_accessor :appType
-    # (no documentation provided)
-    attr_accessor :id
+    attr_accessor :ipAddress
     # (no documentation provided)
     attr_accessor :info
-    # (no documentation provided)
-    attr_accessor :ipAddress
 
     # the json hash for this RangerPluginInfo
     def to_jaxb_json_hash
       _h = {}
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       _h['updateTime'] = updateTime.to_jaxb_json_hash unless updateTime.nil?
+      _h['id'] = id.to_jaxb_json_hash unless id.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['appType'] = appType.to_jaxb_json_hash unless appType.nil?
       _h['hostName'] = hostName.to_jaxb_json_hash unless hostName.nil?
       _h['createTime'] = createTime.to_jaxb_json_hash unless createTime.nil?
-      _h['appType'] = appType.to_jaxb_json_hash unless appType.nil?
-      _h['id'] = id.to_jaxb_json_hash unless id.nil?
-      _h['info'] = info.to_jaxb_json_hash unless info.nil?
       _h['ipAddress'] = ipAddress.to_jaxb_json_hash unless ipAddress.nil?
+      _h['info'] = info.to_jaxb_json_hash unless info.nil?
       return _h
     end
 
@@ -37362,6 +37362,44 @@ module Model
 
     #initializes this RangerPluginInfo with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['updateTime'].nil?
+          _oa = _o['updateTime']
+            if(_oa.is_a? Hash)
+              @updateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @updateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @updateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @updateTime.push Time.from_json(_item)
+                 else
+                   @updateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @updateTime = _oa
+            end
+          end
+        if !_o['id'].nil?
+          _oa = _o['id']
+            if(_oa.is_a? Hash)
+              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @id =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @id = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @id.push Bignum.from_json(_item)
+                 else
+                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @id = _oa
+            end
+          end
         if !_o['serviceName'].nil?
           _oa = _o['serviceName']
             if(_oa.is_a? Hash)
@@ -37381,23 +37419,23 @@ module Model
                 @serviceName = _oa
             end
           end
-        if !_o['updateTime'].nil?
-          _oa = _o['updateTime']
+        if !_o['appType'].nil?
+          _oa = _o['appType']
             if(_oa.is_a? Hash)
-              @updateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @updateTime =  Time.from_json(_oa) unless _oa['@class']
+              @appType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @appType =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @updateTime = Array.new
+              @appType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @updateTime.push Time.from_json(_item)
+                   @appType.push String.from_json(_item)
                  else
-                   @updateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @appType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @updateTime = _oa
+                @appType = _oa
             end
           end
         if !_o['hostName'].nil?
@@ -37438,42 +37476,23 @@ module Model
                 @createTime = _oa
             end
           end
-        if !_o['appType'].nil?
-          _oa = _o['appType']
+        if !_o['ipAddress'].nil?
+          _oa = _o['ipAddress']
             if(_oa.is_a? Hash)
-              @appType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @appType =  String.from_json(_oa) unless _oa['@class']
+              @ipAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @ipAddress =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @appType = Array.new
+              @ipAddress = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @appType.push String.from_json(_item)
+                   @ipAddress.push String.from_json(_item)
                  else
-                   @appType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @ipAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @appType = _oa
-            end
-          end
-        if !_o['id'].nil?
-          _oa = _o['id']
-            if(_oa.is_a? Hash)
-              @id = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @id =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @id = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @id.push Bignum.from_json(_item)
-                 else
-                   @id.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @id = _oa
+                @ipAddress = _oa
             end
           end
         if !_o['info'].nil?
@@ -37493,25 +37512,6 @@ module Model
                }
             else
                 @info = _oa
-            end
-          end
-        if !_o['ipAddress'].nil?
-          _oa = _o['ipAddress']
-            if(_oa.is_a? Hash)
-              @ipAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @ipAddress =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @ipAddress = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @ipAddress.push String.from_json(_item)
-                 else
-                   @ipAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @ipAddress = _oa
             end
           end
     end
@@ -37621,41 +37621,41 @@ module Model
   class RangerServiceResource < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :resourceElements
+    attr_accessor :resourceSignature
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
-    attr_accessor :resourceSignature
+    attr_accessor :resourceElements
 
     # the json hash for this RangerServiceResource
     def to_jaxb_json_hash
       _h = super
-      _h['resourceElements'] = resourceElements.to_jaxb_json_hash unless resourceElements.nil?
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['resourceElements'] = resourceElements.to_jaxb_json_hash unless resourceElements.nil?
       return _h
     end
 
     #initializes this RangerServiceResource with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['resourceElements'].nil?
-          _oa = _o['resourceElements']
+        if !_o['resourceSignature'].nil?
+          _oa = _o['resourceSignature']
             if(_oa.is_a? Hash)
-              @resourceElements = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceElements =  Hash.from_json(_oa) unless _oa['@class']
+              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resourceElements = Array.new
+              @resourceSignature = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceElements.push Hash.from_json(_item)
+                   @resourceSignature.push String.from_json(_item)
                  else
-                   @resourceElements.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resourceElements = _oa
+                @resourceSignature = _oa
             end
           end
         if !_o['serviceName'].nil?
@@ -37677,23 +37677,23 @@ module Model
                 @serviceName = _oa
             end
           end
-        if !_o['resourceSignature'].nil?
-          _oa = _o['resourceSignature']
+        if !_o['resourceElements'].nil?
+          _oa = _o['resourceElements']
             if(_oa.is_a? Hash)
-              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
+              @resourceElements = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceElements =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resourceSignature = Array.new
+              @resourceElements = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceSignature.push String.from_json(_item)
+                   @resourceElements.push Hash.from_json(_item)
                  else
-                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @resourceElements.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resourceSignature = _oa
+                @resourceElements = _oa
             end
           end
     end
@@ -37734,51 +37734,51 @@ module Model
   class RangerServiceConfigDef 
 
     # (no documentation provided)
-    attr_accessor :itemId
-    # (no documentation provided)
-    attr_accessor :label
-    # (no documentation provided)
     attr_accessor :mandatory
-    # (no documentation provided)
-    attr_accessor :subType
-    # (no documentation provided)
-    attr_accessor :type
-    # (no documentation provided)
-    attr_accessor :defaultValue
-    # (no documentation provided)
-    attr_accessor :validationRegEx
-    # (no documentation provided)
-    attr_accessor :rbKeyValidationMessage
     # (no documentation provided)
     attr_accessor :name
     # (no documentation provided)
-    attr_accessor :description
+    attr_accessor :uiHint
+    # (no documentation provided)
+    attr_accessor :defaultValue
     # (no documentation provided)
     attr_accessor :rbKeyLabel
     # (no documentation provided)
-    attr_accessor :rbKeyDescription
+    attr_accessor :rbKeyValidationMessage
+    # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :itemId
+    # (no documentation provided)
+    attr_accessor :description
+    # (no documentation provided)
+    attr_accessor :type
+    # (no documentation provided)
+    attr_accessor :subType
+    # (no documentation provided)
+    attr_accessor :validationRegEx
     # (no documentation provided)
     attr_accessor :validationMessage
     # (no documentation provided)
-    attr_accessor :uiHint
+    attr_accessor :rbKeyDescription
 
     # the json hash for this RangerServiceConfigDef
     def to_jaxb_json_hash
       _h = {}
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
       _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
-      _h['subType'] = subType.to_jaxb_json_hash unless subType.nil?
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
-      _h['defaultValue'] = defaultValue.to_jaxb_json_hash unless defaultValue.nil?
-      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
-      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
       _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
+      _h['defaultValue'] = defaultValue.to_jaxb_json_hash unless defaultValue.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['subType'] = subType.to_jaxb_json_hash unless subType.nil?
+      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
+      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
       return _h
     end
 
@@ -37789,44 +37789,6 @@ module Model
 
     #initializes this RangerServiceConfigDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
-            if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
-                 else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @itemId = _oa
-            end
-          end
-        if !_o['label'].nil?
-          _oa = _o['label']
-            if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @label = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
-                 else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @label = _oa
-            end
-          end
         if !_o['mandatory'].nil?
           _oa = _o['mandatory']
             if(_oa.is_a? Hash)
@@ -37844,101 +37806,6 @@ module Model
                }
             else
                 @mandatory = _oa
-            end
-          end
-        if !_o['subType'].nil?
-          _oa = _o['subType']
-            if(_oa.is_a? Hash)
-              @subType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @subType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @subType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @subType.push String.from_json(_item)
-                 else
-                   @subType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @subType = _oa
-            end
-          end
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
-            end
-          end
-        if !_o['defaultValue'].nil?
-          _oa = _o['defaultValue']
-            if(_oa.is_a? Hash)
-              @defaultValue = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @defaultValue =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @defaultValue = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @defaultValue.push String.from_json(_item)
-                 else
-                   @defaultValue.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @defaultValue = _oa
-            end
-          end
-        if !_o['validationRegEx'].nil?
-          _oa = _o['validationRegEx']
-            if(_oa.is_a? Hash)
-              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationRegEx = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationRegEx.push String.from_json(_item)
-                 else
-                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationRegEx = _oa
-            end
-          end
-        if !_o['rbKeyValidationMessage'].nil?
-          _oa = _o['rbKeyValidationMessage']
-            if(_oa.is_a? Hash)
-              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyValidationMessage = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyValidationMessage.push String.from_json(_item)
-                 else
-                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyValidationMessage = _oa
             end
           end
         if !_o['name'].nil?
@@ -37960,23 +37827,42 @@ module Model
                 @name = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
+        if !_o['uiHint'].nil?
+          _oa = _o['uiHint']
             if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
+              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @uiHint =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @description = Array.new
+              @uiHint = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
+                   @uiHint.push String.from_json(_item)
                  else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @description = _oa
+                @uiHint = _oa
+            end
+          end
+        if !_o['defaultValue'].nil?
+          _oa = _o['defaultValue']
+            if(_oa.is_a? Hash)
+              @defaultValue = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @defaultValue =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @defaultValue = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @defaultValue.push String.from_json(_item)
+                 else
+                   @defaultValue.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @defaultValue = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -37998,23 +37884,137 @@ module Model
                 @rbKeyLabel = _oa
             end
           end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
+        if !_o['rbKeyValidationMessage'].nil?
+          _oa = _o['rbKeyValidationMessage']
             if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
+              @rbKeyValidationMessage = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
+                   @rbKeyValidationMessage.push String.from_json(_item)
                  else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyDescription = _oa
+                @rbKeyValidationMessage = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
+            end
+          end
+        if !_o['description'].nil?
+          _oa = _o['description']
+            if(_oa.is_a? Hash)
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @description = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @description.push String.from_json(_item)
+                 else
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @description = _oa
+            end
+          end
+        if !_o['type'].nil?
+          _oa = _o['type']
+            if(_oa.is_a? Hash)
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @type = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @type.push String.from_json(_item)
+                 else
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @type = _oa
+            end
+          end
+        if !_o['subType'].nil?
+          _oa = _o['subType']
+            if(_oa.is_a? Hash)
+              @subType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @subType =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @subType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @subType.push String.from_json(_item)
+                 else
+                   @subType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @subType = _oa
+            end
+          end
+        if !_o['validationRegEx'].nil?
+          _oa = _o['validationRegEx']
+            if(_oa.is_a? Hash)
+              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @validationRegEx = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @validationRegEx.push String.from_json(_item)
+                 else
+                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @validationRegEx = _oa
             end
           end
         if !_o['validationMessage'].nil?
@@ -38036,23 +38036,23 @@ module Model
                 @validationMessage = _oa
             end
           end
-        if !_o['uiHint'].nil?
-          _oa = _o['uiHint']
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
             if(_oa.is_a? Hash)
-              @uiHint = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @uiHint =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @uiHint = Array.new
+              @rbKeyDescription = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @uiHint.push String.from_json(_item)
+                   @rbKeyDescription.push String.from_json(_item)
                  else
-                   @uiHint.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @uiHint = _oa
+                @rbKeyDescription = _oa
             end
           end
     end
@@ -39297,9 +39297,9 @@ module Datatype
     # (no documentation provided)
     attr_accessor :msgDesc
     # (no documentation provided)
-    attr_accessor :messageList
-    # (no documentation provided)
     attr_accessor :httpStatusCode
+    # (no documentation provided)
+    attr_accessor :messageList
     # (no documentation provided)
     attr_accessor :statusCode
 
@@ -39307,12 +39307,12 @@ module Datatype
     def to_jaxb_json_hash
       _h = {}
       _h['msgDesc'] = msgDesc.to_jaxb_json_hash unless msgDesc.nil?
+      _h['httpStatusCode'] = httpStatusCode.to_jaxb_json_hash unless httpStatusCode.nil?
       if !messageList.nil?
         _ha = Array.new
         messageList.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['messageList'] = _ha
       end
-      _h['httpStatusCode'] = httpStatusCode.to_jaxb_json_hash unless httpStatusCode.nil?
       _h['statusCode'] = statusCode.to_jaxb_json_hash unless statusCode.nil?
       return _h
     end
@@ -39343,25 +39343,6 @@ module Datatype
                 @msgDesc = _oa
             end
           end
-        if !_o['messageList'].nil?
-          _oa = _o['messageList']
-            if(_oa.is_a? Hash)
-              @messageList = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @messageList =  Org::Apache::Ranger::Admin::Client::Datatype::Message.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @messageList = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @messageList.push Org::Apache::Ranger::Admin::Client::Datatype::Message.from_json(_item)
-                 else
-                   @messageList.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @messageList = _oa
-            end
-          end
         if !_o['httpStatusCode'].nil?
           _oa = _o['httpStatusCode']
             if(_oa.is_a? Hash)
@@ -39379,6 +39360,25 @@ module Datatype
                }
             else
                 @httpStatusCode = _oa
+            end
+          end
+        if !_o['messageList'].nil?
+          _oa = _o['messageList']
+            if(_oa.is_a? Hash)
+              @messageList = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @messageList =  Org::Apache::Ranger::Admin::Client::Datatype::Message.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @messageList = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @messageList.push Org::Apache::Ranger::Admin::Client::Datatype::Message.from_json(_item)
+                 else
+                   @messageList.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @messageList = _oa
             end
           end
         if !_o['statusCode'].nil?
@@ -39531,35 +39531,35 @@ module Model
   class RangerService < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :tagUpdateTime
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :tagVersion
-    # (no documentation provided)
-    attr_accessor :configs
+    attr_accessor :type
     # (no documentation provided)
     attr_accessor :tagService
     # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :tagUpdateTime
+    # (no documentation provided)
+    attr_accessor :tagVersion
     # (no documentation provided)
     attr_accessor :policyUpdateTime
     # (no documentation provided)
+    attr_accessor :name
+    # (no documentation provided)
     attr_accessor :description
+    # (no documentation provided)
+    attr_accessor :configs
     # (no documentation provided)
     attr_accessor :policyVersion
 
     # the json hash for this RangerService
     def to_jaxb_json_hash
       _h = super
-      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
-      _h['configs'] = configs.to_jaxb_json_hash unless configs.nil?
-      _h['tagService'] = tagService.to_jaxb_json_hash unless tagService.nil?
       _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['tagService'] = tagService.to_jaxb_json_hash unless tagService.nil?
+      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
+      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
       _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['configs'] = configs.to_jaxb_json_hash unless configs.nil?
       _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
       return _h
     end
@@ -39567,80 +39567,23 @@ module Model
     #initializes this RangerService with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['tagUpdateTime'].nil?
-          _oa = _o['tagUpdateTime']
+        if !_o['type'].nil?
+          _oa = _o['type']
             if(_oa.is_a? Hash)
-              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagUpdateTime = Array.new
+              @type = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagUpdateTime.push Time.from_json(_item)
+                   @type.push String.from_json(_item)
                  else
-                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagUpdateTime = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['tagVersion'].nil?
-          _oa = _o['tagVersion']
-            if(_oa.is_a? Hash)
-              @tagVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagVersion.push Bignum.from_json(_item)
-                 else
-                   @tagVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagVersion = _oa
-            end
-          end
-        if !_o['configs'].nil?
-          _oa = _o['configs']
-            if(_oa.is_a? Hash)
-              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @configs =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @configs = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @configs.push Hash.from_json(_item)
-                 else
-                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @configs = _oa
+                @type = _oa
             end
           end
         if !_o['tagService'].nil?
@@ -39662,23 +39605,42 @@ module Model
                 @tagService = _oa
             end
           end
-        if !_o['type'].nil?
-          _oa = _o['type']
+        if !_o['tagUpdateTime'].nil?
+          _oa = _o['tagUpdateTime']
             if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
+              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @type = Array.new
+              @tagUpdateTime = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
+                   @tagUpdateTime.push Time.from_json(_item)
                  else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @type = _oa
+                @tagUpdateTime = _oa
+            end
+          end
+        if !_o['tagVersion'].nil?
+          _oa = _o['tagVersion']
+            if(_oa.is_a? Hash)
+              @tagVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagVersion.push Bignum.from_json(_item)
+                 else
+                   @tagVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagVersion = _oa
             end
           end
         if !_o['policyUpdateTime'].nil?
@@ -39700,6 +39662,25 @@ module Model
                 @policyUpdateTime = _oa
             end
           end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
+            end
+          end
         if !_o['description'].nil?
           _oa = _o['description']
             if(_oa.is_a? Hash)
@@ -39717,6 +39698,25 @@ module Model
                }
             else
                 @description = _oa
+            end
+          end
+        if !_o['configs'].nil?
+          _oa = _o['configs']
+            if(_oa.is_a? Hash)
+              @configs = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @configs =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @configs = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @configs.push Hash.from_json(_item)
+                 else
+                   @configs.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @configs = _oa
             end
           end
         if !_o['policyVersion'].nil?
@@ -40155,19 +40155,19 @@ module Model
   class RangerPolicyItemCondition 
 
     # (no documentation provided)
-    attr_accessor :type
-    # (no documentation provided)
     attr_accessor :values
+    # (no documentation provided)
+    attr_accessor :type
 
     # the json hash for this RangerPolicyItemCondition
     def to_jaxb_json_hash
       _h = {}
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       if !values.nil?
         _ha = Array.new
         values.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['values'] = _ha
       end
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       return _h
     end
 
@@ -40178,25 +40178,6 @@ module Model
 
     #initializes this RangerPolicyItemCondition with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
-            end
-          end
         if !_o['values'].nil?
           _oa = _o['values']
             if(_oa.is_a? Hash)
@@ -40214,6 +40195,25 @@ module Model
                }
             else
                 @values = _oa
+            end
+          end
+        if !_o['type'].nil?
+          _oa = _o['type']
+            if(_oa.is_a? Hash)
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @type = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @type.push String.from_json(_item)
+                 else
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @type = _oa
             end
           end
     end
@@ -41267,9 +41267,9 @@ module Model
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
     attr_accessor :defaultIndex
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerEnumDef
     def to_jaxb_json_hash
@@ -41280,8 +41280,8 @@ module Model
         _h['elements'] = _ha
       end
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       _h['defaultIndex'] = defaultIndex.to_jaxb_json_hash unless defaultIndex.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -41330,25 +41330,6 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
         if !_o['defaultIndex'].nil?
           _oa = _o['defaultIndex']
             if(_oa.is_a? Hash)
@@ -41366,6 +41347,25 @@ module Model
                }
             else
                 @defaultIndex = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -41497,28 +41497,28 @@ module Model
   class RangerAccessTypeDef 
 
     # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
     attr_accessor :impliedGrants
-    # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :rbKeyLabel
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :label
+    attr_accessor :rbKeyLabel
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerAccessTypeDef
     def to_jaxb_json_hash
       _h = {}
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
       if !impliedGrants.nil?
         _ha = Array.new
         impliedGrants.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['impliedGrants'] = _ha
       end
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -41529,6 +41529,25 @@ module Model
 
     #initializes this RangerAccessTypeDef with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
         if !_o['impliedGrants'].nil?
           _oa = _o['impliedGrants']
             if(_oa.is_a? Hash)
@@ -41546,44 +41565,6 @@ module Model
                }
             else
                 @impliedGrants = _oa
-            end
-          end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
-            if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
-                 else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyLabel = _oa
             end
           end
         if !_o['itemId'].nil?
@@ -41605,23 +41586,42 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['label'].nil?
-          _oa = _o['label']
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
             if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @label = Array.new
+              @rbKeyLabel = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
+                   @rbKeyLabel.push String.from_json(_item)
                  else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @label = _oa
+                @rbKeyLabel = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -42064,139 +42064,101 @@ module Model
   class RangerServiceDef < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :label
-    # (no documentation provided)
-    attr_accessor :resources
-    # (no documentation provided)
-    attr_accessor :rbKeyDescription
+    attr_accessor :dataMaskDef
     # (no documentation provided)
     attr_accessor :description
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :accessTypes
-    # (no documentation provided)
-    attr_accessor :implClass
-    # (no documentation provided)
-    attr_accessor :policyConditions
-    # (no documentation provided)
-    attr_accessor :enums
-    # (no documentation provided)
     attr_accessor :options
-    # (no documentation provided)
-    attr_accessor :contextEnrichers
     # (no documentation provided)
     attr_accessor :configs
     # (no documentation provided)
-    attr_accessor :rowFilterDef
+    attr_accessor :policyConditions
+    # (no documentation provided)
+    attr_accessor :implClass
+    # (no documentation provided)
+    attr_accessor :rbKeyDescription
+    # (no documentation provided)
+    attr_accessor :accessTypes
+    # (no documentation provided)
+    attr_accessor :enums
+    # (no documentation provided)
+    attr_accessor :resources
+    # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :contextEnrichers
     # (no documentation provided)
     attr_accessor :rbKeyLabel
     # (no documentation provided)
-    attr_accessor :dataMaskDef
+    attr_accessor :rowFilterDef
+    # (no documentation provided)
+    attr_accessor :name
 
     # the json hash for this RangerServiceDef
     def to_jaxb_json_hash
       _h = super
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
-      if !resources.nil?
-        _ha = Array.new
-        resources.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['resources'] = _ha
-      end
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['dataMaskDef'] = dataMaskDef.to_jaxb_json_hash unless dataMaskDef.nil?
       _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      if !accessTypes.nil?
+      _h['options'] = options.to_jaxb_json_hash unless options.nil?
+      if !configs.nil?
         _ha = Array.new
-        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accessTypes'] = _ha
+        configs.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['configs'] = _ha
       end
-      _h['implClass'] = implClass.to_jaxb_json_hash unless implClass.nil?
       if !policyConditions.nil?
         _ha = Array.new
         policyConditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policyConditions'] = _ha
+      end
+      _h['implClass'] = implClass.to_jaxb_json_hash unless implClass.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      if !accessTypes.nil?
+        _ha = Array.new
+        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accessTypes'] = _ha
       end
       if !enums.nil?
         _ha = Array.new
         enums.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['enums'] = _ha
       end
-      _h['options'] = options.to_jaxb_json_hash unless options.nil?
+      if !resources.nil?
+        _ha = Array.new
+        resources.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['resources'] = _ha
+      end
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
       if !contextEnrichers.nil?
         _ha = Array.new
         contextEnrichers.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['contextEnrichers'] = _ha
       end
-      if !configs.nil?
-        _ha = Array.new
-        configs.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['configs'] = _ha
-      end
-      _h['rowFilterDef'] = rowFilterDef.to_jaxb_json_hash unless rowFilterDef.nil?
       _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
-      _h['dataMaskDef'] = dataMaskDef.to_jaxb_json_hash unless dataMaskDef.nil?
+      _h['rowFilterDef'] = rowFilterDef.to_jaxb_json_hash unless rowFilterDef.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
     #initializes this RangerServiceDef with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['label'].nil?
-          _oa = _o['label']
+        if !_o['dataMaskDef'].nil?
+          _oa = _o['dataMaskDef']
             if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
+              @dataMaskDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @dataMaskDef =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @label = Array.new
+              @dataMaskDef = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
+                   @dataMaskDef.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskDef.from_json(_item)
                  else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @dataMaskDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @label = _oa
-            end
-          end
-        if !_o['resources'].nil?
-          _oa = _o['resources']
-            if(_oa.is_a? Hash)
-              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resources =  Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resources = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resources.push Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_item)
-                 else
-                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resources = _oa
-            end
-          end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
-            if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
-                 else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyDescription = _oa
+                @dataMaskDef = _oa
             end
           end
         if !_o['description'].nil?
@@ -42218,101 +42180,6 @@ module Model
                 @description = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['accessTypes'].nil?
-          _oa = _o['accessTypes']
-            if(_oa.is_a? Hash)
-              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessTypes =  Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @accessTypes = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessTypes.push Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_item)
-                 else
-                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @accessTypes = _oa
-            end
-          end
-        if !_o['implClass'].nil?
-          _oa = _o['implClass']
-            if(_oa.is_a? Hash)
-              @implClass = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @implClass =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @implClass = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @implClass.push String.from_json(_item)
-                 else
-                   @implClass.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @implClass = _oa
-            end
-          end
-        if !_o['policyConditions'].nil?
-          _oa = _o['policyConditions']
-            if(_oa.is_a? Hash)
-              @policyConditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyConditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyConditions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyConditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_item)
-                 else
-                   @policyConditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyConditions = _oa
-            end
-          end
-        if !_o['enums'].nil?
-          _oa = _o['enums']
-            if(_oa.is_a? Hash)
-              @enums = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enums =  Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enums = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enums.push Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_item)
-                 else
-                   @enums.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enums = _oa
-            end
-          end
         if !_o['options'].nil?
           _oa = _o['options']
             if(_oa.is_a? Hash)
@@ -42330,25 +42197,6 @@ module Model
                }
             else
                 @options = _oa
-            end
-          end
-        if !_o['contextEnrichers'].nil?
-          _oa = _o['contextEnrichers']
-            if(_oa.is_a? Hash)
-              @contextEnrichers = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @contextEnrichers =  Org::Apache::Ranger::Plugin::Model::RangerContextEnricherDef.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @contextEnrichers = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @contextEnrichers.push Org::Apache::Ranger::Plugin::Model::RangerContextEnricherDef.from_json(_item)
-                 else
-                   @contextEnrichers.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @contextEnrichers = _oa
             end
           end
         if !_o['configs'].nil?
@@ -42370,23 +42218,156 @@ module Model
                 @configs = _oa
             end
           end
-        if !_o['rowFilterDef'].nil?
-          _oa = _o['rowFilterDef']
+        if !_o['policyConditions'].nil?
+          _oa = _o['policyConditions']
             if(_oa.is_a? Hash)
-              @rowFilterDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rowFilterDef =  Org::Apache::Ranger::Plugin::Model::RangerRowFilterDef.from_json(_oa) unless _oa['@class']
+              @policyConditions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyConditions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rowFilterDef = Array.new
+              @policyConditions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rowFilterDef.push Org::Apache::Ranger::Plugin::Model::RangerRowFilterDef.from_json(_item)
+                   @policyConditions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyConditionDef.from_json(_item)
                  else
-                   @rowFilterDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyConditions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rowFilterDef = _oa
+                @policyConditions = _oa
+            end
+          end
+        if !_o['implClass'].nil?
+          _oa = _o['implClass']
+            if(_oa.is_a? Hash)
+              @implClass = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @implClass =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @implClass = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @implClass.push String.from_json(_item)
+                 else
+                   @implClass.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @implClass = _oa
+            end
+          end
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
+            if(_oa.is_a? Hash)
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyDescription = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyDescription.push String.from_json(_item)
+                 else
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyDescription = _oa
+            end
+          end
+        if !_o['accessTypes'].nil?
+          _oa = _o['accessTypes']
+            if(_oa.is_a? Hash)
+              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessTypes =  Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @accessTypes = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @accessTypes.push Org::Apache::Ranger::Plugin::Model::RangerAccessTypeDef.from_json(_item)
+                 else
+                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @accessTypes = _oa
+            end
+          end
+        if !_o['enums'].nil?
+          _oa = _o['enums']
+            if(_oa.is_a? Hash)
+              @enums = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enums =  Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @enums = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @enums.push Org::Apache::Ranger::Plugin::Model::RangerEnumDef.from_json(_item)
+                 else
+                   @enums.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @enums = _oa
+            end
+          end
+        if !_o['resources'].nil?
+          _oa = _o['resources']
+            if(_oa.is_a? Hash)
+              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resources =  Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resources = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resources.push Org::Apache::Ranger::Plugin::Model::RangerResourceDef.from_json(_item)
+                 else
+                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resources = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
+        if !_o['contextEnrichers'].nil?
+          _oa = _o['contextEnrichers']
+            if(_oa.is_a? Hash)
+              @contextEnrichers = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @contextEnrichers =  Org::Apache::Ranger::Plugin::Model::RangerContextEnricherDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @contextEnrichers = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @contextEnrichers.push Org::Apache::Ranger::Plugin::Model::RangerContextEnricherDef.from_json(_item)
+                 else
+                   @contextEnrichers.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @contextEnrichers = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -42408,23 +42389,42 @@ module Model
                 @rbKeyLabel = _oa
             end
           end
-        if !_o['dataMaskDef'].nil?
-          _oa = _o['dataMaskDef']
+        if !_o['rowFilterDef'].nil?
+          _oa = _o['rowFilterDef']
             if(_oa.is_a? Hash)
-              @dataMaskDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @dataMaskDef =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskDef.from_json(_oa) unless _oa['@class']
+              @rowFilterDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rowFilterDef =  Org::Apache::Ranger::Plugin::Model::RangerRowFilterDef.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @dataMaskDef = Array.new
+              @rowFilterDef = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @dataMaskDef.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskDef.from_json(_item)
+                   @rowFilterDef.push Org::Apache::Ranger::Plugin::Model::RangerRowFilterDef.from_json(_item)
                  else
-                   @dataMaskDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rowFilterDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @dataMaskDef = _oa
+                @rowFilterDef = _oa
+            end
+          end
+        if !_o['name'].nil?
+          _oa = _o['name']
+            if(_oa.is_a? Hash)
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @name = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @name.push String.from_json(_item)
+                 else
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @name = _oa
             end
           end
     end
@@ -42465,25 +42465,25 @@ module Model
   class RangerValiditySchedule 
 
     # (no documentation provided)
-    attr_accessor :recurrences
+    attr_accessor :endTime
     # (no documentation provided)
-    attr_accessor :startTime
+    attr_accessor :recurrences
     # (no documentation provided)
     attr_accessor :timeZone
     # (no documentation provided)
-    attr_accessor :endTime
+    attr_accessor :startTime
 
     # the json hash for this RangerValiditySchedule
     def to_jaxb_json_hash
       _h = {}
+      _h['endTime'] = endTime.to_jaxb_json_hash unless endTime.nil?
       if !recurrences.nil?
         _ha = Array.new
         recurrences.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['recurrences'] = _ha
       end
-      _h['startTime'] = startTime.to_jaxb_json_hash unless startTime.nil?
       _h['timeZone'] = timeZone.to_jaxb_json_hash unless timeZone.nil?
-      _h['endTime'] = endTime.to_jaxb_json_hash unless endTime.nil?
+      _h['startTime'] = startTime.to_jaxb_json_hash unless startTime.nil?
       return _h
     end
 
@@ -42494,6 +42494,25 @@ module Model
 
     #initializes this RangerValiditySchedule with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['endTime'].nil?
+          _oa = _o['endTime']
+            if(_oa.is_a? Hash)
+              @endTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @endTime =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @endTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @endTime.push String.from_json(_item)
+                 else
+                   @endTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @endTime = _oa
+            end
+          end
         if !_o['recurrences'].nil?
           _oa = _o['recurrences']
             if(_oa.is_a? Hash)
@@ -42511,25 +42530,6 @@ module Model
                }
             else
                 @recurrences = _oa
-            end
-          end
-        if !_o['startTime'].nil?
-          _oa = _o['startTime']
-            if(_oa.is_a? Hash)
-              @startTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @startTime =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @startTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @startTime.push String.from_json(_item)
-                 else
-                   @startTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @startTime = _oa
             end
           end
         if !_o['timeZone'].nil?
@@ -42551,23 +42551,23 @@ module Model
                 @timeZone = _oa
             end
           end
-        if !_o['endTime'].nil?
-          _oa = _o['endTime']
+        if !_o['startTime'].nil?
+          _oa = _o['startTime']
             if(_oa.is_a? Hash)
-              @endTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @endTime =  String.from_json(_oa) unless _oa['@class']
+              @startTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @startTime =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @endTime = Array.new
+              @startTime = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @endTime.push String.from_json(_item)
+                   @startTime.push String.from_json(_item)
                  else
-                   @endTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @startTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @endTime = _oa
+                @startTime = _oa
             end
           end
     end
@@ -42608,70 +42608,51 @@ module Model
   class RangerTag < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :owner
-    # (no documentation provided)
-    attr_accessor :attributes
+    attr_accessor :type
     # (no documentation provided)
     attr_accessor :options
     # (no documentation provided)
-    attr_accessor :validityPeriods
+    attr_accessor :attributes
     # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :owner
+    # (no documentation provided)
+    attr_accessor :validityPeriods
 
     # the json hash for this RangerTag
     def to_jaxb_json_hash
       _h = super
-      _h['owner'] = owner.to_jaxb_json_hash unless owner.nil?
-      _h['attributes'] = attributes.to_jaxb_json_hash unless attributes.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       _h['options'] = options.to_jaxb_json_hash unless options.nil?
+      _h['attributes'] = attributes.to_jaxb_json_hash unless attributes.nil?
+      _h['owner'] = owner.to_jaxb_json_hash unless owner.nil?
       if !validityPeriods.nil?
         _ha = Array.new
         validityPeriods.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['validityPeriods'] = _ha
       end
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       return _h
     end
 
     #initializes this RangerTag with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['owner'].nil?
-          _oa = _o['owner']
+        if !_o['type'].nil?
+          _oa = _o['type']
             if(_oa.is_a? Hash)
-              @owner = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @owner =  Fixnum.from_json(_oa) unless _oa['@class']
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @owner = Array.new
+              @type = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @owner.push Fixnum.from_json(_item)
+                   @type.push String.from_json(_item)
                  else
-                   @owner.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @owner = _oa
-            end
-          end
-        if !_o['attributes'].nil?
-          _oa = _o['attributes']
-            if(_oa.is_a? Hash)
-              @attributes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @attributes =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @attributes = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @attributes.push Hash.from_json(_item)
-                 else
-                   @attributes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @attributes = _oa
+                @type = _oa
             end
           end
         if !_o['options'].nil?
@@ -42693,6 +42674,44 @@ module Model
                 @options = _oa
             end
           end
+        if !_o['attributes'].nil?
+          _oa = _o['attributes']
+            if(_oa.is_a? Hash)
+              @attributes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @attributes =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @attributes = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @attributes.push Hash.from_json(_item)
+                 else
+                   @attributes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @attributes = _oa
+            end
+          end
+        if !_o['owner'].nil?
+          _oa = _o['owner']
+            if(_oa.is_a? Hash)
+              @owner = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @owner =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @owner = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @owner.push Fixnum.from_json(_item)
+                 else
+                   @owner.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @owner = _oa
+            end
+          end
         if !_o['validityPeriods'].nil?
           _oa = _o['validityPeriods']
             if(_oa.is_a? Hash)
@@ -42710,25 +42729,6 @@ module Model
                }
             else
                 @validityPeriods = _oa
-            end
-          end
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
             end
           end
     end
@@ -43175,15 +43175,15 @@ module Model
   class RangerPolicyItemAccess 
 
     # (no documentation provided)
-    attr_accessor :type
-    # (no documentation provided)
     attr_accessor :isAllowed
+    # (no documentation provided)
+    attr_accessor :type
 
     # the json hash for this RangerPolicyItemAccess
     def to_jaxb_json_hash
       _h = {}
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       _h['isAllowed'] = isAllowed.to_jaxb_json_hash unless isAllowed.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
       return _h
     end
 
@@ -43194,25 +43194,6 @@ module Model
 
     #initializes this RangerPolicyItemAccess with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['type'].nil?
-          _oa = _o['type']
-            if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @type = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
-                 else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @type = _oa
-            end
-          end
         if !_o['isAllowed'].nil?
           _oa = _o['isAllowed']
             if(_oa.is_a? Hash)
@@ -43230,6 +43211,25 @@ module Model
                }
             else
                 @isAllowed = _oa
+            end
+          end
+        if !_o['type'].nil?
+          _oa = _o['type']
+            if(_oa.is_a? Hash)
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @type = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @type.push String.from_json(_item)
+                 else
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @type = _oa
             end
           end
     end
@@ -43721,24 +43721,24 @@ module Datatype
   class Message 
 
     # (no documentation provided)
+    attr_accessor :fieldName
+    # (no documentation provided)
+    attr_accessor :message
+    # (no documentation provided)
     attr_accessor :objectId
     # (no documentation provided)
     attr_accessor :rbKey
     # (no documentation provided)
-    attr_accessor :fieldName
-    # (no documentation provided)
     attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :message
 
     # the json hash for this Message
     def to_jaxb_json_hash
       _h = {}
+      _h['fieldName'] = fieldName.to_jaxb_json_hash unless fieldName.nil?
+      _h['message'] = message.to_jaxb_json_hash unless message.nil?
       _h['objectId'] = objectId.to_jaxb_json_hash unless objectId.nil?
       _h['rbKey'] = rbKey.to_jaxb_json_hash unless rbKey.nil?
-      _h['fieldName'] = fieldName.to_jaxb_json_hash unless fieldName.nil?
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['message'] = message.to_jaxb_json_hash unless message.nil?
       return _h
     end
 
@@ -43749,6 +43749,44 @@ module Datatype
 
     #initializes this Message with a json hash
     def init_jaxb_json_hash(_o)
+        if !_o['fieldName'].nil?
+          _oa = _o['fieldName']
+            if(_oa.is_a? Hash)
+              @fieldName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @fieldName =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @fieldName = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @fieldName.push String.from_json(_item)
+                 else
+                   @fieldName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @fieldName = _oa
+            end
+          end
+        if !_o['message'].nil?
+          _oa = _o['message']
+            if(_oa.is_a? Hash)
+              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @message =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @message = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @message.push String.from_json(_item)
+                 else
+                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @message = _oa
+            end
+          end
         if !_o['objectId'].nil?
           _oa = _o['objectId']
             if(_oa.is_a? Hash)
@@ -43787,25 +43825,6 @@ module Datatype
                 @rbKey = _oa
             end
           end
-        if !_o['fieldName'].nil?
-          _oa = _o['fieldName']
-            if(_oa.is_a? Hash)
-              @fieldName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @fieldName =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @fieldName = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @fieldName.push String.from_json(_item)
-                 else
-                   @fieldName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @fieldName = _oa
-            end
-          end
         if !_o['name'].nil?
           _oa = _o['name']
             if(_oa.is_a? Hash)
@@ -43823,25 +43842,6 @@ module Datatype
                }
             else
                 @name = _oa
-            end
-          end
-        if !_o['message'].nil?
-          _oa = _o['message']
-            if(_oa.is_a? Hash)
-              @message = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @message =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @message = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @message.push String.from_json(_item)
-                 else
-                   @message.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @message = _oa
             end
           end
     end
@@ -43884,33 +43884,33 @@ module Util
   class TagPolicies 
 
     # (no documentation provided)
-    attr_accessor :policies
+    attr_accessor :policyUpdateTime
+    # (no documentation provided)
+    attr_accessor :serviceDef
+    # (no documentation provided)
+    attr_accessor :serviceId
     # (no documentation provided)
     attr_accessor :policyVersion
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
-    attr_accessor :serviceDef
-    # (no documentation provided)
-    attr_accessor :policyUpdateTime
-    # (no documentation provided)
-    attr_accessor :serviceId
+    attr_accessor :policies
     # (no documentation provided)
     attr_accessor :auditMode
 
     # the json hash for this TagPolicies
     def to_jaxb_json_hash
       _h = {}
+      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
+      _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
+      _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
+      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       if !policies.nil?
         _ha = Array.new
         policies.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policies'] = _ha
       end
-      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
-      _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
-      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
-      _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
       _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
       return _h
     end
@@ -43922,23 +43922,61 @@ module Util
 
     #initializes this TagPolicies with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['policies'].nil?
-          _oa = _o['policies']
+        if !_o['policyUpdateTime'].nil?
+          _oa = _o['policyUpdateTime']
             if(_oa.is_a? Hash)
-              @policies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policies =  Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_oa) unless _oa['@class']
+              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @policies = Array.new
+              @policyUpdateTime = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policies.push Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_item)
+                   @policyUpdateTime.push Time.from_json(_item)
                  else
-                   @policies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @policies = _oa
+                @policyUpdateTime = _oa
+            end
+          end
+        if !_o['serviceDef'].nil?
+          _oa = _o['serviceDef']
+            if(_oa.is_a? Hash)
+              @serviceDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceDef =  Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceDef = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceDef.push Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_item)
+                 else
+                   @serviceDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceDef = _oa
+            end
+          end
+        if !_o['serviceId'].nil?
+          _oa = _o['serviceId']
+            if(_oa.is_a? Hash)
+              @serviceId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @serviceId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @serviceId.push Bignum.from_json(_item)
+                 else
+                   @serviceId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @serviceId = _oa
             end
           end
         if !_o['policyVersion'].nil?
@@ -43979,61 +44017,23 @@ module Util
                 @serviceName = _oa
             end
           end
-        if !_o['serviceDef'].nil?
-          _oa = _o['serviceDef']
+        if !_o['policies'].nil?
+          _oa = _o['policies']
             if(_oa.is_a? Hash)
-              @serviceDef = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceDef =  Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_oa) unless _oa['@class']
+              @policies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policies =  Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @serviceDef = Array.new
+              @policies = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceDef.push Org::Apache::Ranger::Plugin::Model::RangerServiceDef.from_json(_item)
+                   @policies.push Org::Apache::Ranger::Plugin::Model::RangerPolicy.from_json(_item)
                  else
-                   @serviceDef.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @serviceDef = _oa
-            end
-          end
-        if !_o['policyUpdateTime'].nil?
-          _oa = _o['policyUpdateTime']
-            if(_oa.is_a? Hash)
-              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyUpdateTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyUpdateTime.push Time.from_json(_item)
-                 else
-                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyUpdateTime = _oa
-            end
-          end
-        if !_o['serviceId'].nil?
-          _oa = _o['serviceId']
-            if(_oa.is_a? Hash)
-              @serviceId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @serviceId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceId.push Bignum.from_json(_item)
-                 else
-                   @serviceId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @serviceId = _oa
+                @policies = _oa
             end
           end
         if !_o['auditMode'].nil?
@@ -44440,18 +44440,18 @@ module Service
   class ResourceLookupContext 
 
     # (no documentation provided)
-    attr_accessor :resources
+    attr_accessor :userInput
     # (no documentation provided)
     attr_accessor :resourceName
     # (no documentation provided)
-    attr_accessor :userInput
+    attr_accessor :resources
 
     # the json hash for this ResourceLookupContext
     def to_jaxb_json_hash
       _h = {}
-      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
-      _h['resourceName'] = resourceName.to_jaxb_json_hash unless resourceName.nil?
       _h['userInput'] = userInput.to_jaxb_json_hash unless userInput.nil?
+      _h['resourceName'] = resourceName.to_jaxb_json_hash unless resourceName.nil?
+      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
       return _h
     end
 
@@ -44462,23 +44462,23 @@ module Service
 
     #initializes this ResourceLookupContext with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['resources'].nil?
-          _oa = _o['resources']
+        if !_o['userInput'].nil?
+          _oa = _o['userInput']
             if(_oa.is_a? Hash)
-              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resources =  Hash.from_json(_oa) unless _oa['@class']
+              @userInput = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @userInput =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resources = Array.new
+              @userInput = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resources.push Hash.from_json(_item)
+                   @userInput.push String.from_json(_item)
                  else
-                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @userInput.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resources = _oa
+                @userInput = _oa
             end
           end
         if !_o['resourceName'].nil?
@@ -44500,23 +44500,23 @@ module Service
                 @resourceName = _oa
             end
           end
-        if !_o['userInput'].nil?
-          _oa = _o['userInput']
+        if !_o['resources'].nil?
+          _oa = _o['resources']
             if(_oa.is_a? Hash)
-              @userInput = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @userInput =  String.from_json(_oa) unless _oa['@class']
+              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resources =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @userInput = Array.new
+              @resources = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @userInput.push String.from_json(_item)
+                   @resources.push Hash.from_json(_item)
                  else
-                   @userInput.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @userInput = _oa
+                @resources = _oa
             end
           end
     end
@@ -44557,70 +44557,70 @@ module Util
   class GrantRevokeRequest 
 
     # (no documentation provided)
-    attr_accessor :grantor
-    # (no documentation provided)
-    attr_accessor :sessionId
-    # (no documentation provided)
-    attr_accessor :groups
-    # (no documentation provided)
-    attr_accessor :delegateAdmin
-    # (no documentation provided)
-    attr_accessor :users
-    # (no documentation provided)
-    attr_accessor :replaceExistingPermissions
-    # (no documentation provided)
-    attr_accessor :enableAudit
-    # (no documentation provided)
-    attr_accessor :accessTypes
-    # (no documentation provided)
-    attr_accessor :grantorGroups
-    # (no documentation provided)
-    attr_accessor :requestData
-    # (no documentation provided)
-    attr_accessor :clientIPAddress
+    attr_accessor :clusterName
     # (no documentation provided)
     attr_accessor :clientType
     # (no documentation provided)
-    attr_accessor :resource
+    attr_accessor :users
+    # (no documentation provided)
+    attr_accessor :requestData
     # (no documentation provided)
     attr_accessor :isRecursive
     # (no documentation provided)
-    attr_accessor :clusterName
+    attr_accessor :clientIPAddress
+    # (no documentation provided)
+    attr_accessor :grantorGroups
+    # (no documentation provided)
+    attr_accessor :groups
+    # (no documentation provided)
+    attr_accessor :grantor
+    # (no documentation provided)
+    attr_accessor :replaceExistingPermissions
+    # (no documentation provided)
+    attr_accessor :delegateAdmin
+    # (no documentation provided)
+    attr_accessor :sessionId
+    # (no documentation provided)
+    attr_accessor :resource
+    # (no documentation provided)
+    attr_accessor :accessTypes
+    # (no documentation provided)
+    attr_accessor :enableAudit
 
     # the json hash for this GrantRevokeRequest
     def to_jaxb_json_hash
       _h = {}
-      _h['grantor'] = grantor.to_jaxb_json_hash unless grantor.nil?
-      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
-      if !groups.nil?
-        _ha = Array.new
-        groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['groups'] = _ha
-      end
-      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
+      _h['clusterName'] = clusterName.to_jaxb_json_hash unless clusterName.nil?
+      _h['clientType'] = clientType.to_jaxb_json_hash unless clientType.nil?
       if !users.nil?
         _ha = Array.new
         users.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['users'] = _ha
       end
-      _h['replaceExistingPermissions'] = replaceExistingPermissions.to_jaxb_json_hash unless replaceExistingPermissions.nil?
-      _h['enableAudit'] = enableAudit.to_jaxb_json_hash unless enableAudit.nil?
-      if !accessTypes.nil?
-        _ha = Array.new
-        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accessTypes'] = _ha
-      end
+      _h['requestData'] = requestData.to_jaxb_json_hash unless requestData.nil?
+      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
+      _h['clientIPAddress'] = clientIPAddress.to_jaxb_json_hash unless clientIPAddress.nil?
       if !grantorGroups.nil?
         _ha = Array.new
         grantorGroups.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['grantorGroups'] = _ha
       end
-      _h['requestData'] = requestData.to_jaxb_json_hash unless requestData.nil?
-      _h['clientIPAddress'] = clientIPAddress.to_jaxb_json_hash unless clientIPAddress.nil?
-      _h['clientType'] = clientType.to_jaxb_json_hash unless clientType.nil?
+      if !groups.nil?
+        _ha = Array.new
+        groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['groups'] = _ha
+      end
+      _h['grantor'] = grantor.to_jaxb_json_hash unless grantor.nil?
+      _h['replaceExistingPermissions'] = replaceExistingPermissions.to_jaxb_json_hash unless replaceExistingPermissions.nil?
+      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
+      _h['sessionId'] = sessionId.to_jaxb_json_hash unless sessionId.nil?
       _h['resource'] = resource.to_jaxb_json_hash unless resource.nil?
-      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
-      _h['clusterName'] = clusterName.to_jaxb_json_hash unless clusterName.nil?
+      if !accessTypes.nil?
+        _ha = Array.new
+        accessTypes.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accessTypes'] = _ha
+      end
+      _h['enableAudit'] = enableAudit.to_jaxb_json_hash unless enableAudit.nil?
       return _h
     end
 
@@ -44631,213 +44631,23 @@ module Util
 
     #initializes this GrantRevokeRequest with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['grantor'].nil?
-          _oa = _o['grantor']
+        if !_o['clusterName'].nil?
+          _oa = _o['clusterName']
             if(_oa.is_a? Hash)
-              @grantor = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @grantor =  String.from_json(_oa) unless _oa['@class']
+              @clusterName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @clusterName =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @grantor = Array.new
+              @clusterName = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @grantor.push String.from_json(_item)
+                   @clusterName.push String.from_json(_item)
                  else
-                   @grantor.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @clusterName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @grantor = _oa
-            end
-          end
-        if !_o['sessionId'].nil?
-          _oa = _o['sessionId']
-            if(_oa.is_a? Hash)
-              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @sessionId =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @sessionId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @sessionId.push String.from_json(_item)
-                 else
-                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @sessionId = _oa
-            end
-          end
-        if !_o['groups'].nil?
-          _oa = _o['groups']
-            if(_oa.is_a? Hash)
-              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @groups =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @groups = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @groups.push String.from_json(_item)
-                 else
-                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @groups = _oa
-            end
-          end
-        if !_o['delegateAdmin'].nil?
-          _oa = _o['delegateAdmin']
-            if(_oa.is_a? Hash)
-              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @delegateAdmin = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @delegateAdmin.push Boolean.from_json(_item)
-                 else
-                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @delegateAdmin = _oa
-            end
-          end
-        if !_o['users'].nil?
-          _oa = _o['users']
-            if(_oa.is_a? Hash)
-              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @users =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @users = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @users.push String.from_json(_item)
-                 else
-                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @users = _oa
-            end
-          end
-        if !_o['replaceExistingPermissions'].nil?
-          _oa = _o['replaceExistingPermissions']
-            if(_oa.is_a? Hash)
-              @replaceExistingPermissions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @replaceExistingPermissions =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @replaceExistingPermissions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @replaceExistingPermissions.push Boolean.from_json(_item)
-                 else
-                   @replaceExistingPermissions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @replaceExistingPermissions = _oa
-            end
-          end
-        if !_o['enableAudit'].nil?
-          _oa = _o['enableAudit']
-            if(_oa.is_a? Hash)
-              @enableAudit = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enableAudit =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @enableAudit = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enableAudit.push Boolean.from_json(_item)
-                 else
-                   @enableAudit.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @enableAudit = _oa
-            end
-          end
-        if !_o['accessTypes'].nil?
-          _oa = _o['accessTypes']
-            if(_oa.is_a? Hash)
-              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @accessTypes =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @accessTypes = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @accessTypes.push String.from_json(_item)
-                 else
-                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @accessTypes = _oa
-            end
-          end
-        if !_o['grantorGroups'].nil?
-          _oa = _o['grantorGroups']
-            if(_oa.is_a? Hash)
-              @grantorGroups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @grantorGroups =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @grantorGroups = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @grantorGroups.push String.from_json(_item)
-                 else
-                   @grantorGroups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @grantorGroups = _oa
-            end
-          end
-        if !_o['requestData'].nil?
-          _oa = _o['requestData']
-            if(_oa.is_a? Hash)
-              @requestData = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @requestData =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @requestData = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @requestData.push String.from_json(_item)
-                 else
-                   @requestData.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @requestData = _oa
-            end
-          end
-        if !_o['clientIPAddress'].nil?
-          _oa = _o['clientIPAddress']
-            if(_oa.is_a? Hash)
-              @clientIPAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @clientIPAddress =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @clientIPAddress = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @clientIPAddress.push String.from_json(_item)
-                 else
-                   @clientIPAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @clientIPAddress = _oa
+                @clusterName = _oa
             end
           end
         if !_o['clientType'].nil?
@@ -44859,23 +44669,42 @@ module Util
                 @clientType = _oa
             end
           end
-        if !_o['resource'].nil?
-          _oa = _o['resource']
+        if !_o['users'].nil?
+          _oa = _o['users']
             if(_oa.is_a? Hash)
-              @resource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resource =  Hash.from_json(_oa) unless _oa['@class']
+              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @users =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resource = Array.new
+              @users = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resource.push Hash.from_json(_item)
+                   @users.push String.from_json(_item)
                  else
-                   @resource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resource = _oa
+                @users = _oa
+            end
+          end
+        if !_o['requestData'].nil?
+          _oa = _o['requestData']
+            if(_oa.is_a? Hash)
+              @requestData = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @requestData =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @requestData = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @requestData.push String.from_json(_item)
+                 else
+                   @requestData.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @requestData = _oa
             end
           end
         if !_o['isRecursive'].nil?
@@ -44897,23 +44726,194 @@ module Util
                 @isRecursive = _oa
             end
           end
-        if !_o['clusterName'].nil?
-          _oa = _o['clusterName']
+        if !_o['clientIPAddress'].nil?
+          _oa = _o['clientIPAddress']
             if(_oa.is_a? Hash)
-              @clusterName = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @clusterName =  String.from_json(_oa) unless _oa['@class']
+              @clientIPAddress = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @clientIPAddress =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @clusterName = Array.new
+              @clientIPAddress = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @clusterName.push String.from_json(_item)
+                   @clientIPAddress.push String.from_json(_item)
                  else
-                   @clusterName.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @clientIPAddress.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @clusterName = _oa
+                @clientIPAddress = _oa
+            end
+          end
+        if !_o['grantorGroups'].nil?
+          _oa = _o['grantorGroups']
+            if(_oa.is_a? Hash)
+              @grantorGroups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @grantorGroups =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @grantorGroups = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @grantorGroups.push String.from_json(_item)
+                 else
+                   @grantorGroups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @grantorGroups = _oa
+            end
+          end
+        if !_o['groups'].nil?
+          _oa = _o['groups']
+            if(_oa.is_a? Hash)
+              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @groups =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @groups = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @groups.push String.from_json(_item)
+                 else
+                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @groups = _oa
+            end
+          end
+        if !_o['grantor'].nil?
+          _oa = _o['grantor']
+            if(_oa.is_a? Hash)
+              @grantor = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @grantor =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @grantor = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @grantor.push String.from_json(_item)
+                 else
+                   @grantor.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @grantor = _oa
+            end
+          end
+        if !_o['replaceExistingPermissions'].nil?
+          _oa = _o['replaceExistingPermissions']
+            if(_oa.is_a? Hash)
+              @replaceExistingPermissions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @replaceExistingPermissions =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @replaceExistingPermissions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @replaceExistingPermissions.push Boolean.from_json(_item)
+                 else
+                   @replaceExistingPermissions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @replaceExistingPermissions = _oa
+            end
+          end
+        if !_o['delegateAdmin'].nil?
+          _oa = _o['delegateAdmin']
+            if(_oa.is_a? Hash)
+              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @delegateAdmin = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @delegateAdmin.push Boolean.from_json(_item)
+                 else
+                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @delegateAdmin = _oa
+            end
+          end
+        if !_o['sessionId'].nil?
+          _oa = _o['sessionId']
+            if(_oa.is_a? Hash)
+              @sessionId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @sessionId =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @sessionId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @sessionId.push String.from_json(_item)
+                 else
+                   @sessionId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @sessionId = _oa
+            end
+          end
+        if !_o['resource'].nil?
+          _oa = _o['resource']
+            if(_oa.is_a? Hash)
+              @resource = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resource =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resource = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resource.push Hash.from_json(_item)
+                 else
+                   @resource.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resource = _oa
+            end
+          end
+        if !_o['accessTypes'].nil?
+          _oa = _o['accessTypes']
+            if(_oa.is_a? Hash)
+              @accessTypes = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @accessTypes =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @accessTypes = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @accessTypes.push String.from_json(_item)
+                 else
+                   @accessTypes.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @accessTypes = _oa
+            end
+          end
+        if !_o['enableAudit'].nil?
+          _oa = _o['enableAudit']
+            if(_oa.is_a? Hash)
+              @enableAudit = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enableAudit =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @enableAudit = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @enableAudit.push Boolean.from_json(_item)
+                 else
+                   @enableAudit.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @enableAudit = _oa
             end
           end
     end
@@ -45526,33 +45526,33 @@ module Model
   class RangerDataMaskTypeDef 
 
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :transformer
+    attr_accessor :label
     # (no documentation provided)
     attr_accessor :rbKeyLabel
     # (no documentation provided)
-    attr_accessor :itemId
-    # (no documentation provided)
     attr_accessor :description
+    # (no documentation provided)
+    attr_accessor :transformer
+    # (no documentation provided)
+    attr_accessor :dataMaskOptions
+    # (no documentation provided)
+    attr_accessor :itemId
     # (no documentation provided)
     attr_accessor :rbKeyDescription
     # (no documentation provided)
-    attr_accessor :label
-    # (no documentation provided)
-    attr_accessor :dataMaskOptions
+    attr_accessor :name
 
     # the json hash for this RangerDataMaskTypeDef
     def to_jaxb_json_hash
       _h = {}
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['transformer'] = transformer.to_jaxb_json_hash unless transformer.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
       _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['transformer'] = transformer.to_jaxb_json_hash unless transformer.nil?
       _h['dataMaskOptions'] = dataMaskOptions.to_jaxb_json_hash unless dataMaskOptions.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -45563,42 +45563,23 @@ module Model
 
     #initializes this RangerDataMaskTypeDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['name'].nil?
-          _oa = _o['name']
+        if !_o['label'].nil?
+          _oa = _o['label']
             if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @name = Array.new
+              @label = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
+                   @label.push String.from_json(_item)
                  else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @name = _oa
-            end
-          end
-        if !_o['transformer'].nil?
-          _oa = _o['transformer']
-            if(_oa.is_a? Hash)
-              @transformer = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @transformer =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @transformer = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @transformer.push String.from_json(_item)
-                 else
-                   @transformer.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @transformer = _oa
+                @label = _oa
             end
           end
         if !_o['rbKeyLabel'].nil?
@@ -45620,25 +45601,6 @@ module Model
                 @rbKeyLabel = _oa
             end
           end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
-            if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
-                 else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @itemId = _oa
-            end
-          end
         if !_o['description'].nil?
           _oa = _o['description']
             if(_oa.is_a? Hash)
@@ -45656,6 +45618,63 @@ module Model
                }
             else
                 @description = _oa
+            end
+          end
+        if !_o['transformer'].nil?
+          _oa = _o['transformer']
+            if(_oa.is_a? Hash)
+              @transformer = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @transformer =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @transformer = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @transformer.push String.from_json(_item)
+                 else
+                   @transformer.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @transformer = _oa
+            end
+          end
+        if !_o['dataMaskOptions'].nil?
+          _oa = _o['dataMaskOptions']
+            if(_oa.is_a? Hash)
+              @dataMaskOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @dataMaskOptions =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @dataMaskOptions = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @dataMaskOptions.push Hash.from_json(_item)
+                 else
+                   @dataMaskOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @dataMaskOptions = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
             end
           end
         if !_o['rbKeyDescription'].nil?
@@ -45677,42 +45696,23 @@ module Model
                 @rbKeyDescription = _oa
             end
           end
-        if !_o['label'].nil?
-          _oa = _o['label']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @label = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @label = _oa
-            end
-          end
-        if !_o['dataMaskOptions'].nil?
-          _oa = _o['dataMaskOptions']
-            if(_oa.is_a? Hash)
-              @dataMaskOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @dataMaskOptions =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @dataMaskOptions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @dataMaskOptions.push Hash.from_json(_item)
-                 else
-                   @dataMaskOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @dataMaskOptions = _oa
+                @name = _oa
             end
           end
     end
@@ -46183,94 +46183,94 @@ module Model
   class RangerPolicy < Org::Apache::Ranger::Plugin::Model::RangerBaseModelObject 
 
     # (no documentation provided)
-    attr_accessor :denyPolicyItems
+    attr_accessor :denyExceptions
+    # (no documentation provided)
+    attr_accessor :resourceSignature
+    # (no documentation provided)
+    attr_accessor :policyType
+    # (no documentation provided)
+    attr_accessor :resources
+    # (no documentation provided)
+    attr_accessor :description
     # (no documentation provided)
     attr_accessor :name
     # (no documentation provided)
-    attr_accessor :dataMaskPolicyItems
+    attr_accessor :serviceType
     # (no documentation provided)
     attr_accessor :options
     # (no documentation provided)
     attr_accessor :rowFilterPolicyItems
     # (no documentation provided)
-    attr_accessor :serviceType
-    # (no documentation provided)
-    attr_accessor :description
-    # (no documentation provided)
-    attr_accessor :validitySchedules
-    # (no documentation provided)
-    attr_accessor :resourceSignature
-    # (no documentation provided)
-    attr_accessor :isAuditEnabled
-    # (no documentation provided)
-    attr_accessor :policyLabels
-    # (no documentation provided)
-    attr_accessor :resources
-    # (no documentation provided)
-    attr_accessor :policyType
-    # (no documentation provided)
-    attr_accessor :denyExceptions
-    # (no documentation provided)
-    attr_accessor :policyPriority
+    attr_accessor :policyItems
     # (no documentation provided)
     attr_accessor :allowExceptions
     # (no documentation provided)
+    attr_accessor :dataMaskPolicyItems
+    # (no documentation provided)
+    attr_accessor :policyPriority
+    # (no documentation provided)
+    attr_accessor :isAuditEnabled
+    # (no documentation provided)
+    attr_accessor :validitySchedules
+    # (no documentation provided)
+    attr_accessor :policyLabels
+    # (no documentation provided)
     attr_accessor :service
     # (no documentation provided)
-    attr_accessor :policyItems
+    attr_accessor :denyPolicyItems
 
     # the json hash for this RangerPolicy
     def to_jaxb_json_hash
       _h = super
-      if !denyPolicyItems.nil?
+      if !denyExceptions.nil?
         _ha = Array.new
-        denyPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['denyPolicyItems'] = _ha
+        denyExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['denyExceptions'] = _ha
       end
+      _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
+      _h['policyType'] = policyType.to_jaxb_json_hash unless policyType.nil?
+      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
       _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      if !dataMaskPolicyItems.nil?
-        _ha = Array.new
-        dataMaskPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['dataMaskPolicyItems'] = _ha
-      end
+      _h['serviceType'] = serviceType.to_jaxb_json_hash unless serviceType.nil?
       _h['options'] = options.to_jaxb_json_hash unless options.nil?
       if !rowFilterPolicyItems.nil?
         _ha = Array.new
         rowFilterPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['rowFilterPolicyItems'] = _ha
       end
-      _h['serviceType'] = serviceType.to_jaxb_json_hash unless serviceType.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      if !validitySchedules.nil?
+      if !policyItems.nil?
         _ha = Array.new
-        validitySchedules.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['validitySchedules'] = _ha
+        policyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['policyItems'] = _ha
       end
-      _h['resourceSignature'] = resourceSignature.to_jaxb_json_hash unless resourceSignature.nil?
-      _h['isAuditEnabled'] = isAuditEnabled.to_jaxb_json_hash unless isAuditEnabled.nil?
-      if !policyLabels.nil?
-        _ha = Array.new
-        policyLabels.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['policyLabels'] = _ha
-      end
-      _h['resources'] = resources.to_jaxb_json_hash unless resources.nil?
-      _h['policyType'] = policyType.to_jaxb_json_hash unless policyType.nil?
-      if !denyExceptions.nil?
-        _ha = Array.new
-        denyExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['denyExceptions'] = _ha
-      end
-      _h['policyPriority'] = policyPriority.to_jaxb_json_hash unless policyPriority.nil?
       if !allowExceptions.nil?
         _ha = Array.new
         allowExceptions.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['allowExceptions'] = _ha
       end
-      _h['service'] = service.to_jaxb_json_hash unless service.nil?
-      if !policyItems.nil?
+      if !dataMaskPolicyItems.nil?
         _ha = Array.new
-        policyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['policyItems'] = _ha
+        dataMaskPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['dataMaskPolicyItems'] = _ha
+      end
+      _h['policyPriority'] = policyPriority.to_jaxb_json_hash unless policyPriority.nil?
+      _h['isAuditEnabled'] = isAuditEnabled.to_jaxb_json_hash unless isAuditEnabled.nil?
+      if !validitySchedules.nil?
+        _ha = Array.new
+        validitySchedules.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['validitySchedules'] = _ha
+      end
+      if !policyLabels.nil?
+        _ha = Array.new
+        policyLabels.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['policyLabels'] = _ha
+      end
+      _h['service'] = service.to_jaxb_json_hash unless service.nil?
+      if !denyPolicyItems.nil?
+        _ha = Array.new
+        denyPolicyItems.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['denyPolicyItems'] = _ha
       end
       return _h
     end
@@ -46278,23 +46278,99 @@ module Model
     #initializes this RangerPolicy with a json hash
     def init_jaxb_json_hash(_o)
       super _o
-        if !_o['denyPolicyItems'].nil?
-          _oa = _o['denyPolicyItems']
+        if !_o['denyExceptions'].nil?
+          _oa = _o['denyExceptions']
             if(_oa.is_a? Hash)
-              @denyPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @denyPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
+              @denyExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @denyExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @denyPolicyItems = Array.new
+              @denyExceptions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @denyPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
+                   @denyExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
                  else
-                   @denyPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @denyExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @denyPolicyItems = _oa
+                @denyExceptions = _oa
+            end
+          end
+        if !_o['resourceSignature'].nil?
+          _oa = _o['resourceSignature']
+            if(_oa.is_a? Hash)
+              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resourceSignature = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resourceSignature.push String.from_json(_item)
+                 else
+                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resourceSignature = _oa
+            end
+          end
+        if !_o['policyType'].nil?
+          _oa = _o['policyType']
+            if(_oa.is_a? Hash)
+              @policyType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyType =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyType.push Fixnum.from_json(_item)
+                 else
+                   @policyType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyType = _oa
+            end
+          end
+        if !_o['resources'].nil?
+          _oa = _o['resources']
+            if(_oa.is_a? Hash)
+              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resources =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resources = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resources.push Hash.from_json(_item)
+                 else
+                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resources = _oa
+            end
+          end
+        if !_o['description'].nil?
+          _oa = _o['description']
+            if(_oa.is_a? Hash)
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @description = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @description.push String.from_json(_item)
+                 else
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @description = _oa
             end
           end
         if !_o['name'].nil?
@@ -46316,23 +46392,23 @@ module Model
                 @name = _oa
             end
           end
-        if !_o['dataMaskPolicyItems'].nil?
-          _oa = _o['dataMaskPolicyItems']
+        if !_o['serviceType'].nil?
+          _oa = _o['serviceType']
             if(_oa.is_a? Hash)
-              @dataMaskPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @dataMaskPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_oa) unless _oa['@class']
+              @serviceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @serviceType =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @dataMaskPolicyItems = Array.new
+              @serviceType = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @dataMaskPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_item)
+                   @serviceType.push String.from_json(_item)
                  else
-                   @dataMaskPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @serviceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @dataMaskPolicyItems = _oa
+                @serviceType = _oa
             end
           end
         if !_o['options'].nil?
@@ -46373,194 +46449,23 @@ module Model
                 @rowFilterPolicyItems = _oa
             end
           end
-        if !_o['serviceType'].nil?
-          _oa = _o['serviceType']
+        if !_o['policyItems'].nil?
+          _oa = _o['policyItems']
             if(_oa.is_a? Hash)
-              @serviceType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @serviceType =  String.from_json(_oa) unless _oa['@class']
+              @policyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyItems =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @serviceType = Array.new
+              @policyItems = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @serviceType.push String.from_json(_item)
+                   @policyItems.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
                  else
-                   @serviceType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @policyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @serviceType = _oa
-            end
-          end
-        if !_o['description'].nil?
-          _oa = _o['description']
-            if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @description = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
-                 else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @description = _oa
-            end
-          end
-        if !_o['validitySchedules'].nil?
-          _oa = _o['validitySchedules']
-            if(_oa.is_a? Hash)
-              @validitySchedules = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validitySchedules =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validitySchedules = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validitySchedules.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
-                 else
-                   @validitySchedules.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validitySchedules = _oa
-            end
-          end
-        if !_o['resourceSignature'].nil?
-          _oa = _o['resourceSignature']
-            if(_oa.is_a? Hash)
-              @resourceSignature = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceSignature =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resourceSignature = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceSignature.push String.from_json(_item)
-                 else
-                   @resourceSignature.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resourceSignature = _oa
-            end
-          end
-        if !_o['isAuditEnabled'].nil?
-          _oa = _o['isAuditEnabled']
-            if(_oa.is_a? Hash)
-              @isAuditEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @isAuditEnabled =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @isAuditEnabled = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @isAuditEnabled.push Boolean.from_json(_item)
-                 else
-                   @isAuditEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @isAuditEnabled = _oa
-            end
-          end
-        if !_o['policyLabels'].nil?
-          _oa = _o['policyLabels']
-            if(_oa.is_a? Hash)
-              @policyLabels = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyLabels =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyLabels = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyLabels.push String.from_json(_item)
-                 else
-                   @policyLabels.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyLabels = _oa
-            end
-          end
-        if !_o['resources'].nil?
-          _oa = _o['resources']
-            if(_oa.is_a? Hash)
-              @resources = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resources =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @resources = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resources.push Hash.from_json(_item)
-                 else
-                   @resources.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @resources = _oa
-            end
-          end
-        if !_o['policyType'].nil?
-          _oa = _o['policyType']
-            if(_oa.is_a? Hash)
-              @policyType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyType =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyType.push Fixnum.from_json(_item)
-                 else
-                   @policyType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyType = _oa
-            end
-          end
-        if !_o['denyExceptions'].nil?
-          _oa = _o['denyExceptions']
-            if(_oa.is_a? Hash)
-              @denyExceptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @denyExceptions =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @denyExceptions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @denyExceptions.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
-                 else
-                   @denyExceptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @denyExceptions = _oa
-            end
-          end
-        if !_o['policyPriority'].nil?
-          _oa = _o['policyPriority']
-            if(_oa.is_a? Hash)
-              @policyPriority = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyPriority =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyPriority = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyPriority.push Fixnum.from_json(_item)
-                 else
-                   @policyPriority.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyPriority = _oa
+                @policyItems = _oa
             end
           end
         if !_o['allowExceptions'].nil?
@@ -46582,6 +46487,101 @@ module Model
                 @allowExceptions = _oa
             end
           end
+        if !_o['dataMaskPolicyItems'].nil?
+          _oa = _o['dataMaskPolicyItems']
+            if(_oa.is_a? Hash)
+              @dataMaskPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @dataMaskPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @dataMaskPolicyItems = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @dataMaskPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerDataMaskPolicyItem.from_json(_item)
+                 else
+                   @dataMaskPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @dataMaskPolicyItems = _oa
+            end
+          end
+        if !_o['policyPriority'].nil?
+          _oa = _o['policyPriority']
+            if(_oa.is_a? Hash)
+              @policyPriority = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyPriority =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyPriority = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyPriority.push Fixnum.from_json(_item)
+                 else
+                   @policyPriority.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyPriority = _oa
+            end
+          end
+        if !_o['isAuditEnabled'].nil?
+          _oa = _o['isAuditEnabled']
+            if(_oa.is_a? Hash)
+              @isAuditEnabled = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @isAuditEnabled =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @isAuditEnabled = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @isAuditEnabled.push Boolean.from_json(_item)
+                 else
+                   @isAuditEnabled.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @isAuditEnabled = _oa
+            end
+          end
+        if !_o['validitySchedules'].nil?
+          _oa = _o['validitySchedules']
+            if(_oa.is_a? Hash)
+              @validitySchedules = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validitySchedules =  Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @validitySchedules = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @validitySchedules.push Org::Apache::Ranger::Plugin::Model::RangerValiditySchedule.from_json(_item)
+                 else
+                   @validitySchedules.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @validitySchedules = _oa
+            end
+          end
+        if !_o['policyLabels'].nil?
+          _oa = _o['policyLabels']
+            if(_oa.is_a? Hash)
+              @policyLabels = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyLabels =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyLabels = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyLabels.push String.from_json(_item)
+                 else
+                   @policyLabels.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyLabels = _oa
+            end
+          end
         if !_o['service'].nil?
           _oa = _o['service']
             if(_oa.is_a? Hash)
@@ -46601,23 +46601,23 @@ module Model
                 @service = _oa
             end
           end
-        if !_o['policyItems'].nil?
-          _oa = _o['policyItems']
+        if !_o['denyPolicyItems'].nil?
+          _oa = _o['denyPolicyItems']
             if(_oa.is_a? Hash)
-              @policyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyItems =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
+              @denyPolicyItems = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @denyPolicyItems =  Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @policyItems = Array.new
+              @denyPolicyItems = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyItems.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
+                   @denyPolicyItems.push Org::Apache::Ranger::Plugin::Model::RangerPolicyItem.from_json(_item)
                  else
-                   @policyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @denyPolicyItems.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @policyItems = _oa
+                @denyPolicyItems = _oa
             end
           end
     end
@@ -46769,16 +46769,16 @@ module Model
     # (no documentation provided)
     attr_accessor :valueExpr
     # (no documentation provided)
-    attr_accessor :dataMaskType
-    # (no documentation provided)
     attr_accessor :conditionExpr
+    # (no documentation provided)
+    attr_accessor :dataMaskType
 
     # the json hash for this RangerPolicyItemDataMaskInfo
     def to_jaxb_json_hash
       _h = {}
       _h['valueExpr'] = valueExpr.to_jaxb_json_hash unless valueExpr.nil?
-      _h['dataMaskType'] = dataMaskType.to_jaxb_json_hash unless dataMaskType.nil?
       _h['conditionExpr'] = conditionExpr.to_jaxb_json_hash unless conditionExpr.nil?
+      _h['dataMaskType'] = dataMaskType.to_jaxb_json_hash unless dataMaskType.nil?
       return _h
     end
 
@@ -46808,25 +46808,6 @@ module Model
                 @valueExpr = _oa
             end
           end
-        if !_o['dataMaskType'].nil?
-          _oa = _o['dataMaskType']
-            if(_oa.is_a? Hash)
-              @dataMaskType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @dataMaskType =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @dataMaskType = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @dataMaskType.push String.from_json(_item)
-                 else
-                   @dataMaskType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @dataMaskType = _oa
-            end
-          end
         if !_o['conditionExpr'].nil?
           _oa = _o['conditionExpr']
             if(_oa.is_a? Hash)
@@ -46844,6 +46825,25 @@ module Model
                }
             else
                 @conditionExpr = _oa
+            end
+          end
+        if !_o['dataMaskType'].nil?
+          _oa = _o['dataMaskType']
+            if(_oa.is_a? Hash)
+              @dataMaskType = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @dataMaskType =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @dataMaskType = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @dataMaskType.push String.from_json(_item)
+                 else
+                   @dataMaskType.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @dataMaskType = _oa
             end
           end
     end
@@ -47044,13 +47044,7 @@ module Util
   class ServicePolicies 
 
     # (no documentation provided)
-    attr_accessor :policyUpdateTime
-    # (no documentation provided)
     attr_accessor :policies
-    # (no documentation provided)
-    attr_accessor :policyVersion
-    # (no documentation provided)
-    attr_accessor :tagPolicies
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
@@ -47058,23 +47052,29 @@ module Util
     # (no documentation provided)
     attr_accessor :serviceDef
     # (no documentation provided)
+    attr_accessor :policyUpdateTime
+    # (no documentation provided)
+    attr_accessor :policyVersion
+    # (no documentation provided)
     attr_accessor :auditMode
+    # (no documentation provided)
+    attr_accessor :tagPolicies
 
     # the json hash for this ServicePolicies
     def to_jaxb_json_hash
       _h = {}
-      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
       if !policies.nil?
         _ha = Array.new
         policies.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['policies'] = _ha
       end
-      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
-      _h['tagPolicies'] = tagPolicies.to_jaxb_json_hash unless tagPolicies.nil?
       _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       _h['serviceId'] = serviceId.to_jaxb_json_hash unless serviceId.nil?
       _h['serviceDef'] = serviceDef.to_jaxb_json_hash unless serviceDef.nil?
+      _h['policyUpdateTime'] = policyUpdateTime.to_jaxb_json_hash unless policyUpdateTime.nil?
+      _h['policyVersion'] = policyVersion.to_jaxb_json_hash unless policyVersion.nil?
       _h['auditMode'] = auditMode.to_jaxb_json_hash unless auditMode.nil?
+      _h['tagPolicies'] = tagPolicies.to_jaxb_json_hash unless tagPolicies.nil?
       return _h
     end
 
@@ -47085,25 +47085,6 @@ module Util
 
     #initializes this ServicePolicies with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['policyUpdateTime'].nil?
-          _oa = _o['policyUpdateTime']
-            if(_oa.is_a? Hash)
-              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyUpdateTime = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyUpdateTime.push Time.from_json(_item)
-                 else
-                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyUpdateTime = _oa
-            end
-          end
         if !_o['policies'].nil?
           _oa = _o['policies']
             if(_oa.is_a? Hash)
@@ -47121,44 +47102,6 @@ module Util
                }
             else
                 @policies = _oa
-            end
-          end
-        if !_o['policyVersion'].nil?
-          _oa = _o['policyVersion']
-            if(_oa.is_a? Hash)
-              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @policyVersion = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @policyVersion.push Bignum.from_json(_item)
-                 else
-                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @policyVersion = _oa
-            end
-          end
-        if !_o['tagPolicies'].nil?
-          _oa = _o['tagPolicies']
-            if(_oa.is_a? Hash)
-              @tagPolicies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagPolicies =  Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @tagPolicies = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagPolicies.push Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_item)
-                 else
-                   @tagPolicies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @tagPolicies = _oa
             end
           end
         if !_o['serviceName'].nil?
@@ -47218,6 +47161,44 @@ module Util
                 @serviceDef = _oa
             end
           end
+        if !_o['policyUpdateTime'].nil?
+          _oa = _o['policyUpdateTime']
+            if(_oa.is_a? Hash)
+              @policyUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyUpdateTime = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyUpdateTime.push Time.from_json(_item)
+                 else
+                   @policyUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyUpdateTime = _oa
+            end
+          end
+        if !_o['policyVersion'].nil?
+          _oa = _o['policyVersion']
+            if(_oa.is_a? Hash)
+              @policyVersion = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @policyVersion =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @policyVersion = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @policyVersion.push Bignum.from_json(_item)
+                 else
+                   @policyVersion.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @policyVersion = _oa
+            end
+          end
         if !_o['auditMode'].nil?
           _oa = _o['auditMode']
             if(_oa.is_a? Hash)
@@ -47235,6 +47216,25 @@ module Util
                }
             else
                 @auditMode = _oa
+            end
+          end
+        if !_o['tagPolicies'].nil?
+          _oa = _o['tagPolicies']
+            if(_oa.is_a? Hash)
+              @tagPolicies = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagPolicies =  Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @tagPolicies = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @tagPolicies.push Org::Apache::Ranger::Plugin::Util::TagPolicies.from_json(_item)
+                 else
+                   @tagPolicies.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @tagPolicies = _oa
             end
           end
     end
@@ -47509,40 +47509,40 @@ module Model
   class RangerPolicyItem 
 
     # (no documentation provided)
-    attr_accessor :groups
-    # (no documentation provided)
     attr_accessor :accesses
     # (no documentation provided)
-    attr_accessor :users
+    attr_accessor :groups
+    # (no documentation provided)
+    attr_accessor :delegateAdmin
     # (no documentation provided)
     attr_accessor :conditions
     # (no documentation provided)
-    attr_accessor :delegateAdmin
+    attr_accessor :users
 
     # the json hash for this RangerPolicyItem
     def to_jaxb_json_hash
       _h = {}
+      if !accesses.nil?
+        _ha = Array.new
+        accesses.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['accesses'] = _ha
+      end
       if !groups.nil?
         _ha = Array.new
         groups.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['groups'] = _ha
       end
-      if !accesses.nil?
+      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
+      if !conditions.nil?
         _ha = Array.new
-        accesses.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['accesses'] = _ha
+        conditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
+        _h['conditions'] = _ha
       end
       if !users.nil?
         _ha = Array.new
         users.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['users'] = _ha
       end
-      if !conditions.nil?
-        _ha = Array.new
-        conditions.each { | _item | _ha.push _item.to_jaxb_json_hash }
-        _h['conditions'] = _ha
-      end
-      _h['delegateAdmin'] = delegateAdmin.to_jaxb_json_hash unless delegateAdmin.nil?
       return _h
     end
 
@@ -47553,25 +47553,6 @@ module Model
 
     #initializes this RangerPolicyItem with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['groups'].nil?
-          _oa = _o['groups']
-            if(_oa.is_a? Hash)
-              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @groups =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @groups = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @groups.push String.from_json(_item)
-                 else
-                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @groups = _oa
-            end
-          end
         if !_o['accesses'].nil?
           _oa = _o['accesses']
             if(_oa.is_a? Hash)
@@ -47591,23 +47572,42 @@ module Model
                 @accesses = _oa
             end
           end
-        if !_o['users'].nil?
-          _oa = _o['users']
+        if !_o['groups'].nil?
+          _oa = _o['groups']
             if(_oa.is_a? Hash)
-              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @users =  String.from_json(_oa) unless _oa['@class']
+              @groups = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @groups =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @users = Array.new
+              @groups = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @users.push String.from_json(_item)
+                   @groups.push String.from_json(_item)
                  else
-                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @groups.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @users = _oa
+                @groups = _oa
+            end
+          end
+        if !_o['delegateAdmin'].nil?
+          _oa = _o['delegateAdmin']
+            if(_oa.is_a? Hash)
+              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @delegateAdmin = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @delegateAdmin.push Boolean.from_json(_item)
+                 else
+                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @delegateAdmin = _oa
             end
           end
         if !_o['conditions'].nil?
@@ -47629,23 +47629,23 @@ module Model
                 @conditions = _oa
             end
           end
-        if !_o['delegateAdmin'].nil?
-          _oa = _o['delegateAdmin']
+        if !_o['users'].nil?
+          _oa = _o['users']
             if(_oa.is_a? Hash)
-              @delegateAdmin = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @delegateAdmin =  Boolean.from_json(_oa) unless _oa['@class']
+              @users = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @users =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @delegateAdmin = Array.new
+              @users = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @delegateAdmin.push Boolean.from_json(_item)
+                   @users.push String.from_json(_item)
                  else
-                   @delegateAdmin.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @users.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @delegateAdmin = _oa
+                @users = _oa
             end
           end
     end
@@ -48782,76 +48782,76 @@ module Model
   class RangerResourceDef 
 
     # (no documentation provided)
-    attr_accessor :excludesSupported
+    attr_accessor :description
     # (no documentation provided)
-    attr_accessor :rbKeyValidationMessage
+    attr_accessor :name
     # (no documentation provided)
-    attr_accessor :type
+    attr_accessor :validationRegEx
     # (no documentation provided)
-    attr_accessor :recursiveSupported
+    attr_accessor :matcher
     # (no documentation provided)
-    attr_accessor :validationMessage
+    attr_accessor :matcherOptions
+    # (no documentation provided)
+    attr_accessor :label
+    # (no documentation provided)
+    attr_accessor :rbKeyDescription
+    # (no documentation provided)
+    attr_accessor :itemId
+    # (no documentation provided)
+    attr_accessor :mandatory
+    # (no documentation provided)
+    attr_accessor :level
+    # (no documentation provided)
+    attr_accessor :parent
+    # (no documentation provided)
+    attr_accessor :rbKeyLabel
     # (no documentation provided)
     attr_accessor :uiHint
     # (no documentation provided)
     attr_accessor :lookupSupported
     # (no documentation provided)
-    attr_accessor :name
-    # (no documentation provided)
-    attr_accessor :mandatory
-    # (no documentation provided)
-    attr_accessor :validationRegEx
-    # (no documentation provided)
-    attr_accessor :matcherOptions
-    # (no documentation provided)
-    attr_accessor :rbKeyDescription
-    # (no documentation provided)
-    attr_accessor :parent
-    # (no documentation provided)
     attr_accessor :accessTypeRestrictions
     # (no documentation provided)
-    attr_accessor :matcher
-    # (no documentation provided)
-    attr_accessor :level
-    # (no documentation provided)
-    attr_accessor :label
+    attr_accessor :validationMessage
     # (no documentation provided)
     attr_accessor :isValidLeaf
     # (no documentation provided)
-    attr_accessor :rbKeyLabel
+    attr_accessor :recursiveSupported
     # (no documentation provided)
-    attr_accessor :description
+    attr_accessor :rbKeyValidationMessage
     # (no documentation provided)
-    attr_accessor :itemId
+    attr_accessor :type
+    # (no documentation provided)
+    attr_accessor :excludesSupported
 
     # the json hash for this RangerResourceDef
     def to_jaxb_json_hash
       _h = {}
-      _h['excludesSupported'] = excludesSupported.to_jaxb_json_hash unless excludesSupported.nil?
-      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
-      _h['type'] = type.to_jaxb_json_hash unless type.nil?
-      _h['recursiveSupported'] = recursiveSupported.to_jaxb_json_hash unless recursiveSupported.nil?
-      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
+      _h['description'] = description.to_jaxb_json_hash unless description.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
+      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
+      _h['matcher'] = matcher.to_jaxb_json_hash unless matcher.nil?
+      _h['matcherOptions'] = matcherOptions.to_jaxb_json_hash unless matcherOptions.nil?
+      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
+      _h['level'] = level.to_jaxb_json_hash unless level.nil?
+      _h['parent'] = parent.to_jaxb_json_hash unless parent.nil?
+      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
       _h['uiHint'] = uiHint.to_jaxb_json_hash unless uiHint.nil?
       _h['lookupSupported'] = lookupSupported.to_jaxb_json_hash unless lookupSupported.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['mandatory'] = mandatory.to_jaxb_json_hash unless mandatory.nil?
-      _h['validationRegEx'] = validationRegEx.to_jaxb_json_hash unless validationRegEx.nil?
-      _h['matcherOptions'] = matcherOptions.to_jaxb_json_hash unless matcherOptions.nil?
-      _h['rbKeyDescription'] = rbKeyDescription.to_jaxb_json_hash unless rbKeyDescription.nil?
-      _h['parent'] = parent.to_jaxb_json_hash unless parent.nil?
       if !accessTypeRestrictions.nil?
         _ha = Array.new
         accessTypeRestrictions.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['accessTypeRestrictions'] = _ha
       end
-      _h['matcher'] = matcher.to_jaxb_json_hash unless matcher.nil?
-      _h['level'] = level.to_jaxb_json_hash unless level.nil?
-      _h['label'] = label.to_jaxb_json_hash unless label.nil?
+      _h['validationMessage'] = validationMessage.to_jaxb_json_hash unless validationMessage.nil?
       _h['isValidLeaf'] = isValidLeaf.to_jaxb_json_hash unless isValidLeaf.nil?
-      _h['rbKeyLabel'] = rbKeyLabel.to_jaxb_json_hash unless rbKeyLabel.nil?
-      _h['description'] = description.to_jaxb_json_hash unless description.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['recursiveSupported'] = recursiveSupported.to_jaxb_json_hash unless recursiveSupported.nil?
+      _h['rbKeyValidationMessage'] = rbKeyValidationMessage.to_jaxb_json_hash unless rbKeyValidationMessage.nil?
+      _h['type'] = type.to_jaxb_json_hash unless type.nil?
+      _h['excludesSupported'] = excludesSupported.to_jaxb_json_hash unless excludesSupported.nil?
       return _h
     end
 
@@ -48862,99 +48862,232 @@ module Model
 
     #initializes this RangerResourceDef with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['excludesSupported'].nil?
-          _oa = _o['excludesSupported']
+        if !_o['description'].nil?
+          _oa = _o['description']
             if(_oa.is_a? Hash)
-              @excludesSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @excludesSupported =  Boolean.from_json(_oa) unless _oa['@class']
+              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @description =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @excludesSupported = Array.new
+              @description = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @excludesSupported.push Boolean.from_json(_item)
+                   @description.push String.from_json(_item)
                  else
-                   @excludesSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @excludesSupported = _oa
+                @description = _oa
             end
           end
-        if !_o['rbKeyValidationMessage'].nil?
-          _oa = _o['rbKeyValidationMessage']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyValidationMessage = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyValidationMessage.push String.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyValidationMessage = _oa
+                @name = _oa
             end
           end
-        if !_o['type'].nil?
-          _oa = _o['type']
+        if !_o['validationRegEx'].nil?
+          _oa = _o['validationRegEx']
             if(_oa.is_a? Hash)
-              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @type =  String.from_json(_oa) unless _oa['@class']
+              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @type = Array.new
+              @validationRegEx = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @type.push String.from_json(_item)
+                   @validationRegEx.push String.from_json(_item)
                  else
-                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @type = _oa
+                @validationRegEx = _oa
             end
           end
-        if !_o['recursiveSupported'].nil?
-          _oa = _o['recursiveSupported']
+        if !_o['matcher'].nil?
+          _oa = _o['matcher']
             if(_oa.is_a? Hash)
-              @recursiveSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @recursiveSupported =  Boolean.from_json(_oa) unless _oa['@class']
+              @matcher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @matcher =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @recursiveSupported = Array.new
+              @matcher = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @recursiveSupported.push Boolean.from_json(_item)
+                   @matcher.push String.from_json(_item)
                  else
-                   @recursiveSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @matcher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @recursiveSupported = _oa
+                @matcher = _oa
             end
           end
-        if !_o['validationMessage'].nil?
-          _oa = _o['validationMessage']
+        if !_o['matcherOptions'].nil?
+          _oa = _o['matcherOptions']
             if(_oa.is_a? Hash)
-              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationMessage =  String.from_json(_oa) unless _oa['@class']
+              @matcherOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @matcherOptions =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @validationMessage = Array.new
+              @matcherOptions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationMessage.push String.from_json(_item)
+                   @matcherOptions.push Hash.from_json(_item)
                  else
-                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @matcherOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @validationMessage = _oa
+                @matcherOptions = _oa
+            end
+          end
+        if !_o['label'].nil?
+          _oa = _o['label']
+            if(_oa.is_a? Hash)
+              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @label =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @label = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @label.push String.from_json(_item)
+                 else
+                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @label = _oa
+            end
+          end
+        if !_o['rbKeyDescription'].nil?
+          _oa = _o['rbKeyDescription']
+            if(_oa.is_a? Hash)
+              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyDescription = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyDescription.push String.from_json(_item)
+                 else
+                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyDescription = _oa
+            end
+          end
+        if !_o['itemId'].nil?
+          _oa = _o['itemId']
+            if(_oa.is_a? Hash)
+              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @itemId = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @itemId.push Bignum.from_json(_item)
+                 else
+                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @itemId = _oa
+            end
+          end
+        if !_o['mandatory'].nil?
+          _oa = _o['mandatory']
+            if(_oa.is_a? Hash)
+              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @mandatory = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @mandatory.push Boolean.from_json(_item)
+                 else
+                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @mandatory = _oa
+            end
+          end
+        if !_o['level'].nil?
+          _oa = _o['level']
+            if(_oa.is_a? Hash)
+              @level = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @level =  Fixnum.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @level = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @level.push Fixnum.from_json(_item)
+                 else
+                   @level.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @level = _oa
+            end
+          end
+        if !_o['parent'].nil?
+          _oa = _o['parent']
+            if(_oa.is_a? Hash)
+              @parent = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @parent =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @parent = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @parent.push String.from_json(_item)
+                 else
+                   @parent.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @parent = _oa
+            end
+          end
+        if !_o['rbKeyLabel'].nil?
+          _oa = _o['rbKeyLabel']
+            if(_oa.is_a? Hash)
+              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @rbKeyLabel = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @rbKeyLabel.push String.from_json(_item)
+                 else
+                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @rbKeyLabel = _oa
             end
           end
         if !_o['uiHint'].nil?
@@ -48995,120 +49128,6 @@ module Model
                 @lookupSupported = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
-            if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @name = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
-                 else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @name = _oa
-            end
-          end
-        if !_o['mandatory'].nil?
-          _oa = _o['mandatory']
-            if(_oa.is_a? Hash)
-              @mandatory = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @mandatory =  Boolean.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @mandatory = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @mandatory.push Boolean.from_json(_item)
-                 else
-                   @mandatory.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @mandatory = _oa
-            end
-          end
-        if !_o['validationRegEx'].nil?
-          _oa = _o['validationRegEx']
-            if(_oa.is_a? Hash)
-              @validationRegEx = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @validationRegEx =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @validationRegEx = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @validationRegEx.push String.from_json(_item)
-                 else
-                   @validationRegEx.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @validationRegEx = _oa
-            end
-          end
-        if !_o['matcherOptions'].nil?
-          _oa = _o['matcherOptions']
-            if(_oa.is_a? Hash)
-              @matcherOptions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @matcherOptions =  Hash.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @matcherOptions = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @matcherOptions.push Hash.from_json(_item)
-                 else
-                   @matcherOptions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @matcherOptions = _oa
-            end
-          end
-        if !_o['rbKeyDescription'].nil?
-          _oa = _o['rbKeyDescription']
-            if(_oa.is_a? Hash)
-              @rbKeyDescription = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyDescription =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @rbKeyDescription = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyDescription.push String.from_json(_item)
-                 else
-                   @rbKeyDescription.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @rbKeyDescription = _oa
-            end
-          end
-        if !_o['parent'].nil?
-          _oa = _o['parent']
-            if(_oa.is_a? Hash)
-              @parent = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @parent =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @parent = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @parent.push String.from_json(_item)
-                 else
-                   @parent.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @parent = _oa
-            end
-          end
         if !_o['accessTypeRestrictions'].nil?
           _oa = _o['accessTypeRestrictions']
             if(_oa.is_a? Hash)
@@ -49128,61 +49147,23 @@ module Model
                 @accessTypeRestrictions = _oa
             end
           end
-        if !_o['matcher'].nil?
-          _oa = _o['matcher']
+        if !_o['validationMessage'].nil?
+          _oa = _o['validationMessage']
             if(_oa.is_a? Hash)
-              @matcher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @matcher =  String.from_json(_oa) unless _oa['@class']
+              @validationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @validationMessage =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @matcher = Array.new
+              @validationMessage = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @matcher.push String.from_json(_item)
+                   @validationMessage.push String.from_json(_item)
                  else
-                   @matcher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @validationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @matcher = _oa
-            end
-          end
-        if !_o['level'].nil?
-          _oa = _o['level']
-            if(_oa.is_a? Hash)
-              @level = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @level =  Fixnum.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @level = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @level.push Fixnum.from_json(_item)
-                 else
-                   @level.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @level = _oa
-            end
-          end
-        if !_o['label'].nil?
-          _oa = _o['label']
-            if(_oa.is_a? Hash)
-              @label = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @label =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @label = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @label.push String.from_json(_item)
-                 else
-                   @label.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @label = _oa
+                @validationMessage = _oa
             end
           end
         if !_o['isValidLeaf'].nil?
@@ -49204,61 +49185,80 @@ module Model
                 @isValidLeaf = _oa
             end
           end
-        if !_o['rbKeyLabel'].nil?
-          _oa = _o['rbKeyLabel']
+        if !_o['recursiveSupported'].nil?
+          _oa = _o['recursiveSupported']
             if(_oa.is_a? Hash)
-              @rbKeyLabel = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @rbKeyLabel =  String.from_json(_oa) unless _oa['@class']
+              @recursiveSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @recursiveSupported =  Boolean.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @rbKeyLabel = Array.new
+              @recursiveSupported = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @rbKeyLabel.push String.from_json(_item)
+                   @recursiveSupported.push Boolean.from_json(_item)
                  else
-                   @rbKeyLabel.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @recursiveSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @rbKeyLabel = _oa
+                @recursiveSupported = _oa
             end
           end
-        if !_o['description'].nil?
-          _oa = _o['description']
+        if !_o['rbKeyValidationMessage'].nil?
+          _oa = _o['rbKeyValidationMessage']
             if(_oa.is_a? Hash)
-              @description = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @description =  String.from_json(_oa) unless _oa['@class']
+              @rbKeyValidationMessage = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @rbKeyValidationMessage =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @description = Array.new
+              @rbKeyValidationMessage = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @description.push String.from_json(_item)
+                   @rbKeyValidationMessage.push String.from_json(_item)
                  else
-                   @description.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @rbKeyValidationMessage.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @description = _oa
+                @rbKeyValidationMessage = _oa
             end
           end
-        if !_o['itemId'].nil?
-          _oa = _o['itemId']
+        if !_o['type'].nil?
+          _oa = _o['type']
             if(_oa.is_a? Hash)
-              @itemId = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @itemId =  Bignum.from_json(_oa) unless _oa['@class']
+              @type = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @type =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @itemId = Array.new
+              @type = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @itemId.push Bignum.from_json(_item)
+                   @type.push String.from_json(_item)
                  else
-                   @itemId.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @type.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @itemId = _oa
+                @type = _oa
+            end
+          end
+        if !_o['excludesSupported'].nil?
+          _oa = _o['excludesSupported']
+            if(_oa.is_a? Hash)
+              @excludesSupported = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @excludesSupported =  Boolean.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @excludesSupported = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @excludesSupported.push Boolean.from_json(_item)
+                 else
+                   @excludesSupported.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @excludesSupported = _oa
             end
           end
     end
@@ -49658,19 +49658,19 @@ module Model
     # (no documentation provided)
     attr_accessor :enricherOptions
     # (no documentation provided)
-    attr_accessor :name
+    attr_accessor :enricher
     # (no documentation provided)
     attr_accessor :itemId
     # (no documentation provided)
-    attr_accessor :enricher
+    attr_accessor :name
 
     # the json hash for this RangerContextEnricherDef
     def to_jaxb_json_hash
       _h = {}
       _h['enricherOptions'] = enricherOptions.to_jaxb_json_hash unless enricherOptions.nil?
-      _h['name'] = name.to_jaxb_json_hash unless name.nil?
-      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
       _h['enricher'] = enricher.to_jaxb_json_hash unless enricher.nil?
+      _h['itemId'] = itemId.to_jaxb_json_hash unless itemId.nil?
+      _h['name'] = name.to_jaxb_json_hash unless name.nil?
       return _h
     end
 
@@ -49700,23 +49700,23 @@ module Model
                 @enricherOptions = _oa
             end
           end
-        if !_o['name'].nil?
-          _oa = _o['name']
+        if !_o['enricher'].nil?
+          _oa = _o['enricher']
             if(_oa.is_a? Hash)
-              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @name =  String.from_json(_oa) unless _oa['@class']
+              @enricher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @enricher =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @name = Array.new
+              @enricher = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @name.push String.from_json(_item)
+                   @enricher.push String.from_json(_item)
                  else
-                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @enricher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @name = _oa
+                @enricher = _oa
             end
           end
         if !_o['itemId'].nil?
@@ -49738,23 +49738,23 @@ module Model
                 @itemId = _oa
             end
           end
-        if !_o['enricher'].nil?
-          _oa = _o['enricher']
+        if !_o['name'].nil?
+          _oa = _o['name']
             if(_oa.is_a? Hash)
-              @enricher = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @enricher =  String.from_json(_oa) unless _oa['@class']
+              @name = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @name =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @enricher = Array.new
+              @name = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @enricher.push String.from_json(_item)
+                   @name.push String.from_json(_item)
                  else
-                   @enricher.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @name.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @enricher = _oa
+                @name = _oa
             end
           end
     end
@@ -49797,35 +49797,35 @@ module Util
     # (no documentation provided)
     attr_accessor :tags
     # (no documentation provided)
-    attr_accessor :resourceToTagIds
+    attr_accessor :tagDefinitions
     # (no documentation provided)
     attr_accessor :tagVersion
     # (no documentation provided)
-    attr_accessor :tagUpdateTime
+    attr_accessor :op
     # (no documentation provided)
     attr_accessor :serviceName
     # (no documentation provided)
-    attr_accessor :tagDefinitions
+    attr_accessor :tagUpdateTime
+    # (no documentation provided)
+    attr_accessor :resourceToTagIds
     # (no documentation provided)
     attr_accessor :serviceResources
-    # (no documentation provided)
-    attr_accessor :op
 
     # the json hash for this ServiceTags
     def to_jaxb_json_hash
       _h = {}
       _h['tags'] = tags.to_jaxb_json_hash unless tags.nil?
-      _h['resourceToTagIds'] = resourceToTagIds.to_jaxb_json_hash unless resourceToTagIds.nil?
-      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
-      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
-      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
       _h['tagDefinitions'] = tagDefinitions.to_jaxb_json_hash unless tagDefinitions.nil?
+      _h['tagVersion'] = tagVersion.to_jaxb_json_hash unless tagVersion.nil?
+      _h['op'] = op.to_jaxb_json_hash unless op.nil?
+      _h['serviceName'] = serviceName.to_jaxb_json_hash unless serviceName.nil?
+      _h['tagUpdateTime'] = tagUpdateTime.to_jaxb_json_hash unless tagUpdateTime.nil?
+      _h['resourceToTagIds'] = resourceToTagIds.to_jaxb_json_hash unless resourceToTagIds.nil?
       if !serviceResources.nil?
         _ha = Array.new
         serviceResources.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['serviceResources'] = _ha
       end
-      _h['op'] = op.to_jaxb_json_hash unless op.nil?
       return _h
     end
 
@@ -49855,23 +49855,23 @@ module Util
                 @tags = _oa
             end
           end
-        if !_o['resourceToTagIds'].nil?
-          _oa = _o['resourceToTagIds']
+        if !_o['tagDefinitions'].nil?
+          _oa = _o['tagDefinitions']
             if(_oa.is_a? Hash)
-              @resourceToTagIds = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @resourceToTagIds =  Hash.from_json(_oa) unless _oa['@class']
+              @tagDefinitions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagDefinitions =  Hash.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @resourceToTagIds = Array.new
+              @tagDefinitions = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @resourceToTagIds.push Hash.from_json(_item)
+                   @tagDefinitions.push Hash.from_json(_item)
                  else
-                   @resourceToTagIds.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @tagDefinitions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @resourceToTagIds = _oa
+                @tagDefinitions = _oa
             end
           end
         if !_o['tagVersion'].nil?
@@ -49893,23 +49893,23 @@ module Util
                 @tagVersion = _oa
             end
           end
-        if !_o['tagUpdateTime'].nil?
-          _oa = _o['tagUpdateTime']
+        if !_o['op'].nil?
+          _oa = _o['op']
             if(_oa.is_a? Hash)
-              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
+              @op = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @op =  String.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagUpdateTime = Array.new
+              @op = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagUpdateTime.push Time.from_json(_item)
+                   @op.push String.from_json(_item)
                  else
-                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @op.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagUpdateTime = _oa
+                @op = _oa
             end
           end
         if !_o['serviceName'].nil?
@@ -49931,23 +49931,42 @@ module Util
                 @serviceName = _oa
             end
           end
-        if !_o['tagDefinitions'].nil?
-          _oa = _o['tagDefinitions']
+        if !_o['tagUpdateTime'].nil?
+          _oa = _o['tagUpdateTime']
             if(_oa.is_a? Hash)
-              @tagDefinitions = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @tagDefinitions =  Hash.from_json(_oa) unless _oa['@class']
+              @tagUpdateTime = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @tagUpdateTime =  Time.from_json(_oa) unless _oa['@class']
             elsif (_oa.is_a? Array)
               #an array(of hashes hopefully) or scalar
-              @tagDefinitions = Array.new
+              @tagUpdateTime = Array.new
               _oa.each { | _item | 
                  if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @tagDefinitions.push Hash.from_json(_item)
+                   @tagUpdateTime.push Time.from_json(_item)
                  else
-                   @tagDefinitions.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                   @tagUpdateTime.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
                  end
                }
             else
-                @tagDefinitions = _oa
+                @tagUpdateTime = _oa
+            end
+          end
+        if !_o['resourceToTagIds'].nil?
+          _oa = _o['resourceToTagIds']
+            if(_oa.is_a? Hash)
+              @resourceToTagIds = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @resourceToTagIds =  Hash.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @resourceToTagIds = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @resourceToTagIds.push Hash.from_json(_item)
+                 else
+                   @resourceToTagIds.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @resourceToTagIds = _oa
             end
           end
         if !_o['serviceResources'].nil?
@@ -49967,25 +49986,6 @@ module Util
                }
             else
                 @serviceResources = _oa
-            end
-          end
-        if !_o['op'].nil?
-          _oa = _o['op']
-            if(_oa.is_a? Hash)
-              @op = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @op =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @op = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @op.push String.from_json(_item)
-                 else
-                   @op.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @op = _oa
             end
           end
     end
@@ -50026,22 +50026,22 @@ module Model
   class RangerPolicyResource 
 
     # (no documentation provided)
-    attr_accessor :values
-    # (no documentation provided)
     attr_accessor :isRecursive
     # (no documentation provided)
     attr_accessor :isExcludes
+    # (no documentation provided)
+    attr_accessor :values
 
     # the json hash for this RangerPolicyResource
     def to_jaxb_json_hash
       _h = {}
+      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
+      _h['isExcludes'] = isExcludes.to_jaxb_json_hash unless isExcludes.nil?
       if !values.nil?
         _ha = Array.new
         values.each { | _item | _ha.push _item.to_jaxb_json_hash }
         _h['values'] = _ha
       end
-      _h['isRecursive'] = isRecursive.to_jaxb_json_hash unless isRecursive.nil?
-      _h['isExcludes'] = isExcludes.to_jaxb_json_hash unless isExcludes.nil?
       return _h
     end
 
@@ -50052,25 +50052,6 @@ module Model
 
     #initializes this RangerPolicyResource with a json hash
     def init_jaxb_json_hash(_o)
-        if !_o['values'].nil?
-          _oa = _o['values']
-            if(_oa.is_a? Hash)
-              @values = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
-              @values =  String.from_json(_oa) unless _oa['@class']
-            elsif (_oa.is_a? Array)
-              #an array(of hashes hopefully) or scalar
-              @values = Array.new
-              _oa.each { | _item | 
-                 if ((_item.nil? || _item['@class'].nil?)rescue true)
-                   @values.push String.from_json(_item)
-                 else
-                   @values.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
-                 end
-               }
-            else
-                @values = _oa
-            end
-          end
         if !_o['isRecursive'].nil?
           _oa = _o['isRecursive']
             if(_oa.is_a? Hash)
@@ -50107,6 +50088,25 @@ module Model
                }
             else
                 @isExcludes = _oa
+            end
+          end
+        if !_o['values'].nil?
+          _oa = _o['values']
+            if(_oa.is_a? Hash)
+              @values = EnunciateHelpers::LAMB_CLASS_AWARE.call(_oa) if _oa['@class']
+              @values =  String.from_json(_oa) unless _oa['@class']
+            elsif (_oa.is_a? Array)
+              #an array(of hashes hopefully) or scalar
+              @values = Array.new
+              _oa.each { | _item | 
+                 if ((_item.nil? || _item['@class'].nil?)rescue true)
+                   @values.push String.from_json(_item)
+                 else
+                   @values.push EnunciateHelpers::LAMB_CLASS_AWARE.call(_item)
+                 end
+               }
+            else
+                @values = _oa
             end
           end
     end

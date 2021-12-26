@@ -1,0 +1,16 @@
+Release Notes - Hive - Version 2.3.9
+
+
+
+** Bug
+    * [HIVE-17155] - findConfFile() in HiveConf.java has some issues with the conf path
+    * [HIVE-24797] - Disable validate default values when parsing Avro schemas
+    * [HIVE-24608] - Switch back to get_table in HMS client for Hive 2.3.x
+    * [HIVE-21200] - Vectorization: date column throwing java.lang.UnsupportedOperationException for parquet
+
+** Improvement
+    * [HIVE-21563] - Improve Table#getEmptyTable performance by disabling registerAllFunctionsOnce
+    * [HIVE-19228] - Remove commons-httpclient 3.x usage
+
+** Test
+    * [HIVE-18147] - Tests can fail with java.net.BindException: Address already in use

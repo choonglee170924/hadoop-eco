@@ -80,9 +80,45 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">denyPolicyItems</span>
+          <td>  <span class="property-name">denyExceptions</span>
 </td>
           <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItem.html">RangerPolicyItem</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">resourceSignature</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">policyType</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">resources</span>
+</td>
+          <td>  <span class="datatype-reference">map of <a href="json_RangerPolicyResource.html">RangerPolicyResource</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">description</span>
+</td>
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -98,9 +134,9 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">dataMaskPolicyItems</span>
+          <td>  <span class="property-name">serviceType</span>
 </td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerDataMaskPolicyItem.html">RangerDataMaskPolicyItem</a>
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -125,90 +161,9 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">serviceType</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">description</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">validitySchedules</span>
-</td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerValiditySchedule.html">RangerValiditySchedule</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">resourceSignature</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">isAuditEnabled</span>
-</td>
-          <td>  <span class="datatype-reference">boolean
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">policyLabels</span>
-</td>
-          <td>  <span class="datatype-reference">array of string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">resources</span>
-</td>
-          <td>  <span class="datatype-reference">map of <a href="json_RangerPolicyResource.html">RangerPolicyResource</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">policyType</span>
-</td>
-          <td>  <span class="datatype-reference">number
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">denyExceptions</span>
+          <td>  <span class="property-name">policyItems</span>
 </td>
           <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItem.html">RangerPolicyItem</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">policyPriority</span>
-</td>
-          <td>  <span class="datatype-reference">number
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -224,6 +179,51 @@
 </td>
         </tr>
         <tr>
+          <td>  <span class="property-name">dataMaskPolicyItems</span>
+</td>
+          <td>  <span class="datatype-reference">array of <a href="json_RangerDataMaskPolicyItem.html">RangerDataMaskPolicyItem</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">policyPriority</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">isAuditEnabled</span>
+</td>
+          <td>  <span class="datatype-reference">boolean
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">validitySchedules</span>
+</td>
+          <td>  <span class="datatype-reference">array of <a href="json_RangerValiditySchedule.html">RangerValiditySchedule</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">policyLabels</span>
+</td>
+          <td>  <span class="datatype-reference">array of string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
           <td>  <span class="property-name">service</span>
 </td>
           <td>  <span class="datatype-reference">string
@@ -233,7 +233,7 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">policyItems</span>
+          <td>  <span class="property-name">denyPolicyItems</span>
 </td>
           <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItem.html">RangerPolicyItem</a>
 </span>
@@ -247,19 +247,13 @@
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createdBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">version</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="property-name">createdBy</span></td>
           <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
@@ -271,8 +265,20 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
+          <td><span class="property-name">version</span></td>
+          <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
           <td><span class="property-name">updateTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -288,103 +294,66 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">createTime</span></td>
-          <td><span class="datatype-reference">number
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;denyPolicyItems&quot; : [ {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+  &quot;denyExceptions&quot; : [ {
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   }, {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   } ],
+  &quot;resourceSignature&quot; : &quot;...&quot;,
+  &quot;policyType&quot; : 12345,
+  &quot;resources&quot; : {
+    &quot;property1&quot; : {
+      &quot;isRecursive&quot; : true,
+      &quot;isExcludes&quot; : true,
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+    },
+    &quot;property2&quot; : {
+      &quot;isRecursive&quot; : true,
+      &quot;isExcludes&quot; : true,
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+    }
+  },
+  &quot;description&quot; : &quot;...&quot;,
   &quot;name&quot; : &quot;...&quot;,
-  &quot;dataMaskPolicyItems&quot; : [ {
-    &quot;dataMaskInfo&quot; : {
-      &quot;valueExpr&quot; : &quot;...&quot;,
-      &quot;dataMaskType&quot; : &quot;...&quot;,
-      &quot;conditionExpr&quot; : &quot;...&quot;
-    },
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
-    } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
-  }, {
-    &quot;dataMaskInfo&quot; : {
-      &quot;valueExpr&quot; : &quot;...&quot;,
-      &quot;dataMaskType&quot; : &quot;...&quot;,
-      &quot;conditionExpr&quot; : &quot;...&quot;
-    },
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
-    } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
-  } ],
+  &quot;serviceType&quot; : &quot;...&quot;,
   &quot;options&quot; : {
     &quot;property1&quot; : { },
     &quot;property2&quot; : { }
@@ -393,207 +362,238 @@
     &quot;rowFilterInfo&quot; : {
       &quot;filterExpr&quot; : &quot;...&quot;
     },
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   }, {
     &quot;rowFilterInfo&quot; : {
       &quot;filterExpr&quot; : &quot;...&quot;
     },
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
-  } ],
-  &quot;serviceType&quot; : &quot;...&quot;,
-  &quot;description&quot; : &quot;...&quot;,
-  &quot;validitySchedules&quot; : [ {
-    &quot;recurrences&quot; : [ {
-      &quot;schedule&quot; : { },
-      &quot;interval&quot; : { }
-    }, {
-      &quot;schedule&quot; : { },
-      &quot;interval&quot; : { }
-    } ],
-    &quot;startTime&quot; : &quot;...&quot;,
-    &quot;timeZone&quot; : &quot;...&quot;,
-    &quot;endTime&quot; : &quot;...&quot;
-  }, {
-    &quot;recurrences&quot; : [ {
-      &quot;schedule&quot; : { },
-      &quot;interval&quot; : { }
-    }, {
-      &quot;schedule&quot; : { },
-      &quot;interval&quot; : { }
-    } ],
-    &quot;startTime&quot; : &quot;...&quot;,
-    &quot;timeZone&quot; : &quot;...&quot;,
-    &quot;endTime&quot; : &quot;...&quot;
-  } ],
-  &quot;resourceSignature&quot; : &quot;...&quot;,
-  &quot;isAuditEnabled&quot; : true,
-  &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-  &quot;resources&quot; : {
-    &quot;property1&quot; : {
       &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;isRecursive&quot; : true,
-      &quot;isExcludes&quot; : true
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  } ],
+  &quot;policyItems&quot; : [ {
+    &quot;accesses&quot; : [ {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
+    &quot;conditions&quot; : [ {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  }, {
+    &quot;accesses&quot; : [ {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
+    &quot;conditions&quot; : [ {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  } ],
+  &quot;allowExceptions&quot; : [ {
+    &quot;accesses&quot; : [ {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
+    &quot;conditions&quot; : [ {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  }, {
+    &quot;accesses&quot; : [ {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
+    &quot;conditions&quot; : [ {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  } ],
+  &quot;dataMaskPolicyItems&quot; : [ {
+    &quot;dataMaskInfo&quot; : {
+      &quot;valueExpr&quot; : &quot;...&quot;,
+      &quot;conditionExpr&quot; : &quot;...&quot;,
+      &quot;dataMaskType&quot; : &quot;...&quot;
     },
-    &quot;property2&quot; : {
+    &quot;accesses&quot; : [ {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    }, {
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
+    } ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
+    &quot;conditions&quot; : [ {
       &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;isRecursive&quot; : true,
-      &quot;isExcludes&quot; : true
-    }
-  },
-  &quot;policyType&quot; : 12345,
-  &quot;denyExceptions&quot; : [ {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   }, {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;dataMaskInfo&quot; : {
+      &quot;valueExpr&quot; : &quot;...&quot;,
+      &quot;conditionExpr&quot; : &quot;...&quot;,
+      &quot;dataMaskType&quot; : &quot;...&quot;
+    },
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   } ],
   &quot;policyPriority&quot; : 12345,
-  &quot;allowExceptions&quot; : [ {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+  &quot;isAuditEnabled&quot; : true,
+  &quot;validitySchedules&quot; : [ {
+    &quot;endTime&quot; : &quot;...&quot;,
+    &quot;recurrences&quot; : [ {
+      &quot;interval&quot; : { },
+      &quot;schedule&quot; : { }
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;interval&quot; : { },
+      &quot;schedule&quot; : { }
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;timeZone&quot; : &quot;...&quot;,
+    &quot;startTime&quot; : &quot;...&quot;
   }, {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+    &quot;endTime&quot; : &quot;...&quot;,
+    &quot;recurrences&quot; : [ {
+      &quot;interval&quot; : { },
+      &quot;schedule&quot; : { }
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;interval&quot; : { },
+      &quot;schedule&quot; : { }
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;timeZone&quot; : &quot;...&quot;,
+    &quot;startTime&quot; : &quot;...&quot;
   } ],
+  &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
   &quot;service&quot; : &quot;...&quot;,
-  &quot;policyItems&quot; : [ {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+  &quot;denyPolicyItems&quot; : [ {
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   }, {
-    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
     &quot;accesses&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;isAllowed&quot; : true
+      &quot;isAllowed&quot; : true,
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;delegateAdmin&quot; : true,
     &quot;conditions&quot; : [ {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     }, {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+      &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;type&quot; : &quot;...&quot;
     } ],
-    &quot;delegateAdmin&quot; : true
+    &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   } ],
+  &quot;createTime&quot; : 12345,
   &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;version&quot; : 12345,
-  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;id&quot; : 12345,
+  &quot;version&quot; : 12345,
   &quot;updateTime&quot; : 12345,
+  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true,
-  &quot;createTime&quot; : 12345
+  &quot;isEnabled&quot; : true
 }</pre>
 
         <footer class="footer">

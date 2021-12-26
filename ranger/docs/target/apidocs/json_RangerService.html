@@ -80,7 +80,43 @@
         </thead>
         <tbody>
         <tr>
+          <td>  <span class="property-name">type</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">tagService</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
           <td>  <span class="property-name">tagUpdateTime</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">tagVersion</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">policyUpdateTime</span>
 </td>
           <td>  <span class="datatype-reference">number
 </span>
@@ -98,9 +134,9 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">tagVersion</span>
+          <td>  <span class="property-name">description</span>
 </td>
-          <td>  <span class="datatype-reference">number
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -110,42 +146,6 @@
           <td>  <span class="property-name">configs</span>
 </td>
           <td>  <span class="datatype-reference">map of string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">tagService</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">type</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">policyUpdateTime</span>
-</td>
-          <td>  <span class="datatype-reference">number
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">description</span>
-</td>
-          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -166,19 +166,13 @@
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createdBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">version</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="property-name">createdBy</span></td>
           <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
@@ -190,8 +184,20 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
+          <td><span class="property-name">version</span></td>
+          <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
           <td><span class="property-name">updateTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -207,38 +213,32 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">createTime</span></td>
-          <td><span class="datatype-reference">number
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
+  &quot;type&quot; : &quot;...&quot;,
+  &quot;tagService&quot; : &quot;...&quot;,
   &quot;tagUpdateTime&quot; : 12345,
-  &quot;name&quot; : &quot;...&quot;,
   &quot;tagVersion&quot; : 12345,
+  &quot;policyUpdateTime&quot; : 12345,
+  &quot;name&quot; : &quot;...&quot;,
+  &quot;description&quot; : &quot;...&quot;,
   &quot;configs&quot; : {
     &quot;property1&quot; : &quot;...&quot;,
     &quot;property2&quot; : &quot;...&quot;
   },
-  &quot;tagService&quot; : &quot;...&quot;,
-  &quot;type&quot; : &quot;...&quot;,
-  &quot;policyUpdateTime&quot; : 12345,
-  &quot;description&quot; : &quot;...&quot;,
   &quot;policyVersion&quot; : 12345,
+  &quot;createTime&quot; : 12345,
   &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;version&quot; : 12345,
-  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;id&quot; : 12345,
+  &quot;version&quot; : 12345,
   &quot;updateTime&quot; : 12345,
+  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true,
-  &quot;createTime&quot; : 12345
+  &quot;isEnabled&quot; : true
 }</pre>
 
         <footer class="footer">

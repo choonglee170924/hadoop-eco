@@ -80,15 +80,6 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">name</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
           <td>  <span class="property-name">attributeDefs</span>
 </td>
           <td>  <span class="datatype-reference">array of <a href="json_RangerTagAttributeDef.html">RangerTagAttributeDef</a>
@@ -106,25 +97,28 @@
           <td>  <span class="property-description"></span>
 </td>
         </tr>
+        <tr>
+          <td>  <span class="property-name">name</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
         </tbody>
         <tr>
           <td colspan="3"><h5 class="text-muted">Properties inherited from <a href="json_RangerBaseModelObject.html">RangerBaseModelObject</a></h5></td>
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createdBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">version</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="property-name">createdBy</span></td>
           <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
@@ -136,8 +130,20 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
+          <td><span class="property-name">version</span></td>
+          <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
           <td><span class="property-name">updateTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -153,19 +159,12 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">createTime</span></td>
-          <td><span class="datatype-reference">number
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;name&quot; : &quot;...&quot;,
   &quot;attributeDefs&quot; : [ {
     &quot;name&quot; : &quot;...&quot;,
     &quot;type&quot; : &quot;...&quot;
@@ -174,14 +173,15 @@
     &quot;type&quot; : &quot;...&quot;
   } ],
   &quot;source&quot; : &quot;...&quot;,
+  &quot;name&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
   &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;version&quot; : 12345,
-  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;id&quot; : 12345,
+  &quot;version&quot; : 12345,
   &quot;updateTime&quot; : 12345,
+  &quot;updatedBy&quot; : &quot;...&quot;,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true,
-  &quot;createTime&quot; : 12345
+  &quot;isEnabled&quot; : true
 }</pre>
 
         <footer class="footer">
