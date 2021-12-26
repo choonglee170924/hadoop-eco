@@ -17,14 +17,15 @@
  * under the License.
  */
 
-package org.apache.ranger.security.handler;
+ package org.apache.ranger.security.handler;
 
 /**
  *
  */
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.Serializable;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.common.ContextUtil;
 import org.apache.ranger.common.PropertiesUtil;
@@ -34,12 +35,10 @@ import org.apache.ranger.entity.XXDBBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 @Component
 public class RangerDomainObjectSecurityHandler {
 
-	private static final Logger logger = LogManager
+	private static final Logger logger = Logger
 			.getLogger(RangerDomainObjectSecurityHandler.class);
 
 	@Autowired
@@ -63,13 +62,13 @@ public class RangerDomainObjectSecurityHandler {
 	}
 
 	public <T extends XXDBBase> boolean hasAccess(T targetDomainObject,
-	                                              Permission.permissionType permission) {
+			Permission.permissionType permission) {
 		//TODO: Need to review this method and reimplement it properly
 		return true;
 	}
 
 	public boolean hasAccess(String targetType, Serializable targetId,
-	                         Permission.permissionType permission) {
+			Permission.permissionType permission) {
 		try {
 			Class<?> clazz = Class.forName(targetType);
 			Class<? extends XXDBBase> gjClazz = clazz.asSubclass(XXDBBase.class);
@@ -86,7 +85,7 @@ public class RangerDomainObjectSecurityHandler {
 	}
 
 	public boolean hasAccess(Class<? extends XXDBBase> targetClass,
-	                         Serializable targetId, Permission.permissionType permission) {
+			Serializable targetId, Permission.permissionType permission) {
 		try {
 			Class<? extends XXDBBase> gjClazz = targetClass
 					.asSubclass(XXDBBase.class);

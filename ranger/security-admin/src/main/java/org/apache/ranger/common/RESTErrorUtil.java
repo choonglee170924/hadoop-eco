@@ -17,32 +17,34 @@
  * under the License.
  */
 
-package org.apache.ranger.common;
+ package org.apache.ranger.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.admin.client.datatype.RESTResponse;
-import org.apache.ranger.view.VXMessage;
-import org.apache.ranger.view.VXResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.admin.client.datatype.RESTResponse;
+import org.apache.ranger.view.VXMessage;
+import org.apache.ranger.view.VXResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 
 @Component
 public class RESTErrorUtil {
 
-	public static final String TRUE = "true";
-	private static final Logger logger = LogManager.getLogger(RESTErrorUtil.class);
+	private static final Logger logger = Logger.getLogger(RESTErrorUtil.class);
+
 	@Autowired
 	StringUtil stringUtil;
+
+	public static final String TRUE = "true";
 
 	public WebApplicationException createRESTException(VXResponse gjResponse) {
 		Response errorResponse = Response
@@ -59,7 +61,7 @@ public class RESTErrorUtil {
 		}
 
 		logger.info("Request failed. loginId="
-						+ loginId + ", logMessage=" + gjResponse.getMsgDesc(),
+				+ loginId + ", logMessage=" + gjResponse.getMsgDesc(),
 				restException);
 
 		return restException;
@@ -80,14 +82,15 @@ public class RESTErrorUtil {
 		}
 
 		logger.info("Request failed. loginId="
-						+ loginId + ", logMessage=" + gjResponse.getMsgDesc(),
+				+ loginId + ", logMessage=" + gjResponse.getMsgDesc(),
 				restException);
 
 		return restException;
 	}
-
 	/**
-	 * @param logMessage This is optional
+	 *
+	 * @param logMessage
+	 *            This is optional
 	 * @return
 	 */
 	public WebApplicationException create403RESTException(String logMessage) {
@@ -113,7 +116,7 @@ public class RESTErrorUtil {
 				requestInfo = reqContext.toString();
 				requestInfo += ", timeTaken="
 						+ (System.currentTimeMillis() - reqContext
-						.getStartTime());
+								.getStartTime());
 			}
 		} catch (Throwable contextEx) {
 			logger.error("Error getting request info", contextEx);
@@ -126,7 +129,7 @@ public class RESTErrorUtil {
 		return restException;
 	}
 
-
+	
 	public WebApplicationException createGrantRevokeRESTException(String logMessage) {
 		RESTResponse resp = new RESTResponse();
 		resp.setMsgDesc(logMessage);
@@ -144,15 +147,15 @@ public class RESTErrorUtil {
 		}
 
 		logger.info("Request failed. loginId="
-						+ loginId + ", logMessage=" + logMessage,
+				+ loginId + ", logMessage=" + logMessage,
 				restException);
 
 		return restException;
 	}
 
-
+	
 	public Integer parseInt(String value, String errorMessage,
-	                        MessageEnums messageEnum, Long objectId, String fieldName) {
+			MessageEnums messageEnum, Long objectId, String fieldName) {
 		try {
 			if (stringUtil.isEmpty(value)) {
 				return null;
@@ -166,8 +169,8 @@ public class RESTErrorUtil {
 	}
 
 	public Integer parseInt(String value, int defaultValue,
-	                        String errorMessage, MessageEnums messageEnum, Long objectId,
-	                        String fieldName) {
+			String errorMessage, MessageEnums messageEnum, Long objectId,
+			String fieldName) {
 		try {
 			if (stringUtil.isEmpty(value)) {
 				return Integer.valueOf(defaultValue);
@@ -188,7 +191,7 @@ public class RESTErrorUtil {
 	}
 
 	public Long parseLong(String value, String errorMessage,
-	                      MessageEnums messageEnum, Long objectId, String fieldName) {
+			MessageEnums messageEnum, Long objectId, String fieldName) {
 		try {
 			if (stringUtil.isEmpty(value)) {
 				return null;
@@ -201,18 +204,19 @@ public class RESTErrorUtil {
 		}
 	}
 
+	
 
 	public String validateString(String value, String regExStr,
-	                             String errorMessage, MessageEnums messageEnum, Long objectId,
-	                             String fieldName) {
+			String errorMessage, MessageEnums messageEnum, Long objectId,
+			String fieldName) {
 		return validateString(value, regExStr, errorMessage, messageEnum,
 				objectId, fieldName, false);
 
 	}
 
 	public String validateString(String value, String regExStr,
-	                             String errorMessage, MessageEnums messageEnum, Long objectId,
-	                             String fieldName, boolean isMandatory) {
+			String errorMessage, MessageEnums messageEnum, Long objectId,
+			String fieldName, boolean isMandatory) {
 		if (stringUtil.isEmpty(value)) {
 			if (isMandatory) {
 				throw createRESTException(errorMessage,
@@ -234,15 +238,15 @@ public class RESTErrorUtil {
 	}
 
 	public String validateStringForUpdate(String value, String originalValue,
-	                                      String regExStr, String errorMessage, MessageEnums messageEnum,
-	                                      Long objectId, String fieldName) {
+			String regExStr, String errorMessage, MessageEnums messageEnum,
+			Long objectId, String fieldName) {
 		return validateStringForUpdate(value, originalValue, regExStr,
 				errorMessage, messageEnum, objectId, fieldName, false);
 	}
 
 	public String validateStringForUpdate(String value, String originalValue,
-	                                      String regExStr, String errorMessage, MessageEnums messageEnum,
-	                                      Long objectId, String fieldName, boolean isMandatory) {
+			String regExStr, String errorMessage, MessageEnums messageEnum,
+			Long objectId, String fieldName, boolean isMandatory) {
 		if (stringUtil.isEmpty(value)) {
 			if (isMandatory) {
 				throw createRESTException(errorMessage,
@@ -260,7 +264,7 @@ public class RESTErrorUtil {
 	}
 
 	public void validateStringList(String value, String[] validValues,
-	                               String errorMessage, Long objectId, String fieldName) {
+			String errorMessage, Long objectId, String fieldName) {
 		for (String validValue : validValues) {
 			if (validValue.equals(value)) {
 				return;
@@ -270,9 +274,12 @@ public class RESTErrorUtil {
 				MessageEnums.INVALID_INPUT_DATA, objectId, fieldName, value);
 	}
 
+	
+
+	
 
 	public void validateMinMax(int value, int minValue, int maxValue,
-	                           String errorMessage, Long objectId, String fieldName) {
+			String errorMessage, Long objectId, String fieldName) {
 		if (value < minValue || value > maxValue) {
 			throw createRESTException(errorMessage,
 					MessageEnums.INPUT_DATA_OUT_OF_BOUND, objectId, fieldName,
@@ -282,8 +289,8 @@ public class RESTErrorUtil {
 
 
 	public WebApplicationException createRESTException(String errorMessage,
-	                                                   MessageEnums messageEnum, Long objectId, String fieldName,
-	                                                   String logMessage) {
+			MessageEnums messageEnum, Long objectId, String fieldName,
+			String logMessage) {
 		List<VXMessage> messageList = new ArrayList<VXMessage>();
 		messageList.add(messageEnum.getMessage(objectId, fieldName));
 
@@ -307,7 +314,7 @@ public class RESTErrorUtil {
 	}
 
 	public WebApplicationException createRESTException(String errorMessage,
-	                                                   MessageEnums messageEnum) {
+			MessageEnums messageEnum) {
 		List<VXMessage> messageList = new ArrayList<VXMessage>();
 		messageList.add(messageEnum.getMessage());
 
@@ -321,7 +328,7 @@ public class RESTErrorUtil {
 	}
 
 	public WebApplicationException createRESTException(int responseCode,
-	                                                   String logMessage, boolean logError) {
+			String logMessage, boolean logError) {
 		Response errorResponse = Response
 				.status(responseCode).entity(logMessage).build();
 
@@ -336,17 +343,17 @@ public class RESTErrorUtil {
 
 		if (logError) {
 			logger.info("Request failed. loginId="
-							+ loginId + ", logMessage=" + logMessage,
+					+ loginId + ", logMessage=" + logMessage,
 					restException);
 		}
 
-		return restException;
+		return restException;	
 	}
-
-
+	
+	
 	public Date parseDate(String value, String errorMessage,
-	                      MessageEnums messageEnum, Long objectId, String fieldName,
-	                      String dateFormat) {
+			MessageEnums messageEnum, Long objectId, String fieldName,
+			String dateFormat) {
 		try {
 			if (stringUtil.isEmpty(value)) {
 				return null;
@@ -367,9 +374,9 @@ public class RESTErrorUtil {
 		}
 		return TRUE.equalsIgnoreCase(value.trim());
 	}
-
+	
 	public Boolean parseBoolean(String value, String errorMessage,
-	                            MessageEnums messageEnum, Long objectId, String fieldName) {
+			MessageEnums messageEnum, Long objectId, String fieldName) {
 		try {
 			if (stringUtil.isEmpty(value)) {
 				return null;
@@ -383,8 +390,9 @@ public class RESTErrorUtil {
 	}
 
 	public WebApplicationException createRESTException(String errorMessage,
-	                                                   MessageEnums messageEnum, Long objectId, String fieldName,
-	                                                   String logMessage, int statusCode) {
+				MessageEnums messageEnum, Long objectId, String fieldName,
+				String logMessage,int statusCode)
+	{
 		List<VXMessage> messageList = new ArrayList<VXMessage>();
 		messageList.add(messageEnum.getMessage(objectId, fieldName));
 		VXResponse vResponse = new VXResponse();
@@ -400,7 +408,7 @@ public class RESTErrorUtil {
 			loginId = userSession.getLoginId();
 		}
 		logger.info("Request failed. loginId="
-						+ loginId + ", logMessage=" + vResponse.getMsgDesc(),
+				+ loginId + ", logMessage=" + vResponse.getMsgDesc(),
 				restException);
 		return restException;
 	}

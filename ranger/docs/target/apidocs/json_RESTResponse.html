@@ -80,24 +80,6 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">msgDesc</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">httpStatusCode</span>
-</td>
-          <td>  <span class="datatype-reference">number
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
           <td>  <span class="property-name">messageList</span>
 </td>
           <td>  <span class="datatype-reference">array of <a href="json_Message.html">Message</a>
@@ -115,28 +97,46 @@
           <td>  <span class="property-description"></span>
 </td>
         </tr>
+        <tr>
+          <td>  <span class="property-name">httpStatusCode</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">msgDesc</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;msgDesc&quot; : &quot;...&quot;,
-  &quot;httpStatusCode&quot; : 12345,
   &quot;messageList&quot; : [ {
-    &quot;fieldName&quot; : &quot;...&quot;,
     &quot;message&quot; : &quot;...&quot;,
+    &quot;fieldName&quot; : &quot;...&quot;,
     &quot;objectId&quot; : 12345,
     &quot;rbKey&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;
   }, {
-    &quot;fieldName&quot; : &quot;...&quot;,
     &quot;message&quot; : &quot;...&quot;,
+    &quot;fieldName&quot; : &quot;...&quot;,
     &quot;objectId&quot; : 12345,
     &quot;rbKey&quot; : &quot;...&quot;,
     &quot;name&quot; : &quot;...&quot;
   } ],
-  &quot;statusCode&quot; : 12345
+  &quot;statusCode&quot; : 12345,
+  &quot;httpStatusCode&quot; : 12345,
+  &quot;msgDesc&quot; : &quot;...&quot;
 }</pre>
 
         <footer class="footer">

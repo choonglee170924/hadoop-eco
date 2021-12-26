@@ -17,21 +17,21 @@
 
 package org.apache.ranger.patch;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Date;
+import java.util.List;
+import org.apache.log4j.Logger;
 import org.apache.ranger.db.RangerDaoManager;
 import org.apache.ranger.entity.XXService;
 import org.apache.ranger.entity.XXServiceVersionInfo;
+
 import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-
 @Component
 public class PatchForServiceVersionInfo_J10004 extends BaseLoader {
-	private static final Logger logger = LogManager.getLogger(PatchForServiceVersionInfo_J10004.class);
+	private static final Logger logger = Logger
+			.getLogger(PatchForServiceVersionInfo_J10004.class);
 
 	@Autowired
 	RangerDaoManager daoManager;

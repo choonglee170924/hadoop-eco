@@ -29,8 +29,7 @@ import java.util.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
 import org.apache.ranger.unixusersync.model.FileSyncSourceInfo;
 import org.apache.ranger.unixusersync.model.UgsyncAuditInfo;
@@ -42,7 +41,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
-	private static final Logger LOG = LogManager.getLogger(FileSourceUserGroupBuilder.class);
+	private static final Logger LOG = Logger.getLogger(FileSourceUserGroupBuilder.class);
 
 	private Map<String,List<String>> user2GroupListMap     = new HashMap<String,List<String>>();
 	private String                   userGroupFilename     = null;
@@ -60,7 +59,7 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 		if (args.length > 0) {
 			filesourceUGBuilder.setUserGroupFilename(args[0]);
 		}
-
+		
 		filesourceUGBuilder.init();
 
 		UserGroupSink ugSink = UserGroupSyncConfig.getInstance().getUserGroupSink();
@@ -68,7 +67,7 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 		ugSink.init();
 
 		filesourceUGBuilder.updateSink(ugSink);
-
+		
 		if ( LOG.isDebugEnabled()) {
 			filesourceUGBuilder.print();
 		}
@@ -77,7 +76,7 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 	public FileSourceUserGroupBuilder() {
 		super();
 	}
-
+	
 	@Override
 	public void init() throws Throwable {
 		isStartupFlag = true;
@@ -91,16 +90,16 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 		fileSyncSourceInfo.setFileName(userGroupFilename);
 		buildUserGroupInfo();
 	}
-
+	
 	@Override
 	public boolean isChanged() {
-		// If previous update to Ranger admin fails,
+		// If previous update to Ranger admin fails, 
 		// we want to retry the sync process even if there are no changes to the sync files
 		if (!isUpdateSinkSucc) {
 			LOG.info("Previous updateSink failed and hence retry!!");
 			return true;
 		}
-
+		
 		long TempUserGroupFileModifedAt = new File(userGroupFilename).lastModified();
 		if (usergroupFileModified != TempUserGroupFileModifedAt) {
 			return true;
@@ -179,17 +178,17 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 			print();
 		}
 	}
-
+	
 	public void buildUserGroupList() throws Throwable {
 		if (userGroupFilename == null){
 			throw new Exception("User Group Source File is not Configured. Please maintain in unixauthservice.properties or pass it as command line argument for org.apache.ranger.unixusersync.process.FileSourceUserGroupBuilder");
 		}
-
+	
 		File f = new File(userGroupFilename);
-
+		
 		if (f.exists() && f.canRead()) {
 			Map<String,List<String>> tmpUser2GroupListMap = null;
-
+			
 			if ( isJsonFile(userGroupFilename) ) {
 				tmpUser2GroupListMap = readJSONfile(f);
 			} else {
@@ -198,7 +197,7 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 
 			if(tmpUser2GroupListMap != null) {
 				user2GroupListMap     = tmpUser2GroupListMap;
-
+				
 				usergroupFileModified = f.lastModified();
 			} else {
 				LOG.info("No new UserGroup to sync at this time");
@@ -207,7 +206,7 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 			throw new Exception("User Group Source File " + userGroupFilename + "doesn't not exist or readable");
 		}
 	}
-
+	
 	public boolean isJsonFile(String userGroupFilename) {
 		boolean ret = false;
 
@@ -217,41 +216,41 @@ public class FileSourceUserGroupBuilder extends AbstractUserGroupSource {
 
 		return ret;
 	}
-
+	
 	public 	Map<String, List<String>> readJSONfile(File jsonFile) throws Exception {
 		Map<String, List<String>> ret = new HashMap<String, List<String>>();
 
 		JsonReader jsonReader = new JsonReader(new BufferedReader(new FileReader(jsonFile)));
-
+		
 		Gson gson = new GsonBuilder().create();
 
 		ret = gson.fromJson(jsonReader, ret.getClass());
-
+		
 		return ret;
 
 	}
-
+	
 	public Map<String, List<String>> readTextFile(File textFile) throws Exception {
-
+		
 		Map<String, List<String>> ret = new HashMap<String, List<String>>();
-
+		
 		String delimiter = config.getUserSyncFileSourceDelimiter();
-
+		
 		CSVFormat csvFormat = CSVFormat.newFormat(delimiter.charAt(0));
-
+		
 		CSVParser csvParser = new CSVParser(new BufferedReader(new FileReader(textFile)), csvFormat);
-
+		
 		List<CSVRecord> csvRecordList = csvParser.getRecords();
-
+		
 		if ( csvRecordList != null) {
 			for(CSVRecord csvRecord : csvRecordList) {
 				List<String> groups = new ArrayList<String>();
 				String user = csvRecord.get(0);
-
+				
 				user = user.replaceAll("^\"|\"$", "");
-
+					
 				int i = csvRecord.size();
-
+				
 				for (int j = 1; j < i; j ++) {
 					String group = csvRecord.get(j);
 					if ( group != null && !group.isEmpty()) {

@@ -19,12 +19,11 @@
 
 package org.apache.ranger.usergroupsync;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 public abstract class AbstractMapper implements Mapper {
-
-	protected static final Logger logger = LogManager.getLogger(AbstractMapper.class);
+	
+	protected static final Logger logger = Logger.getLogger(AbstractMapper.class);
 
 	@Override
 	public void init(String baseProperty) {

@@ -51,8 +51,7 @@ import javax.naming.ldap.StartTlsResponse;
 
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
 import org.apache.ranger.unixusersync.model.LdapSyncSourceInfo;
 import org.apache.ranger.unixusersync.model.UgsyncAuditInfo;
@@ -63,27 +62,22 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
-
-	private static final Logger LOG = LogManager.getLogger(LdapDeltaUserGroupBuilder.class);
-
+	
+	private static final Logger LOG = Logger.getLogger(LdapDeltaUserGroupBuilder.class);
+	
 	private static final int PAGE_SIZE = 500;
-	private static long deltaSyncUserTime = 0; // Used for AD uSNChanged
+	private static long deltaSyncUserTime = 0; // Used for AD uSNChanged 
 	private static long deltaSyncGroupTime = 0; // Used for AD uSNChanged
-	StartTlsResponse tls;
-	UgsyncAuditInfo ugsyncAuditInfo;
-	LdapSyncSourceInfo ldapSyncSourceInfo;
-	int noOfNewUsers;
-	int noOfNewGroups;
-	int noOfModifiedUsers;
-	int noOfModifiedGroups;
 	private String deltaSyncUserTimeStamp; // Used for OpenLdap modifyTimestamp
 	private String deltaSyncGroupTimeStamp; // Used for OpenLdap modifyTimestamp
+
   private String ldapUrl;
   private String ldapBindDn;
   private String ldapBindPassword;
   private String ldapAuthenticationMechanism;
   private String ldapReferral;
   private String searchBase;
+
   private String[] userSearchBase;
 	private String userNameAttribute;
   private int    userSearchScope;
@@ -92,8 +86,10 @@ public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
   private String extendedUserSearchFilter;
   private SearchControls userSearchControls;
   private Set<String> userGroupNameAttributeSet;
+
   private boolean pagedResultsEnabled = true;
   private int pagedResultsSize = PAGE_SIZE;
+
   private boolean groupSearchFirstEnabled = false;
   private boolean userSearchEnabled = false;
   private boolean groupSearchEnabled = true;
@@ -108,17 +104,33 @@ public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
   private String groupNameAttribute;
 	private int groupHierarchyLevels;
 
-  //private Map<String, UserInfo> userGroupMap;
 	private LdapContext ldapContext;
+	StartTlsResponse tls;
+
 	private boolean userNameCaseConversionFlag = false;
 	private boolean groupNameCaseConversionFlag = false;
 	private boolean userNameLowerCaseFlag = false;
 	private boolean groupNameLowerCaseFlag = false;
+
   private boolean  groupUserMapSyncEnabled = false;
+
+  //private Map<String, UserInfo> userGroupMap;
+
   private Table<String, String, String> groupUserTable;
   private Map<String, String> userNameMap;
 	private HashSet<String> groupNames;
 	private BidiMap groupNameMap;
+	UgsyncAuditInfo ugsyncAuditInfo;
+	LdapSyncSourceInfo ldapSyncSourceInfo;
+	int noOfNewUsers;
+	int noOfNewGroups;
+	int noOfModifiedUsers;
+	int noOfModifiedGroups;
+
+	public static void main(String[] args) throws Throwable {
+		LdapDeltaUserGroupBuilder  ugBuilder = new LdapDeltaUserGroupBuilder();
+		ugBuilder.init();
+	}
 
 	public LdapDeltaUserGroupBuilder() {
 		super();
@@ -143,43 +155,6 @@ public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
 		    groupNameCaseConversionFlag = true;
 		    groupNameLowerCaseFlag = UserGroupSyncConfig.UGSYNC_LOWER_CASE_CONVERSION_VALUE.equalsIgnoreCase(groupNameCaseConversion);
 		}
-	}
-
-	public static void main(String[] args) throws Throwable {
-		LdapDeltaUserGroupBuilder  ugBuilder = new LdapDeltaUserGroupBuilder();
-		ugBuilder.init();
-	}
-
-	private static String getShortGroupName(String longGroupName) throws InvalidNameException {
-		if (longGroupName == null) {
-			return null;
-		}
-		StringTokenizer stc = new StringTokenizer(longGroupName, ",");
-		String firstToken = stc.nextToken();
-		StringTokenizer ste = new StringTokenizer(firstToken, "=");
-		String groupName =  ste.nextToken();
-		if (ste.hasMoreTokens()) {
-			groupName = ste.nextToken();
-		}
-		groupName = groupName.trim();
-		LOG.info("longGroupName: " + longGroupName + ", groupName: " + groupName);
-		return groupName;
-	}
-
-	private static String getShortUserName(String longUserName) throws InvalidNameException {
-		if (longUserName == null) {
-			return null;
-		}
-		StringTokenizer stc = new StringTokenizer(longUserName, ",");
-		String firstToken = stc.nextToken();
-		StringTokenizer ste = new StringTokenizer(firstToken, "=");
-		String userName =  ste.nextToken();
-		if (ste.hasMoreTokens()) {
-			userName = ste.nextToken();
-		}
-		userName = userName.trim();
-		LOG.info("longUserName: " + longUserName + ", userName: " + userName);
-		return userName;
 	}
 
 	@Override
@@ -386,7 +361,7 @@ public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
 			}
 			return;
 		}
-
+        
 		if (groupHierarchyLevels > 0) {
 			LOG.info("Going through group hierarchy for nested group evaluation");
             Set<String> groupFullNames = groupNameMap.keySet();
@@ -878,6 +853,39 @@ public class LdapDeltaUserGroupBuilder extends AbstractUserGroupSource {
             // Incrementing the highest timestamp value (for OpenLdap) with 1min in order to avoid search record repetition for next sync cycle.
             deltaSyncGroupTimeStamp = dateFormat.format(new Date(highestdeltaSyncGroupTime + 60l));
         }
+	}
+
+
+	private static String getShortGroupName(String longGroupName) throws InvalidNameException {
+		if (longGroupName == null) {
+			return null;
+		}
+		StringTokenizer stc = new StringTokenizer(longGroupName, ",");
+		String firstToken = stc.nextToken();
+		StringTokenizer ste = new StringTokenizer(firstToken, "=");
+		String groupName =  ste.nextToken();
+		if (ste.hasMoreTokens()) {
+			groupName = ste.nextToken();
+		}
+		groupName = groupName.trim();
+		LOG.info("longGroupName: " + longGroupName + ", groupName: " + groupName);
+		return groupName;
+	}
+
+	private static String getShortUserName(String longUserName) throws InvalidNameException {
+		if (longUserName == null) {
+			return null;
+		}
+		StringTokenizer stc = new StringTokenizer(longUserName, ",");
+		String firstToken = stc.nextToken();
+		StringTokenizer ste = new StringTokenizer(firstToken, "=");
+		String userName =  ste.nextToken();
+		if (ste.hasMoreTokens()) {
+			userName = ste.nextToken();
+		}
+		userName = userName.trim();
+		LOG.info("longUserName: " + longUserName + ", userName: " + userName);
+		return userName;
 	}
 
 	private String userNameTransform(String userName) {

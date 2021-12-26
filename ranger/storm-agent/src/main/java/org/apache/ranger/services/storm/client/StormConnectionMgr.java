@@ -20,28 +20,27 @@
 package org.apache.ranger.services.storm.client;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 
 public class StormConnectionMgr {
 
-	private static final Logger LOG = LogManager.getLogger(StormConnectionMgr.class);
+	private static final Logger LOG = Logger.getLogger(StormConnectionMgr.class);
 
 	public static StormClient getStormClient(final String stormUIURL, String userName, String password, String lookupPrincipal, String lookupKeytab, String nameRules) {
-		StormClient stormClient = null;
-		if (stormUIURL == null || stormUIURL.isEmpty()) {
-			LOG.error("Can not create StormClient: stormUIURL is empty");
-		} else if (StringUtils.isEmpty(lookupPrincipal) || StringUtils.isEmpty(lookupKeytab)) {
-			if (userName == null || userName.isEmpty()) {
-				LOG.error("Can not create StormClient: stormAdminUser is empty");
-			} else if (password == null || password.isEmpty()) {
-				LOG.error("Can not create StormClient: stormAdminPassword is empty");
-			}
-		} else {
-			stormClient = new StormClient(stormUIURL, userName, password, lookupPrincipal, lookupKeytab, nameRules);
-		}
-		return stormClient;
-	}
+        StormClient stormClient = null;
+        if (stormUIURL == null || stormUIURL.isEmpty()) {
+        	LOG.error("Can not create StormClient: stormUIURL is empty");
+        } else if(StringUtils.isEmpty(lookupPrincipal) || StringUtils.isEmpty(lookupKeytab)){
+        	if (userName == null || userName.isEmpty()) {
+        		LOG.error("Can not create StormClient: stormAdminUser is empty");
+        	} else if (password == null || password.isEmpty()) {
+        		LOG.error("Can not create StormClient: stormAdminPassword is empty");
+        	}
+        }else {
+            stormClient =  new StormClient(stormUIURL, userName, password, lookupPrincipal, lookupKeytab, nameRules);
+        }
+        return stormClient;
+    }
 
 }

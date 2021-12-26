@@ -20,13 +20,15 @@
 package org.apache.ranger.ldapusersync.process;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
-import org.apache.ranger.unixusersync.model.LdapSyncSourceInfo;
-import org.apache.ranger.unixusersync.model.UgsyncAuditInfo;
-import org.apache.ranger.usergroupsync.AbstractUserGroupSource;
-import org.apache.ranger.usergroupsync.UserGroupSink;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.naming.Context;
 import javax.naming.InvalidNameException;
@@ -35,22 +37,34 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
-import javax.naming.ldap.*;
-import java.util.*;
+import javax.naming.ldap.Control;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.PagedResultsControl;
+import javax.naming.ldap.PagedResultsResponseControl;
+import javax.naming.ldap.StartTlsRequest;
+import javax.naming.ldap.StartTlsResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
+import org.apache.ranger.unixusersync.model.LdapSyncSourceInfo;
+import org.apache.ranger.unixusersync.model.UgsyncAuditInfo;
+import org.apache.ranger.usergroupsync.AbstractUserGroupSource;
+import org.apache.ranger.usergroupsync.UserGroupSink;
 
 public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 
-	private static final Logger LOG = LogManager.getLogger(LdapUserGroupBuilder.class);
+	private static final Logger LOG = Logger.getLogger(LdapUserGroupBuilder.class);
 
 	private static final int PAGE_SIZE = 500;
-	UgsyncAuditInfo ugsyncAuditInfo;
-	LdapSyncSourceInfo ldapSyncSourceInfo;
+
 	private String ldapUrl;
 	private String ldapBindDn;
 	private String ldapBindPassword;
 	private String ldapAuthenticationMechanism;
 	private String ldapReferral;
 	private String searchBase;
+
 	private String[] userSearchBase;
 	private String userNameAttribute;
 	private int userSearchScope;
@@ -59,8 +73,10 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 	private String extendedUserSearchFilter;
 	private SearchControls userSearchControls;
 	private Set<String> userGroupNameAttributeSet;
+
 	private boolean pagedResultsEnabled = true;
 	private int pagedResultsSize = PAGE_SIZE;
+
 	private boolean groupSearchFirstEnabled;
 	private boolean userSearchEnabled;
 	private boolean groupSearchEnabled = true;
@@ -73,17 +89,29 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 	private SearchControls groupSearchControls;
 	private String groupMemberAttributeName;
 	private String groupNameAttribute;
-	private int groupHierarchyLevels;
+    private int groupHierarchyLevels;
+
 	private LdapContext ldapContext;
 	private StartTlsResponse tls;
+
 	private boolean userNameCaseConversionFlag;
 	private boolean groupNameCaseConversionFlag;
 	private boolean userNameLowerCaseFlag;
 	private boolean groupNameLowerCaseFlag;
+
 	private boolean groupUserMapSyncEnabled;
+
 	private Map<String, UserInfo> userGroupMap;
-	//private Set<String> firstGroupDNs;
+    //private Set<String> firstGroupDNs;
 	private Set<String> allUsers;
+
+	UgsyncAuditInfo ugsyncAuditInfo;
+	LdapSyncSourceInfo ldapSyncSourceInfo;
+
+	public static void main(String[] args) throws Throwable {
+		LdapUserGroupBuilder  ugBuilder = new LdapUserGroupBuilder();
+		ugBuilder.init();
+	}
 
 	public LdapUserGroupBuilder() {
 		super();
@@ -93,7 +121,8 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 
 		if (UserGroupSyncConfig.UGSYNC_NONE_CASE_CONVERSION_VALUE.equalsIgnoreCase(userNameCaseConversion)) {
 			userNameCaseConversionFlag = false;
-		} else {
+		}
+		else {
 			userNameCaseConversionFlag = true;
 			userNameLowerCaseFlag = UserGroupSyncConfig.UGSYNC_LOWER_CASE_CONVERSION_VALUE.equalsIgnoreCase(userNameCaseConversion);
 		}
@@ -102,51 +131,15 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 
 		if (UserGroupSyncConfig.UGSYNC_NONE_CASE_CONVERSION_VALUE.equalsIgnoreCase(groupNameCaseConversion)) {
 			groupNameCaseConversionFlag = false;
-		} else {
+		}
+		else {
 			groupNameCaseConversionFlag = true;
 			groupNameLowerCaseFlag = UserGroupSyncConfig.UGSYNC_LOWER_CASE_CONVERSION_VALUE.equalsIgnoreCase(groupNameCaseConversion);
 		}
 	}
 
-	public static void main(String[] args) throws Throwable {
-		LdapUserGroupBuilder ugBuilder = new LdapUserGroupBuilder();
-		ugBuilder.init();
-	}
-
-	private static String getShortGroupName(String longGroupName) throws InvalidNameException {
-		if (longGroupName == null) {
-			return null;
-		}
-		StringTokenizer stc = new StringTokenizer(longGroupName, ",");
-		String firstToken = stc.nextToken();
-		StringTokenizer ste = new StringTokenizer(firstToken, "=");
-		String groupName = ste.nextToken();
-		if (ste.hasMoreTokens()) {
-			groupName = ste.nextToken();
-		}
-		groupName = groupName.trim();
-		LOG.info("longGroupName: " + longGroupName + ", groupName: " + groupName);
-		return groupName;
-	}
-
-	private static String getShortUserName(String longUserName) throws InvalidNameException {
-		if (longUserName == null) {
-			return null;
-		}
-		StringTokenizer stc = new StringTokenizer(longUserName, ",");
-		String firstToken = stc.nextToken();
-		StringTokenizer ste = new StringTokenizer(firstToken, "=");
-		String userName = ste.nextToken();
-		if (ste.hasMoreTokens()) {
-			userName = ste.nextToken();
-		}
-		userName = userName.trim();
-		LOG.info("longUserName: " + longUserName + ", userName: " + userName);
-		return userName;
-	}
-
 	@Override
-	public void init() throws Throwable {
+	public void init() throws Throwable{
 		setConfig();
 		ugsyncAuditInfo = new UgsyncAuditInfo();
 		ldapSyncSourceInfo = new LdapSyncSourceInfo();
@@ -191,9 +184,9 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 	private void setConfig() throws Throwable {
 		LOG.info("LdapUserGroupBuilder initialization started");
 
-		groupSearchFirstEnabled = config.isGroupSearchFirstEnabled();
-		userSearchEnabled = config.isUserSearchEnabled();
-		groupSearchEnabled = config.isGroupSearchEnabled();
+		groupSearchFirstEnabled =   config.isGroupSearchFirstEnabled();
+		userSearchEnabled =   config.isUserSearchEnabled();
+		groupSearchEnabled =   config.isGroupSearchEnabled();
 		ldapUrl = config.getLdapUrl();
 		ldapBindDn = config.getLdapBindDn();
 		ldapBindPassword = config.getLdapBindPassword();
@@ -230,18 +223,18 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 		userSearchControls = new SearchControls();
 		userSearchControls.setSearchScope(userSearchScope);
 		userSearchControls.setReturningAttributes(userSearchAttributes.toArray(
-				new String[userSearchAttributes.size()]));
+                new String[userSearchAttributes.size()]));
 
-		pagedResultsEnabled = config.isPagedResultsEnabled();
-		pagedResultsSize = config.getPagedResultsSize();
+		pagedResultsEnabled =   config.isPagedResultsEnabled();
+		pagedResultsSize =   config.getPagedResultsSize();
 
 		groupSearchBase = config.getGroupSearchBase().split(";");
 		groupSearchScope = config.getGroupSearchScope();
 		groupObjectClass = config.getGroupObjectClass();
 		groupSearchFilter = config.getGroupSearchFilter();
-		groupMemberAttributeName = config.getUserGroupMemberAttributeName();
+		groupMemberAttributeName =  config.getUserGroupMemberAttributeName();
 		groupNameAttribute = config.getGroupNameAttribute();
-		groupHierarchyLevels = config.getGroupHierarchyLevels();
+        groupHierarchyLevels = config.getGroupHierarchyLevels();
 
 		extendedGroupSearchFilter = "(objectclass=" + groupObjectClass + ")";
 		if (groupSearchFilter != null && !groupSearchFilter.trim().isEmpty()) {
@@ -251,9 +244,9 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 			}
 			extendedGroupSearchFilter = extendedGroupSearchFilter + customFilter;
 		}
-		extendedAllGroupsSearchFilter = "(&" + extendedGroupSearchFilter + ")";
+		extendedAllGroupsSearchFilter = "(&"  + extendedGroupSearchFilter + ")";
 		if (!groupSearchFirstEnabled) {
-			extendedGroupSearchFilter = "(&" + extendedGroupSearchFilter + "(|(" + groupMemberAttributeName + "={0})(" + groupMemberAttributeName + "={1})))";
+			extendedGroupSearchFilter =  "(&"  + extendedGroupSearchFilter + "(|(" + groupMemberAttributeName + "={0})(" + groupMemberAttributeName + "={1})))";
 		}
 		groupUserMapSyncEnabled = config.isGroupUserMapSyncEnabled();
 
@@ -298,7 +291,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 					+ ", groupSearchFirstEnabled: " + groupSearchFirstEnabled
 					+ ", userSearchEnabled: " + userSearchEnabled
 					+ ",  ldapReferral: " + ldapReferral
-			);
+					);
 		}
 
 	}
@@ -332,27 +325,28 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 			if (!groupSearchEnabled && groupHierarchyLevels > 0) {
 				getRootDN();
 			}
-			//Iterator<UserInfo> userInfoIterator = userGroupMap.
+            //Iterator<UserInfo> userInfoIterator = userGroupMap.
 			for (UserInfo userInfo : userGroupMap.values()) {
 				String userName = userInfo.getUserName();
 				if (groupSearchEnabled) {
 					// Perform group search
 					LOG.info("groupSearch is enabled, would search for groups and compute memberships");
-					//firstGroupDNs = new HashSet<String>();
+                    //firstGroupDNs = new HashSet<String>();
 					getGroups(sink, userInfo);
 				}
-				if (groupHierarchyLevels > 0) {
-					LOG.debug("Going through group hierarchy for nested group evaluation");
-					goUpGroupHierarchyLdap(userInfo.getGroupDNs(), groupHierarchyLevels - 1, userInfo);
-					LOG.debug("Completed group hierarchy computation");
-				}
+                if (groupHierarchyLevels > 0) {
+                    LOG.debug("Going through group hierarchy for nested group evaluation");
+                    goUpGroupHierarchyLdap(userInfo.getGroupDNs(), groupHierarchyLevels - 1, userInfo);
+                    LOG.debug("Completed group hierarchy computation");
+                }
 				List<String> groupList = userInfo.getGroups();
 				allGroups.addAll(groupList);
-				LOG.debug("updateSink(): group list for " + userName + " = " + groupList);
+                LOG.debug("updateSink(): group list for " + userName + " = " + groupList);
 				if (userNameCaseConversionFlag) {
 					if (userNameLowerCaseFlag) {
 						userName = userName.toLowerCase();
-					} else {
+					}
+					else {
 						userName = userName.toUpperCase();
 					}
 				}
@@ -364,8 +358,8 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 					sink.addOrUpdateUser(userName, groupList);
 				} catch (Throwable t) {
 					LOG.error("sink.addOrUpdateUser failed with exception: " + t.getMessage()
-							+ ", for user: " + userName
-							+ ", groups: " + groupList);
+					+ ", for user: " + userName
+					+ ", groups: " + groupList);
 				}
 			}
 			ldapSyncSourceInfo.setUserSearchFilter(extendedUserSearchFilter);
@@ -381,45 +375,45 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 		} else {
 			LOG.info("Performing Group search first");
 			getGroups(sink, null);
-			// Go through the userInfo map and update ranger admin.
-			for (UserInfo userInfo : userGroupMap.values()) {
+			 // Go through the userInfo map and update ranger admin.
+            for (UserInfo userInfo : userGroupMap.values()) {
 				LOG.debug("userName from map = " + userInfo.getUserFullName());
-				String userName = getShortUserName(userInfo.getUserFullName());
-				if (groupHierarchyLevels > 0) {
-					//System.out.println("Going through group hierarchy for nested group evaluation");
-					goUpGroupHierarchyLdap(userInfo.getGroupDNs(), groupHierarchyLevels - 1, userInfo);
-					//System.out.println("Completed group hierarchy computation");
-				}
+                String userName = getShortUserName(userInfo.getUserFullName());
+                if (groupHierarchyLevels > 0) {
+                    //System.out.println("Going through group hierarchy for nested group evaluation");
+                    goUpGroupHierarchyLdap(userInfo.getGroupDNs(), groupHierarchyLevels - 1, userInfo);
+                    //System.out.println("Completed group hierarchy computation");
+                }
 				List<String> groupList = userInfo.getGroups();
 				allGroups.addAll(groupList);
-				if (userSearchEnabled) {
-					LOG.info("User search is enabled and hence computing user membership.");
-					getUsers(sink);
-				} else {
-					LOG.info("User search is disabled and hence using the group member attribute for username" + userName);
+                if (userSearchEnabled) {
+                    LOG.info("User search is enabled and hence computing user membership.");
+                    getUsers(sink);
+                } else {
+                    LOG.info("User search is disabled and hence using the group member attribute for username" + userName);
 					allGroups.addAll(groupList);
 					allUsers.add(userName); // Note:- in this case the usernames may contain groups as part of nested groups
-					if (userNameCaseConversionFlag) {
-						if (userNameLowerCaseFlag) {
-							userName = userName.toLowerCase();
-						} else {
-							userName = userName.toUpperCase();
-						}
-					}
+                    if (userNameCaseConversionFlag) {
+                        if (userNameLowerCaseFlag) {
+                            userName = userName.toLowerCase();
+                        } else {
+                            userName = userName.toUpperCase();
+                        }
+                    }
 
-					if (userNameRegExInst != null) {
-						userName = userNameRegExInst.transform(userName);
-					}
+                    if (userNameRegExInst != null) {
+                        userName = userNameRegExInst.transform(userName);
+                    }
 
-					try {
-						sink.addOrUpdateUser(userName, groupList);
-					} catch (Throwable t) {
-						LOG.error("sink.addOrUpdateUser failed with exception: " + t.getMessage()
-								+ ", for user: " + userName
-								+ ", groups: " + groupList);
-					}
-				}
-			}
+                    try {
+                        sink.addOrUpdateUser(userName, groupList);
+                    } catch (Throwable t) {
+                        LOG.error("sink.addOrUpdateUser failed with exception: " + t.getMessage()
+                                + ", for user: " + userName
+                                + ", groups: " + groupList);
+                    }
+                }
+            }
 			ldapSyncSourceInfo.setUserSearchFilter(extendedUserSearchFilter);
 			ldapSyncSourceInfo.setGroupSearchFilter(extendedAllGroupsSearchFilter);
 			ldapSyncSourceInfo.setTotalUsersSynced(allUsers.size());
@@ -440,9 +434,9 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 			createLdapContext();
 			int total;
 			// Activate paged results
-			if (pagedResultsEnabled) {
+			if (pagedResultsEnabled)   {
 				ldapContext.setRequestControls(new Control[]{
-						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL)});
+						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL) });
 			}
 
 			// When multiple OUs are configured, go through each OU as the user search base to search for users.
@@ -459,25 +453,25 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							// searchResults contains all the user entries
 							final SearchResult userEntry = userSearchResultEnum.next();
 
-							if (userEntry == null) {
-								if (LOG.isInfoEnabled()) {
+							if (userEntry == null)  {
+								if (LOG.isInfoEnabled())  {
 									LOG.info("userEntry null, skipping sync for the entry");
 								}
 								continue;
 							}
 
 							Attributes attributes = userEntry.getAttributes();
-							if (attributes == null) {
-								if (LOG.isInfoEnabled()) {
+							if (attributes == null)  {
+								if (LOG.isInfoEnabled())  {
 									LOG.info("attributes  missing for entry " + userEntry.getNameInNamespace() +
 											", skipping sync");
 								}
 								continue;
 							}
 
-							Attribute userNameAttr = attributes.get(userNameAttribute);
-							if (userNameAttr == null) {
-								if (LOG.isInfoEnabled()) {
+							Attribute userNameAttr  = attributes.get(userNameAttribute);
+							if (userNameAttr == null)  {
+								if (LOG.isInfoEnabled())  {
 									LOG.info(userNameAttribute + " missing for entry " + userEntry.getNameInNamespace() +
 											", skipping sync");
 								}
@@ -486,8 +480,8 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 
 							String userName = (String) userNameAttr.get();
 
-							if (userName == null || userName.trim().isEmpty()) {
-								if (LOG.isInfoEnabled()) {
+							if (userName == null || userName.trim().isEmpty())  {
+								if (LOG.isInfoEnabled())  {
 									LOG.info(userNameAttribute + " empty for entry " + userEntry.getNameInNamespace() +
 											", skipping sync");
 								}
@@ -505,9 +499,9 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 										if (userGroupfAttribute != null) {
 											NamingEnumeration<?> groupEnum = userGroupfAttribute.getAll();
 											while (groupEnum.hasMore()) {
-												String groupDN = (String) groupEnum.next();
-												LOG.debug("Adding " + groupDN + " to " + userName);
-												userInfo.addGroupDN(groupDN);
+                                                String groupDN = (String) groupEnum.next();
+                                                LOG.debug("Adding " + groupDN + " to " + userName);
+                                                userInfo.addGroupDN(groupDN);
 												String gName = getShortGroupName(groupDN);
 												if (groupNameCaseConversionFlag) {
 													if (groupNameLowerCaseFlag) {
@@ -531,7 +525,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 								//userInfo contains details of user that will be later used for
 								//group search to compute group membership as well as to call sink.addOrUpdateUser()
 								if (userGroupMap.containsKey(userName)) {
-									LOG.warn("user object with username " + userName + " already exists and is replaced with the latest user object.");
+									LOG.warn("user object with username " + userName + " already exists and is replaced with the latest user object." );
 								}
 								userGroupMap.put(userName, userInfo);
 								allUsers.add(userName);
@@ -545,7 +539,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 												+ ", userName: " + userName + ", groupList: "
 												+ groupList);
 									}
-									if (counter == 2000) {
+									if ( counter == 2000 ) {
 										LOG.info("===> 2000 user records have been synchronized so far. From now on, only a summary progress log will be written for every 100 users. To continue to see detailed log for every user, please enable Trace level logging. <===");
 									}
 								} else {
@@ -553,8 +547,8 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 										LOG.trace("Updating user count: " + counter
 												+ ", userName: " + userName + ", groupList: "
 												+ groupList);
-									} else {
-										if (counter % 100 == 0) {
+									} else  {
+										if ( counter % 100 == 0) {
 											LOG.info("Synced " + counter + " users till now");
 										}
 									}
@@ -575,26 +569,27 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 									LOG.info("Updating username for " + userFullName + " with " + userName);
 									userInfo.updateUserName(userName);
 									allUsers.add(userName);
-									List<String> groupList = userInfo.getGroups();
-									if (userNameCaseConversionFlag) {
-										if (userNameLowerCaseFlag) {
-											userName = userName.toLowerCase();
-										} else {
-											userName = userName.toUpperCase();
-										}
-									}
+                                    List<String> groupList = userInfo.getGroups();
+                                    if (userNameCaseConversionFlag) {
+                                        if (userNameLowerCaseFlag) {
+                                            userName = userName.toLowerCase();
+                                        }
+                                        else {
+                                            userName = userName.toUpperCase();
+                                        }
+                                    }
 
-									if (userNameRegExInst != null) {
-										userName = userNameRegExInst.transform(userName);
-									}
+                                    if (userNameRegExInst != null) {
+                                        userName = userNameRegExInst.transform(userName);
+                                    }
 
-									try {
-										sink.addOrUpdateUser(userName, groupList);
-									} catch (Throwable t) {
-										LOG.error("sink.addOrUpdateUser failed with exception: " + t.getMessage()
-												+ ", for user: " + userName
-												+ ", groups: " + groupList);
-									}
+                                    try {
+                                        sink.addOrUpdateUser(userName, groupList);
+                                    } catch (Throwable t) {
+                                        LOG.error("sink.addOrUpdateUser failed with exception: " + t.getMessage()
+                                                + ", for user: " + userName
+                                                + ", groups: " + groupList);
+                                    }
 								}
 							}
 
@@ -606,7 +601,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							for (Control control : controls) {
 								if (control instanceof PagedResultsResponseControl) {
 									PagedResultsResponseControl prrc =
-											(PagedResultsResponseControl) control;
+											(PagedResultsResponseControl)control;
 									total = prrc.getResultSize();
 									if (total != 0) {
 										LOG.debug("END-OF-PAGE total : " + total);
@@ -620,10 +615,10 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							LOG.debug("No controls were sent from the server");
 						}
 						// Re-activate paged results
-						if (pagedResultsEnabled) {
+						if (pagedResultsEnabled)   {
 							LOG.debug(String.format("Fetched paged results round: %s", ++paged));
 							ldapContext.setRequestControls(new Control[]{
-									new PagedResultsControl(pagedResultsSize, cookie, Control.CRITICAL)});
+									new PagedResultsControl(pagedResultsSize, cookie, Control.CRITICAL) });
 						}
 					} while (cookie != null);
 					LOG.info("LDAPUserGroupBuilder.getUsers() completed with user count: "
@@ -647,17 +642,17 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 	}
 
 	private void getGroups(UserGroupSink sink, UserInfo userInfo) throws Throwable {
-		//LOG.debug("getGroups(): for user " + userInfo.getUserName());
+        //LOG.debug("getGroups(): for user " + userInfo.getUserName());
 		NamingEnumeration<SearchResult> groupSearchResultEnum = null;
 		try {
 			createLdapContext();
 			int total;
-			// Activate paged results
-			if (pagedResultsEnabled) {
+            // Activate paged results
+			if (pagedResultsEnabled)   {
 				ldapContext.setRequestControls(new Control[]{
-						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL)});
+						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL) });
 			}
-			for (String ou : groupSearchBase) {
+            for (String ou : groupSearchBase) {
 				byte[] cookie = null;
 				int counter = 0;
 				try {
@@ -672,7 +667,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							if (LOG.isDebugEnabled()) {
 								LOG.debug("Searching for groups for user " + userInfo.getUserName() +
 										" using filter " + String.format(extendedGroupSearchFilter, userInfo.getUserFullName(),
-										userInfo.getUserName()));
+												userInfo.getUserName()));
 							}
 							groupSearchResultEnum = ldapContext
 									.search(ou, extendedGroupSearchFilter,
@@ -689,17 +684,17 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							if (groupEntry != null) {
 								counter++;
 								Attribute groupNameAttr = groupEntry.getAttributes().get(groupNameAttribute);
-								//System.out.println("getGroups(): Going through all groups");
+                                //System.out.println("getGroups(): Going through all groups");
 								if (groupNameAttr == null) {
-									if (LOG.isInfoEnabled()) {
+									if (LOG.isInfoEnabled())  {
 										LOG.info(groupNameAttribute + " empty for entry " + groupEntry.getNameInNamespace() +
 												", skipping sync");
 									}
 									continue;
 								}
-								String groupDN = groupEntry.getNameInNamespace();
-								//System.out.println("getGroups(): groupDN = " + groupDN);
-								String gName = (String) groupNameAttr.get();
+                                String groupDN = groupEntry.getNameInNamespace();
+                                //System.out.println("getGroups(): groupDN = " + groupDN);
+                                String gName = (String) groupNameAttr.get();
 								if (groupNameCaseConversionFlag) {
 									if (groupNameLowerCaseFlag) {
 										gName = gName.toLowerCase();
@@ -712,11 +707,11 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 								}
 								if (!groupSearchFirstEnabled) {
 									//computedGroups.add(gName);
-									if (LOG.isInfoEnabled()) {
+									if (LOG.isInfoEnabled())  {
 										LOG.info("computed groups for user: " + userInfo.getUserName() + ", groups: " + gName);
 									}
-									userInfo.addGroupDN(groupDN);
-									userInfo.addGroup(gName);
+                                    userInfo.addGroupDN(groupDN);
+                                    userInfo.addGroup(gName);
 								} else {
 									// If group based search is enabled, then
 									// update the group name to ranger admin
@@ -743,10 +738,10 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 											userGroupMap.put(userFullName, userInfo);
 										} else {
 											userInfo = userGroupMap.get(userFullName);
-										}
-										LOG.info("Adding " + gName + " to user " + userInfo.getUserFullName());
-										userInfo.addGroup(gName);
-										userInfo.addGroupDN(groupDN);
+                                        }
+                                        LOG.info("Adding " + gName + " to user " + userInfo.getUserFullName());
+                                        userInfo.addGroup(gName);
+                                        userInfo.addGroupDN(groupDN);
 									}
 									LOG.info("No. of members in the group " + gName + " = " + userCount);
 								}
@@ -758,7 +753,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							for (Control control : controls) {
 								if (control instanceof PagedResultsResponseControl) {
 									PagedResultsResponseControl prrc =
-											(PagedResultsResponseControl) control;
+											(PagedResultsResponseControl)control;
 									total = prrc.getResultSize();
 									if (total != 0) {
 										LOG.debug("END-OF-PAGE total : " + total);
@@ -772,10 +767,10 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							LOG.debug("No controls were sent from the server");
 						}
 						// Re-activate paged results
-						if (pagedResultsEnabled) {
+						if (pagedResultsEnabled)   {
 							LOG.debug(String.format("Fetched paged results round: %s", ++paged));
 							ldapContext.setRequestControls(new Control[]{
-									new PagedResultsControl(pagedResultsSize, cookie, Control.CRITICAL)});
+									new PagedResultsControl(pagedResultsSize, cookie, Control.CRITICAL) });
 						}
 					} while (cookie != null);
 					LOG.info("LDAPUserGroupBuilder.getGroups() completed with group count: "
@@ -795,8 +790,41 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 		}
 	}
 
+
+	private static String getShortGroupName(String longGroupName) throws InvalidNameException {
+		if (longGroupName == null) {
+			return null;
+		}
+		StringTokenizer stc = new StringTokenizer(longGroupName, ",");
+		String firstToken = stc.nextToken();
+		StringTokenizer ste = new StringTokenizer(firstToken, "=");
+		String groupName =  ste.nextToken();
+		if (ste.hasMoreTokens()) {
+			groupName = ste.nextToken();
+		}
+		groupName = groupName.trim();
+		LOG.info("longGroupName: " + longGroupName + ", groupName: " + groupName);
+		return groupName;
+	}
+
+	private static String getShortUserName(String longUserName) throws InvalidNameException {
+		if (longUserName == null) {
+			return null;
+		}
+		StringTokenizer stc = new StringTokenizer(longUserName, ",");
+		String firstToken = stc.nextToken();
+		StringTokenizer ste = new StringTokenizer(firstToken, "=");
+		String userName =  ste.nextToken();
+		if (ste.hasMoreTokens()) {
+			userName = ste.nextToken();
+		}
+		userName = userName.trim();
+		LOG.info("longUserName: " + longUserName + ", userName: " + userName);
+		return userName;
+	}
+
 	private void goUpGroupHierarchyLdap(Set<String> groupDNs, int groupHierarchyLevels, UserInfo userInfo) throws Throwable {
-		LOG.debug("goUpGroupHierarchyLdap(): Incoming groups " + groupDNs);
+        LOG.debug("goUpGroupHierarchyLdap(): Incoming groups " + groupDNs);
 		if (groupHierarchyLevels <= 0 || groupDNs.isEmpty()) {
 			return;
 		}
@@ -807,18 +835,18 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 			createLdapContext();
 			int total;
 			// Activate paged results
-			if (pagedResultsEnabled) {
+			if (pagedResultsEnabled)   {
 				ldapContext.setRequestControls(new Control[]{
-						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL)});
+						new PagedResultsControl(pagedResultsSize, Control.NONCRITICAL) });
 			}
 			String groupFilter = "(&(objectclass=" + groupObjectClass + ")";
-			if (groupSearchFilter != null && !groupSearchFilter.trim().isEmpty()) {
-				String customFilter = groupSearchFilter.trim();
-				if (!customFilter.startsWith("(")) {
-					customFilter = "(" + customFilter + ")";
-				}
-				groupFilter += customFilter + "(|";
-			}
+            if (groupSearchFilter != null && !groupSearchFilter.trim().isEmpty()) {
+                String customFilter = groupSearchFilter.trim();
+                if (!customFilter.startsWith("(")) {
+                    customFilter = "(" + customFilter + ")";
+                }
+                groupFilter += customFilter + "(|";
+            }
 			StringBuilder filter = new StringBuilder();
 
 			for (String groupDN : groupDNs) {
@@ -826,7 +854,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 						.append(groupDN).append(")");
 			}
 			filter.append("))");
-			groupFilter += filter;
+            groupFilter += filter;
 
 			LOG.debug("extendedAllGroupsSearchFilter = " + groupFilter);
 			for (String ou : groupSearchBase) {
@@ -835,13 +863,13 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 				try {
 					do {
 						groupSearchResultEnum = ldapContext
-								.search(ou, groupFilter,
-										groupSearchControls);
-						//System.out.println("goUpGroupHierarchyLdap(): Going through the sub groups");
+									.search(ou, groupFilter,
+											groupSearchControls);
+                        //System.out.println("goUpGroupHierarchyLdap(): Going through the sub groups");
 						while (groupSearchResultEnum.hasMore()) {
 							final SearchResult groupEntry = groupSearchResultEnum.next();
 							if (groupEntry == null) {
-								if (LOG.isInfoEnabled()) {
+								if (LOG.isInfoEnabled())  {
 									LOG.info("groupEntry null, skipping sync for the entry");
 								}
 								continue;
@@ -849,14 +877,14 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							counter++;
 							Attribute groupNameAttr = groupEntry.getAttributes().get(groupNameAttribute);
 							if (groupNameAttr == null) {
-								if (LOG.isInfoEnabled()) {
+								if (LOG.isInfoEnabled())  {
 									LOG.info(groupNameAttribute + " empty for entry " + groupEntry.getNameInNamespace() +
 											", skipping sync");
 								}
 								continue;
 							}
-							String groupDN = groupEntry.getNameInNamespace();
-							//System.out.println("goUpGroupHierarchyLdap(): next Level Group DN = " + groupDN);
+                            String groupDN = groupEntry.getNameInNamespace();
+                            //System.out.println("goUpGroupHierarchyLdap(): next Level Group DN = " + groupDN);
 							nextLevelGroups.add(groupDN);
 							String gName = (String) groupNameAttr.get();
 							if (groupNameCaseConversionFlag) {
@@ -877,7 +905,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							for (Control control : controls) {
 								if (control instanceof PagedResultsResponseControl) {
 									PagedResultsResponseControl prrc =
-											(PagedResultsResponseControl) control;
+											(PagedResultsResponseControl)control;
 									total = prrc.getResultSize();
 									if (total != 0) {
 										LOG.debug("END-OF-PAGE total : " + total);
@@ -891,9 +919,9 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 							LOG.debug("No controls were sent from the server");
 						}
 						// Re-activate paged results
-						if (pagedResultsEnabled) {
+						if (pagedResultsEnabled)   {
 							ldapContext.setRequestControls(new Control[]{
-									new PagedResultsControl(PAGE_SIZE, cookie, Control.CRITICAL)});
+									new PagedResultsControl(PAGE_SIZE, cookie, Control.CRITICAL) });
 						}
 					} while (cookie != null);
 					LOG.info("LdapUserGroupBuilder.goUpGroupHierarchyLdap() completed with group count: "
@@ -936,7 +964,7 @@ public class LdapUserGroupBuilder extends AbstractUserGroupSource {
 				Attributes attrs = result1.getAttributes();
 				Attribute attr = attrs.get("namingContexts");
 				LOG.debug("namingContexts = " + attr);
-				groupSearchBase = new String[]{attr.get(0).toString()};
+				groupSearchBase = new String[] {attr.get(0).toString()};
 				LOG.info("RootDN = " + Arrays.toString(groupSearchBase));
 			}
 		} catch (RuntimeException re) {
@@ -954,13 +982,13 @@ class UserInfo {
 	private String userName;
 	private String userFullName;
 	private Set<String> groupList;
-	private Set<String> groupDNList;
+    private Set<String> groupDNList;
 
 	public UserInfo(String userName, String userFullName) {
 		this.userName = userName;
 		this.userFullName = userFullName;
 		this.groupList = new HashSet<String>();
-		this.groupDNList = new HashSet<String>();
+        this.groupDNList = new HashSet<String>();
 	}
 
 	public void updateUserName(String userName) {
@@ -970,32 +998,26 @@ class UserInfo {
 	public String getUserName() {
 		return userName;
 	}
-
 	public String getUserFullName() {
 		return userFullName;
 	}
-
 	public void addGroups(Set<String> groups) {
 		groupList.addAll(groups);
 	}
-
 	public void addGroup(String group) {
 		groupList.add(group);
 	}
-
 	public List<String> getGroups() {
 		return (new ArrayList<String>(groupList));
 	}
 
-	public void addGroupDNs(Set<String> groupDNs) {
-		groupDNList.addAll(groupDNs);
-	}
-
-	public void addGroupDN(String groupDN) {
-		groupDNList.add(groupDN);
-	}
-
-	public Set<String> getGroupDNs() {
-		return (groupDNList);
-	}
+    public void addGroupDNs(Set<String> groupDNs) {
+        groupDNList.addAll(groupDNs);
+    }
+    public void addGroupDN(String groupDN) {
+        groupDNList.add(groupDN);
+    }
+    public Set<String> getGroupDNs() {
+        return (groupDNList);
+    }
 }

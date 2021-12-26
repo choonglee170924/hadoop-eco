@@ -19,30 +19,35 @@
 
 package org.apache.ranger.plugin.policyengine;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.*;
+import org.apache.log4j.Logger;
 
 public class RangerAccessRequestImpl implements RangerAccessRequest {
-	private static final Logger LOG = LogManager.getLogger(RangerAccessRequestImpl.class);
+	private static final Logger LOG = Logger.getLogger(RangerAccessRequestImpl.class);
 
 	private RangerAccessResource resource;
-	private String accessType;
-	private String user;
-	private Set<String> userGroups;
-	private Date accessTime;
-	private String clientIPAddress;
-	private List<String> forwardedAddresses;
-	private String remoteIPAddress;
-	private String clientType;
-	private String action;
-	private String requestData;
-	private String sessionId;
-	private Map<String, Object> context;
-	private String clusterName;
+	private String               accessType;
+	private String               user;
+	private Set<String>          userGroups;
+	private Date                 accessTime;
+	private String               clientIPAddress;
+	private List<String>         forwardedAddresses;
+	private String               remoteIPAddress;
+	private String               clientType;
+	private String               action;
+	private String               requestData;
+	private String               sessionId;
+	private Map<String, Object>  context;
+	private String				 clusterName;
 
 	private boolean isAccessTypeAny;
 	private boolean isAccessTypeDelegatedAdmin;
@@ -75,23 +80,9 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return resource;
 	}
 
-	public void setResource(RangerAccessResource resource) {
-		this.resource = resource;
-	}
-
 	@Override
 	public String getAccessType() {
 		return accessType;
-	}
-
-	public void setAccessType(String accessType) {
-		if (StringUtils.isEmpty(accessType)) {
-			accessType = RangerPolicyEngine.ANY_ACCESS;
-		}
-
-		this.accessType = accessType;
-		isAccessTypeAny = StringUtils.equals(accessType, RangerPolicyEngine.ANY_ACCESS);
-		isAccessTypeDelegatedAdmin = StringUtils.equals(accessType, RangerPolicyEngine.ADMIN_ACCESS);
 	}
 
 	@Override
@@ -99,17 +90,9 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return user;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
-	}
-
 	@Override
 	public Set<String> getUserGroups() {
 		return userGroups;
-	}
-
-	public void setUserGroups(Set<String> userGroups) {
-		this.userGroups = (userGroups == null) ? new HashSet<String>() : userGroups;
 	}
 
 	@Override
@@ -117,44 +100,20 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return accessTime;
 	}
 
-	public void setAccessTime(Date accessTime) {
-		this.accessTime = accessTime;
-	}
-
 	@Override
-	public String getClientIPAddress() {
-		return clientIPAddress;
-	}
-
-	public void setClientIPAddress(String ipAddress) {
-		this.clientIPAddress = ipAddress;
-	}
+	public String getClientIPAddress() { return clientIPAddress;}
 
 	@Override
 	public String getRemoteIPAddress() {
 		return remoteIPAddress;
 	}
 
-	public void setRemoteIPAddress(String remoteIPAddress) {
-		this.remoteIPAddress = remoteIPAddress;
-	}
-
 	@Override
-	public List<String> getForwardedAddresses() {
-		return forwardedAddresses;
-	}
-
-	public void setForwardedAddresses(List<String> forwardedAddresses) {
-		this.forwardedAddresses = (forwardedAddresses == null) ? new ArrayList<String>() : forwardedAddresses;
-	}
+	public List<String> getForwardedAddresses() { return forwardedAddresses; }
 
 	@Override
 	public String getClientType() {
 		return clientType;
-	}
-
-	public void setClientType(String clientType) {
-		this.clientType = clientType;
 	}
 
 	@Override
@@ -162,17 +121,9 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return action;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
-	}
-
 	@Override
 	public String getRequestData() {
 		return requestData;
-	}
-
-	public void setRequestData(String requestData) {
-		this.requestData = requestData;
 	}
 
 	@Override
@@ -180,26 +131,14 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
 	@Override
 	public Map<String, Object> getContext() {
 		return context;
 	}
 
-	public void setContext(Map<String, Object> context) {
-		this.context = (context == null) ? new HashMap<String, Object>() : context;
-	}
-
 	@Override
 	public ResourceMatchingScope getResourceMatchingScope() {
 		return resourceMatchingScope;
-	}
-
-	public void setResourceMatchingScope(ResourceMatchingScope scope) {
-		this.resourceMatchingScope = scope;
 	}
 
 	@Override
@@ -212,6 +151,60 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		return isAccessTypeDelegatedAdmin;
 	}
 
+	public void setResource(RangerAccessResource resource) {
+		this.resource = resource;
+	}
+
+	public void setAccessType(String accessType) {
+		if (StringUtils.isEmpty(accessType)) {
+			accessType = RangerPolicyEngine.ANY_ACCESS;
+		}
+
+		this.accessType            = accessType;
+		isAccessTypeAny            = StringUtils.equals(accessType, RangerPolicyEngine.ANY_ACCESS);
+		isAccessTypeDelegatedAdmin = StringUtils.equals(accessType, RangerPolicyEngine.ADMIN_ACCESS);
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setUserGroups(Set<String> userGroups) {
+		this.userGroups = (userGroups == null) ? new HashSet<String>() : userGroups;
+	}
+
+	public void setAccessTime(Date accessTime) {
+		this.accessTime = accessTime;
+	}
+
+	public void setClientIPAddress(String ipAddress) {
+		this.clientIPAddress = ipAddress;
+	}
+
+	public void setForwardedAddresses(List<String> forwardedAddresses) {
+		this.forwardedAddresses = (forwardedAddresses == null) ? new ArrayList<String>() : forwardedAddresses;
+	}
+
+	public void setRemoteIPAddress(String remoteIPAddress) {
+		this.remoteIPAddress = remoteIPAddress;
+	}
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public void setRequestData(String requestData) {
+		this.requestData = requestData;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	
 	public String getClusterName() {
 		return clusterName;
 	}
@@ -220,7 +213,13 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		this.clusterName = clusterName;
 	}
 
-	public void extractAndSetClientIPAddress(boolean useForwardedIPAddress, String[] trustedProxyAddresses) {
+	public void setResourceMatchingScope(ResourceMatchingScope scope) { this.resourceMatchingScope = scope; }
+
+	public void setContext(Map<String, Object> context) {
+		this.context = (context == null) ? new HashMap<String, Object>() : context;
+	}
+
+	public void extractAndSetClientIPAddress(boolean useForwardedIPAddress, String[]trustedProxyAddresses) {
 		String ip = getRemoteIPAddress();
 		if (ip == null) {
 			ip = getClientIPAddress();
@@ -259,7 +258,7 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 	}
 
 	@Override
-	public String toString() {
+	public String toString( ) {
 		StringBuilder sb = new StringBuilder();
 
 		toString(sb);
@@ -275,8 +274,8 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		sb.append("user={").append(user).append("} ");
 
 		sb.append("userGroups={");
-		if (userGroups != null) {
-			for (String userGroup : userGroups) {
+		if(userGroups != null) {
+			for(String userGroup : userGroups) {
 				sb.append(userGroup).append(" ");
 			}
 		}
@@ -294,8 +293,8 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 		sb.append("clusterName={").append(clusterName).append("} ");
 
 		sb.append("context={");
-		if (context != null) {
-			for (Map.Entry<String, Object> e : context.entrySet()) {
+		if(context != null) {
+			for(Map.Entry<String, Object> e : context.entrySet()) {
 				sb.append(e.getKey()).append("={").append(e.getValue()).append("} ");
 			}
 		}
@@ -305,7 +304,6 @@ public class RangerAccessRequestImpl implements RangerAccessRequest {
 
 		return sb;
 	}
-
 	@Override
 	public RangerAccessRequest getReadOnlyCopy() {
 		return new RangerAccessRequestReadOnly(this);

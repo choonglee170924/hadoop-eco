@@ -17,11 +17,7 @@
  * under the License.
  */
 
-package org.apache.ranger.common;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
+ package org.apache.ranger.common;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -29,30 +25,35 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+
 @Component
 public class StringUtil implements Serializable {
+	private static final Logger logger = Logger.getLogger(StringUtil.class);
+
 	static final public int MIN_PASSWORD_LENGTH = 8;
-	static final public String VALIDATION_NAME = "^([A-Za-z0-9_]|[\u00C0-\u017F])([a-zA-Z0-9\\s_. -@]|[\u00C0-\u017F])+$";
+
+        static final public String VALIDATION_NAME = "^([A-Za-z0-9_]|[\u00C0-\u017F])([a-zA-Z0-9\\s_. -@]|[\u00C0-\u017F])+$";
 	static final public String VALIDATION_TEXT = "[a-zA-Z0-9\\ \"!@#$%^&amp;*()-_=+;:'&quot;|~`&lt;&gt;?/{}\\.\\,\\-\\?<>]*";
 	static final public String VALIDATION_LOGINID = "^([A-Za-z0-9_]|[\u00C0-\u017F])([a-z0-9,._\\-+/@= ]|[\u00C0-\u017F])+$";
+
 	static final public String VALIDATION_ALPHA = "[a-z,A-Z]*";
 	static final public String VALIDATION_IP_ADDRESS = "[\\d\\.\\%\\:]*";
 	static final public String WILDCARD_ASTERISK = "*";
-	private static final Logger logger = LogManager.getLogger(StringUtil.class);
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -2102399594424760213L;
+
 	static HashMap<String, Pattern> compiledRegEx = new HashMap<String, Pattern>();
+
 	String[] invalidNames = null;
+
+	/**
+     *
+     */
+	private static final long serialVersionUID = -2102399594424760213L;
 
 	public StringUtil() {
 		// Default constructor
 		invalidNames = PropertiesUtil.getPropertyStringList("xa.names.invalid");
-	}
-
-	public static String trim(String str) {
-		return str != null ? str.trim() : null;
 	}
 
 	/**
@@ -210,6 +211,10 @@ public class StringUtil implements Serializable {
 		}
 	}
 
+	public static String trim(String str) {
+		return str != null ? str.trim() : null;
+	}
+
 	/**
 	 * @param firstName
 	 * @return
@@ -239,19 +244,18 @@ public class StringUtil implements Serializable {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Returns a valid user name from the passed string
-	 *
 	 * @param str
 	 * @return
 	 */
 	public String getValidUserName(String str) {
 		return str.indexOf("/") >= 0 ?
-				str.substring(0, str.indexOf("/"))
-				: str.indexOf("@") >= 0 ?
-				str.substring(0, str.indexOf("@"))
-				: str;
+				 str.substring(0,str.indexOf("/"))
+				:	str.indexOf("@") >= 0 ?
+						str.substring(0,str.indexOf("@"))
+						: str;
 	}
 
 }

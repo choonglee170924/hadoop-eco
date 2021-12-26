@@ -474,7 +474,7 @@ public class RangerBasePlugin {
 			try {
 				@SuppressWarnings("unchecked")
 				Class<RangerAdminClient> adminClass = (Class<RangerAdminClient>)Class.forName(policySourceImpl);
-
+				
 				ret = adminClass.newInstance();
 			} catch (Exception excp) {
 				LOG.error("failed to instantiate policy source of type '" + policySourceImpl + "'. Will use policy source of type '" + RangerAdminRESTClient.class.getName() + "'", excp);
@@ -482,10 +482,8 @@ public class RangerBasePlugin {
 		}
 
 		if(ret == null) {
-			LOG.info("@@@@@@@@ -> RESTClient 1");
 			ret = new RangerAdminRESTClient();
 		}
-		LOG.info("@@@@@@@@ -> RESTClient2");
 
 		ret.init(rangerServiceName, applicationId, propertyPrefix);
 
@@ -498,7 +496,7 @@ public class RangerBasePlugin {
 	private void auditGrantRevoke(GrantRevokeRequest request, String action, boolean isSuccess, RangerAccessResultProcessor resultProcessor) {
 		if(request != null && resultProcessor != null) {
 			RangerAccessRequestImpl accessRequest = new RangerAccessRequestImpl();
-
+	
 			accessRequest.setResource(new RangerAccessResourceImpl(StringUtil.toStringObjectMap(request.getResource())));
 			accessRequest.setUser(request.getGrantor());
 			accessRequest.setAccessType(RangerPolicyEngine.ADMIN_ACCESS);

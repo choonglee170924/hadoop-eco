@@ -80,9 +80,9 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">type</span>
+          <td>  <span class="property-name">attributes</span>
 </td>
-          <td>  <span class="datatype-reference">string
+          <td>  <span class="datatype-reference">map of string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -98,18 +98,18 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">attributes</span>
+          <td>  <span class="property-name">owner</span>
 </td>
-          <td>  <span class="datatype-reference">map of string
+          <td>  <span class="datatype-reference">number
 </span>
 </td>
           <td>  <span class="property-description"></span>
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">owner</span>
+          <td>  <span class="property-name">type</span>
 </td>
-          <td>  <span class="datatype-reference">number
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -130,8 +130,20 @@
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createTime</span></td>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">id</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">isEnabled</span></td>
+          <td><span class="datatype-reference">boolean
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -142,8 +154,14 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">id</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">guid</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -159,71 +177,53 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">updatedBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">guid</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">isEnabled</span></td>
-          <td><span class="datatype-reference">boolean
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;type&quot; : &quot;...&quot;,
-  &quot;options&quot; : {
-    &quot;property1&quot; : { },
-    &quot;property2&quot; : { }
-  },
   &quot;attributes&quot; : {
     &quot;property1&quot; : &quot;...&quot;,
     &quot;property2&quot; : &quot;...&quot;
   },
+  &quot;options&quot; : {
+    &quot;property1&quot; : { },
+    &quot;property2&quot; : { }
+  },
   &quot;owner&quot; : 12345,
+  &quot;type&quot; : &quot;...&quot;,
   &quot;validityPeriods&quot; : [ {
+    &quot;startTime&quot; : &quot;...&quot;,
+    &quot;timeZone&quot; : &quot;...&quot;,
     &quot;endTime&quot; : &quot;...&quot;,
     &quot;recurrences&quot; : [ {
-      &quot;interval&quot; : { },
-      &quot;schedule&quot; : { }
+      &quot;schedule&quot; : { },
+      &quot;interval&quot; : { }
     }, {
-      &quot;interval&quot; : { },
-      &quot;schedule&quot; : { }
-    } ],
-    &quot;timeZone&quot; : &quot;...&quot;,
-    &quot;startTime&quot; : &quot;...&quot;
+      &quot;schedule&quot; : { },
+      &quot;interval&quot; : { }
+    } ]
   }, {
+    &quot;startTime&quot; : &quot;...&quot;,
+    &quot;timeZone&quot; : &quot;...&quot;,
     &quot;endTime&quot; : &quot;...&quot;,
     &quot;recurrences&quot; : [ {
-      &quot;interval&quot; : { },
-      &quot;schedule&quot; : { }
+      &quot;schedule&quot; : { },
+      &quot;interval&quot; : { }
     }, {
-      &quot;interval&quot; : { },
-      &quot;schedule&quot; : { }
-    } ],
-    &quot;timeZone&quot; : &quot;...&quot;,
-    &quot;startTime&quot; : &quot;...&quot;
+      &quot;schedule&quot; : { },
+      &quot;interval&quot; : { }
+    } ]
   } ],
-  &quot;createTime&quot; : 12345,
-  &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;id&quot; : 12345,
-  &quot;version&quot; : 12345,
-  &quot;updateTime&quot; : 12345,
   &quot;updatedBy&quot; : &quot;...&quot;,
+  &quot;id&quot; : 12345,
+  &quot;isEnabled&quot; : true,
+  &quot;createdBy&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true
+  &quot;version&quot; : 12345,
+  &quot;updateTime&quot; : 12345
 }</pre>
 
         <footer class="footer">

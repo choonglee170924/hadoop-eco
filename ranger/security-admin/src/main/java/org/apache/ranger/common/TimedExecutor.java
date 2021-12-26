@@ -35,8 +35,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.plugin.client.HadoopException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -48,21 +47,21 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 @Scope("singleton")
 public class TimedExecutor {
 
-	private static final Logger LOG = LogManager.getLogger(TimedExecutor.class);
+	private static final Logger LOG = Logger.getLogger(TimedExecutor.class);
 
 	@Autowired
 	TimedExecutorConfigurator _configurator;
-
+	
 	ExecutorService _executorService;
-
+	
 	public TimedExecutor() {
 	}
-
+	
 	@PostConstruct
 	void initialize() {
 		initialize(_configurator);
 	}
-
+		
 	// Not designed for public access - only for testability
 	void initialize(TimedExecutorConfigurator configurator) {
 		final ThreadFactory _ThreadFactory = new ThreadFactoryBuilder()
@@ -77,7 +76,7 @@ public class TimedExecutor {
 														configurator.getKeepAliveTime(), configurator.getKeepAliveTimeUnit(),
 														blockingQueue, _ThreadFactory);
 	}
-
+	
 	public <T> T timedTask(Callable<T> callable, long time, TimeUnit unit) throws Exception{
 		try {
 		Future<T> future = _executorService.submit(callable);
@@ -110,14 +109,14 @@ public class TimedExecutor {
 			throw e;
 		}
 	}
-
+	
 	/**
 	 * Not designed for public access.  Non-private only for testability.  Expected to be called by tests to do proper cleanup.
 	 */
 	void shutdown() {
 		_executorService.shutdownNow();
 	}
-
+	
 	private HadoopException generateHadoopException( Exception e) {
 		String msgDesc = "Unable to retrieve any files using given parameters, "
 				+ "You can still save the repository and start creating policies, "
@@ -136,15 +135,15 @@ public class TimedExecutor {
 			LOG.warn(message, e);
 		}
 	}
-
+	
 	static class LocalThreadPoolExecutor extends ThreadPoolExecutor {
 
 		private ThreadLocal<Long> startNanoTime = new ThreadLocal<Long>();
-
+		
 		public LocalThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
 			super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
 		}
-
+		
 		@Override
 		protected void beforeExecute(Thread t, Runnable r) {
 			if (LOG.isDebugEnabled()) {
@@ -153,7 +152,7 @@ public class TimedExecutor {
 			}
 			super.beforeExecute(t, r);
 		}
-
+		
 		@Override
 		protected void afterExecute(Runnable r, Throwable t) {
 			super.afterExecute(r, t);
@@ -162,7 +161,7 @@ public class TimedExecutor {
 				LOG.debug("TimedExecutor: Done execution of task. Duration[" + duration/1000000 + " ms].");
 			}
 		}
-
+		
 		@Override
 		protected void terminated() {
 			super.terminated();

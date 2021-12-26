@@ -19,37 +19,46 @@
 
 package org.apache.ranger.solr;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Date;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.audit.utils.InMemoryJAASConfiguration;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.common.PropertiesUtil;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.*;
+import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
+import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.apache.solr.client.solrj.impl.HttpClientUtil;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.impl.Krb5HttpClientConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.Properties;
-
 /**
  * This class initializes Solr
+ *
  */
 @Component
 public class SolrMgr {
 
-	public static final String DEFAULT_COLLECTION_NAME = "ranger_audits";
-	static final Object lock = new Object();
-	final static String SOLR_URLS_PROP = "ranger.audit.solr.urls";
-	final static String SOLR_ZK_HOSTS = "ranger.audit.solr.zookeepers";
-	final static String SOLR_COLLECTION_NAME = "ranger.audit.solr.collection.name";
-	final static String PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG = "java.security.auth.login.config";
-	private static final Logger logger = LogManager.getLogger(SolrMgr.class);
+	private static final Logger logger = Logger.getLogger(SolrMgr.class);
+
 	@Autowired
 	RangerBizUtil rangerBizUtil;
+
+	static final Object lock = new Object();
+
 	SolrClient solrClient = null;
 	Date lastConnectTime = null;
 	volatile boolean initDone = false;
+
+	final static String SOLR_URLS_PROP = "ranger.audit.solr.urls";
+	final static String SOLR_ZK_HOSTS = "ranger.audit.solr.zookeepers";
+	final static String SOLR_COLLECTION_NAME = "ranger.audit.solr.collection.name";
+	final static String PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG   = "java.security.auth.login.config";
+
+	public static final String DEFAULT_COLLECTION_NAME = "ranger_audits";
 
 	public SolrMgr() {
 		init();
@@ -156,28 +165,28 @@ public class SolrMgr {
 	}
 
 	private void init() {
-		logger.info("==>SolrMgr.init()");
-		Properties props = PropertiesUtil.getProps();
+		logger.info("==>SolrMgr.init()" );
+		Properties  props = PropertiesUtil.getProps();
 		try {
-			// SolrJ requires "java.security.auth.login.config"  property to be set to identify itself that it is kerberized. So using a dummy property for it
-			// Acutal solrclient JAAS configs are read from the ranger-admin-site.xml in ranger admin config folder and set by InMemoryJAASConfiguration
-			// Refer InMemoryJAASConfiguration doc for JAAS Configuration
-			if (System.getProperty(PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG) == null) {
-				System.setProperty(PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG, "/dev/null");
+			 // SolrJ requires "java.security.auth.login.config"  property to be set to identify itself that it is kerberized. So using a dummy property for it
+			 // Acutal solrclient JAAS configs are read from the ranger-admin-site.xml in ranger admin config folder and set by InMemoryJAASConfiguration
+			 // Refer InMemoryJAASConfiguration doc for JAAS Configuration
+			 if ( System.getProperty(PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG) == null ) {
+				 System.setProperty(PROP_JAVA_SECURITY_AUTH_LOGIN_CONFIG, "/dev/null");
+			 }
+			 logger.info("Loading SolrClient JAAS config from Ranger audit config if present...");
+			 InMemoryJAASConfiguration.init(props);
+			} catch (Exception e) {
+				logger.error("ERROR: Unable to load SolrClient JAAS config from ranger admin config file. Audit to Kerberized Solr will fail...", e);
 			}
-			logger.info("Loading SolrClient JAAS config from Ranger audit config if present...");
-			InMemoryJAASConfiguration.init(props);
-		} catch (Exception e) {
-			logger.error("ERROR: Unable to load SolrClient JAAS config from ranger admin config file. Audit to Kerberized Solr will fail...", e);
-		}
-		logger.info("<==SolrMgr.init()");
+		logger.info("<==SolrMgr.init()" );
 	}
 
 	public SolrClient getSolrClient() {
-		if (solrClient != null) {
+		if(solrClient!=null){
 			return solrClient;
-		} else {
-			synchronized (this) {
+		}else{
+			synchronized(this){
 				connect();
 			}
 		}

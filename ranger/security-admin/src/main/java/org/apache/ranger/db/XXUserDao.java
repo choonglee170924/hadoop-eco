@@ -17,21 +17,21 @@
  * under the License.
  */
 
-package org.apache.ranger.db;
+ package org.apache.ranger.db;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXUser;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.List;
-
 @Service
 public class XXUserDao extends BaseDao<XXUser> {
-	private static final Logger logger = LogManager.getLogger(XXResourceDao.class);
+	private static final Logger logger = Logger.getLogger(XXResourceDao.class);
 
 	public XXUserDao(RangerDaoManagerBase daoManager) {
 		super(daoManager);

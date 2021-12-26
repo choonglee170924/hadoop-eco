@@ -1,9 +1,3 @@
-# CUSTOMIZED
-
-- 2021-12-24
-    - LOG4J 보안 문제로 Version 업 함
-
-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.

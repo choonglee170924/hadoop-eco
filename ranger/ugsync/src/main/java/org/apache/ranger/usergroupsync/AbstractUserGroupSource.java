@@ -18,54 +18,53 @@
  */
 package org.apache.ranger.usergroupsync;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
 
 public abstract class AbstractUserGroupSource implements UserGroupSource {
 
-	private static final Logger LOG = LogManager.getLogger(AbstractUserGroupSource.class);
+    private static final Logger LOG = Logger.getLogger(AbstractUserGroupSource.class);
 
-	protected UserGroupSyncConfig config = UserGroupSyncConfig.getInstance();
+    protected UserGroupSyncConfig config = UserGroupSyncConfig.getInstance();
 
-	protected Mapper userNameRegExInst = null;
-	protected Mapper groupNameRegExInst = null;
+    protected Mapper userNameRegExInst = null;
+    protected Mapper groupNameRegExInst = null;
 
 
-	public AbstractUserGroupSource() {
-		String mappingUserNameHandler = config.getUserSyncMappingUserNameHandler();
-		try {
-			if (mappingUserNameHandler != null) {
-				Class<Mapper> regExClass = (Class<Mapper>) Class.forName(mappingUserNameHandler);
-				userNameRegExInst = regExClass.newInstance();
-				if (userNameRegExInst != null) {
-					userNameRegExInst.init(UserGroupSyncConfig.SYNC_MAPPING_USERNAME);
-				} else {
-					LOG.error("RegEx handler instance for username is null!");
-				}
-			}
-		} catch (ClassNotFoundException cne) {
-			LOG.error("Failed to load " + mappingUserNameHandler + " " + cne);
-		} catch (Throwable te) {
-			LOG.error("Failed to instantiate " + mappingUserNameHandler + " " + te);
-		}
+    public AbstractUserGroupSource() {
+        String mappingUserNameHandler = config.getUserSyncMappingUserNameHandler();
+        try {
+            if (mappingUserNameHandler != null) {
+                Class<Mapper> regExClass = (Class<Mapper>)Class.forName(mappingUserNameHandler);
+                userNameRegExInst = regExClass.newInstance();
+                if (userNameRegExInst != null) {
+                    userNameRegExInst.init(UserGroupSyncConfig.SYNC_MAPPING_USERNAME);
+                } else {
+                    LOG.error("RegEx handler instance for username is null!");
+                }
+            }
+        } catch (ClassNotFoundException cne) {
+            LOG.error("Failed to load " + mappingUserNameHandler + " " + cne);
+        } catch (Throwable te) {
+            LOG.error("Failed to instantiate " + mappingUserNameHandler + " " + te);
+        }
 
-		String mappingGroupNameHandler = config.getUserSyncMappingGroupNameHandler();
-		try {
-			if (mappingGroupNameHandler != null) {
-				Class<Mapper> regExClass = (Class<Mapper>) Class.forName(mappingGroupNameHandler);
-				groupNameRegExInst = regExClass.newInstance();
-				if (groupNameRegExInst != null) {
-					groupNameRegExInst.init(UserGroupSyncConfig.SYNC_MAPPING_GROUPNAME);
-				} else {
-					LOG.error("RegEx handler instance for groupname is null!");
-				}
-			}
-		} catch (ClassNotFoundException cne) {
-			LOG.error("Failed to load " + mappingGroupNameHandler + " " + cne);
-		} catch (Throwable te) {
-			LOG.error("Failed to instantiate " + mappingGroupNameHandler + " " + te);
-		}
-	}
+        String mappingGroupNameHandler = config.getUserSyncMappingGroupNameHandler();
+        try {
+            if (mappingGroupNameHandler != null) {
+                Class<Mapper> regExClass = (Class<Mapper>)Class.forName(mappingGroupNameHandler);
+                groupNameRegExInst = regExClass.newInstance();
+                if (groupNameRegExInst != null) {
+                    groupNameRegExInst.init(UserGroupSyncConfig.SYNC_MAPPING_GROUPNAME);
+                } else {
+                    LOG.error("RegEx handler instance for groupname is null!");
+                }
+            }
+        } catch (ClassNotFoundException cne) {
+            LOG.error("Failed to load " + mappingGroupNameHandler + " " + cne);
+        } catch (Throwable te) {
+            LOG.error("Failed to instantiate " + mappingGroupNameHandler + " " + te);
+        }
+    }
 
 }

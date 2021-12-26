@@ -99,9 +99,9 @@ public class RangerAdminRESTClient implements RangerAdminClient {
 		if(LOG.isDebugEnabled()) {
 			LOG.debug("==> RangerAdminRESTClient.getServicePoliciesIfUpdated(" + lastKnownVersion + ", " + lastActivationTimeInMillis + ")");
 		}
+
 		ServicePolicies ret = null;
 		UserGroupInformation user = MiscUtil.getUGILoginUser();
-
 		boolean isSecureMode = user != null && UserGroupInformation.isSecurityEnabled();
 		ClientResponse response = null;
 		if (isSecureMode) {
@@ -123,18 +123,11 @@ public class RangerAdminRESTClient implements RangerAdminClient {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Checking Service policy if updated with old api call");
 			}
-			// /service/plugins/secure/policies/download/hiverepo?
-			WebResource webResource =
-					createWebResource(RangerRESTUtils.REST_URL_POLICY_GET_FOR_SERVICE_IF_UPDATED + serviceName)
+			WebResource webResource = createWebResource(RangerRESTUtils.REST_URL_POLICY_GET_FOR_SERVICE_IF_UPDATED + serviceName)
 					.queryParam(RangerRESTUtils.REST_PARAM_LAST_KNOWN_POLICY_VERSION, Long.toString(lastKnownVersion))
 					.queryParam(RangerRESTUtils.REST_PARAM_LAST_ACTIVATION_TIME, Long.toString(lastActivationTimeInMillis))
 					.queryParam(RangerRESTUtils.REST_PARAM_PLUGIN_ID, pluginId)
 					.queryParam(RangerRESTUtils.REST_PARAM_CLUSTER_NAME, clusterName);
-
-			LOG.info("################### pluginId : " +pluginId);
-			LOG.info("################### clsuterName : " +clusterName);
-			LOG.info("################### serviceName : " +serviceName);
-
 			response = webResource.accept(RangerRESTUtils.REST_MIME_TYPE_JSON).get(ClientResponse.class);
 		}
 
@@ -280,7 +273,7 @@ public class RangerAdminRESTClient implements RangerAdminClient {
 
 	private WebResource createWebResource(String url) {
 		WebResource ret = restClient.getResource(url);
-
+		
 		return ret;
 	}
 

@@ -29,8 +29,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.KmsKeyMgr;
 import org.apache.ranger.common.MessageEnums;
 import org.apache.ranger.common.RESTErrorUtil;
@@ -57,19 +56,19 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 @RangerAnnotationJSMgrName("KeyMgr")
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class XKeyREST {
-	private static final Logger logger = LogManager.getLogger(XKeyREST.class);
+	private static final Logger logger = Logger.getLogger(XKeyREST.class);
 
 	private static String UNAUTHENTICATED_MSG = "Unauthenticated : Please check the permission in the policy for the user";
-
+	
 	@Autowired
 	KmsKeyMgr keyMgr;
-
+		
 	@Autowired
 	SearchUtil searchUtil;
-
+	
 	@Autowired
 	RESTErrorUtil restErrorUtil;
-
+	
 	/**
 	 * Implements the traditional search functionalities for Keys
 	 *
@@ -85,11 +84,11 @@ public class XKeyREST {
 		try{
 			vxKmsKeyList = keyMgr.searchKeys(request, provider);
 		}catch(Exception e){
-			handleError(e);
+			handleError(e);						
 		}
 		return vxKmsKeyList;
 	}
-
+	
 	/**
 	 * Implements the Rollover key functionality
 	 * @param vXKey
@@ -115,8 +114,8 @@ public class XKeyREST {
 			handleError(e);
 		}
 		return vxKmsKey;
-	}
-
+	}	
+	
 	/**
 	 * Implements the delete key functionality
 	 * @param name
@@ -137,7 +136,7 @@ public class XKeyREST {
 			handleError(e);
 		}
 	}
-
+	
 	/**
 	 * Implements the create key functionality
 	 * @param vXKey
@@ -164,7 +163,7 @@ public class XKeyREST {
 		}
 		return vxKmsKey;
 	}
-
+	
 	/**
 	 *
 	 * @param name
@@ -188,7 +187,7 @@ public class XKeyREST {
 		}
 		return vxKmsKey;
 	}
-
+	
 	private void handleError(Exception e) {
 		String message = e.getMessage();
 		if (e instanceof UniformInterfaceException){
@@ -202,10 +201,10 @@ public class XKeyREST {
 				message = obj.getString("message");
 			} catch (JSONException e1) {
 				message = e1.getMessage();
-			}
-		}
+			}			
+		}			
 		if (!(message==null) && !(message.isEmpty()) && message.contains("Connection refused")){
-			message = "Connection refused : Please check the KMS provider URL and whether the Ranger KMS is running";
+			message = "Connection refused : Please check the KMS provider URL and whether the Ranger KMS is running";			
 		} else if (!(message==null) && !(message.isEmpty()) && (message.contains("response status of 403") || message.contains("HTTP Status 403"))){
 			message = UNAUTHENTICATED_MSG;
 		} else if (!(message==null) && !(message.isEmpty()) && (message.contains("response status of 401") || message.contains("HTTP Status 401 - Authentication required"))){
@@ -214,5 +213,5 @@ public class XKeyREST {
 		    message = UNAUTHENTICATED_MSG;
 		}
 		throw restErrorUtil.createRESTException(message, MessageEnums.ERROR_SYSTEM);
-	}
+	}	
 }

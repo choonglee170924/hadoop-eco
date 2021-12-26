@@ -28,8 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.view.VEnum;
 import org.apache.ranger.common.view.VEnumElement;
 import org.springframework.stereotype.Component;
@@ -37,6 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RangerEnumUtil {
 
+    private static final Logger logger = Logger.getLogger(RangerEnumUtil.class);
     public final static String ENUM_CommonEnums_ActiveStatus = "CommonEnums.ActiveStatus";
     public final static String ENUM_CommonEnums_ActivationStatus = "CommonEnums.ActivationStatus";
     public final static String ENUM_CommonEnums_BooleanValue = "CommonEnums.BooleanValue";
@@ -65,7 +65,7 @@ public class RangerEnumUtil {
     public final static String ENUM_XXAuthSession_AuthStatus = "XXAuthSession.AuthStatus";
     public final static String ENUM_XXAuthSession_AuthType = "XXAuthSession.AuthType";
     public final static String ENUM_XResponse_ResponseStatus = "XResponse.ResponseStatus";
-		private static final Logger logger = LogManager.getLogger(RangerEnumUtil.class);
+
     protected Map<String, VEnum> enumMap = new HashMap<String, VEnum>();
     protected List<VEnum> enumList = new ArrayList<VEnum>();
 
@@ -978,9 +978,9 @@ public class RangerEnumUtil {
 	vElement.setElementLabel("Agent");
 	vElement.setRbKey("xa.enum.AssetType.ASSET_AGENT");
 	vElement.setEnumName(vEnum.getEnumName());
-
+	
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("ASSET_KNOX");
 	vElement.setElementValue(5);
@@ -989,8 +989,8 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
-
+	
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("ASSET_STORM");
 	vElement.setElementValue(6);
@@ -1215,18 +1215,18 @@ public class RangerEnumUtil {
 	vElement.setElementLabel("View Column");
 	vElement.setRbKey("xa.enum.ResourceType.RESOURCE_VIEW_COL");
 	vElement.setEnumName(vEnum.getEnumName());
-
+	
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("RESOURCE_TOPOLOGY");
 	vElement.setElementValue(9);
 	vElement.setElementLabel("Topology");
 	vElement.setRbKey("xa.enum.ResourceType.RESOURCE_TOPOLOGY");
 	vElement.setEnumName(vEnum.getEnumName());
-
+	
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("RESOURCE_SERVICE");
 	vElement.setElementValue(10);
@@ -1481,7 +1481,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_ALLOW");
 	vElement.setElementValue(17);
@@ -1490,8 +1490,8 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
-
+	
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_SUBMIT_TOPOLOGY");
 	vElement.setElementValue(18);
@@ -1500,7 +1500,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_FILE_UPLOAD");
 	vElement.setElementValue(19);
@@ -1509,7 +1509,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_NIMBUS");
 	vElement.setElementValue(20);
@@ -1518,7 +1518,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_CLUSTER_INFO");
 	vElement.setElementValue(21);
@@ -1527,8 +1527,8 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
-
+	
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_FILE_DOWNLOAD");
 	vElement.setElementValue(22);
@@ -1537,7 +1537,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_KILL_TOPOLOGY");
 	vElement.setElementValue(23);
@@ -1546,7 +1546,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_REBALANCE");
 	vElement.setElementValue(24);
@@ -1555,7 +1555,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_ACTIVATE");
 	vElement.setElementValue(25);
@@ -1564,7 +1564,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_DEACTIVATE");
 	vElement.setElementValue(26);
@@ -1573,7 +1573,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_TOPOLOGY_CONF");
 	vElement.setElementValue(27);
@@ -1582,7 +1582,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_TOPOLOGY");
 	vElement.setElementValue(28);
@@ -1591,7 +1591,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_USER_TOPOLOGY");
 	vElement.setElementValue(29);
@@ -1600,7 +1600,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_GET_TOPOLOGY_INFO");
 	vElement.setElementValue(30);
@@ -1609,7 +1609,7 @@ public class RangerEnumUtil {
 	vElement.setEnumName(vEnum.getEnumName());
 
 	vEnum.getElementList().add(vElement);
-
+	
 	vElement = new VEnumElement();
 	vElement.setElementName("XA_PERM_TYPE_UPLOAD_NEW_CREDENTIAL");
 	vElement.setElementValue(31);
@@ -1619,7 +1619,7 @@ public class RangerEnumUtil {
 
 	vEnum.getElementList().add(vElement);
 
-
+	
 	///////////////////////////////////
 	// CommonEnums::ClassTypes
 	///////////////////////////////////

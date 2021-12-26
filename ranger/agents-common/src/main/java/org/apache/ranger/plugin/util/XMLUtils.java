@@ -19,25 +19,25 @@
 
 package org.apache.ranger.plugin.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public class XMLUtils {
 
-	private static final Logger LOG = LogManager.getLogger(XMLUtils.class);
+	private static final Logger LOG = Logger.getLogger(XMLUtils.class);
 
 	private static final String XMLCONFIG_PROPERTY_TAGNAME = "property";
 	private static final String XMLCONFIG_NAME_TAGNAME = "name";
@@ -56,7 +56,7 @@ public class XMLUtils {
 			DocumentBuilderFactory xmlDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
 			xmlDocumentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			xmlDocumentBuilderFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			xmlDocumentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+                	xmlDocumentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			xmlDocumentBuilderFactory.setIgnoringComments(true);
 			xmlDocumentBuilderFactory.setNamespaceAware(true);
 
@@ -116,7 +116,7 @@ public class XMLUtils {
 			ret = XMLUtils.class.getResourceAsStream(path);
 
 			if (ret == null) {
-				if (!path.startsWith("/")) {
+				if (! path.startsWith("/")) {
 					ret = XMLUtils.class.getResourceAsStream("/" + path);
 				}
 			}
@@ -124,7 +124,7 @@ public class XMLUtils {
 			if (ret == null) {
 				ret = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
 				if (ret == null) {
-					if (!path.startsWith("/")) {
+					if (! path.startsWith("/")) {
 						ret = ClassLoader.getSystemResourceAsStream("/" + path);
 					}
 				}

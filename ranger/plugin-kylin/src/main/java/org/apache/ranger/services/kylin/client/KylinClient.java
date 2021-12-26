@@ -19,6 +19,26 @@
 
 package org.apache.ranger.services.kylin.client;
 
+import java.security.PrivilegedAction;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.security.auth.Subject;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.client.BaseClient;
+import org.apache.ranger.plugin.client.HadoopException;
+import org.apache.ranger.plugin.util.PasswordUtils;
+import org.apache.ranger.services.kylin.client.json.model.KylinProjectResponse;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -26,25 +46,10 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.client.BaseClient;
-import org.apache.ranger.plugin.client.HadoopException;
-import org.apache.ranger.plugin.util.PasswordUtils;
-import org.apache.ranger.services.kylin.client.json.model.KylinProjectResponse;
-
-import javax.security.auth.Subject;
-import java.security.PrivilegedAction;
-import java.util.*;
 
 public class KylinClient extends BaseClient {
 
-	private static final Logger LOG = LogManager.getLogger(KylinClient.class);
+	private static final Logger LOG = Logger.getLogger(KylinClient.class);
 
 	private static final String EXPECTED_MIME_TYPE = "application/json";
 
@@ -80,6 +85,42 @@ public class KylinClient extends BaseClient {
 			LOG.debug("Kylin client is build with url [" + this.kylinUrl + "], user: [" + this.userName
 					+ "], password: [" + "*********" + "].");
 		}
+	}
+
+	public List<String> getProjectList(final String projectMatching, final List<String> existingProjects) {
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Getting kylin project list for projectMatching: " + projectMatching + ", existingProjects: "
+					+ existingProjects);
+		}
+		Subject subj = getLoginSubject();
+		if (subj == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> ret = Subject.doAs(subj, new PrivilegedAction<List<String>>() {
+
+			@Override
+			public List<String> run() {
+
+				ClientResponse response = getClientResponse(kylinUrl, userName, password);
+
+				List<KylinProjectResponse> projectResponses = getKylinProjectResponse(response);
+
+				if (CollectionUtils.isEmpty(projectResponses)) {
+					return Collections.emptyList();
+				}
+
+				List<String> projects = getProjectFromResponse(projectMatching, existingProjects, projectResponses);
+
+				return projects;
+			}
+		});
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Getting kylin project list result: " + ret);
+		}
+		return ret;
 	}
 
 	private static ClientResponse getClientResponse(String kylinUrl, String userName, String password) {
@@ -119,6 +160,51 @@ public class KylinClient extends BaseClient {
 		return response;
 	}
 
+	private List<KylinProjectResponse> getKylinProjectResponse(ClientResponse response) {
+		List<KylinProjectResponse> projectResponses = null;
+		try {
+			if (response != null) {
+				if (response.getStatus() == HttpStatus.SC_OK) {
+					String jsonString = response.getEntity(String.class);
+					Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+					projectResponses = gson.fromJson(jsonString, new TypeToken<List<KylinProjectResponse>>() {
+					}.getType());
+				} else {
+					String msgDesc = "Unable to get a valid response for " + "expected mime type : [" + EXPECTED_MIME_TYPE
+							+ "], kylinUrl: " + kylinUrl + " - got http response code " + response.getStatus();
+					LOG.error(msgDesc);
+					HadoopException hdpException = new HadoopException(msgDesc);
+					hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
+					throw hdpException;
+				}
+			} else {
+				String msgDesc = "Unable to get a valid response for " + "expected mime type : [" + EXPECTED_MIME_TYPE
+						+ "], kylinUrl: " + kylinUrl + " - got null response.";
+				LOG.error(msgDesc);
+				HadoopException hdpException = new HadoopException(msgDesc);
+				hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
+				throw hdpException;
+			}
+		} catch (HadoopException he) {
+			throw he;
+		} catch (Throwable t) {
+			String msgDesc = "Exception while getting kylin project response, kylinUrl: " + kylinUrl;
+			HadoopException hdpException = new HadoopException(msgDesc, t);
+
+			LOG.error(msgDesc, t);
+
+			hdpException.generateResponseDataMap(false, BaseClient.getMessage(t), msgDesc + ERROR_MESSAGE, null, null);
+			throw hdpException;
+
+		} finally {
+			if (response != null) {
+				response.close();
+			}
+		}
+		return projectResponses;
+	}
+
 	private static ClientResponse getProjectResponse(String url, Client client) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getProjectResponse():calling " + url);
@@ -143,7 +229,7 @@ public class KylinClient extends BaseClient {
 	}
 
 	private static List<String> getProjectFromResponse(String projectMatching, List<String> existingProjects,
-	                                                   List<KylinProjectResponse> projectResponses) {
+			List<KylinProjectResponse> projectResponses) {
 		List<String> projcetNames = new ArrayList<String>();
 		for (KylinProjectResponse project : projectResponses) {
 			String projectName = project.getName();
@@ -201,86 +287,5 @@ public class KylinClient extends BaseClient {
 			kylinClient = new KylinClient(serviceName, configs);
 		}
 		return kylinClient;
-	}
-
-	public List<String> getProjectList(final String projectMatching, final List<String> existingProjects) {
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Getting kylin project list for projectMatching: " + projectMatching + ", existingProjects: "
-					+ existingProjects);
-		}
-		Subject subj = getLoginSubject();
-		if (subj == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> ret = Subject.doAs(subj, new PrivilegedAction<List<String>>() {
-
-			@Override
-			public List<String> run() {
-
-				ClientResponse response = getClientResponse(kylinUrl, userName, password);
-
-				List<KylinProjectResponse> projectResponses = getKylinProjectResponse(response);
-
-				if (CollectionUtils.isEmpty(projectResponses)) {
-					return Collections.emptyList();
-				}
-
-				List<String> projects = getProjectFromResponse(projectMatching, existingProjects, projectResponses);
-
-				return projects;
-			}
-		});
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Getting kylin project list result: " + ret);
-		}
-		return ret;
-	}
-
-	private List<KylinProjectResponse> getKylinProjectResponse(ClientResponse response) {
-		List<KylinProjectResponse> projectResponses = null;
-		try {
-			if (response != null) {
-				if (response.getStatus() == HttpStatus.SC_OK) {
-					String jsonString = response.getEntity(String.class);
-					Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-					projectResponses = gson.fromJson(jsonString, new TypeToken<List<KylinProjectResponse>>() {
-					}.getType());
-				} else {
-					String msgDesc = "Unable to get a valid response for " + "expected mime type : [" + EXPECTED_MIME_TYPE
-							+ "], kylinUrl: " + kylinUrl + " - got http response code " + response.getStatus();
-					LOG.error(msgDesc);
-					HadoopException hdpException = new HadoopException(msgDesc);
-					hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
-					throw hdpException;
-				}
-			} else {
-				String msgDesc = "Unable to get a valid response for " + "expected mime type : [" + EXPECTED_MIME_TYPE
-						+ "], kylinUrl: " + kylinUrl + " - got null response.";
-				LOG.error(msgDesc);
-				HadoopException hdpException = new HadoopException(msgDesc);
-				hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
-				throw hdpException;
-			}
-		} catch (HadoopException he) {
-			throw he;
-		} catch (Throwable t) {
-			String msgDesc = "Exception while getting kylin project response, kylinUrl: " + kylinUrl;
-			HadoopException hdpException = new HadoopException(msgDesc, t);
-
-			LOG.error(msgDesc, t);
-
-			hdpException.generateResponseDataMap(false, BaseClient.getMessage(t), msgDesc + ERROR_MESSAGE, null, null);
-			throw hdpException;
-
-		} finally {
-			if (response != null) {
-				response.close();
-			}
-		}
-		return projectResponses;
 	}
 }

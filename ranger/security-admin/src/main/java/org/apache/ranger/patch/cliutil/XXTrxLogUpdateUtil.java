@@ -17,20 +17,19 @@
 
 package org.apache.ranger.patch.cliutil;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.biz.XUserMgr;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.AppConstants;
 import org.apache.ranger.db.RangerDaoManager;
 import org.apache.ranger.patch.BaseLoader;
 import org.apache.ranger.service.XPortalUserService;
+import org.apache.ranger.biz.XUserMgr;
 import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class XXTrxLogUpdateUtil extends BaseLoader {
-	private static final Logger logger = LogManager
+	private static final Logger logger = Logger
 			.getLogger(XXTrxLogUpdateUtil.class);
 
 	@Autowired
@@ -74,25 +73,25 @@ public class XXTrxLogUpdateUtil extends BaseLoader {
 
 	public void updateXTrxLog() {
 		long maxXTrxLogID = daoManager.getXXTrxLog().getMaxIdOfXXTrxLog();
-		if (maxXTrxLogID == 0) {
+		if(maxXTrxLogID==0){
 			return;
 		}
-		long maxRowsPerBatch = 10000;
+		long maxRowsPerBatch=10000;
 		//To ceil the actual division result i.e noOfBatches=maxXTrxLogID/maxRowsPerBatch
-		long noOfBatches = (maxXTrxLogID + maxRowsPerBatch - 1) / maxRowsPerBatch;
-		long minRange = 0;
-		long maxRange = maxXTrxLogID <= maxRowsPerBatch ? maxXTrxLogID : maxRowsPerBatch;
-		long startTimeInMS = 0;
-		long timeTaken = 0;
-		for (long index = 1; index <= noOfBatches; index++) {
-			logger.info("Batch " + index + " of total " + noOfBatches);
-			startTimeInMS = System.currentTimeMillis();
+		long noOfBatches=(maxXTrxLogID+maxRowsPerBatch-1)/maxRowsPerBatch;
+		long minRange=0;
+		long maxRange=maxXTrxLogID<=maxRowsPerBatch ? maxXTrxLogID : maxRowsPerBatch;
+		long startTimeInMS=0;
+		long timeTaken=0;
+		for(long index=1;index<=noOfBatches;index++){
+			logger.info("Batch "+ index+" of total "+noOfBatches);
+			startTimeInMS=System.currentTimeMillis();
 			//minRange and maxRange both exclusive, if we add +1 in maxRange
-			int rowsAffected = daoManager.getXXTrxLog().updateXTrxLog(minRange, maxRange + 1, AppConstants.CLASS_TYPE_XA_USER, "Password", AppConstants.Masked_String);
-			timeTaken = (System.currentTimeMillis() - startTimeInMS);
-			logger.info(rowsAffected + " rows affected (" + timeTaken + " ms)");
-			minRange = maxRange;
-			maxRange = maxRange + maxRowsPerBatch;
+			int rowsAffected=daoManager.getXXTrxLog().updateXTrxLog(minRange,maxRange+1,AppConstants.CLASS_TYPE_XA_USER,"Password",AppConstants.Masked_String);
+			timeTaken=(System.currentTimeMillis()-startTimeInMS);
+			logger.info(rowsAffected +" rows affected ("+timeTaken+" ms)");
+			minRange=maxRange;
+			maxRange=maxRange+maxRowsPerBatch;
 		}
 	}
 

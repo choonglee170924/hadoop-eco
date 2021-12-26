@@ -97,7 +97,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 		LOG.debug("RangerHiveAuthorizer.RangerHiveAuthorizer()");
 
 		RangerHivePlugin plugin = hivePlugin;
-
+		
 		if(plugin == null) {
 			synchronized(RangerHiveAuthorizer.class) {
 				plugin = hivePlugin;
@@ -226,32 +226,9 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 		      throws HiveAuthzPluginException, HiveAccessControlException {
 		UserGroupInformation ugi = getCurrentUserGroupInfo();
 
-		LOG.info("^^^^^^^^^^^^^^^^^^ checkPrivileges");
-		try {
-			HiveAuthzSessionContext hiveAuthzSessionContext = getHiveAuthzSessionContext();
-			UserGroupInformation choongUgi = choongCreateRemoteUser(ugi.getUserName());
-			HiveConf hiveConf = getHiveConf();
-
-			LOG.info("^^^^^^^^^^^^^^^^^^ getSessionString" + hiveAuthzSessionContext.getSessionString());
-
-			char[] userPassword = hiveConf.getPassword(choongUgi.getUserName());
-			if(userPassword != null) {
-				String str = new String(userPassword);
-				LOG.info("^^^^^^^^^^^^^^^^^^ password" + str);
-			} else {
-				LOG.info("^^^^^^^^^^^^^^^^^^ password null");
-			}
-		} catch (Exception e) {
-			LOG.info("^^^^^^^^^^^^^^^^^^ ERROR" + e.getMessage());
-		}
-
 		if(ugi == null) {
 			throw new HiveAccessControlException("Permission denied: user information not available");
 		}
-
-		LOG.info("@@@@@@@@@@@@@@@@@@@ ugi cred : " + ugi.getCredentials());
-		LOG.info("@@@@@@@@@@@@@@@@@@@ ugi toString : " + ugi.toString());
-		LOG.info("@@@@@@@@@@@@@@@@@@@ ugi : " + ugi.getTokenIdentifiers().toString());
 
 		RangerHiveAuditHandler auditHandler = new RangerHiveAuditHandler();
 
@@ -262,16 +239,10 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 			String                  user           = ugi.getShortUserName();
 			Set<String>             groups         = Sets.newHashSet(ugi.getGroupNames());
 			String clusterName = hivePlugin.getClusterName();
-			LOG.info("@@@@@@###### RangerHiveAuthorizer : ");
+
 			if(LOG.isDebugEnabled()) {
-				LOG.info("@@@@@@###### RangerHiveAuthorizer : 1");
 				LOG.debug(toString(hiveOpType, inputHObjs, outputHObjs, context, sessionContext));
-				LOG.info("@@@@@@###### RangerHiveAuthorizer : 2");
 			}
-			LOG.info("@@@@@@###### RangerHiveAuthorizer : user ::" + user);
-			LOG.info("@@@@@@###### RangerHiveAuthorizer : session ::" + sessionContext.getSessionString());
-			LOG.info("@@@@@@###### RangerHiveAuthorizer : session tostring::" + sessionContext.toString());
-			LOG.info("@@@@@@###### RangerHiveAuthorizer : session type::" + sessionContext.getClientType());
 
 			if(hiveOpType == HiveOperationType.DFS) {
 				handleDfsCommand(hiveOpType, inputHObjs, user, auditHandler);
@@ -285,11 +256,8 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 
 			List<RangerHiveAccessRequest> requests = new ArrayList<RangerHiveAccessRequest>();
 
-			LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> RangerHiveAuthorizer: 1");
 			if(!CollectionUtils.isEmpty(inputHObjs)) {
-				LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> RangerHiveAuthorizer: 2");
 				for(HivePrivilegeObject hiveObj : inputHObjs) {
-					LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> RangerHiveAuthorizer: 3" + hiveObj.toString());
 					RangerHiveResource resource = getHiveResource(hiveOpType, hiveObj);
 
 					if (resource == null) { // possible if input object/object is of a kind that we don't currently authorize
@@ -485,7 +453,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 	public List<HivePrivilegeObject> filterListCmdObjects(List<HivePrivilegeObject> objs,
 														  HiveAuthzContext          context)
 		      throws HiveAuthzPluginException, HiveAccessControlException {
-
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(String.format("==> filterListCmdObjects(%s, %s)", objs, context));
 		}
@@ -522,7 +490,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(String.format("filterListCmdObjects: user[%s], groups%s", user, groups));
 			}
-
+			
 			if (ret == null) { // if we got any items to filter then we can't return back a null.  We must return back a list even if its empty.
 				ret = new ArrayList<HivePrivilegeObject>(objs.size());
 			}
@@ -540,7 +508,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 					final String format = "filterListCmdObjects: actionType[%s], objectType[%s], objectName[%s], dbName[%s], columns[%s], partitionKeys[%s]; context: commandString[%s], ipAddress[%s]";
 					LOG.debug(String.format(format, actionType, objectType, objectName, dbName, columns, partitionKeys, commandString, ipAddress));
 				}
-
+				
 				RangerHiveResource resource = createHiveResource(privilegeObject);
 				if (resource == null) {
 					LOG.error("filterListCmdObjects: RangerHiveResource returned by createHiveResource is null");
@@ -839,7 +807,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 			case DATABASE:
 				ret = new RangerHiveResource(objectType, hiveObj.getDbname());
 			break;
-
+	
 			case TABLE:
 			case VIEW:
 			case PARTITION:
@@ -847,7 +815,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 			case FUNCTION:
 				ret = new RangerHiveResource(objectType, hiveObj.getDbname(), hiveObj.getObjectName());
 			break;
-
+	
 			case COLUMN:
 				ret = new RangerHiveResource(objectType, hiveObj.getDbname(), hiveObj.getObjectName(), StringUtils.join(hiveObj.getColumns(), COLUMN_SEP));
 			break;
@@ -1118,7 +1086,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 			}
 			break;
 		}
-
+		
 		return accessType;
 	}
 
@@ -1280,14 +1248,11 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 	}
 
     private boolean isURIAccessAllowed(String userName, FsAction action, String uri, HiveConf conf) {
-	    LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> isURIAccessAllowed: 1");
-	    boolean ret = false;
+        boolean ret = false;
 
         if(action == FsAction.NONE) {
-	          LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> isURIAccessAllowed: 2");
             ret = true;
         } else {
-	          LOG.info("@@@@@@@@@@@@@@@@@@@@@@->>>> isURIAccessAllowed: 3");
             try {
                 Path       filePath   = new Path(uri);
                 FileSystem fs         = FileSystem.get(filePath.toUri(), conf);
@@ -1486,7 +1451,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 
 		for(HivePrivilege privilege : hivePrivileges) {
 			String privName = privilege.getName();
-
+			
 			if(StringUtils.equalsIgnoreCase(privName, HiveAccessType.ALL.name()) ||
 			   StringUtils.equalsIgnoreCase(privName, HiveAccessType.ALTER.name()) ||
 			   StringUtils.equalsIgnoreCase(privName, HiveAccessType.CREATE.name()) ||
@@ -1681,7 +1646,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 							HiveAuthzContext          context,
 							HiveAuthzSessionContext   sessionContext) {
 		StringBuilder sb = new StringBuilder();
-
+		
 		sb.append("'checkPrivileges':{");
 		sb.append("'hiveOpType':").append(hiveOpType);
 
@@ -1717,7 +1682,7 @@ public class RangerHiveAuthorizer extends RangerHiveAuthorizerBase {
 				toString(privObjs.get(i), sb);
 			}
 		}
-
+		
 		return sb;
 	}
 
@@ -1758,32 +1723,11 @@ class RangerHivePlugin extends RangerBasePlugin {
 	public void init() {
 		super.init();
 
-		RangerHivePlugin.UpdateXaPoliciesOnGrantRevoke =
-				RangerConfiguration
-						.getInstance()
-						.getBoolean(
-								RangerHadoopConstants.HIVE_UPDATE_RANGER_POLICIES_ON_GRANT_REVOKE_PROP,
-								RangerHadoopConstants.HIVE_UPDATE_RANGER_POLICIES_ON_GRANT_REVOKE_DEFAULT_VALUE);
+		RangerHivePlugin.UpdateXaPoliciesOnGrantRevoke = RangerConfiguration.getInstance().getBoolean(RangerHadoopConstants.HIVE_UPDATE_RANGER_POLICIES_ON_GRANT_REVOKE_PROP, RangerHadoopConstants.HIVE_UPDATE_RANGER_POLICIES_ON_GRANT_REVOKE_DEFAULT_VALUE);
+		RangerHivePlugin.BlockUpdateIfRowfilterColumnMaskSpecified = RangerConfiguration.getInstance().getBoolean(RangerHadoopConstants.HIVE_BLOCK_UPDATE_IF_ROWFILTER_COLUMNMASK_SPECIFIED_PROP, RangerHadoopConstants.HIVE_BLOCK_UPDATE_IF_ROWFILTER_COLUMNMASK_SPECIFIED_DEFAULT_VALUE);
+		RangerHivePlugin.DescribeShowTableAuth = RangerConfiguration.getInstance().get(RangerHadoopConstants.HIVE_DESCRIBE_TABLE_SHOW_COLUMNS_AUTH_OPTION_PROP, RangerHadoopConstants.HIVE_DESCRIBE_TABLE_SHOW_COLUMNS_AUTH_OPTION_PROP_DEFAULT_VALUE);
 
-		RangerHivePlugin.BlockUpdateIfRowfilterColumnMaskSpecified =
-				RangerConfiguration
-						.getInstance()
-						.getBoolean(
-								RangerHadoopConstants.HIVE_BLOCK_UPDATE_IF_ROWFILTER_COLUMNMASK_SPECIFIED_PROP,
-								RangerHadoopConstants.HIVE_BLOCK_UPDATE_IF_ROWFILTER_COLUMNMASK_SPECIFIED_DEFAULT_VALUE);
-
-		RangerHivePlugin.DescribeShowTableAuth =
-				RangerConfiguration.getInstance()
-						.get(
-								RangerHadoopConstants.HIVE_DESCRIBE_TABLE_SHOW_COLUMNS_AUTH_OPTION_PROP,
-								RangerHadoopConstants.HIVE_DESCRIBE_TABLE_SHOW_COLUMNS_AUTH_OPTION_PROP_DEFAULT_VALUE);
-
-		String fsSchemesString =
-				RangerConfiguration.getInstance()
-						.get(
-								RANGER_PLUGIN_HIVE_ULRAUTH_FILESYSTEM_SCHEMES,
-								RANGER_PLUGIN_HIVE_ULRAUTH_FILESYSTEM_SCHEMES_DEFAULT);
-
+		String fsSchemesString = RangerConfiguration.getInstance().get(RANGER_PLUGIN_HIVE_ULRAUTH_FILESYSTEM_SCHEMES, RANGER_PLUGIN_HIVE_ULRAUTH_FILESYSTEM_SCHEMES_DEFAULT);
 		fsScheme = StringUtils.split(fsSchemesString, FILESYSTEM_SCHEMES_SEPARATOR_CHAR);
 
 		if (fsScheme != null) {

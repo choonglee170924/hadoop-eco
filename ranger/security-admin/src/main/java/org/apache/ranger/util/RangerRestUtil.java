@@ -17,10 +17,14 @@
  * under the License.
  */
 
-package org.apache.ranger.util;
+ package org.apache.ranger.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.MessageEnums;
 import org.apache.ranger.common.RESTErrorUtil;
 import org.apache.ranger.common.RangerConfigUtil;
@@ -32,14 +36,9 @@ import org.apache.ranger.view.VXResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 @Component
 public class RangerRestUtil {
-	private static final Logger logger = LogManager.getLogger(RangerRestUtil.class);
+	private static final Logger logger = Logger.getLogger(RangerRestUtil.class);
 
 	@Autowired
 	StringUtil stringUtil;
@@ -54,7 +53,7 @@ public class RangerRestUtil {
 		Collection<String> newCollection = new ArrayList<String>();
 		for (String role : collection) {
 			String[] roles = role.split(",");
-			newCollection.addAll(Arrays.asList(roles));
+            newCollection.addAll(Arrays.asList(roles));
 		}
 		collection.clear();
 		collection.addAll(newCollection);
@@ -67,7 +66,7 @@ public class RangerRestUtil {
 	 * @return
 	 */
 	public void validateVUserProfileForUpdate(XXPortalUser gjUser,
-	                                          VXPortalUser userProfile) {
+			VXPortalUser userProfile) {
 
 		List<VXMessage> messageList = new ArrayList<VXMessage>();
 
@@ -84,7 +83,7 @@ public class RangerRestUtil {
 		// Login Id can't be changed
 		if (userProfile.getLoginId() != null
 				&& !gjUser.getLoginId().equalsIgnoreCase(
-				userProfile.getLoginId())) {
+						userProfile.getLoginId())) {
 			throw restErrorUtil.createRESTException(
 					"Username can't be updated",
 					MessageEnums.DATA_NOT_UPDATABLE, null, "loginId",
@@ -101,7 +100,7 @@ public class RangerRestUtil {
 				StringUtil.VALIDATION_NAME, "Invalid first name",
 				MessageEnums.INVALID_INPUT_DATA, null, "firstName"));
 
-
+		
 		// firstName
 		if (!stringUtil.isValidName(userProfile.getFirstName())) {
 			logger.info("Invalid first name." + userProfile);
@@ -109,7 +108,7 @@ public class RangerRestUtil {
 					"firstName"));
 		}
 
-
+		
 		// create the public screen name
 		userProfile.setPublicScreenName(userProfile.getFirstName() + " "
 				+ userProfile.getLastName());

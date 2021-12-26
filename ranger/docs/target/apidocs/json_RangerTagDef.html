@@ -80,15 +80,6 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">attributeDefs</span>
-</td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerTagAttributeDef.html">RangerTagAttributeDef</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
           <td>  <span class="property-name">source</span>
 </td>
           <td>  <span class="datatype-reference">string
@@ -106,14 +97,35 @@
           <td>  <span class="property-description"></span>
 </td>
         </tr>
+        <tr>
+          <td>  <span class="property-name">attributeDefs</span>
+</td>
+          <td>  <span class="datatype-reference">array of <a href="json_RangerTagAttributeDef.html">RangerTagAttributeDef</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
         </tbody>
         <tr>
           <td colspan="3"><h5 class="text-muted">Properties inherited from <a href="json_RangerBaseModelObject.html">RangerBaseModelObject</a></h5></td>
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createTime</span></td>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">id</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">isEnabled</span></td>
+          <td><span class="datatype-reference">boolean
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -124,8 +136,14 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">id</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">guid</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -141,47 +159,29 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">updatedBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">guid</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">isEnabled</span></td>
-          <td><span class="datatype-reference">boolean
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;attributeDefs&quot; : [ {
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;
-  }, {
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;
-  } ],
   &quot;source&quot; : &quot;...&quot;,
   &quot;name&quot; : &quot;...&quot;,
-  &quot;createTime&quot; : 12345,
-  &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;id&quot; : 12345,
-  &quot;version&quot; : 12345,
-  &quot;updateTime&quot; : 12345,
+  &quot;attributeDefs&quot; : [ {
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;
+  }, {
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;
+  } ],
   &quot;updatedBy&quot; : &quot;...&quot;,
+  &quot;id&quot; : 12345,
+  &quot;isEnabled&quot; : true,
+  &quot;createdBy&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true
+  &quot;version&quot; : 12345,
+  &quot;updateTime&quot; : 12345
 }</pre>
 
         <footer class="footer">

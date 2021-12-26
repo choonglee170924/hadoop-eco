@@ -19,9 +19,18 @@
 
 package org.apache.ranger.solr;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.*;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.MessageEnums;
+import org.apache.ranger.common.PropertiesUtil;
+import org.apache.ranger.common.RESTErrorUtil;
+import org.apache.ranger.common.SearchCriteria;
+import org.apache.ranger.common.SearchField;
+import org.apache.ranger.common.SortField;
+import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.common.SearchField.DATA_TYPE;
 import org.apache.ranger.common.SearchField.SEARCH_TYPE;
 import org.apache.ranger.common.SortField.SORT_ORDER;
@@ -38,26 +47,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @Scope("singleton")
 public class SolrAccessAuditsService {
-	private static final Logger logger = LogManager.getLogger(SolrAccessAuditsService.class);
-	public List<SortField> sortFields = new ArrayList<SortField>();
-	public List<SearchField> searchFields = new ArrayList<SearchField>();
+	private static final Logger logger = Logger.getLogger(SolrAccessAuditsService.class);
+
 	@Autowired
 	SolrMgr solrMgr;
+
 	@Autowired
 	SolrUtil solrUtil;
+
 	@Autowired
 	RESTErrorUtil restErrorUtil;
+
 	@Autowired
 	StringUtil stringUtil;
+
 	@Autowired
 	RangerDaoManager daoManager;
+
+	public List<SortField> sortFields = new ArrayList<SortField>();
+	public List<SearchField> searchFields = new ArrayList<SearchField>();
 
 	public SolrAccessAuditsService() {
 
@@ -92,8 +103,8 @@ public class SolrAccessAuditsService {
 				SearchField.DATA_TYPE.INTEGER, SearchField.SEARCH_TYPE.FULL));
 		searchFields.add(new SearchField("repoType", "repoType",
 				SearchField.DATA_TYPE.INTEGER, SearchField.SEARCH_TYPE.FULL));
-		searchFields.add(new SearchField("-repoType", "-repoType",
-				SearchField.DATA_TYPE.INTEGER, SearchField.SEARCH_TYPE.FULL));
+                searchFields.add(new SearchField("-repoType", "-repoType",
+                                SearchField.DATA_TYPE.INTEGER, SearchField.SEARCH_TYPE.FULL));
 		searchFields.add(new SearchField("resourceType", "resType",
 				SearchField.DATA_TYPE.STRING, SearchField.SEARCH_TYPE.FULL));
 		searchFields.add(new SearchField("reason", "reason",
@@ -118,7 +129,7 @@ public class SolrAccessAuditsService {
 
 		// Make call to Solr
 		SolrClient solrClient = solrMgr.getSolrClient();
-		final boolean hiveQueryVisibility = PropertiesUtil.getBooleanProperty("ranger.audit.hive.query.visibility", true);
+                final boolean hiveQueryVisibility = PropertiesUtil.getBooleanProperty("ranger.audit.hive.query.visibility", true);
 		if (solrClient == null) {
 			logger.warn("Solr client is null, so not running the query.");
 			throw restErrorUtil.createRESTException(
@@ -134,17 +145,18 @@ public class SolrAccessAuditsService {
 		for (int i = 0; i < docs.size(); i++) {
 			SolrDocument doc = docs.get(i);
 			VXAccessAudit vXAccessAudit = populateViewBean(doc);
-			if (vXAccessAudit != null) {
-				if (!hiveQueryVisibility && "hive".equalsIgnoreCase(vXAccessAudit.getServiceType())) {
-					vXAccessAudit.setRequestData(null);
-				} else if ("hive".equalsIgnoreCase(vXAccessAudit.getServiceType()) && ("grant".equalsIgnoreCase(vXAccessAudit.getAccessType()) || "revoke".equalsIgnoreCase(vXAccessAudit.getAccessType()))) {
-					try {
-						vXAccessAudit.setRequestData(java.net.URLDecoder.decode(vXAccessAudit.getRequestData(), "UTF-8"));
-					} catch (UnsupportedEncodingException e) {
-						logger.warn("Error while encoding request data");
-					}
-				}
-			}
+                        if (vXAccessAudit != null) {
+                                if (!hiveQueryVisibility && "hive".equalsIgnoreCase(vXAccessAudit.getServiceType())) {
+                                        vXAccessAudit.setRequestData(null);
+                                }
+                                else if("hive".equalsIgnoreCase(vXAccessAudit.getServiceType()) && ("grant".equalsIgnoreCase(vXAccessAudit.getAccessType()) || "revoke".equalsIgnoreCase(vXAccessAudit.getAccessType()))){
+                                        try {
+                                                vXAccessAudit.setRequestData(java.net.URLDecoder.decode(vXAccessAudit.getRequestData(), "UTF-8"));
+                                        } catch (UnsupportedEncodingException e) {
+                                                logger.warn("Error while encoding request data");
+                                        }
+                                }
+                        }
 			xAccessAuditList.add(vXAccessAudit);
 		}
 
@@ -164,7 +176,7 @@ public class SolrAccessAuditsService {
 	private VXAccessAudit populateViewBean(SolrDocument doc) {
 		VXAccessAudit accessAudit = new VXAccessAudit();
 		Object value = null;
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("doc=" + doc.toString());
 		}
 
@@ -173,12 +185,12 @@ public class SolrAccessAuditsService {
 			// TODO: Converting ID to hashcode for now
 			accessAudit.setId((long) value.hashCode());
 		}
-
+		
 		value = doc.getFieldValue("cluster");
 		if (value != null) {
 			accessAudit.setClusterName(value.toString());
 		}
-
+		
 		value = doc.getFieldValue("access");
 		if (value != null) {
 			accessAudit.setAccessType(value.toString());
@@ -218,7 +230,7 @@ public class SolrAccessAuditsService {
 		}
 		value = doc.getFieldValue("logType");
 		//if (value != null) {
-		// TODO: Need to see what logType maps to in UI
+			// TODO: Need to see what logType maps to in UI
 //			accessAudit.setAuditType(solrUtil.toInt(value));
 		//}
 		value = doc.getFieldValue("result");

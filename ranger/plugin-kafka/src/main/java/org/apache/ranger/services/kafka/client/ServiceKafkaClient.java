@@ -19,18 +19,6 @@
 
 package org.apache.ranger.services.kafka.client;
 
-import kafka.utils.ZkUtils;
-import kafka.utils.ZkUtils$;
-import org.I0Itec.zkclient.ZkClient;
-import org.I0Itec.zkclient.ZkConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.client.BaseClient;
-import org.apache.ranger.plugin.service.ResourceLookupContext;
-import org.apache.ranger.plugin.util.TimedEventUtil;
-import scala.collection.Iterator;
-import scala.collection.Seq;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,15 +27,32 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import kafka.utils.ZkUtils;
+import kafka.utils.ZkUtils$;
+import org.I0Itec.zkclient.*;
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.client.BaseClient;
+import org.apache.ranger.plugin.service.ResourceLookupContext;
+import org.apache.ranger.plugin.util.TimedEventUtil;
+
+import scala.collection.Iterator;
+import scala.collection.Seq;
+
 public class ServiceKafkaClient {
-	private static final Logger LOG = LogManager.getLogger(ServiceKafkaClient.class);
+	private static final Logger LOG = Logger.getLogger(ServiceKafkaClient.class);
+
+	enum RESOURCE_TYPE {
+		TOPIC
+	}
+
+	String serviceName = null;
+	String zookeeperConnect = null;
 	private static final String errMessage = " You can still save the repository and start creating "
 			+ "policies, but you would not be able to use autocomplete for "
 			+ "resource names. Check server logs for more info.";
+
 	private static final String TOPIC_KEY = "topic";
 	private static final long LOOKUP_TIMEOUT_SEC = 5;
-	String serviceName = null;
-	String zookeeperConnect = null;
 
 	public ServiceKafkaClient(String serviceName, String zookeeperConnect) {
 		this.serviceName = serviceName;
@@ -77,17 +82,17 @@ public class ServiceKafkaClient {
 	private List<String> getTopicList(List<String> ignoreTopicList) throws Exception {
 		List<String> ret = new ArrayList<String>();
 
-		int sessionTimeout = 5000;
-		int connectionTimeout = 10000;
-		ZkClient zkClient = null;
-		ZkConnection zkConnection = null;
+		int          sessionTimeout    = 5000;
+        int          connectionTimeout = 10000;
+		ZkClient     zkClient          = null;
+		ZkConnection zkConnection      = null;
 
 		try {
-			zkClient = ZkUtils$.MODULE$.createZkClient(zookeeperConnect, sessionTimeout, connectionTimeout);
-			zkConnection = new ZkConnection(zookeeperConnect, sessionTimeout);
+	        zkClient     = ZkUtils$.MODULE$.createZkClient(zookeeperConnect, sessionTimeout, connectionTimeout);
+	        zkConnection = new ZkConnection(zookeeperConnect, sessionTimeout);
 
-			ZkUtils zkUtils = new ZkUtils(zkClient, zkConnection, true);
-			Seq<String> topicList = zkUtils.getChildrenParentMayNotExist(ZkUtils.BrokerTopicsPath());
+	        ZkUtils      zkUtils           = new ZkUtils(zkClient, zkConnection, true);
+	        Seq<String>  topicList         = zkUtils.getChildrenParentMayNotExist(ZkUtils.BrokerTopicsPath());
 
 			Iterator<String> iter = topicList.iterator();
 			while (iter.hasNext()) {
@@ -98,19 +103,19 @@ public class ServiceKafkaClient {
 			}
 		} finally {
 			try {
-				if (zkClient != null) {
+				if(zkClient != null) {
 					zkClient.close();
 				}
 			} catch (Exception ex) {
 				LOG.error("Error closing zkClient", ex);
 			}
-
+			
 			try {
-				if (zkConnection != null) {
+				if(zkConnection != null) {
 					zkConnection.close();
 				}
-
-			} catch (Exception ex) {
+				
+			} catch(Exception ex) {
 				LOG.error("Error closing zkConnection", ex);
 			}
 		}
@@ -143,11 +148,11 @@ public class ServiceKafkaClient {
 				topicList = resourceMap.get(TOPIC_KEY);
 			}
 			switch (resource.trim().toLowerCase()) {
-				case TOPIC_KEY:
-					lookupResource = RESOURCE_TYPE.TOPIC;
-					break;
-				default:
-					break;
+			case TOPIC_KEY:
+				lookupResource = RESOURCE_TYPE.TOPIC;
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -180,9 +185,7 @@ public class ServiceKafkaClient {
 								LOG.error("Error getting topic.", ex);
 							}
 							return retList;
-						}
-
-						;
+						};
 					};
 				}
 				// If we need to do lookup
@@ -204,10 +207,6 @@ public class ServiceKafkaClient {
 	public String toString() {
 		return "ServiceKafkaClient [serviceName=" + serviceName
 				+ ", zookeeperConnect=" + zookeeperConnect + "]";
-	}
-
-	enum RESOURCE_TYPE {
-		TOPIC
 	}
 
 }

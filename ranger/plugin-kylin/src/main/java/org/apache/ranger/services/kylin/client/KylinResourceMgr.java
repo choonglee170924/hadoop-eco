@@ -19,20 +19,19 @@
 
 package org.apache.ranger.services.kylin.client;
 
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.service.ResourceLookupContext;
-
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.service.ResourceLookupContext;
 
 public class KylinResourceMgr {
 
 	public static final String PROJECT = "project";
 
-	private static final Logger LOG = LogManager.getLogger(KylinResourceMgr.class);
+	private static final Logger LOG = Logger.getLogger(KylinResourceMgr.class);
 
 	public static Map<String, Object> validateConfig(String serviceName, Map<String, String> configs) throws Exception {
 		Map<String, Object> ret = null;
@@ -55,7 +54,7 @@ public class KylinResourceMgr {
 	}
 
 	public static List<String> getKylinResources(String serviceName, Map<String, String> configs,
-	                                             ResourceLookupContext context) {
+			ResourceLookupContext context) {
 		String userInput = context.getUserInput();
 		String resource = context.getResourceName();
 		Map<String, List<String>> resourceMap = context.getResources();

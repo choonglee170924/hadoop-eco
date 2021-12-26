@@ -19,14 +19,13 @@
 
 package org.apache.ranger.services.sqoop.client;
 
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.service.ResourceLookupContext;
-
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.service.ResourceLookupContext;
 
 public class SqoopResourceMgr {
 
@@ -34,7 +33,7 @@ public class SqoopResourceMgr {
 	public static final String LINK = "link";
 	public static final String JOB = "job";
 
-	private static final Logger LOG = LogManager.getLogger(SqoopResourceMgr.class);
+	private static final Logger LOG = Logger.getLogger(SqoopResourceMgr.class);
 
 	public static Map<String, Object> validateConfig(String serviceName, Map<String, String> configs) throws Exception {
 		Map<String, Object> ret = null;
@@ -57,7 +56,7 @@ public class SqoopResourceMgr {
 	}
 
 	public static List<String> getSqoopResources(String serviceName, Map<String, String> configs,
-	                                             ResourceLookupContext context) {
+			ResourceLookupContext context) {
 		String userInput = context.getUserInput();
 		String resource = context.getResourceName();
 		Map<String, List<String>> resourceMap = context.getResources();
@@ -86,20 +85,20 @@ public class SqoopResourceMgr {
 
 		if (StringUtils.isNotEmpty(resource)) {
 			switch (resource) {
-				case CONNECTOR:
-					List<String> existingConnectors = resourceMap.get(CONNECTOR);
-					resultList = sqoopClient.getConnectorList(userInput, existingConnectors);
-					break;
-				case LINK:
-					List<String> existingLinks = resourceMap.get(LINK);
-					resultList = sqoopClient.getLinkList(userInput, existingLinks);
-					break;
-				case JOB:
-					List<String> existingJobs = resourceMap.get(JOB);
-					resultList = sqoopClient.getJobList(userInput, existingJobs);
-					break;
-				default:
-					break;
+			case CONNECTOR:
+				List<String> existingConnectors = resourceMap.get(CONNECTOR);
+				resultList = sqoopClient.getConnectorList(userInput, existingConnectors);
+				break;
+			case LINK:
+				List<String> existingLinks = resourceMap.get(LINK);
+				resultList = sqoopClient.getLinkList(userInput, existingLinks);
+				break;
+			case JOB:
+				List<String> existingJobs = resourceMap.get(JOB);
+				resultList = sqoopClient.getJobList(userInput, existingJobs);
+				break;
+			default:
+				break;
 			}
 		}
 

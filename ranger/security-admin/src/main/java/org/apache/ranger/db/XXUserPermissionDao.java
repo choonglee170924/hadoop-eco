@@ -17,31 +17,32 @@
 
 package org.apache.ranger.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.RangerCommonEnums;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXUserPermission;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-public class XXUserPermissionDao extends BaseDao<XXUserPermission> {
+public class XXUserPermissionDao extends BaseDao<XXUserPermission>{
 
-	private static final Logger logger = LogManager.getLogger(XXUserPermissionDao.class);
+	private static final Logger logger = Logger.getLogger(XXUserPermissionDao.class);
 
 	public XXUserPermissionDao(RangerDaoManagerBase daoManager) {
 		super(daoManager);
 	}
 
-	public List<XXUserPermission> findByModuleId(Long moduleId, boolean isUpdate) {
+	public List<XXUserPermission> findByModuleId(Long moduleId,boolean isUpdate) {
 		if (moduleId != null) {
 			try {
 
-				if (isUpdate) {
+				if(isUpdate)
+				{
 					return getEntityManager()
 							.createNamedQuery("XXUserPermissionUpdates.findByModuleId", XXUserPermission.class)
 							.setParameter("moduleId", moduleId)
@@ -50,7 +51,7 @@ public class XXUserPermissionDao extends BaseDao<XXUserPermission> {
 				return getEntityManager()
 						.createNamedQuery("XXUserPermission.findByModuleId", XXUserPermission.class)
 						.setParameter("moduleId", moduleId)
-						.setParameter("isAllowed", RangerCommonEnums.IS_ALLOWED)
+						.setParameter("isAllowed",RangerCommonEnums.IS_ALLOWED)
 						.getResultList();
 			} catch (NoResultException e) {
 				logger.debug(e.getMessage());
@@ -69,7 +70,7 @@ public class XXUserPermissionDao extends BaseDao<XXUserPermission> {
 				return getEntityManager()
 						.createNamedQuery("XXUserPermission.findByUserPermissionIdAndIsAllowed")
 						.setParameter("userId", userId)
-						.setParameter("isAllowed", RangerCommonEnums.IS_ALLOWED)
+						.setParameter("isAllowed",RangerCommonEnums.IS_ALLOWED)
 						.getResultList();
 			} catch (NoResultException e) {
 				logger.debug(e.getMessage());
@@ -120,9 +121,9 @@ public class XXUserPermissionDao extends BaseDao<XXUserPermission> {
 		if (moduleId != null) {
 			try {
 				getEntityManager()
-						.createNamedQuery("XXUserPermission.deleteByModuleId", XXUserPermission.class)
-						.setParameter("moduleId", moduleId)
-						.executeUpdate();
+					.createNamedQuery("XXUserPermission.deleteByModuleId", XXUserPermission.class)
+					.setParameter("moduleId", moduleId)
+					.executeUpdate();
 			} catch (Exception e) {
 				logger.debug(e.getMessage());
 			}

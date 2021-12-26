@@ -19,40 +19,110 @@
 
 package org.apache.ranger.biz;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.*;
-import org.apache.ranger.db.RangerDaoManager;
-import org.apache.ranger.entity.*;
-import org.apache.ranger.service.XGroupPermissionService;
-import org.apache.ranger.service.XPortalUserService;
-import org.apache.ranger.service.XUserPermissionService;
-import org.apache.ranger.view.*;
-import org.apache.velocity.Template;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.Query;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.Query;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.AppConstants;
+import org.apache.ranger.common.ContextUtil;
+import org.apache.ranger.common.DateUtil;
+import org.apache.ranger.common.GUIDUtil;
+import org.apache.ranger.common.MessageEnums;
+import org.apache.ranger.common.PropertiesUtil;
+import org.apache.ranger.common.RESTErrorUtil;
+import org.apache.ranger.common.RangerCommonEnums;
+import org.apache.ranger.common.RangerConfigUtil;
+import org.apache.ranger.common.RangerConstants;
+import org.apache.ranger.common.SearchCriteria;
+import org.apache.ranger.common.SearchUtil;
+import org.apache.ranger.common.StringUtil;
+import org.apache.ranger.common.UserSessionBase;
+import org.apache.ranger.db.RangerDaoManager;
+import org.apache.ranger.entity.XXGroupPermission;
+import org.apache.ranger.entity.XXPortalUser;
+import org.apache.ranger.entity.XXPortalUserRole;
+import org.apache.ranger.entity.XXTrxLog;
+import org.apache.ranger.entity.XXUser;
+import org.apache.ranger.entity.XXUserPermission;
+import org.apache.ranger.service.XGroupPermissionService;
+import org.apache.ranger.service.XPortalUserService;
+import org.apache.ranger.service.XUserPermissionService;
+import org.apache.ranger.view.VXGroupPermission;
+import org.apache.ranger.view.VXPasswordChange;
+import org.apache.ranger.view.VXPortalUser;
+import org.apache.ranger.view.VXPortalUserList;
+import org.apache.ranger.view.VXResponse;
+import org.apache.ranger.view.VXString;
+import org.apache.ranger.view.VXUserPermission;
+import org.apache.velocity.Template;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+
 @Component
 public class UserMgr {
 
-	private static final Logger logger = LogManager.getLogger(UserMgr.class);
+	private static final Logger logger = Logger.getLogger(UserMgr.class);
 	private static final Md5PasswordEncoder md5Encoder = new Md5PasswordEncoder();
 	private static final ShaPasswordEncoder sha256Encoder = new ShaPasswordEncoder(256);
+	@Autowired
+	RangerDaoManager daoManager;
+
+	@Autowired
+	RESTErrorUtil restErrorUtil;
+
+	@Autowired
+	StringUtil stringUtil;
+
+	@Autowired
+	SearchUtil searchUtil;
+
+	@Autowired
+        RangerBizUtil rangerBizUtil;
+
+	@Autowired
+	SessionMgr sessionMgr;
+
+	@Autowired
+	VelocityEngine velocityEngine;
+	Template t;
+
+	@Autowired
+	DateUtil dateUtil;
+
+	@Autowired
+	RangerConfigUtil configUtil;
+
+	@Autowired
+	XPortalUserService xPortalUserService;
+
+	@Autowired
+	XUserPermissionService xUserPermissionService;
+
+	@Autowired
+	XGroupPermissionService xGroupPermissionService;
+	
+	@Autowired
+	XUserMgr xUserMgr;
+
+	@Autowired
+	GUIDUtil guidUtil;
+	
+	String publicRoles[] = new String[] { RangerConstants.ROLE_USER,
+			RangerConstants.ROLE_OTHER };
+
 	private static final List<String> DEFAULT_ROLE_LIST = new ArrayList<String>(
 			1);
+
 	private static final List<String> VALID_ROLE_LIST = new ArrayList<String>(2);
 
 	static {
@@ -60,41 +130,9 @@ public class UserMgr {
 		VALID_ROLE_LIST.add(RangerConstants.ROLE_SYS_ADMIN);
 		VALID_ROLE_LIST.add(RangerConstants.ROLE_USER);
 		VALID_ROLE_LIST.add(RangerConstants.ROLE_KEY_ADMIN);
-		VALID_ROLE_LIST.add(RangerConstants.ROLE_ADMIN_AUDITOR);
-		VALID_ROLE_LIST.add(RangerConstants.ROLE_KEY_ADMIN_AUDITOR);
+        VALID_ROLE_LIST.add(RangerConstants.ROLE_ADMIN_AUDITOR);
+        VALID_ROLE_LIST.add(RangerConstants.ROLE_KEY_ADMIN_AUDITOR);
 	}
-
-	@Autowired
-	RangerDaoManager daoManager;
-	@Autowired
-	RESTErrorUtil restErrorUtil;
-	@Autowired
-	StringUtil stringUtil;
-	@Autowired
-	SearchUtil searchUtil;
-	@Autowired
-	RangerBizUtil rangerBizUtil;
-	@Autowired
-	SessionMgr sessionMgr;
-	@Autowired
-	VelocityEngine velocityEngine;
-	Template t;
-	@Autowired
-	DateUtil dateUtil;
-	@Autowired
-	RangerConfigUtil configUtil;
-	@Autowired
-	XPortalUserService xPortalUserService;
-	@Autowired
-	XUserPermissionService xUserPermissionService;
-	@Autowired
-	XGroupPermissionService xGroupPermissionService;
-	@Autowired
-	XUserMgr xUserMgr;
-	@Autowired
-	GUIDUtil guidUtil;
-	String publicRoles[] = new String[]{RangerConstants.ROLE_USER,
-			RangerConstants.ROLE_OTHER};
 
 	public UserMgr() {
 		if (logger.isDebugEnabled()) {
@@ -103,19 +141,19 @@ public class UserMgr {
 	}
 
 	public XXPortalUser createUser(VXPortalUser userProfile, int userStatus,
-	                               Collection<String> userRoleList) {
+			Collection<String> userRoleList) {
 		XXPortalUser user = mapVXPortalUserToXXPortalUser(userProfile);
 		checkAdminAccess();
-		rangerBizUtil.blockAuditorRoleUser();
-		List<String> userRolesList = new ArrayList<String>(userRoleList);
-		xUserMgr.checkAccessRoles(userRolesList);
+                rangerBizUtil.blockAuditorRoleUser();
+                List<String> userRolesList = new ArrayList<String>(userRoleList);
+        xUserMgr.checkAccessRoles(userRolesList);
 		user = createUser(user, userStatus, userRoleList);
 
 		return user;
 	}
 
 	public XXPortalUser createUser(XXPortalUser user, int userStatus,
-	                               Collection<String> userRoleList) {
+			Collection<String> userRoleList) {
 		user.setStatus(userStatus);
 		String saltEncodedpasswd = encrypt(user.getLoginId(),
 				user.getPassword());
@@ -141,13 +179,13 @@ public class UserMgr {
 		ArrayList<String> roleList = new ArrayList<String>();
 		Collection<String> reqRoleList = userProfile.getUserRoleList();
 		if (reqRoleList != null && reqRoleList.size() > 0) {
-			for (String role : reqRoleList) {
-				if (role != null) {
-					roleList.add(role);
-				} else {
-					roleList.add(RangerConstants.ROLE_USER);
-				}
-			}
+            for (String role : reqRoleList) {
+                if (role != null) {
+                    roleList.add(role);
+                } else {
+                    roleList.add(RangerConstants.ROLE_USER);
+                }
+            }
 		} else {
 			roleList.add(RangerConstants.ROLE_USER);
 		}
@@ -170,7 +208,7 @@ public class UserMgr {
 		}
 
 		checkAccess(gjUser);
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		boolean updateUser = false;
 		// Selectively update fields
 
@@ -225,7 +263,7 @@ public class UserMgr {
 		// }
 
 		// firstName
-		if ("null".equalsIgnoreCase(userProfile.getFirstName())) {
+		if("null".equalsIgnoreCase(userProfile.getFirstName())){
 			userProfile.setFirstName("");
 		}
 		if (!stringUtil.isEmpty(userProfile.getFirstName())
@@ -235,7 +273,7 @@ public class UserMgr {
 			updateUser = true;
 		}
 
-		if ("null".equalsIgnoreCase(userProfile.getLastName())) {
+		if("null".equalsIgnoreCase(userProfile.getLastName())){
 			userProfile.setLastName("");
 		}
 		if (!stringUtil.isEmpty(userProfile.getLastName())
@@ -278,7 +316,7 @@ public class UserMgr {
 			sessionMgr.resetUserSessionForProfiles(ContextUtil
 					.getCurrentUserSession());
 
-			rangerBizUtil.createTrxLog(trxLogList);
+                        rangerBizUtil.createTrxLog(trxLogList);
 		}
 
 		return gjUser;
@@ -291,13 +329,13 @@ public class UserMgr {
 		}
 		List<String> stringRolesList = new ArrayList<String>();
 		for (String userRole : rolesList) {
-			if (!VALID_ROLE_LIST.contains(userRole.toUpperCase())) {
-				throw restErrorUtil.createRESTException("Invalid user role, please provide valid user role.", MessageEnums.INVALID_INPUT_DATA);
+			if(!VALID_ROLE_LIST.contains(userRole.toUpperCase())){
+				throw restErrorUtil.createRESTException("Invalid user role, please provide valid user role.",MessageEnums.INVALID_INPUT_DATA);
 			}
 			stringRolesList.add(userRole);
 		}
 		xUserMgr.checkAccessRoles(stringRolesList);
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		// Let's first delete old roles
 		List<XXPortalUserRole> gjUserRoles = daoManager.getXXPortalUserRole()
 				.findByUserId(userId);
@@ -345,20 +383,20 @@ public class UserMgr {
 			stringRolesList.add(vXString.getValue());
 		}
 		xUserMgr.checkAccessRoles(stringRolesList);
-		rangerBizUtil.blockAuditorRoleUser();
-		VXPortalUser oldUserProfile = getUserProfile(userId);
+                rangerBizUtil.blockAuditorRoleUser();
+		VXPortalUser oldUserProfile=getUserProfile(userId);
 		xUserMgr.updateUserRolesPermissions(oldUserProfile, stringRolesList);
 	}
 
 	/**
 	 * @param pwdChange
-	 * @return
-	 */
-	public VXResponse changePassword(VXPasswordChange pwdChange) {
+         * @return
+         */
+        public VXResponse changePassword(VXPasswordChange pwdChange) {
 
-		VXResponse ret = new VXResponse();
+                VXResponse ret = new VXResponse();
 
-		// First let's get the XXPortalUser for the current logged in user
+                // First let's get the XXPortalUser for the current logged in user
 		String currentUserLoginId = ContextUtil.getCurrentUserLoginId();
 		XXPortalUser gjUserCurrent = daoManager.getXXPortalUser().findByLoginId(currentUserLoginId);
 		checkAccessForUpdate(gjUserCurrent);
@@ -366,30 +404,30 @@ public class UserMgr {
 		// Get the user of whom we want to change the password
 		XXPortalUser gjUser = daoManager.getXXPortalUser().findByLoginId(pwdChange.getLoginId());
 		if (gjUser == null) {
-			logger.warn("SECURITY:changePassword(). User not found. LoginId=" + pwdChange.getLoginId());
-			throw restErrorUtil.createRESTException("serverMsg.userMgrInvalidUser", MessageEnums.DATA_NOT_FOUND, null, null, pwdChange.getLoginId());
+			logger.warn("SECURITY:changePassword(). User not found. LoginId="+ pwdChange.getLoginId());
+			throw restErrorUtil.createRESTException("serverMsg.userMgrInvalidUser",MessageEnums.DATA_NOT_FOUND, null, null,pwdChange.getLoginId());
 		}
-		if (gjUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
-			logger.info("SECURITY:changePassword().Ranger External Users cannot change password. LoginId=" + pwdChange.getLoginId());
-			VXResponse vXResponse = new VXResponse();
-			vXResponse.setStatusCode(HttpServletResponse.SC_FORBIDDEN);
-			vXResponse.setMsgDesc("SECURITY:changePassword().Ranger External Users cannot change password. LoginId=" + pwdChange.getLoginId());
-			throw restErrorUtil.generateRESTException(vXResponse);
-		}
+        if (gjUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
+            logger.info("SECURITY:changePassword().Ranger External Users cannot change password. LoginId=" + pwdChange.getLoginId());
+            VXResponse vXResponse = new VXResponse();
+            vXResponse.setStatusCode(HttpServletResponse.SC_FORBIDDEN);
+            vXResponse.setMsgDesc("SECURITY:changePassword().Ranger External Users cannot change password. LoginId=" + pwdChange.getLoginId());
+            throw restErrorUtil.generateRESTException(vXResponse);
+        }
 		//check current password and provided old password is same or not
-		String encryptedOldPwd = encrypt(pwdChange.getLoginId(), pwdChange.getOldPassword());
+		String encryptedOldPwd = encrypt(pwdChange.getLoginId(),pwdChange.getOldPassword());
 		if (!stringUtil.equals(encryptedOldPwd, gjUser.getPassword())) {
-			logger.info("changePassword(). Invalid old password. LoginId=" + pwdChange.getLoginId());
-			throw restErrorUtil.createRESTException("serverMsg.userMgrOldPassword", MessageEnums.INVALID_INPUT_DATA, null, null, pwdChange.getLoginId());
+			logger.info("changePassword(). Invalid old password. LoginId="+ pwdChange.getLoginId());
+			throw restErrorUtil.createRESTException("serverMsg.userMgrOldPassword",MessageEnums.INVALID_INPUT_DATA, null, null,pwdChange.getLoginId());
 		}
 
 		//validate new password
-		if (!stringUtil.validatePassword(pwdChange.getUpdPassword(), new String[]{gjUser.getFirstName(), gjUser.getLastName(), gjUser.getLoginId()})) {
-			logger.warn("SECURITY:changePassword(). Invalid new password. LoginId=" + pwdChange.getLoginId());
-			throw restErrorUtil.createRESTException("serverMsg.userMgrNewPassword", MessageEnums.INVALID_PASSWORD, null, null, pwdChange.getLoginId());
+		if (!stringUtil.validatePassword(pwdChange.getUpdPassword(),new String[] { gjUser.getFirstName(),gjUser.getLastName(), gjUser.getLoginId()})) {
+			logger.warn("SECURITY:changePassword(). Invalid new password. LoginId="+ pwdChange.getLoginId());
+			throw restErrorUtil.createRESTException("serverMsg.userMgrNewPassword",MessageEnums.INVALID_PASSWORD, null, null,pwdChange.getLoginId());
 		}
 
-		String encryptedNewPwd = encrypt(pwdChange.getLoginId(), pwdChange.getUpdPassword());
+		String encryptedNewPwd = encrypt(pwdChange.getLoginId(),pwdChange.getUpdPassword());
 		String currentPassword = gjUser.getPassword();
 		if (!encryptedNewPwd.equals(currentPassword)) {
 			List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
@@ -402,7 +440,7 @@ public class UserMgr {
 			xTrxLog.setObjectId(pwdChange.getId());
 			xTrxLog.setObjectName(pwdChange.getLoginId());
 			trxLogList.add(xTrxLog);
-			rangerBizUtil.createTrxLog(trxLogList);
+                        rangerBizUtil.createTrxLog(trxLogList);
 			gjUser.setPassword(encryptedNewPwd);
 			gjUser = daoManager.getXXPortalUser().update(gjUser);
 			ret.setMsgDesc("Password successfully updated");
@@ -410,7 +448,7 @@ public class UserMgr {
 		} else {
 			ret.setMsgDesc("Password update failed");
 			ret.setStatusCode(VXResponse.STATUS_ERROR);
-			throw restErrorUtil.createRESTException("serverMsg.userMgrNewPassword", MessageEnums.INVALID_INPUT_DATA, gjUser.getId(), "password", gjUser.toString());
+			throw restErrorUtil.createRESTException("serverMsg.userMgrNewPassword",MessageEnums.INVALID_INPUT_DATA, gjUser.getId(),"password", gjUser.toString());
 		}
 		return ret;
 	}
@@ -421,9 +459,9 @@ public class UserMgr {
 	 * @return
 	 */
 	public VXPortalUser changeEmailAddress(XXPortalUser gjUser,
-	                                       VXPasswordChange changeEmail) {
+			VXPasswordChange changeEmail) {
 		checkAccessForUpdate(gjUser);
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		if (StringUtils.isEmpty(changeEmail.getEmailAddress())) {
 			changeEmail.setEmailAddress(null);
 		}
@@ -456,11 +494,12 @@ public class UserMgr {
 
 		String saltEncodedpasswd = encrypt(gjUser.getLoginId(),
 				changeEmail.getOldPassword());
-		if (gjUser.getUserSource() == RangerCommonEnums.USER_APP) {
-			gjUser.setPassword(saltEncodedpasswd);
-		} else if (gjUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
-			gjUser.setPassword(gjUser.getPassword());
-		}
+        if (gjUser.getUserSource() == RangerCommonEnums.USER_APP) {
+		gjUser.setPassword(saltEncodedpasswd);
+       }
+        else if (gjUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
+                gjUser.setPassword(gjUser.getPassword());
+        }
 		daoManager.getXXPortalUser().update(gjUser);
 		return mapXXPortalUserVXPortalUser(gjUser);
 	}
@@ -470,7 +509,7 @@ public class UserMgr {
 	 */
 	public VXPortalUser deactivateUser(XXPortalUser gjUser) {
 		checkAdminAccess();
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		if (gjUser != null
 				&& gjUser.getStatus() != RangerConstants.ACT_STATUS_DEACTIVATED) {
 			logger.info("Marking user " + gjUser.getLoginId() + " as deleted");
@@ -514,11 +553,11 @@ public class UserMgr {
 	public XXPortalUser mapVXPortalUserToXXPortalUser(VXPortalUser userProfile) {
 		XXPortalUser gjUser = new XXPortalUser();
 		gjUser.setEmailAddress(userProfile.getEmailAddress());
-		if ("null".equalsIgnoreCase(userProfile.getFirstName())) {
+		if("null".equalsIgnoreCase(userProfile.getFirstName())){
 			userProfile.setFirstName("");
 		}
 		gjUser.setFirstName(userProfile.getFirstName());
-		if ("null".equalsIgnoreCase(userProfile.getLastName())) {
+		if("null".equalsIgnoreCase(userProfile.getLastName())){
 			userProfile.setLastName("");
 		}
 		gjUser.setLastName(userProfile.getLastName());
@@ -550,7 +589,7 @@ public class UserMgr {
 	 * @return
 	 */
 	public VXPortalUser mapXXPortalUserToVXPortalUser(XXPortalUser user,
-	                                                  Collection<String> userRoleList) {
+			Collection<String> userRoleList) {
 		if (user == null) {
 			return null;
 		}
@@ -692,7 +731,7 @@ public class UserMgr {
 		// Get total count first
 		Query query = createUserSearchQuery(countQueryStr, null, searchCriteria);
 		Long count = (Long) query.getSingleResult();
-		int resultSize = count != null ? count.intValue() : 0;
+		int resultSize = count!=null ? count.intValue() :0;
 		if (resultSize == 0) {
 			return returnList;
 		}
@@ -772,7 +811,7 @@ public class UserMgr {
 	 * @return
 	 */
 	protected Query createUserSearchQuery(String queryStr, String sortClause,
-	                                      SearchCriteria searchCriteria) {
+			SearchCriteria searchCriteria) {
 		HashMap<String, Object> paramList = searchCriteria.getParamList();
 
 		String whereClause = "WHERE 1 = 1 ";
@@ -960,7 +999,7 @@ public class UserMgr {
 								+ sess.toString(), new Throwable());
 				return null;
 			}
-			rangerBizUtil.blockAuditorRoleUser();
+                        rangerBizUtil.blockAuditorRoleUser();
 		}
 
 		for (XXPortalUserRole gjUserRole : roleList) {
@@ -969,9 +1008,9 @@ public class UserMgr {
 			}
 		}
 		XXPortalUserRole userRoleObj = new XXPortalUserRole();
-		if (!VALID_ROLE_LIST.contains(userRole.toUpperCase())) {
-			throw restErrorUtil.createRESTException("Invalid user role, please provide valid user role.", MessageEnums.INVALID_INPUT_DATA);
-		}
+                if(!VALID_ROLE_LIST.contains(userRole.toUpperCase())){
+                        throw restErrorUtil.createRESTException("Invalid user role, please provide valid user role.",MessageEnums.INVALID_INPUT_DATA);
+                }
 		userRoleObj.setUserRole(userRole.toUpperCase());
 		userRoleObj.setUserId(userId);
 		userRoleObj.setStatus(RangerConstants.STATUS_ENABLED);
@@ -1024,7 +1063,7 @@ public class UserMgr {
 		throw restErrorUtil.create403RESTException("User "
 				+ " access denied. loggedInUser="
 				+ (sess != null ? sess.getXXPortalUser().getId()
-				: "Not Logged In") + ", accessing user="
+						: "Not Logged In") + ", accessing user="
 				+ gjUser.getId());
 
 	}
@@ -1053,18 +1092,18 @@ public class UserMgr {
 		vXResponse.setMsgDesc("User "
 				+ " access denied. loggedInUser="
 				+ (sess != null ? sess.getXXPortalUser().getId()
-				: "Not Logged In") + ", accessing user="
+						: "Not Logged In") + ", accessing user="
 				+ gjUser.getId());
 		throw restErrorUtil.generateRESTException(vXResponse);
 
 	}
 
 	public String encrypt(String loginId, String password) {
-		String sha256PasswordUpdateDisable = PropertiesUtil.getProperty("ranger.sha256Password.update.disable", "false");
-		String saltEncodedpasswd = "";
-		if ("false".equalsIgnoreCase(sha256PasswordUpdateDisable)) {
+		String sha256PasswordUpdateDisable=PropertiesUtil.getProperty("ranger.sha256Password.update.disable", "false");
+		String saltEncodedpasswd="";
+		if("false".equalsIgnoreCase(sha256PasswordUpdateDisable)){
 			saltEncodedpasswd = sha256Encoder.encodePassword(password, loginId);
-		} else {
+		}else{
 			saltEncodedpasswd = md5Encoder.encodePassword(password, loginId);
 		}
 		return saltEncodedpasswd;
@@ -1072,7 +1111,7 @@ public class UserMgr {
 
 	public VXPortalUser createUser(VXPortalUser userProfile) {
 		checkAdminAccess();
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		XXPortalUser xXPortalUser = this.createUser(userProfile,
 				RangerCommonEnums.STATUS_ENABLED);
 		return mapXXPortalUserVXPortalUser(xXPortalUser);
@@ -1085,21 +1124,21 @@ public class UserMgr {
 		}
 		// access control
 		checkAdminAccess();
-		rangerBizUtil.blockAuditorRoleUser();
+                rangerBizUtil.blockAuditorRoleUser();
 		logger.info("create:" + userProfile.getLoginId());
 		XXPortalUser xXPortalUser = null;
-		Collection<String> existingRoleList = null;
-		Collection<String> reqRoleList = null;
+                Collection<String> existingRoleList = null;
+                Collection<String> reqRoleList = null;
 		String loginId = userProfile.getLoginId();
 		String emailAddress = userProfile.getEmailAddress();
 
-		if (loginId != null && !loginId.isEmpty()) {
+                if (loginId != null && !loginId.isEmpty()) {
 			xXPortalUser = this.findByLoginId(loginId);
 			if (xXPortalUser == null) {
 				if (!stringUtil.isEmpty(emailAddress)) {
 					xXPortalUser = this.findByEmailAddress(emailAddress);
 					if (xXPortalUser == null) {
-						xXPortalUser = this.createUser(userProfile,
+                                            xXPortalUser = this.createUser(userProfile,
 								RangerCommonEnums.STATUS_ENABLED);
 					} else {
 						throw restErrorUtil
@@ -1111,9 +1150,9 @@ public class UserMgr {
 										MessageEnums.OPER_NOT_ALLOWED_FOR_STATE);
 					}
 				} else {
-					userProfile.setEmailAddress(null);
-					xXPortalUser = this.createUser(userProfile,
-							RangerCommonEnums.STATUS_ENABLED);
+                        userProfile.setEmailAddress(null);
+                        xXPortalUser = this.createUser(userProfile,
+                                RangerCommonEnums.STATUS_ENABLED);
 				}
 			} else { //NOPMD
 				/*
@@ -1123,71 +1162,71 @@ public class UserMgr {
 				 * + "login id.", MessageEnums.OPER_NOT_ALLOWED_FOR_STATE);
 				 */
 			}
-		}
-		VXPortalUser userProfileRes = null;
-		if (xXPortalUser != null) {
-			userProfileRes = mapXXPortalUserToVXPortalUserForDefaultAccount(xXPortalUser);
-			if (userProfile.getUserRoleList() != null
-					&& userProfile.getUserRoleList().size() > 0
-					&& ((List<String>) userProfile.getUserRoleList()).get(0) != null) {
-				reqRoleList = userProfile.getUserRoleList();
-				existingRoleList = this.getRolesByLoginId(loginId);
-				XXPortalUser xxPortalUser = daoManager.getXXPortalUser()
-						.findByLoginId(userProfile.getLoginId());
-				if (xxPortalUser != null
-						&& xxPortalUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
-					userProfileRes = updateRoleForExternalUsers(reqRoleList,
-							existingRoleList, userProfileRes);
-				}
-			}
-		}
-		return userProfileRes;
-	}
+        }
+        VXPortalUser userProfileRes = null;
+        if (xXPortalUser != null) {
+            userProfileRes = mapXXPortalUserToVXPortalUserForDefaultAccount(xXPortalUser);
+            if (userProfile.getUserRoleList() != null
+                    && userProfile.getUserRoleList().size() > 0
+                    && ((List<String>) userProfile.getUserRoleList()).get(0) != null) {
+                reqRoleList = userProfile.getUserRoleList();
+                existingRoleList = this.getRolesByLoginId(loginId);
+                XXPortalUser xxPortalUser = daoManager.getXXPortalUser()
+                        .findByLoginId(userProfile.getLoginId());
+                if (xxPortalUser != null
+                        && xxPortalUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
+                    userProfileRes = updateRoleForExternalUsers(reqRoleList,
+                            existingRoleList, userProfileRes);
+                }
+            }
+        }
+        return userProfileRes;
+        }
 
-	protected VXPortalUser updateRoleForExternalUsers(
-			Collection<String> reqRoleList,
-			Collection<String> existingRoleList, VXPortalUser userProfileRes) {
-		UserSessionBase session = ContextUtil.getCurrentUserSession();
-		if (session != null && session.getXXPortalUser() != null && session.getXXPortalUser().getLoginId() != null && "rangerusersync".equals(session.getXXPortalUser().getLoginId())
-				&& reqRoleList != null && !reqRoleList.isEmpty()
-				&& existingRoleList != null && !existingRoleList.isEmpty()) {
-			if (!reqRoleList.equals(existingRoleList)) {
-				userProfileRes.setUserRoleList(reqRoleList);
-				userProfileRes.setUserSource(RangerCommonEnums.USER_EXTERNAL);
-				List<XXUserPermission> xuserPermissionList = daoManager
-						.getXXUserPermission().findByUserPermissionId(
-								userProfileRes.getId());
-				if (xuserPermissionList != null
-						&& xuserPermissionList.size() > 0) {
-					for (XXUserPermission xXUserPermission : xuserPermissionList) {
-						if (xXUserPermission != null) {
-							try {
-								xUserPermissionService
-										.deleteResource(xXUserPermission
-												.getId());
-							} catch (Exception e) {
-								logger.error(e.getMessage());
-							}
-						}
+    protected VXPortalUser updateRoleForExternalUsers(
+            Collection<String> reqRoleList,
+            Collection<String> existingRoleList, VXPortalUser userProfileRes) {
+        UserSessionBase session = ContextUtil.getCurrentUserSession();
+        if (session != null && session.getXXPortalUser() != null && session.getXXPortalUser().getLoginId() != null &&  "rangerusersync".equals(session.getXXPortalUser().getLoginId())
+                && reqRoleList != null && !reqRoleList.isEmpty()
+                && existingRoleList != null && !existingRoleList.isEmpty()) {
+            if (!reqRoleList.equals(existingRoleList)) {
+                userProfileRes.setUserRoleList(reqRoleList);
+                userProfileRes.setUserSource(RangerCommonEnums.USER_EXTERNAL);
+                List<XXUserPermission> xuserPermissionList = daoManager
+                        .getXXUserPermission().findByUserPermissionId(
+                                userProfileRes.getId());
+                if (xuserPermissionList != null
+                        && xuserPermissionList.size() > 0) {
+                    for (XXUserPermission xXUserPermission : xuserPermissionList) {
+                        if (xXUserPermission != null) {
+                            try {
+                                xUserPermissionService
+                                        .deleteResource(xXUserPermission
+                                                .getId());
+                            } catch (Exception e) {
+                                logger.error(e.getMessage());
+                            }
+                        }
 
-					}
-				}
-				updateUser(userProfileRes);
-			}
-		} else {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Permission"
-						+ " denied. LoggedInUser="
-						+ (session != null ? session.getXXPortalUser().getId()
-						: "")
-						+ " isn't permitted to perform the action.");
-			}
-		}
-		return userProfileRes;
-	}
+                    }
+                }
+                updateUser(userProfileRes);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Permission"
+                        + " denied. LoggedInUser="
+                        + (session != null ? session.getXXPortalUser().getId()
+                                : "")
+                        + " isn't permitted to perform the action.");
+            }
+        }
+        return userProfileRes;
+    }
 
-	protected VXPortalUser mapXXPortalUserToVXPortalUserForDefaultAccount(
-			XXPortalUser user) {
+        protected VXPortalUser mapXXPortalUserToVXPortalUserForDefaultAccount(
+                        XXPortalUser user) {
 
 		VXPortalUser userProfile = new VXPortalUser();
 
@@ -1206,7 +1245,7 @@ public class UserMgr {
 		for (XXPortalUserRole gjUserRole : gjUserRoleList) {
 			userProfile.getUserRoleList().add(gjUserRole.getUserRole());
 		}
-
+		
 		return userProfile;
 	}
 
@@ -1224,16 +1263,16 @@ public class UserMgr {
 
 	public XXPortalUser updateUserWithPass(VXPortalUser userProfile) {
 		String updatedPassword = userProfile.getPassword();
-		XXPortalUser xXPortalUser = this.updateUser(userProfile);
+        XXPortalUser xXPortalUser = this.updateUser(userProfile);
 
 		if (xXPortalUser == null) {
 			return null;
 		}
 
 		if (updatedPassword != null && !updatedPassword.isEmpty()) {
-			if (!stringUtil.validatePassword(updatedPassword, new String[]{
+			if (!stringUtil.validatePassword(updatedPassword, new String[] {
 					xXPortalUser.getFirstName(), xXPortalUser.getLastName(),
-					xXPortalUser.getLoginId()})) {
+					xXPortalUser.getLoginId() })) {
 				logger.warn("SECURITY:changePassword(). Invalid new password. userId="
 						+ xXPortalUser.getId());
 
@@ -1245,21 +1284,21 @@ public class UserMgr {
 
 			String encryptedNewPwd = encrypt(xXPortalUser.getLoginId(),
 					updatedPassword);
-			if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
-				xXPortalUser.setPassword(encryptedNewPwd);
-			} else if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
-				xXPortalUser.setPassword(xXPortalUser.getPassword());
-			}
-			xXPortalUser = daoManager.getXXPortalUser().update(xXPortalUser);
+            if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
+		xXPortalUser.setPassword(encryptedNewPwd);
+             }
+             else if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
+		 xXPortalUser.setPassword(xXPortalUser.getPassword());
+             }
+             xXPortalUser = daoManager.getXXPortalUser().update(xXPortalUser);
 		}
 		return xXPortalUser;
 	}
-
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public XXPortalUser updatePasswordInSHA256(String userName, String userPassword, boolean logAudits) {
+        public XXPortalUser updatePasswordInSHA256(String userName,String userPassword,boolean logAudits) {
 		if (userName == null || userPassword == null
-				|| userName.trim().isEmpty() || userPassword.trim().isEmpty()) {
-			return null;
+				|| userName.trim().isEmpty() || userPassword.trim().isEmpty()){
+				return null;
 		}
 
 		XXPortalUser xXPortalUser = this.findByLoginId(userName);
@@ -1267,33 +1306,34 @@ public class UserMgr {
 		if (xXPortalUser == null) {
 			return null;
 		}
-		String dbOldPwd = xXPortalUser.getPassword();
-		String encryptedNewPwd = encrypt(xXPortalUser.getLoginId(), userPassword);
-		if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
-			xXPortalUser.setPassword(encryptedNewPwd);
-		} else if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
-			xXPortalUser.setPassword(xXPortalUser.getPassword());
-		}
+                String dbOldPwd =xXPortalUser.getPassword();
+		String encryptedNewPwd = encrypt(xXPortalUser.getLoginId(),userPassword);
+       if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
+                xXPortalUser.setPassword(encryptedNewPwd);
+       }
+       else if (xXPortalUser.getUserSource() != RangerCommonEnums.USER_EXTERNAL) {
+	   xXPortalUser.setPassword(xXPortalUser.getPassword());
+       }
 
 		xXPortalUser = daoManager.getXXPortalUser().update(xXPortalUser);
-		if (xXPortalUser != null && logAudits) {
-			String dbNewPwd = xXPortalUser.getPassword();
-			if (!dbOldPwd.equals(dbNewPwd)) {
-				List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
-				XXTrxLog xTrxLog = new XXTrxLog();
-				xTrxLog.setAttributeName("Password");
-				xTrxLog.setPreviousValue(dbOldPwd);
-				xTrxLog.setNewValue(dbNewPwd);
-				xTrxLog.setAction("password change");
-				xTrxLog.setObjectClassType(AppConstants.CLASS_TYPE_PASSWORD_CHANGE);
-				xTrxLog.setObjectId(xXPortalUser.getId());
-				xTrxLog.setObjectName(xXPortalUser.getLoginId());
-				xTrxLog.setAddedByUserId(xXPortalUser.getId());
-				xTrxLog.setUpdatedByUserId(xXPortalUser.getId());
-				trxLogList.add(xTrxLog);
-				rangerBizUtil.createTrxLog(trxLogList);
-			}
-		}
+                if(xXPortalUser!=null && logAudits){
+                        String dbNewPwd=xXPortalUser.getPassword();
+                        if (!dbOldPwd.equals(dbNewPwd)) {
+                                List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
+                                XXTrxLog xTrxLog = new XXTrxLog();
+                                xTrxLog.setAttributeName("Password");
+                                xTrxLog.setPreviousValue(dbOldPwd);
+                                xTrxLog.setNewValue(dbNewPwd);
+                                xTrxLog.setAction("password change");
+                                xTrxLog.setObjectClassType(AppConstants.CLASS_TYPE_PASSWORD_CHANGE);
+                                xTrxLog.setObjectId(xXPortalUser.getId());
+                                xTrxLog.setObjectName(xXPortalUser.getLoginId());
+                                xTrxLog.setAddedByUserId(xXPortalUser.getId());
+                                xTrxLog.setUpdatedByUserId(xXPortalUser.getId());
+                                trxLogList.add(xTrxLog);
+                                rangerBizUtil.createTrxLog(trxLogList);
+                        }
+                }
 
 		return xXPortalUser;
 	}
@@ -1307,69 +1347,70 @@ public class UserMgr {
 	}
 
 	public Collection<String> getRolesByLoginId(String loginId) {
-		if (loginId == null || loginId.trim().isEmpty()) {
+		if (loginId == null || loginId.trim().isEmpty()){
 			return DEFAULT_ROLE_LIST;
 		}
-		XXPortalUser xXPortalUser = daoManager.getXXPortalUser().findByLoginId(loginId);
-		if (xXPortalUser == null) {
+		XXPortalUser xXPortalUser=daoManager.getXXPortalUser().findByLoginId(loginId);
+		if(xXPortalUser==null){
 			return DEFAULT_ROLE_LIST;
-		}
+        }
 		Collection<XXPortalUserRole> xXPortalUserRoles = daoManager
-				.getXXPortalUserRole().findByUserId(xXPortalUser.getId());
-		if (xXPortalUserRoles == null) {
+                        .getXXPortalUserRole().findByUserId(xXPortalUser.getId());
+		if(xXPortalUserRoles==null){
 			return DEFAULT_ROLE_LIST;
 		}
 		Collection<String> roleList = new ArrayList<String>();
 		for (XXPortalUserRole role : xXPortalUserRoles) {
-			if (role != null && VALID_ROLE_LIST.contains(role.getUserRole())) {
-				if (!roleList.contains(role.getUserRole())) {
+			if(role!=null && VALID_ROLE_LIST.contains(role.getUserRole())){
+				if(!roleList.contains(role.getUserRole())){
 					roleList.add(role.getUserRole());
 				}
 			}
-		}
-		if (roleList == null || roleList.size() == 0) {
+        }
+		if(roleList==null || roleList.size()==0){
 			return DEFAULT_ROLE_LIST;
 		}
 		return roleList;
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public XXPortalUser updateOldUserName(String userLoginId, String newUserName, String currentPassword) {
-		if (userLoginId == null || newUserName == null
-				|| userLoginId.trim().isEmpty() || newUserName.trim().isEmpty()) {
-			return null;
-		}
+        @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+        public XXPortalUser updateOldUserName(String userLoginId,String newUserName, String currentPassword) {
+                if (userLoginId == null || newUserName == null
+                                || userLoginId.trim().isEmpty() || newUserName.trim().isEmpty()){
+                        return null;
+                }
 
-		XXPortalUser xXPortalUser = this.findByLoginId(userLoginId);
-		XXUser xXUser = daoManager.getXXUser().findByUserName(userLoginId);
-		if (xXPortalUser == null || xXUser == null) {
-			return null;
-		}
-		xXUser.setName(newUserName);
-		daoManager.getXXUser().update(xXUser);
+                XXPortalUser xXPortalUser = this.findByLoginId(userLoginId);
+        XXUser xXUser = daoManager.getXXUser().findByUserName(userLoginId);
+                if (xXPortalUser == null || xXUser == null) {
+                        return null;
+                }
+                xXUser.setName(newUserName);
+                daoManager.getXXUser().update(xXUser);
 
-		xXPortalUser.setLoginId(newUserName);
-		// The old password needs to be encrypted by the new user name
-		String updatedPwd = encrypt(newUserName, currentPassword);
-		if (xXPortalUser.getUserSource() == RangerCommonEnums.USER_APP) {
-			xXPortalUser.setPassword(updatedPwd);
-		} else if (xXPortalUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
-			xXPortalUser.setPassword(xXPortalUser.getPassword());
-		}
-		xXPortalUser = daoManager.getXXPortalUser().update(xXPortalUser);
-		List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
-		XXTrxLog xTrxLog = new XXTrxLog();
-		xTrxLog.setAttributeName("User Name");
-		xTrxLog.setPreviousValue(userLoginId);
-		xTrxLog.setNewValue(newUserName);
-		xTrxLog.setAction("update");
-		xTrxLog.setObjectClassType(AppConstants.CLASS_TYPE_USER_PROFILE);
-		xTrxLog.setObjectId(xXPortalUser.getId());
-		xTrxLog.setObjectName(xXPortalUser.getLoginId());
-		xTrxLog.setAddedByUserId(xXPortalUser.getId());
-		xTrxLog.setUpdatedByUserId(xXPortalUser.getId());
-		trxLogList.add(xTrxLog);
-		rangerBizUtil.createTrxLog(trxLogList);
-		return xXPortalUser;
-	}
+                xXPortalUser.setLoginId(newUserName);
+                // The old password needs to be encrypted by the new user name
+                String updatedPwd = encrypt(newUserName,currentPassword);
+                if (xXPortalUser.getUserSource() == RangerCommonEnums.USER_APP) {
+                        xXPortalUser.setPassword(updatedPwd);
+                }
+                else  if (xXPortalUser.getUserSource() == RangerCommonEnums.USER_EXTERNAL) {
+                    xXPortalUser.setPassword(xXPortalUser.getPassword());
+                }
+                xXPortalUser = daoManager.getXXPortalUser().update(xXPortalUser);
+                List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
+                XXTrxLog xTrxLog = new XXTrxLog();
+                xTrxLog.setAttributeName("User Name");
+                xTrxLog.setPreviousValue(userLoginId);
+                xTrxLog.setNewValue(newUserName);
+                xTrxLog.setAction("update");
+                xTrxLog.setObjectClassType(AppConstants.CLASS_TYPE_USER_PROFILE);
+                xTrxLog.setObjectId(xXPortalUser.getId());
+                xTrxLog.setObjectName(xXPortalUser.getLoginId());
+                xTrxLog.setAddedByUserId(xXPortalUser.getId());
+                xTrxLog.setUpdatedByUserId(xXPortalUser.getId());
+                trxLogList.add(xTrxLog);
+                rangerBizUtil.createTrxLog(trxLogList);
+                return xXPortalUser;
+        }
 }

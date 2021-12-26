@@ -17,28 +17,28 @@
 
 package org.apache.ranger.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.RangerCommonEnums;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXGroupPermission;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class XXGroupPermissionDao extends BaseDao<XXGroupPermission> {
 
-	private static final Logger logger = LogManager.getLogger(XXGroupPermissionDao.class);
+	private static final Logger logger = Logger.getLogger(XXGroupPermissionDao.class);
 
 	public XXGroupPermissionDao(RangerDaoManagerBase daoManager) {
 		super(daoManager);
 	}
 
 	public List<XXGroupPermission> findByModuleId(Long moduleId,
-	                                              boolean isUpdate) {
+			boolean isUpdate) {
 		if (moduleId != null) {
 			try {
 				if (isUpdate) {
@@ -82,7 +82,6 @@ public class XXGroupPermissionDao extends BaseDao<XXGroupPermission> {
 		}
 		return null;
 	}
-
 	public List<XXGroupPermission> findbyVXPortalUserId(Long userId) {
 		if (userId != null) {
 			try {
@@ -116,14 +115,13 @@ public class XXGroupPermissionDao extends BaseDao<XXGroupPermission> {
 		}
 		return null;
 	}
-
 	public void deleteByModuleId(Long moduleId) {
 		if (moduleId != null) {
 			try {
 				getEntityManager()
-						.createNamedQuery("XXGroupPermission.deleteByModuleId", XXGroupPermission.class)
-						.setParameter("moduleId", moduleId)
-						.executeUpdate();
+					.createNamedQuery("XXGroupPermission.deleteByModuleId", XXGroupPermission.class)
+					.setParameter("moduleId", moduleId)
+					.executeUpdate();
 			} catch (Exception e) {
 				logger.debug(e.getMessage());
 			}

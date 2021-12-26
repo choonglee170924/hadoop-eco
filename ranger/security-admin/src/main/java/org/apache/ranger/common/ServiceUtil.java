@@ -38,8 +38,7 @@ import javax.ws.rs.WebApplicationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.authorization.utils.StringUtil;
 import org.apache.ranger.biz.ServiceDBStore;
 import org.apache.ranger.db.RangerDaoManager;
@@ -68,13 +67,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ServiceUtil {
-	static final Logger LOG = LogManager.getLogger(ServiceUtil.class);
+	static final Logger LOG = Logger.getLogger(ServiceUtil.class);
 	private static final String REGEX_PREFIX_STR 	 = "regex:";
 	private static final int REGEX_PREFIX_STR_LENGTH = REGEX_PREFIX_STR.length();
 
 	static Map<String, Integer> mapServiceTypeToAssetType = new HashMap<String, Integer>();
 	static Map<String, Integer> mapAccessTypeToPermType   = new HashMap<String, Integer>();
 	static String version;
+	
+	@Autowired
+	JSONUtil jsonUtil;
+
+	@Autowired
+	RangerDaoManager xaDaoMgr;
+
+	@Autowired
+	RESTErrorUtil restErrorUtil;
+
+	@Autowired
+	ServiceDBStore svcStore;
 
 	static {
 		mapServiceTypeToAssetType.put(EmbeddedServiceDefsUtil.EMBEDDED_SERVICEDEF_HDFS_NAME,  Integer.valueOf(RangerCommonEnums.ASSET_HDFS));
@@ -117,67 +128,6 @@ public class ServiceUtil {
 		mapAccessTypeToPermType.put("uploadNewCredentials", 31);
 
 		version = "0";
-	}
-
-	@Autowired
-	JSONUtil jsonUtil;
-	@Autowired
-	RangerDaoManager xaDaoMgr;
-	@Autowired
-	RESTErrorUtil restErrorUtil;
-	@Autowired
-	ServiceDBStore svcStore;
-
-	private static String toServiceType(int assetType) {
-		String ret = null;
-
-		for(Map.Entry<String, Integer> e : mapServiceTypeToAssetType.entrySet()) {
-			if(e.getValue().intValue() == assetType) {
-				ret = e.getKey();
-
-				break;
-			}
-		}
-
-		return ret;
-	}
-
-	private static Integer toAssetType(String serviceType) {
-		Integer ret = null;
-
-		if(serviceType != null) {
-			ret = mapServiceTypeToAssetType.get(serviceType.toLowerCase());
-		}
-
-		return ret;
-	}
-
-	public static String toAccessType(int permType) {
-		String ret = null;
-
-		for(Map.Entry<String, Integer> e : mapAccessTypeToPermType.entrySet()) {
-			if(e.getValue().intValue() == permType) {
-				ret = e.getKey();
-
-				break;
-			}
-		}
-
-		return ret;
-	}
-
-	private static Integer toPermType(String accessType) {
-		Integer ret = null;
-
-		for(Map.Entry<String, Integer> e : mapAccessTypeToPermType.entrySet()) {
-			if(e.getKey().equalsIgnoreCase(accessType)) {
-				ret = e.getValue();
-
-				break;
-			}
-		}
-
-		return ret;
 	}
 
 	public RangerService getServiceByName(@PathParam("name") String name) {
@@ -232,7 +182,7 @@ public class ServiceUtil {
 		}
 
 		VXAsset ret = new VXAsset();
-
+	
 		rangerObjectToDataObject(service, ret);
 
 		ret.setAssetType(toAssetType(service.getType()));
@@ -259,10 +209,10 @@ public class ServiceUtil {
 		ret.setIsActive(service.getIsEnabled());
 		ret.setConfig(jsonUtil.readMapToString(service.getConfigs()));
 		ret.setVersion(Long.toString(service.getVersion()));
-
+		
 		return ret;
 	}
-
+	
 	public RangerPolicy toRangerPolicy(VXResource resource, RangerService service) {
 		if(resource == null) {
 			return null;
@@ -297,7 +247,7 @@ public class ServiceUtil {
 		toRangerResourceList(resource.getServices(), "service", Boolean.FALSE, Boolean.FALSE, ret.getResources());
 
 		HashMap<String, List<VXPermMap>> sortedPermMap = new HashMap<String, List<VXPermMap>>();
-
+		
 		// re-group the list with permGroup as the key
 		if (resource.getPermMapList() != null) {
 			for(VXPermMap permMap : resource.getPermMapList()) {
@@ -335,11 +285,11 @@ public class ServiceUtil {
 
 					if (! groupList.contains(groupName)) {
 						groupList.add(groupName);
-					}
+					}					
 				}
 
 				String accessType = toAccessType(permMap.getPermType());
-
+				
 				if(StringUtils.equalsIgnoreCase(accessType, "Admin")) {
 					policyItem.setDelegateAdmin(Boolean.TRUE);
 					if ( assetType != null && assetType == RangerCommonEnums.ASSET_HBASE) {
@@ -351,17 +301,17 @@ public class ServiceUtil {
 
 				ipAddress = permMap.getIpAddress();
 			}
-
+			
 			policyItem.setUsers(userList);
 			policyItem.setGroups(groupList);
 			policyItem.setAccesses(accessList);
-
+			
 			if(ipAddress != null && !ipAddress.isEmpty()) {
 				RangerPolicy.RangerPolicyItemCondition ipCondition = new RangerPolicy.RangerPolicyItemCondition("ipaddress", Collections.singletonList(ipAddress));
 
 				policyItem.getConditions().add(ipCondition);
 			}
-
+			
 			ret.getPolicyItems().add(policyItem);
 		}
 
@@ -426,7 +376,7 @@ public class ServiceUtil {
 		updateResourceName(ret);
 
 		List<VXPermMap> permMapList = getVXPermMapList(policy);
-
+		
 		ret.setPermMapList(permMapList);
 
 		return ret;
@@ -445,7 +395,7 @@ public class ServiceUtil {
 		ret.setConfig(vXRepository.getConfig());
 		return ret;
 	}
-
+	
 	public VXRepository  vXAssetToPublicObject(VXAsset asset) {
 		VXRepository ret = new VXRepository();
 		vXDataObjectToPublicDataObject(ret,asset);
@@ -456,7 +406,7 @@ public class ServiceUtil {
 		ret.setIsActive(asset.getActiveStatus() == RangerCommonEnums.STATUS_ENABLED ? true : false);
 		ret.setConfig(asset.getConfig());
 		ret.setVersion(version);
-
+		
 		return ret;
 	}
 
@@ -480,6 +430,58 @@ public class ServiceUtil {
 		return ret;
 	}
 
+	private static String toServiceType(int assetType) {
+		String ret = null;
+
+		for(Map.Entry<String, Integer> e : mapServiceTypeToAssetType.entrySet()) {
+			if(e.getValue().intValue() == assetType) {
+				ret = e.getKey();
+
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	private static Integer toAssetType(String serviceType) {
+		Integer ret = null;
+
+		if(serviceType != null) {
+			ret = mapServiceTypeToAssetType.get(serviceType.toLowerCase());
+		}
+
+		return ret;
+	}
+
+	public static String toAccessType(int permType) {
+		String ret = null;
+
+		for(Map.Entry<String, Integer> e : mapAccessTypeToPermType.entrySet()) {
+			if(e.getValue().intValue() == permType) {
+				ret = e.getKey();
+
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	private static Integer toPermType(String accessType) {
+		Integer ret = null;
+
+		for(Map.Entry<String, Integer> e : mapAccessTypeToPermType.entrySet()) {
+			if(e.getKey().equalsIgnoreCase(accessType)) {
+				ret = e.getValue();
+
+				break;
+			}
+		}
+
+		return ret;
+	}
+	
 	private RangerBaseModelObject dataObjectToRangerObject(VXDataObject dataObject,RangerBaseModelObject rangerObject) {
 		RangerBaseModelObject ret = rangerObject;
 
@@ -503,10 +505,10 @@ public class ServiceUtil {
 
 		return ret;
 	}
-
+	
 	private String toVxPolicyIncExc(int policyIncExc) {
 		String ret = "";
-
+		
 		switch(policyIncExc)  {
 		case 0:
 			ret = "Inclusion";
@@ -516,7 +518,7 @@ public class ServiceUtil {
 			break;
 		}
 		return ret;
-	}
+	}	
 
 	private void updateResourceName(VXPolicy policy) {
 		if(policy == null || toAssetType(policy.getRepositoryType()) == null) {
@@ -632,7 +634,7 @@ public class ServiceUtil {
 	private String emptyIfNull(String str) {
 		return str == null ? "" : str;
 	}
-
+	
 	private String getResourceString(List<String> values) {
 		String ret = null;
 
@@ -681,9 +683,9 @@ public class ServiceUtil {
 				}
 			}
 		}
-
+		
 		return groupName;
-
+		
 	}
 
 	private Long getUserId(String userName) {
@@ -691,7 +693,7 @@ public class ServiceUtil {
 
 		if(userName != null) {
 			XXUser xxUser = xaDaoMgr.getXXUser().findByUserName(userName);
-
+	
 			if(xxUser != null) {
 				userId = xxUser.getId();
 			}
@@ -713,7 +715,7 @@ public class ServiceUtil {
 
 		return groupId;
 	}
-
+	
 	public SearchCriteria getMappedSearchParams(HttpServletRequest request,
 			SearchCriteria searchCriteria) {
 
@@ -742,8 +744,8 @@ public class ServiceUtil {
 		}
 		return searchCriteria;
 	}
-
-
+	
+	
 	public VXRepositoryList rangerServiceListToPublicObjectList(List<RangerService> serviceList) {
 
 		List<VXRepository> repoList = new ArrayList<VXRepository>();
@@ -757,12 +759,12 @@ public class ServiceUtil {
 		VXRepositoryList vXRepositoryList = new VXRepositoryList(repoList);
 		return vXRepositoryList;
 	}
-
-
+	
+		
 	private VXDataObject vXDataObjectToPublicDataObject(VXDataObject publicDataObject, VXDataObject vXdataObject) {
-
+		
 		VXDataObject ret = publicDataObject;
-
+		
 		ret.setId(vXdataObject.getId());
 		ret.setCreateDate(vXdataObject.getCreateDate());
 		ret.setUpdateDate(vXdataObject.getUpdateDate());
@@ -771,11 +773,11 @@ public class ServiceUtil {
 
 		return ret;
 	}
-
+	
 	protected VXDataObject publicDataObjectTovXDataObject(VXDataObject publicDataObject,VXDataObject vXDataObject) {
-
+		
 		VXDataObject ret = vXDataObject;
-
+		
 		ret.setId(publicDataObject.getId());
 		ret.setCreateDate(publicDataObject.getCreateDate());
 		ret.setUpdateDate(publicDataObject.getUpdateDate());
@@ -784,8 +786,8 @@ public class ServiceUtil {
 
 		return ret;
 	}
-
-
+	
+	
 	public VXPolicy toVXPolicy(RangerPolicy policy, RangerService service) {
 		if(policy == null || service == null || toAssetType(service.getType()) == null) {
 			return null;
@@ -806,7 +808,7 @@ public class ServiceUtil {
 		} else {
 			ret.setVersion(version);
 		}
-
+		
 		for(Map.Entry<String, RangerPolicy.RangerPolicyResource> e : policy.getResources().entrySet()) {
 			RangerPolicy.RangerPolicyResource res       = e.getValue();
 			String                            resType   = e.getKey();
@@ -834,25 +836,25 @@ public class ServiceUtil {
 			}
 		}
 		updateResourceName(ret);
-
+			
 		List<VXPermMap> vXPermMapList = getVXPermMapList(policy);
-
+			
 		List<VXPermObj> vXPermObjList = mapPermMapToPermObj(vXPermMapList);
-
+		
 		ret.setPermMapList(vXPermObjList);
-
+		
 		return ret;
  	}
 
 
 	public List<VXPermMap> getVXPermMapList(RangerPolicy policy) {
-
+		
 		List<VXPermMap> permMapList = new ArrayList<VXPermMap>();
-
+	
 		int permGroup = 0;
 		for(RangerPolicy.RangerPolicyItem policyItem : policy.getPolicyItems()) {
 			String ipAddress = null;
-
+			
 			for(RangerPolicy.RangerPolicyItemCondition condition : policyItem.getConditions()) {
 				if(condition.getType() == "ipaddress") {
 					List<String> values = condition.getValues();
@@ -861,73 +863,73 @@ public class ServiceUtil {
 						ipAddress = values.get(0);
 					}
 				}
-
+	
 				if(ipAddress != null && !ipAddress.isEmpty()) {
 					break; // only 1 IP-address per permMap
 				}
 			}
-
+	
 			for(String userName : policyItem.getUsers()) {
 				for(RangerPolicyItemAccess access : policyItem.getAccesses()) {
 					if(! access.getIsAllowed()) {
 						continue;
 					}
-
+	
 					VXPermMap permMap = new VXPermMap();
-
+	
 					permMap.setPermFor(AppConstants.XA_PERM_FOR_USER);
 					permMap.setPermGroup(Integer.valueOf(permGroup).toString());
 					permMap.setUserName(userName);
 					permMap.setUserId(getUserId(userName));
 					permMap.setPermType(toPermType(access.getType()));
 					permMap.setIpAddress(ipAddress);
-
+	
 					permMapList.add(permMap);
 				}
-
+				
 				if(policyItem.getDelegateAdmin()) {
 					VXPermMap permMap = new VXPermMap();
-
+	
 					permMap.setPermFor(AppConstants.XA_PERM_FOR_USER);
 					permMap.setPermGroup(Integer.valueOf(permGroup).toString());
 					permMap.setUserName(userName);
 					permMap.setUserId(getUserId(userName));
 					permMap.setPermType(toPermType("Admin"));
 					permMap.setIpAddress(ipAddress);
-
+	
 					permMapList.add(permMap);
 				}
 			}
 			permGroup++;
-
+	
 			for(String groupName : policyItem.getGroups()) {
 				for(RangerPolicyItemAccess access : policyItem.getAccesses()) {
 					if(! access.getIsAllowed()) {
 						continue;
 					}
-
+	
 					VXPermMap permMap = new VXPermMap();
-
+	
 					permMap.setPermFor(AppConstants.XA_PERM_FOR_GROUP);
 					permMap.setPermGroup(Integer.valueOf(permGroup).toString());
 					permMap.setGroupName(groupName);
 					permMap.setGroupId(getGroupId(groupName));
 					permMap.setPermType(toPermType(access.getType()));
 					permMap.setIpAddress(ipAddress);
-
+	
 					permMapList.add(permMap);
 				}
-
+				
 				if(policyItem.getDelegateAdmin()) {
 					VXPermMap permMap = new VXPermMap();
-
+	
 					permMap.setPermFor(AppConstants.XA_PERM_FOR_GROUP);
 					permMap.setPermGroup(Integer.valueOf(permGroup).toString());
 					permMap.setGroupName(groupName);
 					permMap.setGroupId(getGroupId(groupName));
 					permMap.setPermType(toPermType("Admin"));
 					permMap.setIpAddress(ipAddress);
-
+	
 					permMapList.add(permMap);
 				}
 			}
@@ -935,8 +937,8 @@ public class ServiceUtil {
 		}
 		return permMapList;
     }
-
-
+	
+	
 	public List<VXPermObj> mapPermMapToPermObj(List<VXPermMap> permMapList) {
 
 		List<VXPermObj> permObjList = new ArrayList<VXPermObj>();
@@ -972,7 +974,7 @@ public class ServiceUtil {
 				} else if (permMap.getPermFor() == AppConstants.XA_PERM_FOR_GROUP) {
 					if (!groupList.contains(permMap.getGroupName())) {
 						groupList.add(permMap.getGroupName());
-					}
+					}					
 				}
 				String perm = AppConstants.getLabelFor_XAPermType(permMap
 						.getPermType());
@@ -990,8 +992,8 @@ public class ServiceUtil {
 		}
 		return permObjList;
 	}
-
-
+	
+	
 	public RangerPolicy toRangerPolicy(VXPolicy vXPolicy, RangerService service ) {
 		if(vXPolicy == null || service == null || toAssetType(service.getType()) == null) {
 			return null;
@@ -1008,54 +1010,54 @@ public class ServiceUtil {
 		ret.setIsAuditEnabled(vXPolicy.getIsAuditEnabled());
 
 		Integer assetType = toAssetType(service.getType());
-
+		
 		Boolean isRecursive  =  Boolean.FALSE;
 		if (assetType == RangerCommonEnums.ASSET_HDFS && vXPolicy.getIsRecursive() != null) {
 			isRecursive      = vXPolicy.getIsRecursive();
 		}
-
+		
 		Boolean isTableExcludes =  Boolean.FALSE;
 		if ( vXPolicy.getTableType() != null) {
 			isTableExcludes  = vXPolicy.getTableType().equals(RangerCommonEnums.getLabelFor_PolicyType(RangerCommonEnums.POLICY_EXCLUSION));
 		}
-
+		
 		Boolean isColumnExcludes =  Boolean.FALSE;
 		if ( vXPolicy.getColumnType() != null) {
 			isColumnExcludes = vXPolicy.getColumnType().equals(RangerCommonEnums.getLabelFor_PolicyType(RangerCommonEnums.POLICY_EXCLUSION));
 		}
-
+		
 		if (assetType == RangerCommonEnums.ASSET_HDFS && vXPolicy.getResourceName() != null ) {
 			toRangerResourceList(vXPolicy.getResourceName(), "path", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getTables() != null) {
 			toRangerResourceList(vXPolicy.getTables(), "table", isTableExcludes, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getColumnFamilies() != null) {
 			toRangerResourceList(vXPolicy.getColumnFamilies(), "column-family", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getColumns() != null) {
 			toRangerResourceList(vXPolicy.getColumns(), "column", isColumnExcludes, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getDatabases() != null) {
 			toRangerResourceList(vXPolicy.getDatabases(), "database", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getUdfs() != null) {
 			toRangerResourceList(vXPolicy.getUdfs(), "udf", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getTopologies() != null) {
 			toRangerResourceList(vXPolicy.getTopologies(), "topology", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if (vXPolicy.getServices() != null) {
 			toRangerResourceList(vXPolicy.getServices(), "service", Boolean.FALSE, isRecursive, ret.getResources());
 		}
-
+		
 		if ( vXPolicy.getPermMapList() != null) {
 			List<VXPermObj> vXPermObjList = vXPolicy.getPermMapList();
 
@@ -1065,7 +1067,7 @@ public class ServiceUtil {
 				List<RangerPolicyItemAccess> accessList = new ArrayList<RangerPolicyItemAccess>();
 				String                       ipAddress  = null;
 				boolean 			    delegatedAdmin  = false;
-
+				
 				if (vXPermObj.getUserList() != null)  {
 					for (String user : vXPermObj.getUserList() ) {
 						if ( user.contains(getUserName(user))) {
@@ -1073,7 +1075,7 @@ public class ServiceUtil {
 						}
 					}
 				 }
-
+				
 				if (vXPermObj.getGroupList() != null) {
 					for (String group : vXPermObj.getGroupList()) {
 						if ( group.contains(getGroupName(group))) {
@@ -1081,7 +1083,7 @@ public class ServiceUtil {
 						}
 					}
 				}
-
+		
 				if (vXPermObj.getPermList() != null) {
 					for (String perm : vXPermObj.getPermList()) {
 						if ( AppConstants.getEnumFor_XAPermType(perm) != 0 ) {
@@ -1095,39 +1097,39 @@ public class ServiceUtil {
 						}
 					}
 				}
-
+				
 				if (vXPermObj.getIpAddress() != null ) {
 					ipAddress =  vXPermObj.getIpAddress();
 				}
-
+				
 				RangerPolicy.RangerPolicyItem policyItem = new RangerPolicy.RangerPolicyItem();
-
+	
 				policyItem.setUsers(userList);
 				policyItem.setGroups(groupList);
 				policyItem.setAccesses(accessList);
-
+				
 				if (delegatedAdmin) {
-					policyItem.setDelegateAdmin(Boolean.TRUE);
+					policyItem.setDelegateAdmin(Boolean.TRUE);	
 				} else {
-					policyItem.setDelegateAdmin(Boolean.FALSE);
+					policyItem.setDelegateAdmin(Boolean.FALSE);	
 				}
-
+								
 				if(ipAddress != null && !ipAddress.isEmpty()) {
 					RangerPolicy.RangerPolicyItemCondition ipCondition = new RangerPolicy.RangerPolicyItemCondition("ipaddress", Collections.singletonList(ipAddress));
-
+	
 					policyItem.getConditions().add(ipCondition);
 				}
-
+				
 				ret.getPolicyItems().add(policyItem);
 			}
 		}
 
 		return ret;
 	}
-
+	
 	private String getUserName(String userName) {
 		if(userName == null || userName.isEmpty()) {
-
+		
 			XXUser xxUser = xaDaoMgr.getXXUser().findByUserName(userName);
 
 			if(xxUser != null) {
@@ -1136,10 +1138,10 @@ public class ServiceUtil {
 		}
 		return userName;
 	}
-
-
+	
+	
 	private String getGroupName(String groupName) {
-
+	
 		if(groupName == null || groupName.isEmpty()) {
 				XXGroup xxGroup = xaDaoMgr.getXXGroup().findByGroupName(groupName);
 
@@ -1149,10 +1151,10 @@ public class ServiceUtil {
 		}
 		return groupName;
 	}
-
-
+	
+	
 	public VXPolicyList rangerPolicyListToPublic(List<RangerPolicy> rangerPolicyList,SearchFilter filter) {
-
+		
 		RangerService service       = null;
 		List<VXPolicy> vXPolicyList = new ArrayList<VXPolicy>();
 
@@ -1189,13 +1191,13 @@ public class ServiceUtil {
 		}
 		return vXPolicyListObj;
 	}
-
-
+	
+	
 	public GrantRevokeRequest toGrantRevokeRequest(VXPolicy vXPolicy) {
 		String serviceType 	  = null;
 		RangerService service = null;
 		GrantRevokeRequest ret 	  = new GrantRevokeRequest();
-
+		
 		if ( vXPolicy != null) {
 			String		  serviceName = vXPolicy.getRepositoryName();
 			try {
@@ -1204,31 +1206,31 @@ public class ServiceUtil {
 				  LOG.error( HttpServletResponse.SC_BAD_REQUEST + "No Service Found for ServiceName:" + serviceName );
 				  throw restErrorUtil.createRESTException(HttpServletResponse.SC_BAD_REQUEST, e.getMessage() + serviceName, true);
 			}
-
+			
 			if ( service != null) {
 				serviceType = service.getType();
 			} else {
 			  LOG.error( HttpServletResponse.SC_BAD_REQUEST + "No Service Found for ServiceName" + serviceName );
 			  throw restErrorUtil.createRESTException(HttpServletResponse.SC_BAD_REQUEST, "No Service Found for ServiceName" + serviceName, true);
 			}
-
+			
 			if (vXPolicy.getGrantor() != null) {
 				ret.setGrantor(vXPolicy.getGrantor());
 			}
 			ret.setEnableAudit(Boolean.TRUE);
-
+			
 			ret.setIsRecursive(Boolean.FALSE);
-
+			
 			ret.setReplaceExistingPermissions(toBooleanReplacePerm(vXPolicy.isReplacePerm()));
-
+		
 			Integer assetType = toAssetType(serviceType);
-
+			
 			if (assetType == RangerCommonEnums.ASSET_HIVE) {
-
+				
 				String database = StringUtils.isEmpty(vXPolicy.getDatabases()) ? "*" : vXPolicy.getDatabases();
 				String table    = getTableOrUdf(vXPolicy);
 				String column   = StringUtils.isEmpty(vXPolicy.getColumns()) ? "*" : vXPolicy.getColumns();
-
+	
 				Map<String, String> mapResource = new HashMap<String, String>();
 				mapResource.put("database", database);
 				mapResource.put("table", table);
@@ -1236,13 +1238,13 @@ public class ServiceUtil {
 				ret.setResource(mapResource);
 			}
 			else if ( assetType == RangerCommonEnums.ASSET_HBASE) {
-
+				
 				String tableName = vXPolicy.getTables();
 					   tableName = StringUtil.isEmpty(tableName) ? "*" : tableName;
-
+					
 				String colFamily = vXPolicy.getColumnFamilies();
 					   colFamily = StringUtil.isEmpty(colFamily) ? "*": colFamily;
-
+					
 				String qualifier = vXPolicy.getColumns();
 					   qualifier = StringUtil.isEmpty(qualifier) ? "*" : qualifier;
 
@@ -1251,15 +1253,15 @@ public class ServiceUtil {
 				mapResource.put("column-family", colFamily);
 				mapResource.put("column", qualifier);
                                 ret.setResource(mapResource);
-
+				
 			}
-
+			
 			List<VXPermObj> vXPermObjList = vXPolicy.getPermMapList();
-
+			
 			if (vXPermObjList != null) {
 				for(VXPermObj vXPermObj : vXPermObjList ) {
 					boolean delegatedAdmin  = false;
-
+					
 					if (vXPermObj.getUserList() != null ) {
 						for (String user : vXPermObj.getUserList() ) {
 							if ( user.contains(getUserName(user))) {
@@ -1267,7 +1269,7 @@ public class ServiceUtil {
 							}
 						}
 					}
-
+					
 					if (vXPermObj.getGroupList() != null) {
 						for (String group : vXPermObj.getGroupList()) {
 							if ( group.contains(getGroupName(group))) {
@@ -1275,7 +1277,7 @@ public class ServiceUtil {
 							}
 						}
 					}
-
+			
 					if(vXPermObj.getPermList() != null) {
 						for (String perm : vXPermObj.getPermList()) {
 							if ( AppConstants.getEnumFor_XAPermType(perm) != 0 ) {
@@ -1289,25 +1291,25 @@ public class ServiceUtil {
 							}
 						}
 					}
-
+					
 					if (delegatedAdmin) {
-						ret.setDelegateAdmin(Boolean.TRUE);
+						ret.setDelegateAdmin(Boolean.TRUE);	
 					} else {
-						ret.setDelegateAdmin(Boolean.FALSE);
+						ret.setDelegateAdmin(Boolean.FALSE);	
 					}
 				 }
-
+				
 			  }
 		}
 		return ret;
 
 	}
-
+	
 	private String getTableOrUdf(VXPolicy vXPolicy) {
 		String ret   = null;
 		String table = vXPolicy.getTables();
 		String udf	 = vXPolicy.getUdfs();
-
+		
 		if (!StringUtils.isEmpty(table)) {
 				ret = table;
 		} else if (!StringUtils.isEmpty(udf)) {
@@ -1315,9 +1317,9 @@ public class ServiceUtil {
 		}
 		return ret;
 	}
+	
 
-
-	public boolean isValidateHttpsAuthentication( String serviceName, HttpServletRequest request) {
+	public boolean isValidateHttpsAuthentication( String serviceName, HttpServletRequest request) {		
 		boolean isValidAuthentication=false;
 		boolean httpEnabled = PropertiesUtil.getBooleanProperty("ranger.service.http.enabled",true);
 		X509Certificate[] certchain = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
@@ -1327,7 +1329,7 @@ public class ServiceUtil {
 		}
 		boolean isSecure = request.isSecure();
 
-		if (serviceName == null || serviceName.isEmpty()) {
+		if (serviceName == null || serviceName.isEmpty()) {			
 			LOG.error("ServiceName not provided");
 			throw restErrorUtil.createRESTException("Unauthorized access.",
 					MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);
@@ -1350,7 +1352,7 @@ public class ServiceUtil {
 			LOG.error("Requested Service is disabled. serviceName=" + serviceName);
 			throw restErrorUtil.createRESTException("Unauthorized access.",
 					MessageEnums.OPER_NOT_ALLOWED_FOR_STATE);
-		}
+		}		
 		if (!httpEnabled) {
 			if (!isSecure) {
 				LOG.error("Unauthorized access. Only https is allowed. serviceName=" + serviceName);
@@ -1371,7 +1373,7 @@ public class ServiceUtil {
 			if (cnFromConfig == null || "".equals(cnFromConfig.trim())) {
 				LOG.error("Unauthorized access. No common name for certificate set. Please check your service config");
 				throw restErrorUtil.createRESTException("Unauthorized access. No common name for certificate set. Please check your service config",
-						MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);
+						MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);		
 			}
 
 
@@ -1399,7 +1401,7 @@ public class ServiceUtil {
 				}
 			} catch (Throwable e) {
 			    LOG.error("Unauthorized access. Error getting SAN from certificate", e);
-				throw restErrorUtil.createRESTException("Unauthorized access - Error getting SAN from client certificate", MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);
+				throw restErrorUtil.createRESTException("Unauthorized access - Error getting SAN from client certificate", MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);						
 			}
 
 			// Perform common name validation only if SAN validation did not succeed
@@ -1429,7 +1431,7 @@ public class ServiceUtil {
 								"Unauthorized access - Invalid Common Name",
 								MessageEnums.OPER_NOT_ALLOWED_FOR_ENTITY);
 					}
-				}
+				}		
 				if (commonName != null) {
 					if (matchNames(commonName, cnFromConfigForTest,isRegEx)) {
 						if (LOG.isDebugEnabled()) LOG.debug("Client Cert verification successful, matched CN " + commonName + " with " + cnFromConfigForTest + ", wildcard match = " + isRegEx);
@@ -1501,14 +1503,14 @@ public class ServiceUtil {
             		   if(LOG.isDebugEnabled()) LOG.debug("Matched target:" + target + " with " + n);
             		   matched = true;
             		   break;
-            	   }
+            	   }            	               	
                } else {
                    if(LOG.isDebugEnabled()) LOG.debug("Matching [" + target + "] with [" + n + "]");
             	   if (target.equalsIgnoreCase(n)) {
             		   if(LOG.isDebugEnabled()) LOG.debug("Matched target:" + target + " with " + n);
             		   matched = true;
             		   break;
-            	   }
+            	   }            	
                }
            }
        } else {
@@ -1531,11 +1533,11 @@ public class ServiceUtil {
 	   return matched;
    }
 
-
+	
 	private Boolean toBooleanReplacePerm(boolean isReplacePermission) {
-
+		
 		Boolean ret;
-
+		
 		if (isReplacePermission) {
 			ret = Boolean.TRUE;
 		} else {
@@ -1553,11 +1555,11 @@ public class ServiceUtil {
 				  throw restErrorUtil.createRESTException(HttpServletResponse.SC_BAD_REQUEST, e.getMessage() + serviceName, true);
 			}
 		}
-
+		
 		String serviceType = service != null ? service.getType() : null;
 
 		Integer assetType = toAssetType(serviceType);
-
+		
 		return assetType;
 	}
 
@@ -1615,4 +1617,4 @@ public class ServiceUtil {
 		return policyLists;
 	}
 }
-
+	

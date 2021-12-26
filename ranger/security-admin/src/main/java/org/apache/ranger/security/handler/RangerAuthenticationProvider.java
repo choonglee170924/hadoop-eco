@@ -29,8 +29,7 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag;
 import javax.security.auth.login.Configuration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.authentication.unix.jaas.RoleUserAuthorityGranter;
 import org.apache.ranger.authorization.utils.StringUtil;
 import org.apache.ranger.common.PropertiesUtil;
@@ -68,12 +67,13 @@ import org.apache.ranger.biz.UserMgr;
 
 public class RangerAuthenticationProvider implements AuthenticationProvider {
 
-	private static final Logger logger = LogManager.getLogger(RangerAuthenticationProvider.class);
-	@Autowired
-	UserMgr userMgr;
 	@Autowired
 	@Qualifier("userService")
 	private JdbcUserDetailsManager userDetailsService;
+
+	@Autowired
+	UserMgr userMgr;
+	private static final Logger logger = Logger.getLogger(RangerAuthenticationProvider.class);
 	private String rangerAuthenticationMethod;
 
 	private LdapAuthenticator authenticator;
@@ -153,14 +153,13 @@ public class RangerAuthenticationProvider implements AuthenticationProvider {
 					userPassword = authentication.getCredentials().toString();
 				}
 				try {
-					// ################# check
 					authentication = getJDBCAuthentication(authentication,encoder);
 				} catch (Exception e) {
 					throw e;
 				}
 				if (authentication != null && authentication.isAuthenticated()) {
 					if ("false".equalsIgnoreCase(sha256PasswordUpdateDisable)) {
-            userMgr.updatePasswordInSHA256(userName,userPassword,false);
+                                                userMgr.updatePasswordInSHA256(userName,userPassword,false);
 					}
 					return authentication;
 				}else{
@@ -620,7 +619,7 @@ public class RangerAuthenticationProvider implements AuthenticationProvider {
 		}
 		return authentication;
 	}
-
+	
 	private List<GrantedAuthority> getAuthorities(String username) {
 		Collection<String> roleList=userMgr.getRolesByLoginId(username);
 		final List<GrantedAuthority> grantedAuths = new ArrayList<>();
@@ -641,7 +640,7 @@ public class RangerAuthenticationProvider implements AuthenticationProvider {
 		}
 		return authentication;
 	}
-
+	
 	private Authentication getSSOAuthentication(Authentication authentication) throws AuthenticationException{
 		return authentication;
 	}

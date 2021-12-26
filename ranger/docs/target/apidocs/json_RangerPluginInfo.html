@@ -80,9 +80,9 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">updateTime</span>
+          <td>  <span class="property-name">info</span>
 </td>
-          <td>  <span class="datatype-reference">number
+          <td>  <span class="datatype-reference">map of string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -99,24 +99,6 @@
         </tr>
         <tr>
           <td>  <span class="property-name">serviceName</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">appType</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">hostName</span>
 </td>
           <td>  <span class="datatype-reference">string
 </span>
@@ -143,9 +125,27 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">info</span>
+          <td>  <span class="property-name">updateTime</span>
 </td>
-          <td>  <span class="datatype-reference">map of string
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">hostName</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">appType</span>
+</td>
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -157,17 +157,17 @@
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;updateTime&quot; : 12345,
-  &quot;id&quot; : 12345,
-  &quot;serviceName&quot; : &quot;...&quot;,
-  &quot;appType&quot; : &quot;...&quot;,
-  &quot;hostName&quot; : &quot;...&quot;,
-  &quot;createTime&quot; : 12345,
-  &quot;ipAddress&quot; : &quot;...&quot;,
   &quot;info&quot; : {
     &quot;property1&quot; : &quot;...&quot;,
     &quot;property2&quot; : &quot;...&quot;
-  }
+  },
+  &quot;id&quot; : 12345,
+  &quot;serviceName&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
+  &quot;ipAddress&quot; : &quot;...&quot;,
+  &quot;updateTime&quot; : 12345,
+  &quot;hostName&quot; : &quot;...&quot;,
+  &quot;appType&quot; : &quot;...&quot;
 }</pre>
 
         <footer class="footer">

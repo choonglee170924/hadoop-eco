@@ -17,21 +17,20 @@
  * under the License.
  */
 
-package org.apache.ranger.common.db;
+ package org.apache.ranger.common.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.DateUtil;
 import org.apache.ranger.common.UserSessionBase;
 import org.apache.ranger.entity.XXDBBase;
 import org.apache.ranger.security.context.RangerContextHolder;
 import org.apache.ranger.security.context.RangerSecurityContext;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
 public class JPABeanCallbacks {
-	private static final Logger logger = LogManager.getLogger(JPABeanCallbacks.class);
+	private static final Logger logger = Logger.getLogger(JPABeanCallbacks.class);
 
 	@PrePersist
 	void onPrePersist(Object o) {

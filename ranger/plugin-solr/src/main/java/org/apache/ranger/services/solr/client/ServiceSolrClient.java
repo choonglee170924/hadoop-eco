@@ -19,9 +19,17 @@
 
 package org.apache.ranger.services.solr.client;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.plugin.client.BaseClient;
 import org.apache.ranger.plugin.service.ResourceLookupContext;
 import org.apache.ranger.plugin.util.PasswordUtils;
@@ -36,27 +44,30 @@ import org.apache.solr.client.solrj.response.CoreAdminResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.CoreAdminParams.CoreAdminAction;
 import org.apache.solr.common.util.SimpleOrderedMap;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
+import org.apache.commons.collections.CollectionUtils;
 
 public class ServiceSolrClient {
-	private static final Logger LOG = LogManager.getLogger(ServiceSolrClient.class);
+	private static final Logger LOG = Logger.getLogger(ServiceSolrClient.class);
+
+	enum RESOURCE_TYPE {
+		COLLECTION, FIELD
+	}
+
 	private static final String errMessage = " You can still save the repository and start creating "
 			+ "policies, but you would not be able to use autocomplete for "
 			+ "resource names. Check server logs for more info.";
+
 	private static final String COLLECTION_KEY = "collection";
 	private static final String FIELD_KEY = "field";
 	private static final long LOOKUP_TIMEOUT_SEC = 5;
+
 	private String username;
 	private String password;
 	private SolrClient solrClient = null;
 	private boolean isSolrCloud = true;
 
 	public ServiceSolrClient(SolrClient solrClient,
-	                         boolean isSolrCloud, Map<String, String> configs) {
+			boolean isSolrCloud, Map<String, String> configs) {
 		this.solrClient = solrClient;
 		this.isSolrCloud = isSolrCloud;
 		this.username = configs.get("username");
@@ -94,14 +105,14 @@ public class ServiceSolrClient {
 
 		CollectionAdminRequest<?> request = new CollectionAdminRequest.List();
 		String decPassword = getDecryptedPassword();
-		if (username != null && decPassword != null) {
-			request.setBasicAuthCredentials(username, decPassword);
+        if (username != null && decPassword != null) {
+		    request.setBasicAuthCredentials(username, decPassword);
 		}
 		SolrResponse response = request.process(solrClient);
 
 		List<String> list = new ArrayList<String>();
-		List<String> responseCollectionList = (ArrayList<String>) response.getResponse().get("collections");
-		if (CollectionUtils.isEmpty(responseCollectionList)) {
+		List<String> responseCollectionList = (ArrayList<String>)response.getResponse().get("collections");
+		if(CollectionUtils.isEmpty(responseCollectionList)) {
 			return list;
 		}
 		for (String responseCollection : responseCollectionList) {
@@ -118,8 +129,8 @@ public class ServiceSolrClient {
 		CoreAdminRequest request = new CoreAdminRequest();
 		request.setAction(CoreAdminAction.STATUS);
 		String decPassword = getDecryptedPassword();
-		if (username != null && decPassword != null) {
-			request.setBasicAuthCredentials(username, decPassword);
+        if (username != null && decPassword != null) {
+		    request.setBasicAuthCredentials(username, decPassword);
 		}
 		CoreAdminResponse cores = request.process(solrClient);
 		// List of the cores
@@ -127,7 +138,7 @@ public class ServiceSolrClient {
 		for (int i = 0; i < cores.getCoreStatus().size(); i++) {
 			if (ignoreCollectionList == null
 					|| !ignoreCollectionList.contains(cores.getCoreStatus()
-					.getName(i))) {
+							.getName(i))) {
 				coreList.add(cores.getCoreStatus().getName(i));
 			}
 		}
@@ -135,7 +146,7 @@ public class ServiceSolrClient {
 	}
 
 	public List<String> getFieldList(String collection,
-	                                 List<String> ignoreFieldList) throws Exception {
+			List<String> ignoreFieldList) throws Exception {
 		// TODO: Best is to get the collections based on the collection value
 		// which could contain wild cards
 		String queryStr = "";
@@ -148,7 +159,7 @@ public class ServiceSolrClient {
 		QueryRequest req = new QueryRequest(query);
 		String decPassword = getDecryptedPassword();
 		if (username != null && decPassword != null) {
-			req.setBasicAuthCredentials(username, decPassword);
+		    req.setBasicAuthCredentials(username, decPassword);
 		}
 		QueryResponse response = req.process(solrClient);
 
@@ -172,7 +183,7 @@ public class ServiceSolrClient {
 	}
 
 	public List<String> getFieldList(List<String> collectionList,
-	                                 List<String> ignoreFieldList) throws Exception {
+			List<String> ignoreFieldList) throws Exception {
 
 		Set<String> fieldSet = new LinkedHashSet<String>();
 		if (collectionList == null || collectionList.size() == 0) {
@@ -211,14 +222,14 @@ public class ServiceSolrClient {
 				fieldList = resourceMap.get(FIELD_KEY);
 			}
 			switch (resource.trim().toLowerCase()) {
-				case COLLECTION_KEY:
-					lookupResource = RESOURCE_TYPE.COLLECTION;
-					break;
-				case FIELD_KEY:
-					lookupResource = RESOURCE_TYPE.FIELD;
-					break;
-				default:
-					break;
+			case COLLECTION_KEY:
+				lookupResource = RESOURCE_TYPE.COLLECTION;
+				break;
+			case FIELD_KEY:
+				lookupResource = RESOURCE_TYPE.FIELD;
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -252,9 +263,7 @@ public class ServiceSolrClient {
 								LOG.error("Error getting collection.", ex);
 							}
 							return retList;
-						}
-
-						;
+						};
 					};
 				} else if (lookupResource == RESOURCE_TYPE.FIELD) {
 					callableObj = new Callable<List<String>>() {
@@ -278,9 +287,7 @@ public class ServiceSolrClient {
 								LOG.error("Error getting collection.", ex);
 							}
 							return retList;
-						}
-
-						;
+						};
 					};
 				}
 				// If we need to do lookup
@@ -299,22 +306,18 @@ public class ServiceSolrClient {
 	}
 
 	private String getDecryptedPassword() {
-		String decryptedPwd = null;
-		try {
-			decryptedPwd = PasswordUtils.decryptPassword(password);
-		} catch (Exception ex) {
-			LOG.info("Password decryption failed; trying Solr connection with received password string");
-			decryptedPwd = null;
-		} finally {
-			if (decryptedPwd == null) {
-				decryptedPwd = password;
-			}
-		}
+	    String decryptedPwd = null;
+        try {
+            decryptedPwd = PasswordUtils.decryptPassword(password);
+        } catch (Exception ex) {
+            LOG.info("Password decryption failed; trying Solr connection with received password string");
+            decryptedPwd = null;
+        } finally {
+            if (decryptedPwd == null) {
+                decryptedPwd = password;
+            }
+        }
 
-		return decryptedPwd;
-	}
-
-	enum RESOURCE_TYPE {
-		COLLECTION, FIELD
+        return decryptedPwd;
 	}
 }

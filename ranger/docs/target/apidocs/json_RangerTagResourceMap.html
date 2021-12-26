@@ -80,7 +80,7 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">resourceId</span>
+          <td>  <span class="property-name">tagId</span>
 </td>
           <td>  <span class="datatype-reference">number
 </span>
@@ -89,7 +89,7 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">tagId</span>
+          <td>  <span class="property-name">resourceId</span>
 </td>
           <td>  <span class="datatype-reference">number
 </span>
@@ -103,8 +103,20 @@
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createTime</span></td>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">id</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">isEnabled</span></td>
+          <td><span class="datatype-reference">boolean
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -115,8 +127,14 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">id</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">guid</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -132,40 +150,22 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">updatedBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">guid</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">isEnabled</span></td>
-          <td><span class="datatype-reference">boolean
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;resourceId&quot; : 12345,
   &quot;tagId&quot; : 12345,
-  &quot;createTime&quot; : 12345,
-  &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;id&quot; : 12345,
-  &quot;version&quot; : 12345,
-  &quot;updateTime&quot; : 12345,
+  &quot;resourceId&quot; : 12345,
   &quot;updatedBy&quot; : &quot;...&quot;,
+  &quot;id&quot; : 12345,
+  &quot;isEnabled&quot; : true,
+  &quot;createdBy&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true
+  &quot;version&quot; : 12345,
+  &quot;updateTime&quot; : 12345
 }</pre>
 
         <footer class="footer">

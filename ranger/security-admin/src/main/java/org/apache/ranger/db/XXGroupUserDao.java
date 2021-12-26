@@ -17,25 +17,25 @@
  * under the License.
  */
 
-package org.apache.ranger.db;
+ package org.apache.ranger.db;
 
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.db.BaseDao;
-import org.apache.ranger.entity.XXGroupUser;
-import org.springframework.stereotype.Service;
-
-import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.db.BaseDao;
+import org.apache.ranger.entity.XXGroupUser;
+import org.springframework.stereotype.Service;
+
 @Service
 public class XXGroupUserDao extends BaseDao<XXGroupUser> {
-	private static final Logger logger = LogManager.getLogger(XXGroupUserDao.class);
+	private static final Logger logger = Logger.getLogger(XXGroupUserDao.class);
 
 	public XXGroupUserDao(RangerDaoManagerBase daoManager) {
 		super(daoManager);
@@ -67,7 +67,8 @@ public class XXGroupUserDao extends BaseDao<XXGroupUser> {
 	}
 
 	/**
-	 * @param xUserId -- Id of X_USER table
+	 * @param xUserId
+	 *            -- Id of X_USER table
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -98,7 +99,7 @@ public class XXGroupUserDao extends BaseDao<XXGroupUser> {
 			logger.debug("UserId not provided.");
 		}
 
-		if (groupList != null) {
+		if(groupList != null) {
 			return new HashSet<String>(groupList);
 		}
 

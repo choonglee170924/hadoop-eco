@@ -17,27 +17,25 @@
 
 package org.apache.ranger.patch;
 
+import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.biz.XUserMgr;
-import org.apache.ranger.common.RangerConstants;
+import org.apache.log4j.Logger;
 import org.apache.ranger.db.RangerDaoManager;
 import org.apache.ranger.entity.XXModuleDef;
 import org.apache.ranger.entity.XXPolicy;
 import org.apache.ranger.entity.XXPortalUser;
 import org.apache.ranger.service.XPortalUserService;
+import org.apache.ranger.biz.XUserMgr;
+import org.apache.ranger.common.RangerConstants;
 import org.apache.ranger.util.CLIUtil;
 import org.apache.ranger.view.VXPortalUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class PatchTagModulePermission_J10005 extends BaseLoader {
-	private static final Logger logger = LogManager
+	private static final Logger logger = Logger
 			.getLogger(PatchTagModulePermission_J10005.class);
 
 	@Autowired
@@ -83,16 +81,16 @@ public class PatchTagModulePermission_J10005 extends BaseLoader {
 	public void assignPermissionOnTagModuleToAdminUsers() {
 		int countUserPermissionUpdated = 0;
 		XXModuleDef xModDef = daoManager.getXXModuleDef().findByModuleName(RangerConstants.MODULE_TAG_BASED_POLICIES);
-		if (xModDef == null) {
+		if(xModDef==null){
 			return;
 		}
 		List<XXPortalUser> allAdminUsers = daoManager.getXXPortalUser().findByRole(RangerConstants.ROLE_SYS_ADMIN);
-		if (!CollectionUtils.isEmpty(allAdminUsers)) {
+		if(!CollectionUtils.isEmpty(allAdminUsers)){
 			for (XXPortalUser xPortalUser : allAdminUsers) {
 				VXPortalUser vPortalUser = xPortalUserService.populateViewBean(xPortalUser);
-				if (vPortalUser != null) {
+				if(vPortalUser!=null){
 					vPortalUser.setUserRoleList(daoManager.getXXPortalUserRole().findXPortalUserRolebyXPortalUserId(vPortalUser.getId()));
-					xUserMgr.createOrUpdateUserPermisson(vPortalUser, xModDef.getId(), false);
+					xUserMgr.createOrUpdateUserPermisson(vPortalUser,xModDef.getId(), false);
 					countUserPermissionUpdated += 1;
 					logger.info("Added '" + xModDef.getModule() + "' permission to user '" + xPortalUser.getLoginId() + "'");
 				}
@@ -105,23 +103,23 @@ public class PatchTagModulePermission_J10005 extends BaseLoader {
 	public void printStats() {
 	}
 
-	private void trimPolicyName() {
-		List<XXPolicy> policies = daoManager.getXXPolicy().getAll();
-		if (!CollectionUtils.isEmpty(policies)) {
-			String policyName = null;
-			for (XXPolicy xXPolicy : policies) {
-				try {
-					if (xXPolicy != null) {
-						policyName = xXPolicy.getName();
-						if (!StringUtils.isEmpty(policyName)) {
-							if (policyName.startsWith(" ") || policyName.endsWith(" ")) {
+	private void trimPolicyName(){
+		List<XXPolicy> policies=daoManager.getXXPolicy().getAll();
+		if(!CollectionUtils.isEmpty(policies)){
+			String policyName=null;
+			for(XXPolicy xXPolicy:policies){
+				try{
+					if(xXPolicy!=null){
+						policyName=xXPolicy.getName();
+						if(!StringUtils.isEmpty(policyName)){
+							if(policyName.startsWith(" ") || policyName.endsWith(" ")){
 								xXPolicy.setName(StringUtils.trim(policyName));
 								daoManager.getXXPolicy().update(xXPolicy);
 							}
 						}
 					}
-				} catch (Exception ex) {
-					logger.info("Error during policy update:" + xXPolicy.toString());
+				}catch(Exception ex){
+					logger.info("Error during policy update:"+xXPolicy.toString());
 					logger.error(ex);
 				}
 			}

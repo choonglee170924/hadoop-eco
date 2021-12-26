@@ -18,15 +18,14 @@
 package org.apache.ranger.patch;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
+import org.apache.ranger.entity.XXServiceDef;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.biz.ServiceDBStore;
 import org.apache.ranger.common.JSONUtil;
 import org.apache.ranger.common.RangerValidatorFactory;
 import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.db.RangerDaoManager;
-import org.apache.ranger.entity.XXServiceDef;
 import org.apache.ranger.plugin.model.RangerServiceDef;
 import org.apache.ranger.plugin.model.RangerServiceDef.RangerDataMaskDef;
 import org.apache.ranger.plugin.model.RangerServiceDef.RangerRowFilterDef;
@@ -45,8 +44,8 @@ import java.util.Map;
 
 @Component
 public class PatchForHiveServiceDefUpdate_J10006 extends BaseLoader {
-	public static final String SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME = "hive";
-	private static final Logger logger = LogManager.getLogger(PatchForHiveServiceDefUpdate_J10006.class);
+	private static final Logger logger = Logger.getLogger(PatchForHiveServiceDefUpdate_J10006.class);
+	public static final String SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME  = "hive";
 	@Autowired
 	RangerDaoManager daoMgr;
 
@@ -67,7 +66,7 @@ public class PatchForHiveServiceDefUpdate_J10006 extends BaseLoader {
 
 	@Autowired
 	XPermMapService xPermMapService;
-
+	
 	@Autowired
 	RangerBizUtil bizUtil;
 
@@ -92,7 +91,7 @@ public class PatchForHiveServiceDefUpdate_J10006 extends BaseLoader {
 			System.exit(1);
 		}
 	}
-
+	
 	@Override
 	public void init() throws Exception {
 		// Do Nothing
@@ -114,50 +113,50 @@ public class PatchForHiveServiceDefUpdate_J10006 extends BaseLoader {
 		logger.info("PatchForHiveServiceDefUpdate data ");
 	}
 
-	private void updateHiveServiceDef() {
-		RangerServiceDef ret = null;
+	private void updateHiveServiceDef(){
+		RangerServiceDef ret  					= null;
 		RangerServiceDef embeddedHiveServiceDef = null;
-		RangerServiceDef dbHiveServiceDef = null;
-		RangerDataMaskDef dataMaskDef = null;
-		RangerRowFilterDef rowFilterDef = null;
-		XXServiceDef xXServiceDefObj = null;
-		try {
-			embeddedHiveServiceDef = EmbeddedServiceDefsUtil.instance().getEmbeddedServiceDef(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
-			if (embeddedHiveServiceDef != null) {
+		RangerServiceDef dbHiveServiceDef 		= null;
+		RangerDataMaskDef dataMaskDef 			= null;
+		RangerRowFilterDef rowFilterDef 		= null;
+		XXServiceDef xXServiceDefObj			= null;
+		try{
+			embeddedHiveServiceDef=EmbeddedServiceDefsUtil.instance().getEmbeddedServiceDef(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
+			if(embeddedHiveServiceDef!=null){
 				xXServiceDefObj = daoMgr.getXXServiceDef().findByName(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
-				Map<String, String> serviceDefOptionsPreUpdate = null;
-				String jsonStrPreUpdate = null;
-				if (xXServiceDefObj != null) {
-					jsonStrPreUpdate = xXServiceDefObj.getDefOptions();
-					serviceDefOptionsPreUpdate = jsonStringToMap(jsonStrPreUpdate);
-					xXServiceDefObj = null;
+				Map<String, String> serviceDefOptionsPreUpdate=null;
+				String jsonStrPreUpdate=null;
+				if(xXServiceDefObj!=null) {
+					jsonStrPreUpdate=xXServiceDefObj.getDefOptions();
+					serviceDefOptionsPreUpdate=jsonStringToMap(jsonStrPreUpdate);
+					xXServiceDefObj=null;
 				}
-				dataMaskDef = embeddedHiveServiceDef.getDataMaskDef();
-				rowFilterDef = embeddedHiveServiceDef.getRowFilterDef();
+				dataMaskDef= embeddedHiveServiceDef.getDataMaskDef();
+				rowFilterDef= embeddedHiveServiceDef.getRowFilterDef();
 
-				dbHiveServiceDef = svcDBStore.getServiceDefByName(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
-
-				if (dbHiveServiceDef != null) {
-					if (dataMaskDef != null) {
+				dbHiveServiceDef=svcDBStore.getServiceDefByName(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
+				
+				if(dbHiveServiceDef!=null){
+					if(dataMaskDef!=null){
 						dbHiveServiceDef.setDataMaskDef(dataMaskDef);
 					}
-					if (rowFilterDef != null) {
+					if(rowFilterDef!=null){
 						dbHiveServiceDef.setRowFilterDef(rowFilterDef);
 					}
 					RangerServiceDefValidator validator = validatorFactory.getServiceDefValidator(svcStore);
 					validator.validate(dbHiveServiceDef, Action.UPDATE);
 
 					ret = svcStore.updateServiceDef(dbHiveServiceDef);
-					if (ret == null) {
-						logger.error("Error while updating " + SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME + "service-def");
+					if(ret==null){
+						logger.error("Error while updating "+SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME+"service-def");
 						System.exit(1);
 					}
 					xXServiceDefObj = daoMgr.getXXServiceDef().findByName(SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME);
-					if (xXServiceDefObj != null) {
-						String jsonStrPostUpdate = xXServiceDefObj.getDefOptions();
-						Map<String, String> serviceDefOptionsPostUpdate = jsonStringToMap(jsonStrPostUpdate);
+					if(xXServiceDefObj!=null) {
+						String jsonStrPostUpdate=xXServiceDefObj.getDefOptions();
+						Map<String, String> serviceDefOptionsPostUpdate=jsonStringToMap(jsonStrPostUpdate);
 						if (serviceDefOptionsPostUpdate != null && serviceDefOptionsPostUpdate.containsKey(RangerServiceDef.OPTION_ENABLE_DENY_AND_EXCEPTIONS_IN_POLICIES)) {
-							if (serviceDefOptionsPreUpdate == null || !serviceDefOptionsPreUpdate.containsKey(RangerServiceDef.OPTION_ENABLE_DENY_AND_EXCEPTIONS_IN_POLICIES)) {
+							if(serviceDefOptionsPreUpdate == null || !serviceDefOptionsPreUpdate.containsKey(RangerServiceDef.OPTION_ENABLE_DENY_AND_EXCEPTIONS_IN_POLICIES)) {
 								String preUpdateValue = serviceDefOptionsPreUpdate == null ? null : serviceDefOptionsPreUpdate.get(RangerServiceDef.OPTION_ENABLE_DENY_AND_EXCEPTIONS_IN_POLICIES);
 								if (preUpdateValue == null) {
 									serviceDefOptionsPostUpdate.remove(RangerServiceDef.OPTION_ENABLE_DENY_AND_EXCEPTIONS_IN_POLICIES);
@@ -171,41 +170,40 @@ public class PatchForHiveServiceDefUpdate_J10006 extends BaseLoader {
 					}
 				}
 			}
-		} catch (Exception e) {
-			logger.error("Error while updating " + SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME + "service-def", e);
-		}
+			}catch(Exception e)
+			{
+				logger.error("Error while updating "+SERVICEDBSTORE_SERVICEDEFBYNAME_HIVE_NAME+"service-def", e);
+			}
 	}
-
 	private String mapToJsonString(Map<String, String> map) {
 		String ret = null;
-		if (map != null) {
+		if(map != null) {
 			try {
 				ret = jsonUtil.readMapToString(map);
-			} catch (Exception excp) {
+			} catch(Exception excp) {
 				logger.warn("mapToJsonString() failed to convert map: " + map, excp);
 			}
 		}
 		return ret;
 	}
-
 	protected Map<String, String> jsonStringToMap(String jsonStr) {
 		Map<String, String> ret = null;
-		if (!StringUtils.isEmpty(jsonStr)) {
+		if(!StringUtils.isEmpty(jsonStr)) {
 			try {
 				ret = jsonUtil.jsonToMap(jsonStr);
-			} catch (Exception excp) {
+			} catch(Exception excp) {
 				// fallback to earlier format: "name1=value1;name2=value2"
-				for (String optionString : jsonStr.split(";")) {
-					if (StringUtils.isEmpty(optionString)) {
+				for(String optionString : jsonStr.split(";")) {
+					if(StringUtils.isEmpty(optionString)) {
 						continue;
 					}
 					String[] nvArr = optionString.split("=");
-					String name = (nvArr != null && nvArr.length > 0) ? nvArr[0].trim() : null;
+					String name  = (nvArr != null && nvArr.length > 0) ? nvArr[0].trim() : null;
 					String value = (nvArr != null && nvArr.length > 1) ? nvArr[1].trim() : null;
-					if (StringUtils.isEmpty(name)) {
+					if(StringUtils.isEmpty(name)) {
 						continue;
 					}
-					if (ret == null) {
+					if(ret == null) {
 						ret = new HashMap<String, String>();
 					}
 					ret.put(name, value);

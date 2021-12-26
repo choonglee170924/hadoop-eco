@@ -20,8 +20,7 @@ package org.apache.ranger.admin.client.datatype;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.authorization.utils.StringUtil;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -36,6 +35,8 @@ import com.sun.jersey.api.client.ClientResponse;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RESTResponse {
+	private static final Logger LOG = Logger.getLogger(RESTResponse.class);
+
 	/**
 	 * values for statusCode
 	 */
@@ -46,44 +47,12 @@ public class RESTResponse {
 	public static final int STATUS_INFO            = 4;
 	public static final int STATUS_PARTIAL_SUCCESS = 5;
 	public static final int ResponseStatus_MAX     = 5;
-	private static final Logger LOG = LogManager.getLogger(RESTResponse.class);
+
 	private int           httpStatusCode;
 	private int           statusCode;
 	private String        msgDesc;
 	private List<Message> messageList;
 
-	public static RESTResponse fromClientResponse(ClientResponse response) {
-		RESTResponse ret = null;
-
-		String jsonString = response == null ? null : response.getEntity(String.class);
-		int    httpStatus = response == null ? 0 : response.getStatus();
-
-		if(! StringUtil.isEmpty(jsonString)) {
-			ret = RESTResponse.fromJson(jsonString);
-		}
-
-		if(ret == null) {
-			ret = new RESTResponse();
-		}
-
-		ret.setHttpStatusCode(httpStatus);
-
-		return ret;
-	}
-
-	public static RESTResponse fromJson(String jsonString) {
-		try {
-			ObjectMapper om = new ObjectMapper();
-
-			return om.readValue(jsonString, RESTResponse.class);
-		} catch (Exception e) {
-			if(LOG.isDebugEnabled()) {
-				LOG.debug("fromJson('" + jsonString + "') failed", e);
-			}
-		}
-
-		return null;
-	}
 
 	public int getHttpStatusCode() {
 		return httpStatusCode;
@@ -116,9 +85,28 @@ public class RESTResponse {
 	public void setMessageList(List<Message> messageList) {
 		this.messageList = messageList;
 	}
-
+	
 	public String getMessage() {
 		return StringUtil.isEmpty(msgDesc) ? ("HTTP " + httpStatusCode) : msgDesc;
+	}
+
+	public static RESTResponse fromClientResponse(ClientResponse response) {
+		RESTResponse ret = null;
+
+		String jsonString = response == null ? null : response.getEntity(String.class);
+		int    httpStatus = response == null ? 0 : response.getStatus();
+
+		if(! StringUtil.isEmpty(jsonString)) {
+			ret = RESTResponse.fromJson(jsonString);
+		}
+
+		if(ret == null) {
+			ret = new RESTResponse();
+		}
+
+		ret.setHttpStatusCode(httpStatus);
+
+		return ret;
 	}
 
 	public String toJson() {
@@ -133,6 +121,20 @@ public class RESTResponse {
 		}
 
 		return "";
+	}
+
+	public static RESTResponse fromJson(String jsonString) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+
+			return om.readValue(jsonString, RESTResponse.class);
+		} catch (Exception e) {
+			if(LOG.isDebugEnabled()) {
+				LOG.debug("fromJson('" + jsonString + "') failed", e);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -150,56 +152,33 @@ public class RESTResponse {
 		private Long   objectId;
 		private String fieldName;
 
-		public static RESTResponse fromJson(String jsonString) {
-			try {
-				ObjectMapper om = new ObjectMapper();
-
-				return om.readValue(jsonString, RESTResponse.class);
-			} catch (Exception e) {
-				if(LOG.isDebugEnabled()) {
-					LOG.debug("fromJson('" + jsonString + "') failed", e);
-				}
-			}
-
-			return null;
-		}
-
 		public String getName() {
 			return name;
 		}
-
 		public void setName(String name) {
 			this.name = name;
 		}
-
 		public String getRbKey() {
 			return rbKey;
 		}
-
 		public void setRbKey(String rbKey) {
 			this.rbKey = rbKey;
 		}
-
 		public String getMessage() {
 			return message;
 		}
-
 		public void setMessage(String message) {
 			this.message = message;
 		}
-
 		public Long getObjectId() {
 			return objectId;
 		}
-
 		public void setObjectId(Long objectId) {
 			this.objectId = objectId;
 		}
-
 		public String getFieldName() {
 			return fieldName;
 		}
-
 		public void setFieldName(String fieldName) {
 			this.fieldName = fieldName;
 		}
@@ -214,8 +193,22 @@ public class RESTResponse {
 					LOG.debug("toJson() failed", e);
 				}
 			}
-
+			
 			return "";
+		}
+
+		public static RESTResponse fromJson(String jsonString) {
+			try {
+				ObjectMapper om = new ObjectMapper();
+
+				return om.readValue(jsonString, RESTResponse.class);
+			} catch (Exception e) {
+				if(LOG.isDebugEnabled()) {
+					LOG.debug("fromJson('" + jsonString + "') failed", e);
+				}
+			}
+			
+			return null;
 		}
 
 		@Override

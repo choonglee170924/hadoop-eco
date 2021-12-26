@@ -17,8 +17,7 @@
 
 package org.apache.ranger.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.DateUtil;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXUgsyncAuditInfo;
@@ -28,14 +27,12 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
- *
  */
 
 @Service
 public class XXUgsyncAuditInfoDao extends BaseDao<XXUgsyncAuditInfo> {
-	protected static final Logger logger = LogManager
+	protected static final Logger logger = Logger
 			.getLogger(XXUgsyncAuditInfoDao.class);
-
 	/**
 	 * Default Constructor
 	 */
@@ -62,7 +59,6 @@ public class XXUgsyncAuditInfoDao extends BaseDao<XXUgsyncAuditInfo> {
 			return null;
 		}
 	}
-
 	public List<XXUgsyncAuditInfo> findBySyncSource(String syncSource) {
 		if (syncSource == null) {
 			return null;

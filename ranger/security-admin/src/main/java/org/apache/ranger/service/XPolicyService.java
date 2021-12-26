@@ -29,8 +29,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.AppConstants;
 import org.apache.ranger.common.DateUtil;
 import org.apache.ranger.common.MessageEnums;
@@ -59,21 +58,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
-	private static String uniqueKeySeparator = "_";
-	Logger logger = LogManager.getLogger(XPolicyService.class);
+	Logger logger = Logger.getLogger(XPolicyService.class);
+
 	@Autowired
 	RESTErrorUtil restErrorUtil;
+
 	@Autowired
 	StringUtil stringUtil;
+
 	@Autowired
 	RangerDaoManager xaDaoMgr;
+
 	@Autowired
 	XPermMapService xPermMapService;
+
 	@Autowired
 	XAuditMapService xAuditMapService;
+
 	@Autowired
 	XResourceService xResourceService;
+
 	String version;
+	
+	private static String uniqueKeySeparator = "_";
 
 	public XPolicyService() {
 		version = PropertiesUtil.getProperty("maven.project.version", "");
@@ -90,8 +97,8 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		vXPolicy.setRepositoryName(vXResource.getAssetName());
 		vXPolicy.setRepositoryType(AppConstants
 				.getLabelFor_AssetType(vXResource.getAssetType()));
-
-
+		
+		
 		List<VXPermObj> permObjList = mapPermMapToPermObj(vXResource
 				.getPermMapList());
 		if (!stringUtil.isEmpty(permObjList)) {
@@ -102,7 +109,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		vXPolicy.setColumns(vXResource.getColumns());
 		vXPolicy.setDatabases(vXResource.getDatabases());
 		vXPolicy.setUdfs(vXResource.getUdfs());
-
+		
 		vXPolicy.setTopologies(vXResource.getTopologies());
 		vXPolicy.setServices(vXResource.getServices());
 
@@ -119,7 +126,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		}
 		vXPolicy.setIsAuditEnabled(auditEnable);
 		vXPolicy.setVersion(version);
-
+		
 		/*
 		 * TODO : These parameters are specific for some components. Need to
 		 * take care while adding new component
@@ -226,7 +233,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		vXResource.setColumns(vXPolicy.getColumns());
 		vXResource.setUdfs(vXPolicy.getUdfs());
 		vXResource.setAssetName(vXPolicy.getRepositoryName());
-
+		
 		int assetType = AppConstants.getEnumFor_AssetType(vXPolicy
 				.getRepositoryType());
 		if (assetType == AppConstants.ASSET_UNKNOWN) {
@@ -244,7 +251,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		vXResource.setCheckParentPermission(AppConstants.BOOL_FALSE);
 		vXResource.setTopologies(vXPolicy.getTopologies());
 		vXResource.setServices(vXPolicy.getServices());
-
+		
 		/*
 		 * TODO : These parameters are specific for some components. Need to
 		 * take care while adding new component
@@ -439,7 +446,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 				} else if (permMap.getPermFor() == AppConstants.XA_PERM_FOR_GROUP) {
 					if (!groupList.contains(permMap.getGroupName())) {
 						groupList.add(permMap.getGroupName());
-					}
+					}					
 				}
 				String perm = AppConstants.getLabelFor_XAPermType(permMap
 						.getPermType());
@@ -479,7 +486,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 		Random rand = new Random();
 
 		for (VXPermObj permObj : permObjList) {
-
+			
 			String ipAddress = permObj.getIpAddress();
 
 			if (!stringUtil.isEmpty(permObj.getUserList())) {
@@ -569,7 +576,7 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 			int permFor = currentPermMap.getPermFor();
 			int permType = currentPermMap.getPermType();
 			String ipAddress = currentPermMap.getIpAddress();
-
+			
 			String uniKey = resId + uniqueKeySeparator + permFor;
 			if (permFor == AppConstants.XA_PERM_FOR_GROUP) {
 				uniKey = uniKey + uniqueKeySeparator + groupId;
@@ -583,11 +590,11 @@ public class XPolicyService extends PublicAPIServiceBase<VXResource, VXPolicy> {
 				userPermMap.put(uniKey, permList);
 			}
 			permList.add(""+permType);
-
+			
 			if (stringUtil.isEmpty(ipAddress)) {
 				permList.add(ipAddress);
 			}
-
+			
 		}
 
 		List<List<String>> masterKeyList = new ArrayList<List<String>>();

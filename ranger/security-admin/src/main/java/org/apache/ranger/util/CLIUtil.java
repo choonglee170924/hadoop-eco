@@ -17,13 +17,17 @@
  * under the License.
  */
 
-/**
+ /**
  *
  */
 package org.apache.ranger.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Locale;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.PropertiesUtil;
 import org.apache.ranger.security.standalone.StandaloneSecurityHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +36,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
 /**
  *
  *
  */
 @Component
 public class CLIUtil {
-	private static final Logger logger = LogManager.getLogger(CLIUtil.class);
-	static ApplicationContext context = null;
+	private static final Logger logger = Logger.getLogger(CLIUtil.class);
+
 	@Autowired
 	StandaloneSecurityHandler securityHandler;
+
+	static ApplicationContext context = null;
 
 	public static void init() {
 		if (context == null) {
@@ -61,18 +63,17 @@ public class CLIUtil {
 		return context.getBean(beanClass);
 	}
 
-	public static String getMessage(String messagekey, HttpServletRequest request) {
-		ServletContext servletContext = request.getSession().getServletContext();
-		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-		Object[] args = new Object[]{};
-		String messageValue = ctx.getMessage(messagekey, args, Locale.getDefault());
-		return messageValue;
-	}
-
 	public void authenticate() throws Exception {
 		String user = PropertiesUtil.getProperty("xa.cli.user");
 		String pwd = PropertiesUtil.getProperty("xa.cli.password");
 		logger.info("Authenticating user:" + user);
 		securityHandler.login(user, pwd, context);
+	}
+	public static String getMessage(String messagekey,HttpServletRequest request){
+		ServletContext servletContext = request.getSession().getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		Object[] args = new Object[] {};
+		String messageValue=ctx.getMessage(messagekey, args, Locale.getDefault());
+		return messageValue;
 	}
 }

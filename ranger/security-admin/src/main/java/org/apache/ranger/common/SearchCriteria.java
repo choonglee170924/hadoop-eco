@@ -17,20 +17,23 @@
  * under the License.
  */
 
-/**
+ /**
  *
  */
 package org.apache.ranger.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.biz.RangerBizUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import java.util.*;
+import org.apache.log4j.Logger;
+import org.apache.ranger.biz.RangerBizUtil;
 
 
 public class SearchCriteria {
-	Logger logger = LogManager.getLogger(SearchCriteria.class);
+	Logger logger = Logger.getLogger(SearchCriteria.class);
 
 	int startIndex = 0;
 	int maxRows = Integer.MAX_VALUE;

@@ -19,8 +19,7 @@
 
 package org.apache.ranger.rest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.*;
 import org.apache.ranger.common.annotation.RangerAnnotationClassName;
 import org.apache.ranger.common.annotation.RangerAnnotationJSMgrName;
@@ -43,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+
 import java.util.List;
 
 @Path("public")
@@ -51,7 +51,7 @@ import java.util.List;
 @RangerAnnotationJSMgrName("PublicMgr")
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class PublicAPIs {
-	private static final Logger logger = LogManager.getLogger(PublicAPIs.class);
+	private static final Logger logger = Logger.getLogger(PublicAPIs.class);
 
 	@Autowired
 	RangerSearchUtil searchUtil;
@@ -67,7 +67,7 @@ public class PublicAPIs {
 
 	@Autowired
 	ServiceUtil serviceUtil;
-
+	
 	@Autowired
 	ServiceREST serviceREST;
 
@@ -76,113 +76,113 @@ public class PublicAPIs {
 
 	@Autowired
 	RESTErrorUtil restErrorUtil;
-
+	
 	@GET
 	@Path("/api/repository/{id}")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXRepository getRepository(@PathParam("id") Long id) {
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.getRepository(" + id + ")");
 		}
-
+		
 		RangerService service = serviceREST.getService(id);
-
+		
 		VXRepository ret = serviceUtil.toVXRepository(service);
 
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("<= PublicAPIs.getRepository(" + id + ")");
 		}
 		return ret;
 	}
-
-
+	
+	
 	@POST
 	@Path("/api/repository/")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXRepository createRepository(VXRepository vXRepository) {
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.createRepository(" + vXRepository + ")");
 		}
-
-		VXAsset vXAsset = serviceUtil.publicObjecttoVXAsset(vXRepository);
-
+		
+		VXAsset vXAsset  = serviceUtil.publicObjecttoVXAsset(vXRepository);
+		
 		RangerService service = serviceUtil.toRangerService(vXAsset);
 
 		RangerService createdService = serviceREST.createService(service);
-
+		
 		VXAsset retvXAsset = serviceUtil.toVXAsset(createdService);
-
+		
 		VXRepository ret = serviceUtil.vXAssetToPublicObject(retvXAsset);
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.createRepository(" + ret + ")");
 		}
-
+		
 		return ret;
 	}
 
-
+	
 	@PUT
 	@Path("/api/repository/{id}")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXRepository updateRepository(VXRepository vXRepository,
-	                                     @PathParam("id") Long id) {
-
-		if (logger.isDebugEnabled()) {
+			@PathParam("id") Long id) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.updateRepository(" + id + ")");
 		}
-
+		
 		XXService existing = daoMgr.getXXService().getById(id);
-		if (existing == null) {
+		if(existing == null) {
 			throw restErrorUtil.createRESTException("Repository not found for Id: " + id, MessageEnums.DATA_NOT_FOUND);
 		}
 
 		vXRepository.setId(id);
-
-		VXAsset vXAsset = serviceUtil.publicObjecttoVXAsset(vXRepository);
+		
+		VXAsset vXAsset  = serviceUtil.publicObjecttoVXAsset(vXRepository);
 
 		RangerService service = serviceUtil.toRangerService(vXAsset);
 		service.setVersion(existing.getVersion());
 
 		RangerService updatedService = serviceREST.updateService(service, null);
-
+		
 		VXAsset retvXAsset = serviceUtil.toVXAsset(updatedService);
-
+		
 		VXRepository ret = serviceUtil.vXAssetToPublicObject(retvXAsset);
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.updateRepository(" + ret + ")");
 		}
-
+		
 		return ret;
 	}
 
-
+	
 	@DELETE
 	@Path("/api/repository/{id}")
 	@PreAuthorize("hasRole('ROLE_SYS_ADMIN')")
 	@RangerAnnotationClassName(class_name = VXAsset.class)
 	public void deleteRepository(@PathParam("id") Long id,
-	                             @Context HttpServletRequest request) {
+			@Context HttpServletRequest request) {
 
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.deleteRepository(" + id + ")");
 		}
-
+		
 		serviceREST.deleteService(id);
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.deleteRepository(" + id + ")");
 		}
 	}
-
+	
 	@GET
 	@Path("/api/repository/")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXRepositoryList searchRepositories(
 			@Context HttpServletRequest request) {
-
-		if (logger.isDebugEnabled()) {
+	
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.searchRepositories()");
 		}
 
@@ -196,7 +196,7 @@ public class PublicAPIs {
 			ret = serviceUtil.rangerServiceListToPublicObjectList(serviceList);
 		}
 
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.searchRepositories(): count=" + (ret == null ? 0 : ret.getListSize()));
 		}
 
@@ -206,10 +206,10 @@ public class PublicAPIs {
 
 	@GET
 	@Path("/api/repository/count")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXLong countRepositories(@Context HttpServletRequest request) {
 
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.countRepositories()");
 		}
 
@@ -218,104 +218,105 @@ public class PublicAPIs {
 		VXLong ret = new VXLong();
 		ret.setValue(repositories == null ? 0 : repositories.getResultSize());
 
-		if (logger.isDebugEnabled()) {
+        if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.countRepositories(): count=" + ret);
 		}
 
-		return ret;
-	}
+        return ret;
+	}	
+	
 
-
+	
 	@GET
 	@Path("/api/policy/{id}")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXPolicy getPolicy(@PathParam("id") Long id) {
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.getPolicy() " + id);
 		}
-
-		RangerPolicy policy = null;
+		
+		RangerPolicy  policy  = null;
 		RangerService service = null;
 
 		policy = serviceREST.getPolicy(id);
-
-		if (policy != null) {
+		
+		if(policy != null) {
 			service = serviceREST.getServiceByName(policy.getService());
 		}
 
 		VXPolicy ret = serviceUtil.toVXPolicy(policy, service);
-
-		if (logger.isDebugEnabled()) {
+	
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.getPolicy()" + ret);
 		}
-
+		
 		return ret;
 	}
-
+	
 
 	@POST
 	@Path("/api/policy")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXPolicy createPolicy(VXPolicy vXPolicy) {
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.createPolicy()");
 		}
-
+		
 		RangerService service = serviceREST.getServiceByName(vXPolicy.getRepositoryName());
-		RangerPolicy policy = serviceUtil.toRangerPolicy(vXPolicy, service);
+		RangerPolicy  policy  = serviceUtil.toRangerPolicy(vXPolicy,service);
 
 		VXPolicy ret = null;
-		if (policy != null) {
-			if (logger.isDebugEnabled()) {
+		if(policy != null) {
+			if(logger.isDebugEnabled()) {
 				logger.debug("RANGERPOLICY: " + policy.toString());
 			}
-
-			RangerPolicy createdPolicy = serviceREST.createPolicy(policy, null);
+		
+			RangerPolicy  createdPolicy = serviceREST.createPolicy(policy,null);
 
 			ret = serviceUtil.toVXPolicy(createdPolicy, service);
 		}
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.createPolicy(" + policy + "): " + ret);
 		}
-
+	
 		return ret;
 	}
 
 	@PUT
 	@Path("/api/policy/{id}")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXPolicy updatePolicy(VXPolicy vXPolicy, @PathParam("id") Long id) {
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("==> PublicAPIs.updatePolicy(): " + vXPolicy);
+		
+		if(logger.isDebugEnabled()) {
+			logger.debug("==> PublicAPIs.updatePolicy(): "  + vXPolicy );
 		}
-
+		
 		XXPolicy existing = daoMgr.getXXPolicy().getById(id);
-		if (existing == null) {
+		if(existing == null) {
 			throw restErrorUtil.createRESTException("Policy not found for Id: " + id, MessageEnums.DATA_NOT_FOUND);
 		}
 
 		vXPolicy.setId(id);
-
+		
 		RangerService service = serviceREST.getServiceByName(vXPolicy.getRepositoryName());
-		RangerPolicy policy = serviceUtil.toRangerPolicy(vXPolicy, service);
+		RangerPolicy  policy  = serviceUtil.toRangerPolicy(vXPolicy,service);
 
 		VXPolicy ret = null;
-		if (policy != null) {
+		if(policy != null) {
 			policy.setVersion(existing.getVersion());
 
-			RangerPolicy updatedPolicy = serviceREST.updatePolicy(policy);
+			RangerPolicy  updatedPolicy = serviceREST.updatePolicy(policy);
 
 			ret = serviceUtil.toVXPolicy(updatedPolicy, service);
 		}
 
-		if (logger.isDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.debug("<== PublicAPIs.updatePolicy(" + policy + "): " + ret);
 		}
-
+	
 		return ret;
 	}
 
@@ -324,32 +325,32 @@ public class PublicAPIs {
 	@PreAuthorize("hasRole('ROLE_SYS_ADMIN')")
 	@RangerAnnotationClassName(class_name = VXResource.class)
 	public void deletePolicy(@PathParam("id") Long id,
-	                         @Context HttpServletRequest request) {
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("==> PublicAPIs.deletePolicy(): " + id);
+			@Context HttpServletRequest request) {
+		
+		if(logger.isDebugEnabled()) {
+			logger.debug("==> PublicAPIs.deletePolicy(): "  + id );
 		}
-
+		
 		serviceREST.deletePolicy(id);
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("<== PublicAPIs.deletePolicy(): " + id);
+		
+		if(logger.isDebugEnabled()) {
+			logger.debug("<== PublicAPIs.deletePolicy(): "  + id );
 		}
 	}
 
 	@GET
 	@Path("/api/policy")
-	@Produces({"application/json", "application/xml"})
+	@Produces({ "application/json", "application/xml" })
 	public VXPolicyList searchPolicies(@Context HttpServletRequest request) {
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.searchPolicies(): ");
 		}
 
 		SearchFilter filter = searchUtil.getSearchFilterFromLegacyRequest(request, policyService.sortFields);
 		// get all policies from the store; pick the page to return after applying filter
 		int savedStartIndex = filter.getStartIndex();
-		int savedMaxRows = filter.getMaxRows();
+		int savedMaxRows    = filter.getMaxRows();
 
 		filter.setStartIndex(0);
 		filter.setMaxRows(Integer.MAX_VALUE);
@@ -361,20 +362,20 @@ public class PublicAPIs {
 
 		VXPolicyList vXPolicyList = null;
 		if (rangerPolicyList != null) {
-			vXPolicyList = serviceUtil.rangerPolicyListToPublic(rangerPolicyList, filter);
+			vXPolicyList = serviceUtil.rangerPolicyListToPublic(rangerPolicyList,filter);
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("<== PublicAPIs.searchPolicies(): " + vXPolicyList);
+		if(logger.isDebugEnabled()) {
+			logger.debug("<== PublicAPIs.searchPolicies(): "  + vXPolicyList );
 		}
 		return vXPolicyList;
 	}
 
 	@GET
 	@Path("/api/policy/count")
-	@Produces({"application/xml", "application/json"})
+	@Produces({ "application/xml", "application/json" })
 	public VXLong countPolicies(@Context HttpServletRequest request) {
-
-		if (logger.isDebugEnabled()) {
+		
+		if(logger.isDebugEnabled()) {
 			logger.debug("==> PublicAPIs.countPolicies(): ");
 		}
 
@@ -383,8 +384,8 @@ public class PublicAPIs {
 		VXLong vXlong = new VXLong();
 		vXlong.setValue(policies == null ? 0 : policies.getResultSize());
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("<== PublicAPIs.countPolicies(): " + request);
+		if(logger.isDebugEnabled()) {
+			logger.debug("<== PublicAPIs.countPolicies(): "  + request );
 		}
 
 		return vXlong;

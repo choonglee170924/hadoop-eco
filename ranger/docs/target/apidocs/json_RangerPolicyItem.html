@@ -82,18 +82,18 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">accesses</span>
+          <td>  <span class="property-name">users</span>
 </td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItemAccess.html">RangerPolicyItemAccess</a>
+          <td>  <span class="datatype-reference">array of string
 </span>
 </td>
           <td>  <span class="property-description"></span>
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">groups</span>
+          <td>  <span class="property-name">accesses</span>
 </td>
-          <td>  <span class="datatype-reference">array of string
+          <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItemAccess.html">RangerPolicyItemAccess</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -109,18 +109,18 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">conditions</span>
+          <td>  <span class="property-name">groups</span>
 </td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItemCondition.html">RangerPolicyItemCondition</a>
+          <td>  <span class="datatype-reference">array of string
 </span>
 </td>
           <td>  <span class="property-description"></span>
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">users</span>
+          <td>  <span class="property-name">conditions</span>
 </td>
-          <td>  <span class="datatype-reference">array of string
+          <td>  <span class="datatype-reference">array of <a href="json_RangerPolicyItemCondition.html">RangerPolicyItemCondition</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -132,23 +132,23 @@
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
+  &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
   &quot;accesses&quot; : [ {
-    &quot;isAllowed&quot; : true,
-    &quot;type&quot; : &quot;...&quot;
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;isAllowed&quot; : true
   }, {
-    &quot;isAllowed&quot; : true,
-    &quot;type&quot; : &quot;...&quot;
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;isAllowed&quot; : true
   } ],
-  &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
   &quot;delegateAdmin&quot; : true,
+  &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
   &quot;conditions&quot; : [ {
-    &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;type&quot; : &quot;...&quot;
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
   }, {
-    &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;type&quot; : &quot;...&quot;
-  } ],
-  &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+  } ]
 }</pre>
 
         <footer class="footer">

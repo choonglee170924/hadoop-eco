@@ -143,18 +143,21 @@ import com.sun.jersey.multipart.FormDataParam;
 @Scope("request")
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class ServiceREST {
+	private static final Log LOG = LogFactory.getLog(ServiceREST.class);
+	private static final Log PERF_LOG = RangerPerfTracer.getPerfLogger("rest.ServiceREST");
+
 	final static public String PARAM_SERVICE_NAME     = "serviceName";
 	final static public String PARAM_SERVICE_TYPE     = "serviceType";
 	final static public String PARAM_POLICY_NAME      = "policyName";
 	final static public String PARAM_UPDATE_IF_EXISTS = "updateIfExists";
 	public static final String Allowed_User_List_For_Download = "policy.download.auth.users";
 	public static final String Allowed_User_List_For_Grant_Revoke = "policy.grantrevoke.auth.users";
+
 	public static final String isCSRF_ENABLED = "ranger.rest-csrf.enabled";
 	public static final String BROWSER_USER_AGENT_PARAM = "ranger.rest-csrf.browser-useragents-regex";
 	public static final String CUSTOM_METHODS_TO_IGNORE_PARAM = "ranger.rest-csrf.methods-to-ignore";
 	public static final String CUSTOM_HEADER_PARAM = "ranger.rest-csrf.custom-header";
-	private static final Log LOG = LogFactory.getLog(ServiceREST.class);
-	private static final Log PERF_LOG = RangerPerfTracer.getPerfLogger("rest.ServiceREST");
+	
 	@Autowired
 	RESTErrorUtil restErrorUtil;
 
@@ -171,19 +174,19 @@ public class ServiceREST {
 
 	@Autowired
 	ServiceDBStore svcStore;
-
+	
 	@Autowired
 	ServiceUtil serviceUtil;
 
 	@Autowired
 	RangerPolicyService policyService;
-
+	
 	@Autowired
         RangerPolicyLabelsService policyLabelsService;
 
         @Autowired
 	RangerServiceService svcService;
-
+	
 	@Autowired
 	RangerServiceDefService serviceDefService;
 
@@ -192,13 +195,13 @@ public class ServiceREST {
 
 	@Autowired
 	RangerSearchUtil searchUtil;
-
+	
     @Autowired
     RangerBizUtil bizUtil;
 
 	@Autowired
 	GUIDUtil guidUtil;
-
+	
 	@Autowired
 	RangerValidatorFactory validatorFactory;
 
@@ -207,7 +210,7 @@ public class ServiceREST {
 
 	@Autowired
 	TagDBStore tagStore;
-
+	
 	@Autowired
     JSONUtil jsonUtil;
 
@@ -333,7 +336,7 @@ public class ServiceREST {
 			if(!StringUtils.isEmpty(forceDeleteStr) && "true".equalsIgnoreCase(forceDeleteStr)) {
 				forceDelete = true;
 			}
-
+			
 			svcStore.deleteServiceDef(id, forceDelete);
 		} catch(WebApplicationException excp) {
 			throw excp;
@@ -441,7 +444,7 @@ public class ServiceREST {
 
 		return ret;
 	}
-
+	
 	@GET
 	@Path("/definitions")
 	@Produces({ "application/json", "application/xml" })
@@ -631,13 +634,13 @@ public class ServiceREST {
 		RangerPerfTracer perf = null;
 
 		try {
-
+			
 			if(RangerPerfTracer.isPerfTraceEnabled(PERF_LOG)) {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.createService(serviceName=" + service.getName() + ")");
 			}
 			RangerServiceValidator validator = validatorFactory.getServiceValidator(svcStore);
 			validator.validate(service, Action.CREATE);
-
+			
 			if(!StringUtils.isEmpty(service.getName().trim())){
 				service.setName(service.getName().trim());
 			}
@@ -694,13 +697,13 @@ public class ServiceREST {
 		RangerPerfTracer perf = null;
 
 		try {
-
+			
 			if(RangerPerfTracer.isPerfTraceEnabled(PERF_LOG)) {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.updateService(serviceName=" + service.getName() + ")");
 			}
 			RangerServiceValidator validator = validatorFactory.getServiceValidator(svcStore);
 			validator.validate(service, Action.UPDATE);
-
+			
 			if(!StringUtils.isEmpty(service.getName().trim())){
 				service.setName(service.getName().trim());
 			}
@@ -813,7 +816,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.getService(serviceId=" + id + ")");
 			}
 			ret = svcStore.getService(id);
-
+			
 			if (ret != null) {
 				UserSessionBase userSession = ContextUtil
 						.getCurrentUserSession();
@@ -868,7 +871,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.getService(serviceName=" + name + ")");
 			}
 			ret = svcStore.getServiceByName(name);
-
+			
 			if (ret != null) {
 				UserSessionBase userSession = ContextUtil
 						.getCurrentUserSession();
@@ -885,7 +888,7 @@ public class ServiceREST {
 					}
 				}
 			}
-
+			
 		} catch(WebApplicationException excp) {
 			throw excp;
 		} catch(Throwable excp) {
@@ -928,7 +931,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.getServices()");
 			}
 			paginatedSvcs = svcStore.getPaginatedServices(filter);
-
+			
 			if(paginatedSvcs!= null && !paginatedSvcs.getList().isEmpty()){
 				UserSessionBase userSession = ContextUtil
 						.getCurrentUserSession();
@@ -939,15 +942,15 @@ public class ServiceREST {
 						if (loggedInVXUser.getUserRoleList().size() == 1
 								&& loggedInVXUser.getUserRoleList().contains(
 										RangerConstants.ROLE_USER)) {
-
+							
 							List<RangerService> updateServiceList = new ArrayList<RangerService>();
 							for(RangerService rangerService : paginatedSvcs.getList()){
-
+								
 								if(rangerService != null){
 									updateServiceList.add(hideCriticalServiceDetailsForRoleUser(rangerService));
 								}
 							}
-
+							
 							if(updateServiceList != null && !updateServiceList.isEmpty()){
 								paginatedSvcs.setList(updateServiceList);
 							}
@@ -1031,7 +1034,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.countService()");
 			}
 			List<RangerService> services = getServices(request).getServices();
-
+			
 			ret = Long.valueOf(services == null ? 0 : services.size());
 		} catch(WebApplicationException excp) {
 			throw excp;
@@ -1083,7 +1086,7 @@ public class ServiceREST {
 
 		return ret;
 	}
-
+	
 	@POST
 	@Path("/services/lookupResource/{serviceName}")
 	@Produces({ "application/json", "application/xml" })
@@ -1158,11 +1161,11 @@ public class ServiceREST {
 					}
 
 					RangerPolicy policy = getExactMatchPolicyForResource(serviceName, resource, userName);
-
+	
 					if(policy != null) {
 						boolean policyUpdated = false;
 						policyUpdated = ServiceRESTUtil.processGrantRequest(policy, grantRequest);
-
+	
 						if(policyUpdated) {
 							svcStore.updatePolicy(policy);
 						} else {
@@ -1176,32 +1179,32 @@ public class ServiceREST {
 						policy.setDescription("created by grant");
 						policy.setIsAuditEnabled(grantRequest.getEnableAudit());
 						policy.setCreatedBy(userName);
-
+			
 						Map<String, RangerPolicyResource> policyResources = new HashMap<String, RangerPolicyResource>();
 						Set<String>                       resourceNames   = resource.getKeys();
-
+			
 						if(! CollectionUtils.isEmpty(resourceNames)) {
 							for(String resourceName : resourceNames) {
 								RangerPolicyResource policyResource = new RangerPolicyResource((String) resource.getValue(resourceName));
 								policyResource.setIsRecursive(grantRequest.getIsRecursive());
-
+		
 								policyResources.put(resourceName, policyResource);
 							}
 						}
 						policy.setResources(policyResources);
-
+	
 						RangerPolicyItem policyItem = new RangerPolicyItem();
-
+	
 						policyItem.setDelegateAdmin(grantRequest.getDelegateAdmin());
 						policyItem.getUsers().addAll(grantRequest.getUsers());
 						policyItem.getGroups().addAll(grantRequest.getGroups());
-
+	
 						for(String accessType : grantRequest.getAccessTypes()) {
 							policyItem.getAccesses().add(new RangerPolicyItemAccess(accessType, Boolean.TRUE));
 						}
-
+	
 						policy.getPolicyItems().add(policyItem);
-
+	
 						svcStore.createPolicy(policy);
 					}
 				} catch(WebApplicationException excp) {
@@ -1223,7 +1226,7 @@ public class ServiceREST {
 
 		return ret;
 	}
-
+	
 	@POST
 	@Path("/secure/services/grant/{serviceName}")
 	@Produces({ "application/json", "application/xml" })
@@ -1337,7 +1340,7 @@ public class ServiceREST {
 			LOG.debug("<== ServiceREST.secureGrantAccess(" + serviceName + ", " + grantRequest + "): " + ret);
 		}
 		return ret;
-	}
+	}	
 
 	@POST
 	@Path("/services/revoke/{serviceName}")
@@ -1490,8 +1493,8 @@ public class ServiceREST {
 			LOG.debug("<== ServiceREST.secureRevokeAccess(" + serviceName + ", " + revokeRequest + "): " + ret);
 		}
 		return ret;
-	}
-
+	}	
+	
 	@POST
 	@Path("/policies")
 	@Produces({ "application/json", "application/xml" })
@@ -1512,7 +1515,7 @@ public class ServiceREST {
 				String serviceName    = request.getParameter(PARAM_SERVICE_NAME);
 				String policyName     = request.getParameter(PARAM_POLICY_NAME);
 				String updateIfExists = request.getParameter(PARAM_UPDATE_IF_EXISTS);
-
+				
 				if (serviceName == null && policyName == null && updateIfExists != null && updateIfExists.equalsIgnoreCase("true")){
 					serviceName    = (String) request.getAttribute(PARAM_SERVICE_NAME);
 					policyName     = (String) request.getAttribute(PARAM_POLICY_NAME);
@@ -1861,7 +1864,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.getPoliciesInExcel()");
 			}
 			List<RangerPolicy> policyLists = new ArrayList<RangerPolicy>();
-
+			
 			policyLists = getAllFilteredPolicyList(filter, request, policyLists);
 			if (CollectionUtils.isNotEmpty(policyLists)){
                                 for (RangerPolicy rangerPolicy : policyLists) {
@@ -1874,11 +1877,11 @@ public class ServiceREST {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				LOG.error("No policies found to download!");
 			}
-
+			
 			RangerExportPolicyList rangerExportPolicyList = new RangerExportPolicyList();
 			svcStore.putMetaDataInfo(rangerExportPolicyList);
 			String metaDataInfo = new ObjectMapper().writeValueAsString(rangerExportPolicyList.getMetaDataInfo());
-
+			
 			List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
 			XXTrxLog xxTrxLog = new XXTrxLog();
 			xxTrxLog.setAction("EXPORT EXCEL");
@@ -1905,7 +1908,7 @@ public class ServiceREST {
 			LOG.debug("==> ServiceREST.getPoliciesInCsv()");
 		}
 		RangerPerfTracer perf = null;
-
+		
 		SearchFilter filter = searchUtil.getSearchFilter(request, policyService.sortFields);
 
 		try {
@@ -1913,7 +1916,7 @@ public class ServiceREST {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG, "ServiceREST.getPoliciesInCsv()");
 			}
 			List<RangerPolicy> policyLists = new ArrayList<RangerPolicy>();
-
+			
 			policyLists = getAllFilteredPolicyList(filter, request, policyLists);
 			if (CollectionUtils.isNotEmpty(policyLists)){
                                 for (RangerPolicy rangerPolicy : policyLists) {
@@ -1927,11 +1930,11 @@ public class ServiceREST {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				LOG.error("No policies found to download!");
 			}
-
+			
 			RangerExportPolicyList rangerExportPolicyList = new RangerExportPolicyList();
 			svcStore.putMetaDataInfo(rangerExportPolicyList);
 			String metaDataInfo = new ObjectMapper().writeValueAsString(rangerExportPolicyList.getMetaDataInfo());
-
+			
 			List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
 			XXTrxLog xxTrxLog = new XXTrxLog();
 			xxTrxLog.setAction("EXPORT CSV");
@@ -1958,7 +1961,7 @@ public class ServiceREST {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("==> ServiceREST.getPoliciesInJson()");
 		}
-
+		
 		RangerPerfTracer perf = null;
 		SearchFilter filter = searchUtil.getSearchFilter(request,policyService.sortFields);
 
@@ -1971,7 +1974,7 @@ public class ServiceREST {
 			}
 
 			List<RangerPolicy> policyLists = new ArrayList<RangerPolicy>();
-
+			
 			policyLists = getAllFilteredPolicyList(filter, request, policyLists);
 			if (CollectionUtils.isNotEmpty(policyLists)) {
 				for (RangerPolicy rangerPolicy : policyLists) {
@@ -1986,12 +1989,12 @@ public class ServiceREST {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				LOG.error("There is no Policy to Export!!");
 			}
-
+                        
 			if(!checkPoliciesExists){
 				RangerExportPolicyList rangerExportPolicyList = new RangerExportPolicyList();
 				svcStore.putMetaDataInfo(rangerExportPolicyList);
 				String metaDataInfo = new ObjectMapper().writeValueAsString(rangerExportPolicyList.getMetaDataInfo());
-
+							
 				List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
 				XXTrxLog xxTrxLog = new XXTrxLog();
 				xxTrxLog.setAction("EXPORT JSON");
@@ -2009,7 +2012,7 @@ public class ServiceREST {
 			RangerPerfTracer.log(perf);
 		}
 	}
-
+	
 	@POST
 	@Path("/policies/importPoliciesFromFile")
 	@Consumes({MediaType.MULTIPART_FORM_DATA, MediaType.APPLICATION_JSON})
@@ -2021,7 +2024,7 @@ public class ServiceREST {
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@QueryParam("isOverride") Boolean isOverride) {
-
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("==> ServiceREST.importPoliciesFromFile()");
 		}
@@ -2029,12 +2032,12 @@ public class ServiceREST {
 		String metaDataInfo = null;
 		List<XXTrxLog> trxLogListError = new ArrayList<XXTrxLog>();
 		XXTrxLog xxTrxLogError = new XXTrxLog();
-
+		
 		try {
 			if (RangerPerfTracer.isPerfTraceEnabled(PERF_LOG)) {
 				perf = RangerPerfTracer.getPerfTracer(PERF_LOG,"ServiceREST.importPoliciesFromFile()");
 			}
-
+			
 			List<XXTrxLog> trxLogList = new ArrayList<XXTrxLog>();
 			XXTrxLog xxTrxLog = new XXTrxLog();
 			xxTrxLog.setAction("IMPORT START");
@@ -2042,7 +2045,7 @@ public class ServiceREST {
                         xxTrxLog.setPreviousValue("IMPORT START");
 			trxLogList.add(xxTrxLog);
 			bizUtil.createTrxLog(trxLogList);
-
+			
 			if (isOverride == null){
 				isOverride = false;
 			}
@@ -2097,8 +2100,8 @@ public class ServiceREST {
 						destinationServices.add(destinationServiceName);
 					}
 				}
-			}
-
+			}	
+			
 			String fileName = fileDetail.getFileName();
 			int totalPolicyCreate = 0;
 			Map<String, RangerPolicy> policiesMap = new LinkedHashMap<String, RangerPolicy>();
@@ -2108,7 +2111,7 @@ public class ServiceREST {
 					RangerExportPolicyList rangerExportPolicyList = null;
 					List<RangerPolicy> policies = null;
 					Gson gson = new Gson();
-
+					
 					String policiesString = IOUtils.toString(uploadedInputStream);
 					policiesString = policiesString.trim();
 					if (StringUtils.isNotEmpty(policiesString)){
@@ -2251,7 +2254,7 @@ public class ServiceREST {
 				LOG.error("Provided file format is not supported!!");
 				throw restErrorUtil.createRESTException("Provided file format is not supported!!");
 			}
-		} catch(JsonSyntaxException ex) {
+		} catch(JsonSyntaxException ex) { 
 			LOG.error("Provided json file is not valid!!", ex);
 			xxTrxLogError.setAction("IMPORT ERROR");
 			xxTrxLogError.setObjectClassType(AppConstants.CLASS_TYPE_RANGER_POLICY);
@@ -2297,7 +2300,7 @@ public class ServiceREST {
 			}
 		}
 	}
-
+	
 	private List<RangerPolicy> getAllFilteredPolicyList(SearchFilter filter,
 			HttpServletRequest request, List<RangerPolicy> policyLists) {
 		String serviceNames = null;
@@ -2306,28 +2309,28 @@ public class ServiceREST {
 		List<String> serviceTypeList = null;
 		List<String> serviceNameInServiceTypeList = new ArrayList<String>();
 		boolean isServiceExists = false;
-
+		
 		if (request.getParameter(PARAM_SERVICE_NAME) != null){
 			serviceNames = request.getParameter(PARAM_SERVICE_NAME);
 		}
 		if (StringUtils.isNotEmpty(serviceNames)) {
 			serviceNameList = new ArrayList<String>(Arrays.asList(serviceNames.split(",")));
 		}
-
+		
 		if (request.getParameter(PARAM_SERVICE_TYPE) != null){
 			serviceType = request.getParameter(PARAM_SERVICE_TYPE);
 		}
 		if(StringUtils.isNotEmpty(serviceType)){
 			serviceTypeList = new ArrayList<String>(Arrays.asList(serviceType.split(",")));
 		}
-
+		
 		List<RangerPolicy> policyList = new ArrayList<RangerPolicy>();
 		List<RangerPolicy> policyListByServiceName = new ArrayList<RangerPolicy>();
-
+		
 		if (filter != null) {
 			filter.setStartIndex(0);
 			filter.setMaxRows(Integer.MAX_VALUE);
-
+			
 			if (!CollectionUtils.isEmpty(serviceTypeList)) {
 				for (String s : serviceTypeList) {
 					filter.removeParam(PARAM_SERVICE_TYPE);
@@ -2377,7 +2380,7 @@ public class ServiceREST {
 			policyLists = serviceUtil.getMatchingPoliciesForResource(request, policyLists);
 		}
 		Map<Long, RangerPolicy> orderedPolicies = new TreeMap<Long, RangerPolicy>();
-
+		
 		if (!CollectionUtils.isEmpty(policyLists)) {
 			for (RangerPolicy policy : policyLists) {
 				if (policy != null) {
@@ -2391,7 +2394,7 @@ public class ServiceREST {
 		}
 		return policyLists;
 	}
-
+	
 	private void deletePoliciesProvidedInServiceMap(
 			List<String> sourceServices, List<String> destinationServices) {
 		int totalDeletedPilicies = 0;
@@ -2534,7 +2537,7 @@ public class ServiceREST {
 			List<RangerPolicy> policies = getPolicies(request).getPolicies();
 
 			policies = applyAdminAccessFilter(policies);
-
+			
 			ret = Long.valueOf(policies == null ? 0 : policies.size());
 		} catch(WebApplicationException excp) {
 			throw excp;
@@ -2862,7 +2865,7 @@ public class ServiceREST {
 			LOG.debug("<== ServiceREST.getSecureServicePoliciesIfUpdated(" + serviceName + ", " + lastKnownVersion + ", " + lastActivationTime + "): count=" + ((ret == null || ret.getPolicies() == null) ? 0 : ret.getPolicies().size()));
 		}
 		return ret;
-	}
+	}		
 
 	private void createPolicyDownloadAudit(String serviceName, Long lastKnownVersion, String pluginId, int httpRespCode, String clusterName, HttpServletRequest request) {
 		try {
@@ -2880,7 +2883,7 @@ public class ServiceREST {
 			policyExportAudit.setRequestedEpoch(lastKnownVersion);
 			policyExportAudit.setHttpRetCode(httpRespCode);
 			policyExportAudit.setClusterName(clusterName);
-
+			
 			assetMgr.createPolicyAudit(policyExportAudit);
 		} catch(Exception excp) {
 			LOG.error("error while creating policy download audit", excp);
@@ -3286,7 +3289,7 @@ public class ServiceREST {
 	public String checkSSO() {
 		return String.valueOf(bizUtil.isSSOEnabled());
 	}
-
+	
 	@GET
 	@Path("/csrfconf")
 	@Produces({ "application/json"})
@@ -3333,7 +3336,7 @@ public class ServiceREST {
 		map.put(CUSTOM_METHODS_TO_IGNORE_PARAM, PropertiesUtil.getProperty(CUSTOM_METHODS_TO_IGNORE_PARAM, RangerCSRFPreventionFilter.METHODS_TO_IGNORE_DEFAULT));
 		return map;
 	}
-
+	
 	boolean isAdminUserWithNoFilterParams(SearchFilter filter) {
 		return (filter == null || MapUtils.isEmpty(filter.getParams())) &&
 			   (bizUtil.isAdmin() || bizUtil.isKeyAdmin());
@@ -3494,10 +3497,10 @@ public class ServiceREST {
         }
         return ret;
     }
-
+	
 	private RangerService hideCriticalServiceDetailsForRoleUser(RangerService rangerService){
 		RangerService ret = rangerService;
-
+		
 		ret.setConfigs(null);
 		ret.setDescription(null);
 		ret.setCreatedBy(null);
@@ -3509,7 +3512,7 @@ public class ServiceREST {
 		ret.setTagVersion(null);
 		ret.setTagUpdateTime(null);
 		ret.setVersion(null);
-
+		
 		return ret;
 	}
 

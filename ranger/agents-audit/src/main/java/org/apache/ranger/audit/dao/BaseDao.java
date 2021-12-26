@@ -17,24 +17,23 @@
  * under the License.
  */
 
-package org.apache.ranger.audit.dao;
+ package org.apache.ranger.audit.dao;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+
+import org.apache.log4j.Logger;
 
 public abstract class BaseDao<T> {
-	static final Logger logger = LogManager.getLogger(BaseDao.class);
+	static final Logger logger = Logger.getLogger(BaseDao.class);
 
 	protected DaoManager daoManager;
 
@@ -69,28 +68,28 @@ public abstract class BaseDao<T> {
 
 		EntityManager em = getEntityManager();
 
-		if (em != null) {
+		if(em != null) {
 			EntityTransaction et = em.getTransaction();
-
+			
 			// check the transaction is not already active
-			if (et != null && !et.isActive()) {
+			if(et != null && !et.isActive()) {
 				et.begin();
 				ret = true;
 			}
 		}
-
+		
 		return ret;
 	}
 
 	public void commitTransaction() {
 		EntityManager em = getEntityManager();
 
-		if (em != null) {
+		if(em != null) {
 			em.flush();
 
 			EntityTransaction et = em.getTransaction();
 
-			if (et != null) {
+			if(et != null) {
 				et.commit();
 			}
 		}
@@ -99,10 +98,10 @@ public abstract class BaseDao<T> {
 	public void rollbackTransaction() {
 		EntityManager em = getEntityManager();
 
-		if (em != null) {
+		if(em != null) {
 			EntityTransaction et = em.getTransaction();
 
-			if (et != null) {
+			if(et != null) {
 				et.rollback();
 			}
 		}
@@ -115,7 +114,7 @@ public abstract class BaseDao<T> {
 
 		getEntityManager().persist(obj);
 
-		if (trxBegan) {
+		if(trxBegan) {
 			commitTransaction();
 		}
 
@@ -129,7 +128,7 @@ public abstract class BaseDao<T> {
 
 		getEntityManager().merge(obj);
 
-		if (trxBegan) {
+		if(trxBegan) {
 			commitTransaction();
 		}
 
@@ -149,7 +148,7 @@ public abstract class BaseDao<T> {
 
 		getEntityManager().remove(obj);
 
-		if (trxBegan) {
+		if(trxBegan) {
 			commitTransaction();
 		}
 
@@ -212,7 +211,7 @@ public abstract class BaseDao<T> {
 	}
 
 	public List<T> findByNamedQuery(String namedQuery, String paramName,
-	                                Object refId) {
+			Object refId) {
 		List<T> ret = new ArrayList<T>();
 
 		if (namedQuery == null) {

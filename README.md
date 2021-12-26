@@ -2,7 +2,7 @@
 
 - 2021-12-26 updated by choong
 ---
-## ranger : 1.2.0
+## ranger : 1.2.0 + 2.0.0
 ```
 mvn clean compile package assembly:assembly install -DskipTests -Drat.skip=true
 ```

@@ -117,7 +117,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 
     private RegionCoprocessorEnvironment regionEnv;
 	private Map<InternalScanner, String> scannerOwners = new MapMaker().weakKeys().makeMap();
-
+	
 	/*
 	 * These are package level only for testability and aren't meant to be exposed outside via getters/setters or made available to derived classes.
 	 */
@@ -125,7 +125,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 	final HbaseUserUtils _userUtils = _factory.getUserUtils();
 	final HbaseAuthUtils _authUtils = _factory.getAuthUtils();
 	private static volatile RangerHBasePlugin hbasePlugin = null;
-
+	
 	// Utilities Methods
 	protected byte[] getTableName(RegionCoprocessorEnvironment e) {
 		Region region = e.getRegion();
@@ -162,12 +162,12 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				return true;
 			}
 		}
-
+			
 		return false;
 	}
 	protected boolean isAccessForMetaTables(RegionCoprocessorEnvironment env) {
 		HRegionInfo hri = env.getRegion().getRegionInfo();
-
+		
 		if (hri.isMetaTable() || hri.isMetaRegion()) {
 			return true;
 		} else {
@@ -188,7 +188,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		}
 		return user;
 	}
-
+	
 	private String getRemoteAddress() {
 		InetAddress remoteAddr = RpcServer.getRemoteAddress();
 
@@ -211,7 +211,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
      String owner = scannerOwners.get(s);
      if (owner != null && !owner.equals(requestUserName)) {
        throw new AccessDeniedException("User '"+ requestUserName +"' is not the scanner owner!");
-     }
+     }	
 	}
 	/**
 	 * @param families
@@ -252,7 +252,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		}
 		return result;
 	}
-
+	
 	static class ColumnFamilyAccessResult {
 		final boolean _everythingIsAccessible;
 		final boolean _somethingIsAccessible;
@@ -277,7 +277,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			_filter = filter;
 			_clusterName = clusterName;
 		}
-
+		
 		@Override
 		public String toString() {
 			return Objects.toStringHelper(getClass())
@@ -290,10 +290,10 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 					.add("filter", _filter)
 					.add("clusterName", _clusterName)
 					.toString();
-
+			
 		}
 	}
-
+	
 	ColumnFamilyAccessResult evaluateAccess(String operation, Action action, final RegionCoprocessorEnvironment env,
 											final Map<byte[], ? extends Collection<?>> familyMap) throws AccessDeniedException {
 
@@ -368,7 +368,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		} else {
 			LOG.debug("evaluateAccess: Families collection not null.  Skipping table-level check, will do finer level check");
 		}
-
+		
 		boolean everythingIsAccessible = true;
 		boolean somethingIsAccessible = false;
 		/*
@@ -548,7 +548,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			}
 		}
 	}
-
+	
 	Filter combineFilters(Filter filter, Filter existingFilter) {
 		Filter combinedFilter = filter;
 		if (existingFilter != null) {
@@ -582,7 +582,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			RangerPerfTracer.log(perf);
 		}
 	}
-
+	
 	/**
 	 * This could run s
 	 * @param operation
@@ -594,14 +594,14 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 	 * @throws AccessDeniedException
 	 */
 	void authorizeAccess(String operation, String otherInformation, Action action, String table, String columnFamily, String column) throws AccessDeniedException {
-
+		
 		String access = _authUtils.getAccess(action);
 		if (LOG.isDebugEnabled()) {
 			final String format = "authorizeAccess: %s: Operation[%s], Info[%s], access[%s], table[%s], columnFamily[%s], column[%s]";
 			String message = String.format(format, "Entering", operation, otherInformation, access, table, columnFamily, column);
 			LOG.debug(message);
 		}
-
+		
 		final String format =  "authorizeAccess: %s: Operation[%s], Info[%s], access[%s], table[%s], columnFamily[%s], column[%s], allowed[%s], reason[%s]";
 		if (canSkipAccessCheck(operation, access, table)) {
 			if (LOG.isDebugEnabled()) {
@@ -612,7 +612,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		}
 		User user = getActiveUser();
 		String clusterName = hbasePlugin.getClusterName();
-
+		
 		HbaseAuditHandler auditHandler = _factory.getAuditHandler();
 		AuthorizationSession session = new AuthorizationSession(hbasePlugin)
 			.operation(operation)
@@ -627,20 +627,20 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			.clusterName(clusterName)
 			.buildRequest()
 			.authorize();
-
+		
 		if (LOG.isDebugEnabled()) {
 			boolean allowed = session.isAuthorized();
 			String reason = session.getDenialReason();
 			String message = String.format(format, "Exiting", operation, otherInformation, access, table, columnFamily, column, allowed, reason);
 			LOG.debug(message);
 		}
-
+		
 		session.publishResults();
 	}
-
+	
 	boolean canSkipAccessCheck(final String operation, String access, final String table)
 			throws AccessDeniedException {
-
+		
 		User user = getActiveUser();
 		boolean result = false;
 		if (user == null) {
@@ -653,10 +653,10 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		} else {
 			LOG.debug("Can't skip access checks");
 		}
-
+		
 		return result;
 	}
-
+	
 	boolean canSkipAccessCheck(final String operation, String access, final RegionCoprocessorEnvironment regionServerEnv) throws AccessDeniedException {
 
 		String clusterName = hbasePlugin.getClusterName();
@@ -685,7 +685,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		}
 		return false;
 	}
-
+	
 	boolean isAccessForMetadataRead(String access, String table) {
 		if (_authUtils.isReadAccess(access) && isSpecialTable(table)) {
 			LOG.debug("isAccessForMetadataRead: Metadata tables read: access allowed!");
@@ -708,7 +708,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 
 		authorizeAccess(request, null, action, table, null, null);
 	}
-
+	
 	protected void requirePermission(String request, byte[] aTableName, byte[] aColumnFamily, byte[] aQualifier, Permission.Action action) throws AccessDeniedException {
 
 		String table = Bytes.toString(aTableName);
@@ -717,7 +717,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 
 		authorizeAccess(request, null, action, table, columnFamily, column);
 	}
-
+	
 	protected void requirePermission(String request, Permission.Action perm, RegionCoprocessorEnvironment env, Collection<byte[]> families) throws IOException {
 		HashMap<byte[], Set<byte[]>> familyMap = new HashMap<byte[], Set<byte[]>>();
 
@@ -728,7 +728,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		}
 		requirePermission(request, perm, env, familyMap);
 	}
-
+	
 	@Override
 	public void postScannerClose(ObserverContext<RegionCoprocessorEnvironment> c, InternalScanner s) throws IOException {
 		scannerOwners.remove(s);
@@ -853,7 +853,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 	@Override
 	public Result preIncrement(ObserverContext<RegionCoprocessorEnvironment> c, Increment increment) throws IOException {
 		requirePermission("increment", TablePermission.Action.WRITE, c.getEnvironment(), increment.getFamilyCellMap().keySet());
-
+		
 		return null;
 	}
 	@Override
@@ -881,7 +881,6 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			requirePermission("abortProcedure", Action.ADMIN);
 		}
 	}
-
 
 	@Override
 	public void postListProcedures(ObserverContext<MasterCoprocessorEnvironment> observerContext, List<ProcedureInfo> procInfoList) throws IOException {
@@ -1039,7 +1038,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 			coprocessorType = REGIONAL_COPROCESSOR_TYPE;
 			appType = "hbaseRegional";
 		}
-
+		
 		Configuration conf = env.getConfiguration();
 		HbaseFactory.initialize(conf);
 
@@ -1049,7 +1048,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 		if(plugin == null) {
 			synchronized(RangerAuthorizationCoprocessor.class) {
 				plugin = hbasePlugin;
-
+				
 				if(plugin == null) {
 					plugin = new RangerHBasePlugin(appType);
 
@@ -1061,7 +1060,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				}
 			}
 		}
-
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Start of Coprocessor: [" + coprocessorType + "]");
 		}
@@ -1070,7 +1069,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 	public void prePut(ObserverContext<RegionCoprocessorEnvironment> c, Put put, WALEdit edit, Durability durability) throws IOException {
 		requirePermission("put", TablePermission.Action.WRITE, c.getEnvironment(), put.getFamilyCellMap());
 	}
-
+	
 	@Override
 	public void preGetOp(final ObserverContext<RegionCoprocessorEnvironment> rEnv, final Get get, final List<Cell> result) throws IOException {
 		if (LOG.isDebugEnabled()) {
@@ -1138,7 +1137,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				.user(user)
 				.access(access)
 				.clusterName(clusterName);
-
+	
 			Iterator<HTableDescriptor> itr = descriptors.iterator();
 			while (itr.hasNext()) {
 				HTableDescriptor htd = itr.next();
@@ -1158,7 +1157,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				session.logCapturedEvents();
 			}
 		}
-
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(String.format("<== postGetTableDescriptors(count(tableNamesList)=%s, count(descriptors)=%s, regex=%s)", tableNamesList == null ? 0 : tableNamesList.size(),
 					descriptors == null ? 0 : descriptors.size(), regex));
@@ -1181,14 +1180,14 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 
 		requirePermission("preCleanupBulkLoad", Permission.Action.WRITE, ctx.getEnvironment(), cfs);
 	}
-
+	
 	@Override
 	public void grant(RpcController controller, AccessControlProtos.GrantRequest request, RpcCallback<AccessControlProtos.GrantResponse> done) {
 		boolean isSuccess = false;
 
 		if(UpdateRangerPoliciesOnGrantRevoke) {
 			GrantRevokeRequest grData = null;
-
+	
 			try {
 				grData = createGrantData(request);
 
@@ -1198,7 +1197,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 
 					String clusterName = plugin.getClusterName();
 					grData.setClusterName(clusterName);
-
+					
 					RangerAccessResultProcessor auditHandler = new RangerDefaultAuditHandler();
 
 					plugin.grantAccess(grData, auditHandler);
@@ -1240,7 +1239,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				if(plugin != null) {
 					String clusterName = plugin.getClusterName();
 					grData.setClusterName(clusterName);
-
+					
 					RangerAccessResultProcessor auditHandler = new RangerDefaultAuditHandler();
 
 					plugin.revokeAccess(grData, auditHandler);
@@ -1321,7 +1320,7 @@ public class RangerAuthorizationCoprocessor extends RangerAuthorizationCoprocess
 				nameSpace = userPerm.getNamespace();
 			break;
 		}
-
+		
 		if(StringUtil.isEmpty(nameSpace) && StringUtil.isEmpty(tableName) && StringUtil.isEmpty(colFamily) && StringUtil.isEmpty(qualifier)) {
 			throw new Exception("grant(): namespace/table/columnFamily/columnQualifier not specified");
 		}

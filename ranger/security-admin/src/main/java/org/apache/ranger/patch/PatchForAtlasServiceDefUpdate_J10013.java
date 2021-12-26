@@ -17,11 +17,18 @@
 
 package org.apache.ranger.patch;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.ServiceDBStore;
-import org.apache.ranger.db.*;
+import org.apache.ranger.db.RangerDaoManager;
+import org.apache.ranger.db.XXAccessTypeDefDao;
+import org.apache.ranger.db.XXResourceDefDao;
+import org.apache.ranger.db.XXServiceDao;
+import org.apache.ranger.db.XXServiceDefDao;
 import org.apache.ranger.entity.XXAccessTypeDef;
 import org.apache.ranger.entity.XXResourceDef;
 import org.apache.ranger.entity.XXService;
@@ -32,21 +39,16 @@ import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 @Component
 public class PatchForAtlasServiceDefUpdate_J10013 extends BaseLoader {
-	private static final Logger LOG = LogManager.getLogger(PatchForAtlasServiceDefUpdate_J10013.class);
+	private static final Logger LOG = Logger.getLogger(PatchForAtlasServiceDefUpdate_J10013.class);
 
 	@Autowired
 	RangerDaoManager daoMgr;
 
 	@Autowired
 	ServiceDBStore svcDBStore;
-
+	
 	@Autowired
 	RangerServiceService svcService;
 
@@ -65,7 +67,7 @@ public class PatchForAtlasServiceDefUpdate_J10013 extends BaseLoader {
 			System.exit(1);
 		}
 	}
-
+	
 	@Override
 	public void init() throws Exception {
 	}
@@ -86,18 +88,18 @@ public class PatchForAtlasServiceDefUpdate_J10013 extends BaseLoader {
 		LOG.info("PatchForAtlasServiceDefUpdate data ");
 	}
 
-	private void updateAtlasServiceDef() {
-		String serviceDefName = EmbeddedServiceDefsUtil.EMBEDDED_SERVICEDEF_ATLAS_NAME;
+	private void updateAtlasServiceDef(){
+		String serviceDefName=EmbeddedServiceDefsUtil.EMBEDDED_SERVICEDEF_ATLAS_NAME;
 		XXServiceDefDao serviceDefDao = daoMgr.getXXServiceDef();
 		XXServiceDef serviceDef = serviceDefDao.findByName(serviceDefName);
 		// if service-def named 'atlas' does not exist then no need to process this patch further.
-		if (serviceDef == null) {
+		if(serviceDef == null) {
 			LOG.info(serviceDefName + ": service-def not found. No patching is needed");
 			return;
 		}
 		// if older atlas service-def doesn't exist then no need to process this patch further.
-		if (!checkIfHasOlderServiceDef(serviceDef)) {
-			LOG.info("Older version of " + serviceDefName + " service-def not found. No patching is needed");
+		if(!checkIfHasOlderServiceDef(serviceDef)) {
+			LOG.info("Older version of "+serviceDefName + " service-def not found. No patching is needed");
 			return;
 		}
 		String suffix = null;
@@ -139,20 +141,20 @@ public class PatchForAtlasServiceDefUpdate_J10013 extends BaseLoader {
 	private boolean checkIfHasOlderServiceDef(XXServiceDef serviceDef) {
 		boolean result = true;
 		Set<String> atlasResources = new HashSet<>(Arrays.asList("entity", "type", "operation", "taxonomy", "term"));
-		XXResourceDefDao resourceDefDao = daoMgr.getXXResourceDef();
+		XXResourceDefDao resourceDefDao=daoMgr.getXXResourceDef();
 		List<XXResourceDef> xxResourceDefs = resourceDefDao.findByServiceDefId(serviceDef.getId());
 		for (XXResourceDef xxResourceDef : xxResourceDefs) {
-			if (!atlasResources.contains(xxResourceDef.getName())) {
+			if(! atlasResources.contains(xxResourceDef.getName())) {
 				result = false;
 				break;
 			}
 		}
-		if (result) {
+		if(result){
 			Set<String> atlasAccessTypes = new HashSet<>(Arrays.asList("read", "create", "update", "delete", "all"));
-			XXAccessTypeDefDao accessTypeDefDao = daoMgr.getXXAccessTypeDef();
+			XXAccessTypeDefDao accessTypeDefDao=daoMgr.getXXAccessTypeDef();
 			List<XXAccessTypeDef> xxAccessTypeDefs = accessTypeDefDao.findByServiceDefId(serviceDef.getId());
 			for (XXAccessTypeDef xxAccessTypeDef : xxAccessTypeDefs) {
-				if (!atlasAccessTypes.contains(xxAccessTypeDef.getName())) {
+				if(! atlasAccessTypes.contains(xxAccessTypeDef.getName())) {
 					result = false;
 					break;
 				}

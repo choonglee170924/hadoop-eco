@@ -17,11 +17,20 @@
  * under the License.
  */
 
-package org.apache.ranger.service;
+ package org.apache.ranger.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.ContextUtil;
+import org.apache.ranger.common.MessageEnums;
+import org.apache.ranger.common.RangerConfigUtil;
+import org.apache.ranger.common.RangerConstants;
+import org.apache.ranger.common.StringUtil;
+import org.apache.ranger.common.UserSessionBase;
 import org.apache.ranger.entity.XXPortalUser;
 import org.apache.ranger.entity.XXPortalUserRole;
 import org.apache.ranger.view.VXMessage;
@@ -31,21 +40,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 @Service
 @Scope("singleton")
 public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
+	private static final Logger logger = Logger.getLogger(UserService.class);
+
 	public static final String NAME = "User";
-	private static final Logger logger = LogManager.getLogger(UserService.class);
-	private static UserService instance = null;
+
 	@Autowired
 	RangerConfigUtil configUtil;
+
 	@Autowired
 	XUserPermissionService xUserPermissionService;
+
+	private static UserService instance = null;
 
 	public UserService() {
 		super();
@@ -113,8 +121,8 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 		// password
 		if (!stringUtil.validatePassword(
 				userProfile.getPassword(),
-				new String[]{userProfile.getFirstName(),
-						userProfile.getLastName()})) {
+				new String[] { userProfile.getFirstName(),
+						userProfile.getLastName() })) {
 			logger.info("Invalid password." + userProfile);
 			messageList.add(MessageEnums.INVALID_INPUT_DATA.getMessage(null,
 					"password"));
@@ -157,7 +165,7 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 
 		if (userProfile.getEmailAddress() != null
 				&& !userProfile.getEmailAddress().equalsIgnoreCase(
-				xXPortalUser.getEmailAddress())) {
+						xXPortalUser.getEmailAddress())) {
 			throw restErrorUtil.createRESTException("serverMsg.userEmail",
 					MessageEnums.DATA_NOT_UPDATABLE, null, "emailAddress",
 					userProfile.getEmailAddress());
@@ -166,7 +174,7 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 		// Login Id can't be changed
 		if (userProfile.getLoginId() != null
 				&& !xXPortalUser.getLoginId().equalsIgnoreCase(
-				userProfile.getLoginId())) {
+						userProfile.getLoginId())) {
 			throw restErrorUtil.createRESTException("serverMsg.userUserName",
 					MessageEnums.DATA_NOT_UPDATABLE, null, "loginId",
 					userProfile.getLoginId());
@@ -241,7 +249,7 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 		Collection<String> newCollection = new ArrayList<String>();
 		for (String role : collection) {
 			String roles[] = role.split(",");
-			newCollection.addAll(Arrays.asList(roles));
+            newCollection.addAll(Arrays.asList(roles));
 		}
 		collection.clear();
 		collection.addAll(newCollection);
@@ -249,7 +257,7 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 
 	@Override
 	protected XXPortalUser mapViewToEntityBean(VXPortalUser userProfile, XXPortalUser mObj,
-	                                           int OPERATION_CONTEXT) {
+			int OPERATION_CONTEXT) {
 		mObj.setEmailAddress(userProfile.getEmailAddress());
 		mObj.setFirstName(userProfile.getFirstName());
 		mObj.setLastName(userProfile.getLastName());
@@ -263,7 +271,7 @@ public class UserService extends UserServiceBase<XXPortalUser, VXPortalUser> {
 
 	@Override
 	protected VXPortalUser mapEntityToViewBean(VXPortalUser userProfile,
-	                                           XXPortalUser user) {
+			XXPortalUser user) {
 		userProfile.setId(user.getId());
 		userProfile.setLoginId(user.getLoginId());
 		userProfile.setFirstName(user.getFirstName());

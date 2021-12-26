@@ -19,7 +19,6 @@
 
  package org.apache.ranger.authorization.hive.authorizer;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -51,7 +50,7 @@ public abstract class RangerHiveAuthorizerBase implements HiveAuthorizer {
 	private HiveAuthenticationProvider mHiveAuthenticator;
 	private HiveAuthzSessionContext    mSessionContext;
 	private UserGroupInformation       mUgi;
-
+	
 	public RangerHiveAuthorizerBase(HiveMetastoreClientFactory metastoreClientFactory,
 									  HiveConf                   hiveConf,
 									  HiveAuthenticationProvider hiveAuthenticator,
@@ -97,12 +96,6 @@ public abstract class RangerHiveAuthorizerBase implements HiveAuthorizer {
 	@Override
 	public void applyAuthorizationConfigPolicy(HiveConf hiveConf) throws HiveAuthzPluginException {
 		LOG.debug("RangerHiveAuthorizerBase.applyAuthorizationConfigPolicy()");
-
-		try {
-			LOG.info("@@@@@@@@@@@@@@@@@@@@@@@hive password" + hiveConf.getPassword(hiveConf.getUser().toString()));
-		} catch (Exception e) {
-			LOG.info("@@@@@@@@@@@@@@@@@@@@@ hiveConf error");
-		}
 
 		// from SQLStdHiveAccessController.applyAuthorizationConfigPolicy()
 		if (mSessionContext != null && mSessionContext.getClientType() == CLIENT_TYPE.HIVESERVER2) {
@@ -232,12 +225,4 @@ public abstract class RangerHiveAuthorizerBase implements HiveAuthorizer {
 		throw new HiveAuthzPluginException(method + "() not implemented in Ranger HiveAuthorizer");
 	}
 
-
-	public UserGroupInformation choongCreateRemoteUser (String userName) {
-		return UserGroupInformation.createRemoteUser(userName);
-	}
-
-	public UserGroupInformation choongGetLogin() throws IOException {
-		return UserGroupInformation.getLoginUser();
-	}
 }

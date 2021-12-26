@@ -34,19 +34,20 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.TypedQuery;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.common.AppConstants;
 import org.apache.ranger.db.RangerDaoManager;
 import org.apache.ranger.db.RangerDaoManagerBase;
 
 public abstract class BaseDao<T> {
-	private static final Logger logger = LogManager.getLogger(BaseDao.class);
+	private static final Logger logger = Logger.getLogger(BaseDao.class);
 
 	protected RangerDaoManager daoManager;
-	protected Class<T> tClass;
+
 	EntityManager em;
+
+	protected Class<T> tClass;
 
 	public BaseDao(RangerDaoManagerBase daoManager) {
 		this.daoManager = (RangerDaoManager) daoManager;
@@ -147,7 +148,7 @@ public abstract class BaseDao<T> {
 		return findByNamedQuery(namedQuery, "parentId", parentId);
 	}
 
-
+	
 	public List<T> executeQueryInSecurityContext(Class<T> clazz, Query query) {
 		return executeQueryInSecurityContext(clazz, query, true);
 	}
@@ -167,7 +168,7 @@ public abstract class BaseDao<T> {
 	public Long executeCountQueryInSecurityContext(Class<T> clazz, Query query) { //NOPMD
 		return (Long) query.getSingleResult();
 	}
-
+	
 	public List<T> getAll() {
 		List<T> ret = null;
 		TypedQuery<T> qry = em.createQuery(

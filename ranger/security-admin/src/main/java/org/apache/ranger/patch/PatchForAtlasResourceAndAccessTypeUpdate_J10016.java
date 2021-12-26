@@ -18,16 +18,30 @@
 
 package org.apache.ranger.patch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.ServiceDBStore;
 import org.apache.ranger.common.GUIDUtil;
 import org.apache.ranger.common.JSONUtil;
 import org.apache.ranger.common.RangerValidatorFactory;
 import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.db.RangerDaoManager;
-import org.apache.ranger.entity.*;
+import org.apache.ranger.entity.XXAccessTypeDef;
+import org.apache.ranger.entity.XXGroup;
+import org.apache.ranger.entity.XXPolicy;
+import org.apache.ranger.entity.XXPolicyItem;
+import org.apache.ranger.entity.XXPolicyItemAccess;
+import org.apache.ranger.entity.XXPolicyItemGroupPerm;
+import org.apache.ranger.entity.XXPolicyResource;
+import org.apache.ranger.entity.XXPolicyResourceMap;
+import org.apache.ranger.entity.XXPortalUser;
+import org.apache.ranger.entity.XXResourceDef;
+import org.apache.ranger.entity.XXService;
+import org.apache.ranger.entity.XXServiceDef;
 import org.apache.ranger.plugin.model.RangerPolicy;
 import org.apache.ranger.plugin.model.RangerPolicyResourceSignature;
 import org.apache.ranger.plugin.model.RangerServiceDef;
@@ -40,13 +54,9 @@ import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Component
 public class PatchForAtlasResourceAndAccessTypeUpdate_J10016 extends BaseLoader {
-	private static final Logger logger = LogManager.getLogger(PatchForAtlasResourceAndAccessTypeUpdate_J10016.class);
+	private static final Logger logger = Logger.getLogger(PatchForAtlasResourceAndAccessTypeUpdate_J10016.class);
 	private static final String RESOURCE_DEF_NAME = "all - relationship-type, end-one-entity-type, end-one-entity-classification, end-one-entity, end-two-entity-type, end-two-entity-classification, end-two-entity";
 	private static final List<String> ATLAS_RESOURCES = new ArrayList<>(
 			Arrays.asList("relationship-type", "end-one-entity-type", "end-one-entity-classification", "end-one-entity",
@@ -162,7 +172,7 @@ public class PatchForAtlasResourceAndAccessTypeUpdate_J10016 extends BaseLoader 
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Error while updating " + EmbeddedServiceDefsUtil.EMBEDDED_SERVICEDEF_ATLAS_NAME + " service-def", e);
+			logger.error("Error while updating " + EmbeddedServiceDefsUtil.EMBEDDED_SERVICEDEF_ATLAS_NAME + " service-def",e);
 		}
 
 	}

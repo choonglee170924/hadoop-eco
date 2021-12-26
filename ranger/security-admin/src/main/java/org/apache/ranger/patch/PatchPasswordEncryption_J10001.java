@@ -16,8 +16,9 @@
  */
 package org.apache.ranger.patch;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.db.RangerDaoManager;
 import org.apache.ranger.entity.XXAsset;
@@ -26,41 +27,23 @@ import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class PatchPasswordEncryption_J10001 extends BaseLoader {
-	private static final Logger logger = LogManager.getLogger(PatchPasswordEncryption_J10001.class);
+	private static final Logger logger = Logger.getLogger(PatchPasswordEncryption_J10001.class);
 	int lineCount = 0;
-
+	
 	@Autowired
 	RangerDaoManager xaDaoManager;
-
+	
 	@Autowired
 	StringUtil stringUtil;
-
+	
 	@Autowired
 	XAssetService xAssetService;
-
+	
 	public PatchPasswordEncryption_J10001() {
 	}
-
-	public static void main(String[] args) {
-		logger.info("main()");
-		try {
-			PatchPasswordEncryption_J10001 loader = (PatchPasswordEncryption_J10001) CLIUtil
-					.getBean(PatchPasswordEncryption_J10001.class);
-			//loader.init();
-			while (loader.isMoreToProcess()) {
-				loader.load();
-			}
-			logger.info("Load complete. Exiting!!!");
-			System.exit(0);
-		} catch (Exception e) {
-			logger.error("Error loading", e);
-			System.exit(1);
-		}
-	}
+	
 
 	@Override
 	public void printStats() {
@@ -76,23 +59,40 @@ public class PatchPasswordEncryption_J10001 extends BaseLoader {
 
 	private void encryptLookupUserPassword() {
 		List<XXAsset> xAssetList = xaDaoManager.getXXAsset().getAll();
-		String oldConfig = null;
-		String newConfig = null;
-		for (XXAsset xAsset : xAssetList) {
-			oldConfig = null;
-			newConfig = null;
-			oldConfig = xAsset.getConfig();
-			if (!stringUtil.isEmpty(oldConfig)) {
-				newConfig = xAssetService.getConfigWithEncryptedPassword(oldConfig, false);
+		String oldConfig=null;
+		String newConfig=null;
+		for (XXAsset xAsset : xAssetList) {		
+			oldConfig=null;
+			newConfig=null;
+			oldConfig=xAsset.getConfig();
+			if(!stringUtil.isEmpty(oldConfig)){
+				newConfig=xAssetService.getConfigWithEncryptedPassword(oldConfig,false);
 				xAsset.setConfig(newConfig);
 				xaDaoManager.getXXAsset().update(xAsset);
 			}
 			lineCount++;
 			logger.info("Lookup Password updated for Asset : "
 					+ xAsset.getName());
-			logger.info("oldconfig : " + oldConfig);
-			logger.info("newConfig : " + newConfig);
+			logger.info("oldconfig : "+ oldConfig);
+			logger.info("newConfig : "+ newConfig);
 			print(lineCount, "Total updated assets count : ");
+		}
+	}
+
+	public static void main(String[] args) {
+		logger.info("main()");
+		try {
+			PatchPasswordEncryption_J10001 loader = (PatchPasswordEncryption_J10001) CLIUtil
+					.getBean(PatchPasswordEncryption_J10001.class);
+			//loader.init();
+			while (loader.isMoreToProcess()) {
+				loader.load();
+			}
+			logger.info("Load complete. Exiting!!!");
+			System.exit(0);
+		}catch (Exception e) {
+			logger.error("Error loading", e);
+			System.exit(1);
 		}
 	}
 

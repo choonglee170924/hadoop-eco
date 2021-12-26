@@ -24,36 +24,33 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.security.SecureClientLogin;
 import org.apache.hadoop.security.UserGroupInformation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.tagsync.model.TagSink;
 import org.apache.ranger.tagsync.model.TagSource;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 public class TagSynchronizer {
 
-	private static final Logger LOG = LogManager.getLogger(TagSynchronizer.class);
+	private static final Logger LOG = Logger.getLogger(TagSynchronizer.class);
 
 	private static final String AUTH_TYPE_KERBEROS = "kerberos";
 
 	private static final String TAGSYNC_SOURCE_BASE = "ranger.tagsync.source.";
 	private static final String PROP_CLASS_NAME = "class";
-	private final Object shutdownNotifier = new Object();
+
 	private TagSink tagSink = null;
 	private List<TagSource> tagSources = new ArrayList<TagSource>();
 	private List<TagSource> failedTagSources = new ArrayList<TagSource>();
 	private Properties properties = null;
+
+	private final Object shutdownNotifier = new Object();
 	private volatile boolean isShutdownInProgress = false;
-
-	TagSynchronizer() {
-		this(null);
-	}
-
-	TagSynchronizer(Properties properties) {
-		setProperties(properties);
-	}
 
 	public static void main(String[] args) {
 
@@ -79,6 +76,103 @@ public class TagSynchronizer {
 			System.exit(1);
 		}
 
+	}
+
+	TagSynchronizer() {
+		this(null);
+	}
+
+	TagSynchronizer(Properties properties) {
+		setProperties(properties);
+	}
+
+	void setProperties(Properties properties) {
+		if (properties == null || MapUtils.isEmpty(properties)) {
+			this.properties = new Properties();
+		} else {
+			this.properties = properties;
+		}
+	}
+
+	public boolean initialize() {
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("==> TagSynchronizer.initialize()");
+		}
+
+		printConfigurationProperties(properties);
+
+		boolean ret = initializeKerberosIdentity(properties);
+
+		if (ret) {
+			LOG.info("Initializing TAG source and sink");
+			ret = false;
+			tagSink = initializeTagSink(properties);
+
+			if (tagSink != null) {
+				initializeTagSources();
+				ret = true;
+			}
+		} else {
+			LOG.error("Error initializing kerberos identity");
+		}
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("<== TagSynchronizer.initialize() : " + ret);
+		}
+
+		return ret;
+	}
+
+	public void run() throws Exception {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("==> TagSynchronizer.run()");
+		}
+
+		isShutdownInProgress = false;
+
+		try {
+			boolean threadsStarted = tagSink.start();
+
+			for (TagSource tagSource : tagSources) {
+				threadsStarted = threadsStarted && tagSource.start();
+			}
+
+			if (threadsStarted) {
+				long tagSourceRetryInitializationInterval = TagSyncConfig.getTagSourceRetryInitializationInterval(properties);
+
+				synchronized(shutdownNotifier) {
+					while(! isShutdownInProgress) {
+						shutdownNotifier.wait(tagSourceRetryInitializationInterval);
+						if (CollectionUtils.isNotEmpty(failedTagSources)) {
+							reInitializeFailedTagSources();
+						}
+					}
+				}
+			}
+		} finally {
+			LOG.info("Stopping all tagSources");
+
+			for (TagSource tagSource : tagSources) {
+				tagSource.stop();
+			}
+
+			LOG.info("Stopping tagSink");
+			tagSink.stop();
+		}
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("<== TagSynchronizer.run()");
+		}
+	}
+
+	public void shutdown(String reason) {
+		LOG.info("Received shutdown(), reason=" + reason);
+
+		synchronized(shutdownNotifier) {
+			isShutdownInProgress = true;
+			shutdownNotifier.notifyAll();
+		}
 	}
 
 	static public void printConfigurationProperties(Properties properties) {
@@ -129,8 +223,102 @@ public class TagSynchronizer {
 		return ret;
 	}
 
+	private void initializeTagSources() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("==> TagSynchronizer.initializeTagSources()");
+		}
+
+		List<String> tagSourceNameList = new ArrayList<String>();
+
+		for (Object propNameObj : properties.keySet()) {
+			String propName = propNameObj.toString();
+			if (!propName.startsWith(TAGSYNC_SOURCE_BASE)) {
+				continue;
+			}
+			String tagSourceName = propName.substring(TAGSYNC_SOURCE_BASE.length());
+			List<String> splits = toArray(tagSourceName, ".");
+			if (splits.size() > 1) {
+				continue;
+			}
+			String value = properties.getProperty(propName);
+			if (value.equalsIgnoreCase("enable")
+					|| value.equalsIgnoreCase("enabled")
+					|| value.equalsIgnoreCase("true")) {
+				tagSourceNameList.add(tagSourceName);
+				LOG.info("Tag source " + propName + " is set to "
+						+ value);
+			}
+		}
+
+		List<String> initializedTagSourceNameList = new ArrayList<String>();
+
+		for (String tagSourceName : tagSourceNameList) {
+			String tagSourcePropPrefix = TAGSYNC_SOURCE_BASE + tagSourceName;
+			TagSource tagSource = getTagSourceFromConfig(properties,
+					tagSourcePropPrefix, tagSourceName);
+
+			if (tagSource != null) {
+				try {
+					if (!tagSource.initialize(properties)) {
+						LOG.error("Failed to initialize TAG source " + tagSourceName);
+						failedTagSources.add(tagSource);
+					} else {
+						tagSource.setTagSink(tagSink);
+						tagSources.add(tagSource);
+						initializedTagSourceNameList.add(tagSourceName);
+					}
+				} catch(Exception exception) {
+					LOG.error("tag-source:" + tagSourceName + " initialization failed with ", exception);
+					failedTagSources.add(tagSource);
+				}
+			}
+		}
+
+		if (CollectionUtils.isEmpty(tagSources)) {
+			LOG.warn("TagSync is not configured for any tag-sources. No tags will be received by TagSync.");
+			LOG.warn("Please recheck configuration properties and tagsync environment to ensure that this is correct.");
+		}
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("<== TagSynchronizer.initializeTagSources(initializedTagSources=" + initializedTagSourceNameList
+					+ ", failedTagSources=" + failedTagSources + ")");
+		}
+	}
+
+	private void reInitializeFailedTagSources() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("==> TagSynchronizer.reInitializeFailedTagSources()");
+		}
+
+		for (int index = 0; index < failedTagSources.size(); index++) {
+			TagSource tagSource = failedTagSources.get(index);
+			try {
+				if (tagSource.initialize(properties)) {
+					failedTagSources.remove(index);
+					--index;
+					tagSources.add(tagSource);
+					tagSource.setTagSink(tagSink);
+					if (tagSource.start()) {
+						tagSources.add(tagSource);
+					} else {
+						LOG.error("Failed to start tagSource: " + tagSource);
+					}
+				} else {
+					LOG.error("Failed to initialize TAG source " + tagSource);
+				}
+			} catch (Exception exception) {
+				LOG.error("tag-source:" + tagSource + " initialization failed with ", exception);
+			}
+
+		}
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("<== TagSynchronizer.reInitializeFailedTagSources()");
+		}
+	}
+
 	static private TagSource getTagSourceFromConfig(Properties props,
-	                                                String propPrefix, String tagSourceName) {
+													String propPrefix, String tagSourceName) {
 		TagSource tagSource = null;
 		String className = getStringProperty(props, propPrefix + "."
 				+ PROP_CLASS_NAME);
@@ -252,189 +440,6 @@ public class TagSynchronizer {
 			}
 		}
 		return list;
-	}
-
-	void setProperties(Properties properties) {
-		if (properties == null || MapUtils.isEmpty(properties)) {
-			this.properties = new Properties();
-		} else {
-			this.properties = properties;
-		}
-	}
-
-	public boolean initialize() {
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("==> TagSynchronizer.initialize()");
-		}
-
-		printConfigurationProperties(properties);
-
-		boolean ret = initializeKerberosIdentity(properties);
-
-		if (ret) {
-			LOG.info("Initializing TAG source and sink");
-			ret = false;
-			tagSink = initializeTagSink(properties);
-
-			if (tagSink != null) {
-				initializeTagSources();
-				ret = true;
-			}
-		} else {
-			LOG.error("Error initializing kerberos identity");
-		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== TagSynchronizer.initialize() : " + ret);
-		}
-
-		return ret;
-	}
-
-	public void run() throws Exception {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("==> TagSynchronizer.run()");
-		}
-
-		isShutdownInProgress = false;
-
-		try {
-			boolean threadsStarted = tagSink.start();
-
-			for (TagSource tagSource : tagSources) {
-				threadsStarted = threadsStarted && tagSource.start();
-			}
-
-			if (threadsStarted) {
-				long tagSourceRetryInitializationInterval = TagSyncConfig.getTagSourceRetryInitializationInterval(properties);
-
-				synchronized (shutdownNotifier) {
-					while (!isShutdownInProgress) {
-						shutdownNotifier.wait(tagSourceRetryInitializationInterval);
-						if (CollectionUtils.isNotEmpty(failedTagSources)) {
-							reInitializeFailedTagSources();
-						}
-					}
-				}
-			}
-		} finally {
-			LOG.info("Stopping all tagSources");
-
-			for (TagSource tagSource : tagSources) {
-				tagSource.stop();
-			}
-
-			LOG.info("Stopping tagSink");
-			tagSink.stop();
-		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== TagSynchronizer.run()");
-		}
-	}
-
-	public void shutdown(String reason) {
-		LOG.info("Received shutdown(), reason=" + reason);
-
-		synchronized (shutdownNotifier) {
-			isShutdownInProgress = true;
-			shutdownNotifier.notifyAll();
-		}
-	}
-
-	private void initializeTagSources() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("==> TagSynchronizer.initializeTagSources()");
-		}
-
-		List<String> tagSourceNameList = new ArrayList<String>();
-
-		for (Object propNameObj : properties.keySet()) {
-			String propName = propNameObj.toString();
-			if (!propName.startsWith(TAGSYNC_SOURCE_BASE)) {
-				continue;
-			}
-			String tagSourceName = propName.substring(TAGSYNC_SOURCE_BASE.length());
-			List<String> splits = toArray(tagSourceName, ".");
-			if (splits.size() > 1) {
-				continue;
-			}
-			String value = properties.getProperty(propName);
-			if (value.equalsIgnoreCase("enable")
-					|| value.equalsIgnoreCase("enabled")
-					|| value.equalsIgnoreCase("true")) {
-				tagSourceNameList.add(tagSourceName);
-				LOG.info("Tag source " + propName + " is set to "
-						+ value);
-			}
-		}
-
-		List<String> initializedTagSourceNameList = new ArrayList<String>();
-
-		for (String tagSourceName : tagSourceNameList) {
-			String tagSourcePropPrefix = TAGSYNC_SOURCE_BASE + tagSourceName;
-			TagSource tagSource = getTagSourceFromConfig(properties,
-					tagSourcePropPrefix, tagSourceName);
-
-			if (tagSource != null) {
-				try {
-					if (!tagSource.initialize(properties)) {
-						LOG.error("Failed to initialize TAG source " + tagSourceName);
-						failedTagSources.add(tagSource);
-					} else {
-						tagSource.setTagSink(tagSink);
-						tagSources.add(tagSource);
-						initializedTagSourceNameList.add(tagSourceName);
-					}
-				} catch (Exception exception) {
-					LOG.error("tag-source:" + tagSourceName + " initialization failed with ", exception);
-					failedTagSources.add(tagSource);
-				}
-			}
-		}
-
-		if (CollectionUtils.isEmpty(tagSources)) {
-			LOG.warn("TagSync is not configured for any tag-sources. No tags will be received by TagSync.");
-			LOG.warn("Please recheck configuration properties and tagsync environment to ensure that this is correct.");
-		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== TagSynchronizer.initializeTagSources(initializedTagSources=" + initializedTagSourceNameList
-					+ ", failedTagSources=" + failedTagSources + ")");
-		}
-	}
-
-	private void reInitializeFailedTagSources() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("==> TagSynchronizer.reInitializeFailedTagSources()");
-		}
-
-		for (int index = 0; index < failedTagSources.size(); index++) {
-			TagSource tagSource = failedTagSources.get(index);
-			try {
-				if (tagSource.initialize(properties)) {
-					failedTagSources.remove(index);
-					--index;
-					tagSources.add(tagSource);
-					tagSource.setTagSink(tagSink);
-					if (tagSource.start()) {
-						tagSources.add(tagSource);
-					} else {
-						LOG.error("Failed to start tagSource: " + tagSource);
-					}
-				} else {
-					LOG.error("Failed to initialize TAG source " + tagSource);
-				}
-			} catch (Exception exception) {
-				LOG.error("tag-source:" + tagSource + " initialization failed with ", exception);
-			}
-
-		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== TagSynchronizer.reInitializeFailedTagSources()");
-		}
 	}
 
 }

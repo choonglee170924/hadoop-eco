@@ -176,21 +176,21 @@
       
       <pre class="prettyprint language-xml example">&lt;rangerDataMaskPolicyItem&gt;
   &lt;dataMaskInfo&gt;
+    &lt;conditionExpr&gt;...&lt;/conditionExpr&gt;
     &lt;dataMaskType&gt;...&lt;/dataMaskType&gt;
     &lt;valueExpr&gt;...&lt;/valueExpr&gt;
-    &lt;conditionExpr&gt;...&lt;/conditionExpr&gt;
   &lt;/dataMaskInfo&gt;
-  &lt;delegateAdmin&gt;...&lt;/delegateAdmin&gt;
-  &lt;groups&gt;...&lt;/groups&gt;
+  &lt;accesses&gt;
+    &lt;type&gt;...&lt;/type&gt;
+    &lt;isAllowed&gt;...&lt;/isAllowed&gt;
+  &lt;/accesses&gt;
+  &lt;users&gt;...&lt;/users&gt;
   &lt;conditions&gt;
     &lt;values&gt;...&lt;/values&gt;
     &lt;type&gt;...&lt;/type&gt;
   &lt;/conditions&gt;
-  &lt;accesses&gt;
-    &lt;isAllowed&gt;...&lt;/isAllowed&gt;
-    &lt;type&gt;...&lt;/type&gt;
-  &lt;/accesses&gt;
-  &lt;users&gt;...&lt;/users&gt;
+  &lt;groups&gt;...&lt;/groups&gt;
+  &lt;delegateAdmin&gt;...&lt;/delegateAdmin&gt;
 &lt;/rangerDataMaskPolicyItem&gt;
 </pre>
 

@@ -19,15 +19,13 @@ package org.apache.ranger.patch;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.biz.ServiceDBStore;
 import org.apache.ranger.common.JSONUtil;
 import org.apache.ranger.common.RangerValidatorFactory;
 import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.db.RangerDaoManager;
-import org.apache.ranger.entity.XXServiceDef;
 import org.apache.ranger.plugin.model.RangerServiceDef;
 import org.apache.ranger.plugin.model.validation.RangerServiceDefHelper;
 import org.apache.ranger.service.RangerPolicyService;
@@ -36,80 +34,81 @@ import org.apache.ranger.service.XPolicyService;
 import org.apache.ranger.util.CLIUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.apache.ranger.entity.XXServiceDef;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 extends BaseLoader {
-	private static final Logger logger = LogManager.getLogger(PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.class);
+    private static final Logger logger = Logger.getLogger(PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.class);
 
-	@Autowired
-	RangerDaoManager daoMgr;
+    @Autowired
+    RangerDaoManager daoMgr;
 
-	@Autowired
-	ServiceDBStore svcDBStore;
+    @Autowired
+    ServiceDBStore svcDBStore;
 
-	@Autowired
-	JSONUtil jsonUtil;
+    @Autowired
+    JSONUtil jsonUtil;
 
-	@Autowired
-	RangerPolicyService policyService;
+    @Autowired
+    RangerPolicyService policyService;
 
-	@Autowired
-	StringUtil stringUtil;
+    @Autowired
+    StringUtil stringUtil;
 
-	@Autowired
-	XPolicyService xPolService;
+    @Autowired
+    XPolicyService xPolService;
 
-	@Autowired
-	XPermMapService xPermMapService;
+    @Autowired
+    XPermMapService xPermMapService;
 
-	@Autowired
-	RangerBizUtil bizUtil;
+    @Autowired
+    RangerBizUtil bizUtil;
 
-	@Autowired
-	RangerValidatorFactory validatorFactory;
+    @Autowired
+    RangerValidatorFactory validatorFactory;
 
-	@Autowired
-	ServiceDBStore svcStore;
+    @Autowired
+    ServiceDBStore svcStore;
 
-	public static void main(String[] args) {
-		logger.info("main()");
-		try {
-			PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 loader = (PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012) CLIUtil.getBean(PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.class);
-			loader.init();
-			while (loader.isMoreToProcess()) {
-				loader.load();
-			}
-			logger.info("Load complete. Exiting!!!");
-			System.exit(0);
-		} catch (Exception e) {
-			logger.error("Error loading", e);
-			System.exit(1);
-		}
-	}
+    public static void main(String[] args) {
+        logger.info("main()");
+        try {
+            PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 loader = (PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012) CLIUtil.getBean(PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.class);
+            loader.init();
+            while (loader.isMoreToProcess()) {
+                loader.load();
+            }
+            logger.info("Load complete. Exiting!!!");
+            System.exit(0);
+        } catch (Exception e) {
+            logger.error("Error loading", e);
+            System.exit(1);
+        }
+    }
 
-	@Override
-	public void init() throws Exception {
-		// Do Nothing
-	}
+    @Override
+    public void init() throws Exception {
+        // Do Nothing
+    }
 
-	@Override
-	public void execLoad() {
-		logger.info("==> PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()");
-		try {
-			updateAllServiceDef();
-		} catch (Exception e) {
-			logger.error("Error in PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()", e);
-		}
-		logger.info("<== PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()");
-	}
+    @Override
+    public void execLoad() {
+        logger.info("==> PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()");
+        try {
+            updateAllServiceDef();
+        } catch (Exception e) {
+            logger.error("Error in PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()", e);
+        }
+        logger.info("<== PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012.execLoad()");
+    }
 
-	@Override
-	public void printStats() {
-		logger.info("PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 data ");
-	}
+    @Override
+    public void printStats() {
+        logger.info("PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 data ");
+    }
 
 	private void updateAllServiceDef() {
 
@@ -163,12 +162,12 @@ public class PatchForAllServiceDefUpdateForResourceSpecificAccesses_J10012 exten
 		}
 	}
 
-	private String mapToJsonString(Map<String, String> map) throws Exception {
-		String ret = null;
-		if (map != null) {
-			ret = jsonUtil.readMapToString(map);
-		}
-		return ret;
-	}
+    private String mapToJsonString(Map<String, String> map) throws Exception {
+        String ret = null;
+        if(map != null) {
+            ret = jsonUtil.readMapToString(map);
+        }
+        return ret;
+    }
 }
 

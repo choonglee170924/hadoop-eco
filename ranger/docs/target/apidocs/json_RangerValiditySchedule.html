@@ -80,6 +80,24 @@
         </thead>
         <tbody>
         <tr>
+          <td>  <span class="property-name">startTime</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">timeZone</span>
+</td>
+          <td>  <span class="datatype-reference">string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
           <td>  <span class="property-name">endTime</span>
 </td>
           <td>  <span class="datatype-reference">string
@@ -97,62 +115,44 @@
           <td>  <span class="property-description"></span>
 </td>
         </tr>
-        <tr>
-          <td>  <span class="property-name">timeZone</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">startTime</span>
-</td>
-          <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
+  &quot;startTime&quot; : &quot;...&quot;,
+  &quot;timeZone&quot; : &quot;...&quot;,
   &quot;endTime&quot; : &quot;...&quot;,
   &quot;recurrences&quot; : [ {
-    &quot;interval&quot; : {
-      &quot;hours&quot; : 12345,
-      &quot;minutes&quot; : 12345,
-      &quot;days&quot; : 12345
-    },
     &quot;schedule&quot; : {
-      &quot;dayOfMonth&quot; : &quot;...&quot;,
-      &quot;month&quot; : &quot;...&quot;,
-      &quot;minute&quot; : &quot;...&quot;,
       &quot;year&quot; : &quot;...&quot;,
       &quot;hour&quot; : &quot;...&quot;,
-      &quot;dayOfWeek&quot; : &quot;...&quot;
+      &quot;dayOfMonth&quot; : &quot;...&quot;,
+      &quot;minute&quot; : &quot;...&quot;,
+      &quot;dayOfWeek&quot; : &quot;...&quot;,
+      &quot;month&quot; : &quot;...&quot;
+    },
+    &quot;interval&quot; : {
+      &quot;minutes&quot; : 12345,
+      &quot;hours&quot; : 12345,
+      &quot;days&quot; : 12345
     }
   }, {
-    &quot;interval&quot; : {
-      &quot;hours&quot; : 12345,
-      &quot;minutes&quot; : 12345,
-      &quot;days&quot; : 12345
-    },
     &quot;schedule&quot; : {
-      &quot;dayOfMonth&quot; : &quot;...&quot;,
-      &quot;month&quot; : &quot;...&quot;,
-      &quot;minute&quot; : &quot;...&quot;,
       &quot;year&quot; : &quot;...&quot;,
       &quot;hour&quot; : &quot;...&quot;,
-      &quot;dayOfWeek&quot; : &quot;...&quot;
+      &quot;dayOfMonth&quot; : &quot;...&quot;,
+      &quot;minute&quot; : &quot;...&quot;,
+      &quot;dayOfWeek&quot; : &quot;...&quot;,
+      &quot;month&quot; : &quot;...&quot;
+    },
+    &quot;interval&quot; : {
+      &quot;minutes&quot; : 12345,
+      &quot;hours&quot; : 12345,
+      &quot;days&quot; : 12345
     }
-  } ],
-  &quot;timeZone&quot; : &quot;...&quot;,
-  &quot;startTime&quot; : &quot;...&quot;
+  } ]
 }</pre>
 
         <footer class="footer">

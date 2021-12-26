@@ -27,15 +27,14 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXResource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class XXResourceDao extends BaseDao<XXResource> {
-	private static final Logger logger = LogManager.getLogger(XXResourceDao.class);
+	private static final Logger logger = Logger.getLogger(XXResourceDao.class);
 
 	public XXResourceDao(RangerDaoManagerBase daoManager) {
 		super(daoManager);
@@ -55,7 +54,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 			// ignore
 		}
 		return null;
-	}
+	}	
 
 	public List<XXResource> findUpdatedResourcesByAssetId(
 			Long assetId, Date lastUpdated) {
@@ -76,7 +75,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 		}
 		return null;
 	}
-
+	
 	public List<XXResource> findByAssetId(Long assetId) {
 		List<XXResource> xResourceList = null;
 		if (assetId != null) {
@@ -98,7 +97,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 		}
 		return xResourceList;
 	}
-
+	
 	public List<XXResource> findByAssetType(Integer assetType) {
 		List<XXResource> xResourceList = null;
 		if (assetType != null) {
@@ -120,22 +119,22 @@ public class XXResourceDao extends BaseDao<XXResource> {
 		}
 		return xResourceList;
 	}
-
+	
 	public Timestamp getMaxUpdateTimeForAssetName(String assetName) {
 		if (assetName == null) {
 			return null;
 		}
-		try {
+		try {		
 			 Date date=(Date)getEntityManager()
 			.createNamedQuery("XXResource.getMaxUpdateTimeForAssetName")
 			.setParameter("assetName", assetName)
 			.getSingleResult();
 			 if(date!=null){
-				 Timestamp timestamp=new Timestamp(date.getTime());
+				 Timestamp timestamp=new Timestamp(date.getTime());	
 				 return timestamp;
 			 }else{
 				 return null;
-			 }
+			 }		
 		} catch (NoResultException e) {
 			// ignore
 		}
@@ -179,7 +178,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 			return getEntityManager()
 					.createNamedQuery(
 							"XXResource.findByResourceNameAndAssetIdAndRecursiveFlag",
-							XXResource.class).setParameter("name", resourceName)
+							XXResource.class).setParameter("name", resourceName)							
 					.setParameter("assetId", assetId)
 					.setParameter("isRecursive", isRecursive)
 					.getResultList();
@@ -204,7 +203,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 			return getEntityManager()
 					.createNamedQuery(
 							"XXResource.findByResourceNameAndAssetIdAndResourceType",
-							XXResource.class).setParameter("name", resourceName)
+							XXResource.class).setParameter("name", resourceName)							
 					.setParameter("assetId", assetId)
 					.setParameter("resourceType", resourceType)
 					.getResultList();
@@ -213,7 +212,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 		}
 		return null;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<XXResource> findByAssetIdAndResourceTypes(Long assetId,
 			List<Integer> resourceType) {
@@ -250,7 +249,7 @@ public class XXResourceDao extends BaseDao<XXResource> {
 		}
 		return whereClause.toString();
 	}
-
+	
 	public List<XXResource> findByAssetIdAndResourceStatus(Long assetId, int resourceStatus) {
 		List<XXResource> xResourceList = null;
 		if (assetId != null) {

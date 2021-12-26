@@ -48,7 +48,7 @@ public class EmbeddedServiceDefsUtil {
 
 
 	// following servicedef list should be reviewed/updated whenever a new embedded service-def is added
-	private static final String DEFAULT_BOOTSTRAP_SERVICEDEF_LIST = "tag,hdfs,hbase,hive,kms,knox,storm,yarn,kafka,solr,atlas,nifi,nifi-registry,sqoop,kylin,presto";
+	private static final String DEFAULT_BOOTSTRAP_SERVICEDEF_LIST = "tag,hdfs,hbase,hive,kms,knox,storm,yarn,kafka,solr,atlas,nifi,nifi-registry,sqoop,kylin";
 	private static final String PROPERTY_SUPPORTED_SERVICE_DEFS = "ranger.supportedcomponents";
 	private Set<String> supportedServiceDefs;
 	public static final String EMBEDDED_SERVICEDEF_TAG_NAME  = "tag";
@@ -67,7 +67,6 @@ public class EmbeddedServiceDefsUtil {
 	public static final String EMBEDDED_SERVICEDEF_WASB_NAME  = "wasb";
 	public static final String EMBEDDED_SERVICEDEF_SQOOP_NAME = "sqoop";
 	public static final String EMBEDDED_SERVICEDEF_KYLIN_NAME  = "kylin";
-	public static final String EMBEDDED_SERVICEDEF_PRESTO_NAME  = "presto";
 
 	public static final String PROPERTY_CREATE_EMBEDDED_SERVICE_DEFS = "ranger.service.store.create.embedded.service-defs";
 
@@ -82,7 +81,6 @@ public class EmbeddedServiceDefsUtil {
 	public static final String SOLR_IMPL_CLASS_NAME  = "org.apache.ranger.services.solr.RangerServiceSolr";
 	public static final String NIFI_IMPL_CLASS_NAME  = "org.apache.ranger.services.nifi.RangerServiceNiFi";
 	public static final String ATLAS_IMPL_CLASS_NAME  = "org.apache.ranger.services.atlas.RangerServiceAtlas";
-	public static final String PRESTO_IMPL_CLASS_NAME  = "org.apache.ranger.services.presto.RangerServicePresto";
 
 	private static EmbeddedServiceDefsUtil instance = new EmbeddedServiceDefsUtil();
 
@@ -102,7 +100,6 @@ public class EmbeddedServiceDefsUtil {
 	private RangerServiceDef wasbServiceDef;
 	private RangerServiceDef sqoopServiceDef;
 	private RangerServiceDef kylinServiceDef;
-	private RangerServiceDef prestoServiceDef;
 
 	private RangerServiceDef tagServiceDef;
 
@@ -182,7 +179,7 @@ public class EmbeddedServiceDefsUtil {
 	public long getYarnServiceDefId() {
 		return getId(yarnServiceDef);
 	}
-
+	
 	public long getKafkaServiceDefId() {
 		return getId(kafkaServiceDef);
 	}
@@ -214,8 +211,6 @@ public class EmbeddedServiceDefsUtil {
 	public long getTagServiceDefId() { return getId(tagServiceDef); }
 
 	public long getWasbServiceDefId() { return getId(wasbServiceDef); }
-
-	public long getPrestoServiceDefId() { return getId(prestoServiceDef); }
 
 	public RangerServiceDef getEmbeddedServiceDef(String defType) throws Exception {
 		RangerServiceDef serviceDef=null;
@@ -271,7 +266,7 @@ public class EmbeddedServiceDefsUtil {
 		}
 
 		RangerServiceDef ret = null;
-
+	
 		String resource = "/service-defs/ranger-servicedef-" + serviceType + ".json";
 
 		InputStream inStream = getClass().getResourceAsStream(resource);

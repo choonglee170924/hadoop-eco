@@ -33,8 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.AppConstants;
 import org.apache.ranger.common.ContextUtil;
 import org.apache.ranger.common.GUIDUtil;
@@ -69,31 +68,40 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RangerBizUtil {
-	public static final String AUDIT_STORE_RDBMS = "DB";
-	public static final String AUDIT_STORE_SOLR = "solr";
-	private static final Logger logger = LogManager.getLogger(RangerBizUtil.class);
-	private static final String PATH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst0123456789-_.";
-	static String fileSeparator = PropertiesUtil.getProperty("ranger.file.separator", "/");
-	private static char[] PATH_CHAR_SET = PATH_CHARS.toCharArray();
-	private static int PATH_CHAR_SET_LEN = PATH_CHAR_SET.length;
-	public final String EMPTY_CONTENT_DISPLAY_NAME = "...";
+	private static final Logger logger = Logger.getLogger(RangerBizUtil.class);
+
 	@Autowired
 	RESTErrorUtil restErrorUtil;
+
 	@Autowired
 	RangerDaoManager daoManager;
+
 	@Autowired
 	StringUtil stringUtil;
+
 	@Autowired
 	UserMgr userMgr;
+
 	@Autowired
 	GUIDUtil guidUtil;
+	
 	Set<Class<?>> groupEditableClasses;
-	int maxDisplayNameLength = 150;
-	boolean enableResourceAccessControl;
-	String auditDBType = AUDIT_STORE_RDBMS;
 	private Class<?>[] groupEditableClassesList = {};
+
 	private int maxFirstNameLength;
+	int maxDisplayNameLength = 150;
+	public final String EMPTY_CONTENT_DISPLAY_NAME = "...";
+	boolean enableResourceAccessControl;
         private SecureRandom random;
+	private static final String PATH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst0123456789-_.";
+	private static char[] PATH_CHAR_SET = PATH_CHARS.toCharArray();
+	private static int PATH_CHAR_SET_LEN = PATH_CHAR_SET.length;
+	public static final String AUDIT_STORE_RDBMS = "DB";
+	public static final String AUDIT_STORE_SOLR = "solr";
+
+	String auditDBType = AUDIT_STORE_RDBMS;
+
+	static String fileSeparator = PropertiesUtil.getProperty("ranger.file.separator", "/");
 
 	public RangerBizUtil() {
 		maxFirstNameLength = Integer.parseInt(PropertiesUtil.getProperty("ranger.user.firstname.maxlength", "16"));
@@ -108,63 +116,6 @@ public class RangerBizUtil {
 		logger.info("java.library.path is " + System.getProperty("java.library.path"));
 		logger.info("Audit datasource is " + auditDBType);
                 random = new SecureRandom();
-	}
-
-	/**
-	 * This method returns true if first parameter value is equal to others
-	 * argument value passed
-	 *
-	 * @param checkValue
-	 * @param otherValues
-	 * @return
-	 */
-	public static boolean areAllEqual(int checkValue, int... otherValues) {
-		for (int value : otherValues) {
-			if (value != checkValue) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static int getDBFlavor() {
-		String[] propertyNames = { "xa.db.flavor",
-									"ranger.jpa.jdbc.dialect",
-									"ranger.jpa.jdbc.url",
-									"ranger.jpa.jdbc.driver"
-								};
-
-		for(String propertyName : propertyNames) {
-			String propertyValue = PropertiesUtil.getProperty(propertyName);
-
-			if(StringUtils.isBlank(propertyValue)) {
-				continue;
-			}
-
-			if (StringUtils.containsIgnoreCase(propertyValue, "mysql")) {
-				return AppConstants.DB_FLAVOR_MYSQL;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "oracle")) {
-				return AppConstants.DB_FLAVOR_ORACLE;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "postgresql")) {
-				return AppConstants.DB_FLAVOR_POSTGRES;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqlserver")) {
-				return AppConstants.DB_FLAVOR_SQLSERVER;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "mssql")) {
-				return AppConstants.DB_FLAVOR_SQLSERVER;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqlanywhere")) {
-				return AppConstants.DB_FLAVOR_SQLANYWHERE;
-			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqla")) {
-				return AppConstants.DB_FLAVOR_SQLANYWHERE;
-			}else {
-				if(logger.isDebugEnabled()) {
-					logger.debug("DB Flavor could not be determined from property - " + propertyName + "=" + propertyValue);
-				}
-			}
-		}
-
-		logger.error("DB Flavor could not be determined");
-
-		return AppConstants.DB_FLAVOR_UNKNOWN;
 	}
 
 	// Access control methods
@@ -1138,6 +1089,23 @@ public class RangerBizUtil {
 		return false;
 	}
 
+	/**
+	 * This method returns true if first parameter value is equal to others
+	 * argument value passed
+	 *
+	 * @param checkValue
+	 * @param otherValues
+	 * @return
+	 */
+	public static boolean areAllEqual(int checkValue, int... otherValues) {
+		for (int value : otherValues) {
+			if (value != checkValue) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void createTrxLog(List<XXTrxLog> trxLogList) {
 		if (trxLogList == null) {
 			return;
@@ -1176,6 +1144,46 @@ public class RangerBizUtil {
 			}
 		}
 		}
+	}
+
+	public static int getDBFlavor() {
+		String[] propertyNames = { "xa.db.flavor",
+									"ranger.jpa.jdbc.dialect",
+									"ranger.jpa.jdbc.url",
+									"ranger.jpa.jdbc.driver"
+								};
+
+		for(String propertyName : propertyNames) {
+			String propertyValue = PropertiesUtil.getProperty(propertyName);
+
+			if(StringUtils.isBlank(propertyValue)) {
+				continue;
+			}
+
+			if (StringUtils.containsIgnoreCase(propertyValue, "mysql")) {
+				return AppConstants.DB_FLAVOR_MYSQL;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "oracle")) {
+				return AppConstants.DB_FLAVOR_ORACLE;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "postgresql")) {
+				return AppConstants.DB_FLAVOR_POSTGRES;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqlserver")) {
+				return AppConstants.DB_FLAVOR_SQLSERVER;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "mssql")) {
+				return AppConstants.DB_FLAVOR_SQLSERVER;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqlanywhere")) {
+				return AppConstants.DB_FLAVOR_SQLANYWHERE;
+			} else if (StringUtils.containsIgnoreCase(propertyValue, "sqla")) {
+				return AppConstants.DB_FLAVOR_SQLANYWHERE;
+			}else {
+				if(logger.isDebugEnabled()) {
+					logger.debug("DB Flavor could not be determined from property - " + propertyName + "=" + propertyValue);
+				}
+			}
+		}
+
+		logger.error("DB Flavor could not be determined");
+
+		return AppConstants.DB_FLAVOR_UNKNOWN;
 	}
 
 	public String getDBVersion(){
@@ -1338,7 +1346,7 @@ public class RangerBizUtil {
 		}
                 return isAccessible;
 	}
-
+	
 	public boolean isSSOEnabled() {
 		UserSessionBase session = ContextUtil.getCurrentUserSession();
 		if (session != null) {
@@ -1349,7 +1357,7 @@ public class RangerBizUtil {
 					MessageEnums.OPER_NOT_ALLOWED_FOR_STATE);
 		}
 	}
-
+	
 	public boolean isUserAllowed(RangerService rangerService, String cfgNameAllowedUsers) {
 		Map<String, String> map = rangerService.getConfigs();
 		String user = null;
@@ -1387,7 +1395,7 @@ public class RangerBizUtil {
 			}
 		}
 		return false;
-	}
+	}	
 
         public void blockAuditorRoleUser() {
                 UserSessionBase session = ContextUtil.getCurrentUserSession();

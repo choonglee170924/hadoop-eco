@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.ranger.common.ContextUtil;
 import org.apache.ranger.common.GUIDUtil;
 import org.apache.ranger.common.RangerCommonEnums;
@@ -43,6 +41,7 @@ import org.apache.ranger.plugin.model.RangerPolicy.RangerRowFilterPolicyItem;
 import org.apache.ranger.security.context.RangerAPIMapping;
 import org.apache.ranger.service.*;
 import org.apache.ranger.view.*;
+import org.apache.log4j.Logger;
 import org.apache.ranger.authorization.utils.StringUtil;
 import org.apache.ranger.common.AppConstants;
 import org.apache.ranger.common.MessageEnums;
@@ -88,41 +87,60 @@ import org.apache.ranger.entity.XXPortalUserRole;
 @Component
 public class XUserMgr extends XUserMgrBase {
 
-	static final Logger logger = LogManager.getLogger(XUserMgr.class);
 	@Autowired
 	XUserService xUserService;
+
 	@Autowired
 	XGroupService xGroupService;
+
 	@Autowired
 	RangerBizUtil msBizUtil;
+
 	@Autowired
 	UserMgr userMgr;
+
 	@Autowired
 	RangerDaoManager daoManager;
+
 	@Autowired
 	RangerBizUtil xaBizUtil;
+
 	@Autowired
 	XModuleDefService xModuleDefService;
+
 	@Autowired
 	XUserPermissionService xUserPermissionService;
+
 	@Autowired
 	XGroupPermissionService xGroupPermissionService;
+
 	@Autowired
 	XPortalUserService xPortalUserService;
+	
 	@Autowired
 	XResourceService xResourceService;
+
 	@Autowired
 	SessionMgr sessionMgr;
+
 	@Autowired
 	RangerPolicyService policyService;
+
 	@Autowired
 	ServiceDBStore svcStore;
+
 	@Autowired
 	GUIDUtil guidUtil;
+
 	@Autowired
 	XUgsyncAuditInfoService xUgsyncAuditInfoService;
+
 	@Autowired
 	XGroupUserService xGroupUserService;
+
+	static final Logger logger = Logger.getLogger(XUserMgr.class);
+
+
 
 	public VXUser getXUserByUserName(String userName) {
 		VXUser vXUser=null;
@@ -391,7 +409,7 @@ public class XUserMgr extends XUserMgrBase {
 							roleListUpdatedProfile.add(role);
 						}
 					}
-
+					
 				}
 			}
 		}
@@ -545,7 +563,7 @@ public class XUserMgr extends XUserMgrBase {
 
 		return vxUGInfo;
 	}
-
+	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public VXGroupUserInfo createXGroupUserFromMap(
 			VXGroupUserInfo vXGroupUserInfo) {
@@ -602,7 +620,7 @@ public class XUserMgr extends XUserMgrBase {
 
 		return vxGUInfo;
 	}
-
+	
 	public VXGroupUserInfo getXGroupUserFromMap(
 			String groupName) {
 		checkAdminAccess();
@@ -640,7 +658,7 @@ public class XUserMgr extends XUserMgrBase {
                 }
 				vxu.add(vxUser);
 			}
-
+			
 		}
 		vxGUInfo.setXuserInfo(vxu);
 
@@ -692,13 +710,13 @@ public class XUserMgr extends XUserMgrBase {
 				throw restErrorUtil.create403RESTException("Logged-In user is not allowed to access requested user data.");
 			}
 		}
-
+		
 		if(vXUser!=null && !hasAccessToModule(RangerConstants.MODULE_USER_GROUPS)){
 			vXUser=getMaskedVXUser(vXUser);
 		}
 		return vXUser;
 	}
-
+	
 	private boolean hasAccessToGetUserInfo(VXUser requestedVXUser) {
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && userSession.getLoginId() != null) {
@@ -708,9 +726,9 @@ public class XUserMgr extends XUserMgrBase {
 				if (loggedInVXUser.getUserRoleList().size() == 1
 						&& loggedInVXUser.getUserRoleList().contains(
 								RangerConstants.ROLE_USER)) {
-
+					
 					return requestedVXUser.getId().equals(loggedInVXUser.getId()) ? true : false;
-
+									
 				}else{
 					return true;
 				}
@@ -726,7 +744,7 @@ public class XUserMgr extends XUserMgrBase {
 
 	public VXGroup getXGroup(Long id) {
 		VXGroup vXGroup=null;
-
+		
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && userSession.getLoginId() != null) {
 			VXUser loggedInVXUser = xUserService.getXUserByUserName(userSession
@@ -1604,7 +1622,7 @@ public class XUserMgr extends XUserMgrBase {
 		VXUser vXUserExactMatch = null;
 		try{
 			VXUserList vXUserListSort = new VXUserList();
-
+			
 			if(searchCriteria.getParamList() != null && searchCriteria.getParamList().get("name") != null){
 				searchCriteria.setSortBy("name");
 				vXUserListSort = xUserService.searchXUsers(searchCriteria);
@@ -1788,7 +1806,7 @@ public class XUserMgr extends XUserMgrBase {
 			searchCriteria.setSortBy("id");
 			vXGroupList=xGroupService.searchXGroups(searchCriteria);
 		}
-
+		
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && userSession.getLoginId() != null) {
 			VXUser loggedInVXUser = xUserService.getXUserByUserName(userSession
@@ -1814,8 +1832,8 @@ public class XUserMgr extends XUserMgrBase {
 				}
 			}
 		}
-
-
+		
+		
 		if(vXGroupList!=null && !hasAccessToModule(RangerConstants.MODULE_USER_GROUPS)){
 			if(vXGroupList!=null && vXGroupList.getListSize()>0){
 				List<VXGroup> listMasked=new ArrayList<VXGroup>();

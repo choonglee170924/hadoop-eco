@@ -19,33 +19,42 @@
 
 package org.apache.ranger.ldapusersync.process;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
-import org.apache.ranger.unixusersync.process.PolicyMgrUserGroupBuilder;
-
-import javax.net.ssl.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 
-public class CustomSSLSocketFactory extends SSLSocketFactory {
-	private static final Logger LOG = LogManager.getLogger(CustomSSLSocketFactory.class);
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
+import org.apache.ranger.unixusersync.process.PolicyMgrUserGroupBuilder;
+
+public class CustomSSLSocketFactory extends SSLSocketFactory{
+	private static final Logger LOG = Logger.getLogger(CustomSSLSocketFactory.class);
 	private SSLSocketFactory sockFactory;
 	private UserGroupSyncConfig config = UserGroupSyncConfig.getInstance();
 
-	public CustomSSLSocketFactory() {
-		SSLContext sslContext = null;
-		String keyStoreFile = config.getSSLKeyStorePath();
-		String keyStoreFilepwd = config.getSSLKeyStorePathPassword();
-		String trustStoreFile = config.getSSLTrustStorePath();
-		String trustStoreFilepwd = config.getSSLTrustStorePathPassword();
-		String keyStoreType = KeyStore.getDefaultType();
-		String trustStoreType = KeyStore.getDefaultType();
-		try {
+    public CustomSSLSocketFactory() {
+    	SSLContext sslContext = null;
+    	String keyStoreFile =  config.getSSLKeyStorePath();
+    	String keyStoreFilepwd = config.getSSLKeyStorePathPassword();
+    	String trustStoreFile = config.getSSLTrustStorePath();
+    	String trustStoreFilepwd = config.getSSLTrustStorePathPassword();
+    	String keyStoreType = KeyStore.getDefaultType();
+    	String trustStoreType = KeyStore.getDefaultType();
+    	try {
 
 			KeyManager[] kmList = null;
 			TrustManager[] tmList = null;
@@ -64,12 +73,13 @@ public class CustomSSLSocketFactory extends SSLSocketFactory {
 					KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 					keyManagerFactory.init(keyStore, keyStoreFilepwd.toCharArray());
 					kmList = keyManagerFactory.getKeyManagers();
-				} finally {
+				}
+				finally {
 					if (in != null) {
 						in.close();
 					}
 				}
-
+				
 			}
 
 			if (trustStoreFile != null && trustStoreFilepwd != null) {
@@ -86,7 +96,8 @@ public class CustomSSLSocketFactory extends SSLSocketFactory {
 					TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 					trustManagerFactory.init(trustStore);
 					tmList = trustManagerFactory.getTrustManagers();
-				} finally {
+				}
+				finally {
 					if (in != null) {
 						in.close();
 					}
@@ -97,51 +108,52 @@ public class CustomSSLSocketFactory extends SSLSocketFactory {
 
 			sslContext.init(kmList, tmList, new SecureRandom());
 			sockFactory = sslContext.getSocketFactory();
-		} catch (Throwable t) {
-			throw new RuntimeException("Unable to create SSLConext for communication to policy manager", t);
-		}
-	}
+			}
+			catch(Throwable t) {
+				throw new RuntimeException("Unable to create SSLConext for communication to policy manager", t);
+			}
+    }
 
-	public static SSLSocketFactory getDefault() {
-		return new CustomSSLSocketFactory();
-	}
+    public static SSLSocketFactory getDefault() {
+        return new CustomSSLSocketFactory();
+    }
 
-	@Override
-	public String[] getDefaultCipherSuites() {
-		return sockFactory.getDefaultCipherSuites();
-	}
+    @Override
+    public String[] getDefaultCipherSuites() {
+        return sockFactory.getDefaultCipherSuites();
+    }
 
-	@Override
-	public String[] getSupportedCipherSuites() {
-		return sockFactory.getSupportedCipherSuites();
-	}
+    @Override
+    public String[] getSupportedCipherSuites() {
+        return sockFactory.getSupportedCipherSuites();
+    }
 
-	@Override
-	public Socket createSocket(Socket socket, String host, int port, boolean bln) throws IOException {
-		return sockFactory.createSocket(socket, host, port, bln);
-	}
+    @Override
+    public Socket createSocket(Socket socket, String host, int port, boolean bln) throws IOException {
+        return sockFactory.createSocket(socket, host, port, bln);
+    }
 
-	@Override
-	public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
-		return sockFactory.createSocket(host, port);
-	}
+    @Override
+    public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
+        return sockFactory.createSocket(host, port);
+    }
 
-	@Override
-	public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {
-		return sockFactory.createSocket(host, port, localHost, localPort);
-	}
+    @Override
+    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {
+        return sockFactory.createSocket(host, port, localHost, localPort);
+    }
 
-	@Override
-	public Socket createSocket(InetAddress localHost, int localPort) throws IOException {
-		return sockFactory.createSocket(localHost, localPort);
-	}
+    @Override
+    public Socket createSocket(InetAddress localHost, int localPort) throws IOException {
+        return sockFactory.createSocket(localHost, localPort);
+    }
 
-	@Override
-	public Socket createSocket(InetAddress address, int port, InetAddress localHost, int localPort) throws IOException {
-		return sockFactory.createSocket(address, port, localHost, localPort);
-	}
+    @Override
+    public Socket createSocket(InetAddress address, int port, InetAddress localHost, int localPort) throws IOException {
+        return sockFactory.createSocket(address, port, localHost, localPort);
+    }
 
-	private InputStream getFileInputStream(String path) throws FileNotFoundException {
+    private InputStream getFileInputStream(String path) throws FileNotFoundException {
 
 		InputStream ret = null;
 
@@ -151,17 +163,17 @@ public class CustomSSLSocketFactory extends SSLSocketFactory {
 			ret = new FileInputStream(f);
 		} else {
 			ret = PolicyMgrUserGroupBuilder.class.getResourceAsStream(path);
-
+			
 			if (ret == null) {
-				if (!path.startsWith("/")) {
+				if (! path.startsWith("/")) {
 					ret = getClass().getResourceAsStream("/" + path);
 				}
 			}
-
+			
 			if (ret == null) {
 				ret = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
 				if (ret == null) {
-					if (!path.startsWith("/")) {
+					if (! path.startsWith("/")) {
 						ret = ClassLoader.getSystemResourceAsStream("/" + path);
 					}
 				}

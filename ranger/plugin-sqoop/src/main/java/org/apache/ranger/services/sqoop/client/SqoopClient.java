@@ -19,30 +19,40 @@
 
 package org.apache.ranger.services.sqoop.client;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import java.security.PrivilegedAction;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.security.auth.Subject;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.security.authentication.client.PseudoAuthenticator;
 import org.apache.http.HttpStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.plugin.client.BaseClient;
 import org.apache.ranger.plugin.client.HadoopException;
-import org.apache.ranger.services.sqoop.client.json.model.*;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopConnectorResponse;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopConnectorsResponse;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopJobResponse;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopJobsResponse;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopLinkResponse;
+import org.apache.ranger.services.sqoop.client.json.model.SqoopLinksResponse;
 
-import javax.security.auth.Subject;
-import java.security.PrivilegedAction;
-import java.util.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class SqoopClient extends BaseClient {
 
-	private static final Logger LOG = LogManager.getLogger(SqoopClient.class);
+	private static final Logger LOG = Logger.getLogger(SqoopClient.class);
 
 	private static final String EXPECTED_MIME_TYPE = "application/json";
 
@@ -75,124 +85,6 @@ public class SqoopClient extends BaseClient {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Sqoop Client is build with url [" + this.sqoopUrl + "], user: [" + this.userName + "].");
 		}
-	}
-
-	private static ClientResponse getClientResponse(String sqoopUrl, String sqoopApi, String userName) {
-		ClientResponse response = null;
-		String[] sqoopUrls = sqoopUrl.trim().split("[,;]");
-		if (ArrayUtils.isEmpty(sqoopUrls)) {
-			return null;
-		}
-
-		Client client = Client.create();
-
-		for (String currentUrl : sqoopUrls) {
-			if (StringUtils.isBlank(currentUrl)) {
-				continue;
-			}
-
-			String url = currentUrl.trim() + sqoopApi + "?" + PseudoAuthenticator.USER_NAME + "=" + userName;
-			try {
-				response = getClientResponse(url, client);
-
-				if (response != null) {
-					if (response.getStatus() == HttpStatus.SC_OK) {
-						break;
-					} else {
-						response.close();
-					}
-				}
-			} catch (Throwable t) {
-				String msgDesc = "Exception while getting sqoop response, sqoopUrl: " + url;
-				LOG.error(msgDesc, t);
-			}
-		}
-		client.destroy();
-
-		return response;
-	}
-
-	private static ClientResponse getClientResponse(String url, Client client) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getClientResponse():calling " + url);
-		}
-
-		WebResource webResource = client.resource(url);
-
-		ClientResponse response = webResource.accept(EXPECTED_MIME_TYPE).get(ClientResponse.class);
-
-		if (response != null) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("getClientResponse():response.getStatus()= " + response.getStatus());
-			}
-			if (response.getStatus() != HttpStatus.SC_OK) {
-				LOG.warn("getClientResponse():response.getStatus()= " + response.getStatus() + " for URL " + url
-						+ ", failed to get sqoop resource list.");
-				String jsonString = response.getEntity(String.class);
-				LOG.warn(jsonString);
-			}
-		}
-		return response;
-	}
-
-	private static List<String> filterResourceFromResponse(String resourceMatching, List<String> existingResources,
-	                                                       List<String> resourceResponses) {
-		List<String> resources = new ArrayList<String>();
-		for (String resourceResponse : resourceResponses) {
-			if (CollectionUtils.isNotEmpty(existingResources) && existingResources.contains(resourceResponse)) {
-				continue;
-			}
-			if (StringUtils.isEmpty(resourceMatching) || resourceMatching.startsWith("*")
-					|| resourceResponse.toLowerCase().startsWith(resourceMatching.toLowerCase())) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("filterResourceFromResponse(): Adding sqoop resource " + resourceResponse);
-				}
-				resources.add(resourceResponse);
-			}
-		}
-		return resources;
-	}
-
-	public static Map<String, Object> connectionTest(String serviceName, Map<String, String> configs) {
-		SqoopClient sqoopClient = getSqoopClient(serviceName, configs);
-		List<String> strList = sqoopClient.getConnectorList(null, null);
-
-		boolean connectivityStatus = false;
-		if (CollectionUtils.isNotEmpty(strList)) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("ConnectionTest list size " + strList.size() + " sqoop connectors.");
-			}
-			connectivityStatus = true;
-		}
-
-		Map<String, Object> responseData = new HashMap<String, Object>();
-		if (connectivityStatus) {
-			String successMsg = "ConnectionTest Successful.";
-			BaseClient.generateResponseDataMap(connectivityStatus, successMsg, successMsg, null, null, responseData);
-		} else {
-			String failureMsg = "Unable to retrieve any sqoop connectors using given parameters.";
-			BaseClient.generateResponseDataMap(connectivityStatus, failureMsg, failureMsg + ERROR_MESSAGE, null, null,
-					responseData);
-		}
-
-		return responseData;
-	}
-
-	public static SqoopClient getSqoopClient(String serviceName, Map<String, String> configs) {
-		SqoopClient sqoopClient = null;
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Getting SqoopClient for datasource: " + serviceName);
-		}
-		if (MapUtils.isEmpty(configs)) {
-			String msgDesc = "Could not connect sqoop as Connection ConfigMap is empty.";
-			LOG.error(msgDesc);
-			HadoopException hdpException = new HadoopException(msgDesc);
-			hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
-			throw hdpException;
-		} else {
-			sqoopClient = new SqoopClient(serviceName, configs);
-		}
-		return sqoopClient;
 	}
 
 	public List<String> getConnectorList(final String connectorMatching, final List<String> existingConnectors) {
@@ -314,6 +206,64 @@ public class SqoopClient extends BaseClient {
 		return ret;
 	}
 
+	private static ClientResponse getClientResponse(String sqoopUrl, String sqoopApi, String userName) {
+		ClientResponse response = null;
+		String[] sqoopUrls = sqoopUrl.trim().split("[,;]");
+		if (ArrayUtils.isEmpty(sqoopUrls)) {
+			return null;
+		}
+
+		Client client = Client.create();
+
+		for (String currentUrl : sqoopUrls) {
+			if (StringUtils.isBlank(currentUrl)) {
+				continue;
+			}
+
+			String url = currentUrl.trim() + sqoopApi + "?" + PseudoAuthenticator.USER_NAME + "=" + userName;
+			try {
+				response = getClientResponse(url, client);
+
+				if (response != null) {
+					if (response.getStatus() == HttpStatus.SC_OK) {
+						break;
+					} else {
+						response.close();
+					}
+				}
+			} catch (Throwable t) {
+				String msgDesc = "Exception while getting sqoop response, sqoopUrl: " + url;
+				LOG.error(msgDesc, t);
+			}
+		}
+		client.destroy();
+
+		return response;
+	}
+
+	private static ClientResponse getClientResponse(String url, Client client) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getClientResponse():calling " + url);
+		}
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource.accept(EXPECTED_MIME_TYPE).get(ClientResponse.class);
+
+		if (response != null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getClientResponse():response.getStatus()= " + response.getStatus());
+			}
+			if (response.getStatus() != HttpStatus.SC_OK) {
+				LOG.warn("getClientResponse():response.getStatus()= " + response.getStatus() + " for URL " + url
+						+ ", failed to get sqoop resource list.");
+				String jsonString = response.getEntity(String.class);
+				LOG.warn(jsonString);
+			}
+		}
+		return response;
+	}
+
 	private <T> T getSqoopResourceResponse(ClientResponse response, Class<T> classOfT) {
 		T resource = null;
 		try {
@@ -347,5 +297,65 @@ public class SqoopClient extends BaseClient {
 			}
 		}
 		return resource;
+	}
+
+	private static List<String> filterResourceFromResponse(String resourceMatching, List<String> existingResources,
+			List<String> resourceResponses) {
+		List<String> resources = new ArrayList<String>();
+		for (String resourceResponse : resourceResponses) {
+			if (CollectionUtils.isNotEmpty(existingResources) && existingResources.contains(resourceResponse)) {
+				continue;
+			}
+			if (StringUtils.isEmpty(resourceMatching) || resourceMatching.startsWith("*")
+					|| resourceResponse.toLowerCase().startsWith(resourceMatching.toLowerCase())) {
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("filterResourceFromResponse(): Adding sqoop resource " + resourceResponse);
+				}
+				resources.add(resourceResponse);
+			}
+		}
+		return resources;
+	}
+
+	public static Map<String, Object> connectionTest(String serviceName, Map<String, String> configs) {
+		SqoopClient sqoopClient = getSqoopClient(serviceName, configs);
+		List<String> strList = sqoopClient.getConnectorList(null, null);
+
+		boolean connectivityStatus = false;
+		if (CollectionUtils.isNotEmpty(strList)) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("ConnectionTest list size " + strList.size() + " sqoop connectors.");
+			}
+			connectivityStatus = true;
+		}
+
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		if (connectivityStatus) {
+			String successMsg = "ConnectionTest Successful.";
+			BaseClient.generateResponseDataMap(connectivityStatus, successMsg, successMsg, null, null, responseData);
+		} else {
+			String failureMsg = "Unable to retrieve any sqoop connectors using given parameters.";
+			BaseClient.generateResponseDataMap(connectivityStatus, failureMsg, failureMsg + ERROR_MESSAGE, null, null,
+					responseData);
+		}
+
+		return responseData;
+	}
+
+	public static SqoopClient getSqoopClient(String serviceName, Map<String, String> configs) {
+		SqoopClient sqoopClient = null;
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Getting SqoopClient for datasource: " + serviceName);
+		}
+		if (MapUtils.isEmpty(configs)) {
+			String msgDesc = "Could not connect sqoop as Connection ConfigMap is empty.";
+			LOG.error(msgDesc);
+			HadoopException hdpException = new HadoopException(msgDesc);
+			hdpException.generateResponseDataMap(false, msgDesc, msgDesc + ERROR_MESSAGE, null, null);
+			throw hdpException;
+		} else {
+			sqoopClient = new SqoopClient(serviceName, configs);
+		}
+		return sqoopClient;
 	}
 }

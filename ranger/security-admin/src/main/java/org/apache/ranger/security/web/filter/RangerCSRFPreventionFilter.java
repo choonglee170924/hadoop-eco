@@ -19,20 +19,26 @@
 
 package org.apache.ranger.security.web.filter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.PropertiesUtil;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.PropertiesUtil;
 
 public class RangerCSRFPreventionFilter implements Filter {
-
+	
+	private static final Logger LOG = Logger.getLogger(RangerCSRFPreventionFilter.class);
+		
 	public static final String BROWSER_USER_AGENT_PARAM = "ranger.rest-csrf.browser-useragents-regex";
 	public static final String BROWSER_USER_AGENTS_DEFAULT = "Mozilla,Opera,Chrome";
 	public static final String CUSTOM_METHODS_TO_IGNORE_PARAM = "ranger.rest-csrf.methods-to-ignore";
@@ -40,53 +46,52 @@ public class RangerCSRFPreventionFilter implements Filter {
 	public static final String CUSTOM_HEADER_PARAM = "ranger.rest-csrf.custom-header";
 	public static final String HEADER_DEFAULT = "X-XSRF-HEADER";
 	public static final String HEADER_USER_AGENT = "User-Agent";
-	private static final Logger LOG = LogManager.getLogger(RangerCSRFPreventionFilter.class);
 	private static final boolean IS_CSRF_ENABLED = PropertiesUtil.getBooleanProperty("ranger.rest-csrf.enabled", true);
 
-	private String headerName = HEADER_DEFAULT;
+	private String  headerName = HEADER_DEFAULT;
 	private Set<String> methodsToIgnore = null;
 	private String[] browserUserAgents;
-
+	
 	public RangerCSRFPreventionFilter() {
 		try {
-			if (IS_CSRF_ENABLED) {
+			if (IS_CSRF_ENABLED){
 				init(null);
 			}
 		} catch (Exception e) {
-			LOG.error("Error while initializing Filter : " + e.getMessage());
+			LOG.error("Error while initializing Filter : "+e.getMessage());
 		}
 	}
-
+	
 	public void init(FilterConfig filterConfig) throws ServletException {
 		String customHeader = PropertiesUtil.getProperty(CUSTOM_HEADER_PARAM, HEADER_DEFAULT);
-		if (customHeader != null) {
-			headerName = customHeader;
-		}
-
-		String customMethodsToIgnore = PropertiesUtil.getProperty(CUSTOM_METHODS_TO_IGNORE_PARAM, METHODS_TO_IGNORE_DEFAULT);
-		if (customMethodsToIgnore != null) {
-			parseMethodsToIgnore(customMethodsToIgnore);
-		} else {
-			parseMethodsToIgnore(METHODS_TO_IGNORE_DEFAULT);
-		}
-		String agents = PropertiesUtil.getProperty(BROWSER_USER_AGENT_PARAM, BROWSER_USER_AGENTS_DEFAULT);
-		if (agents == null) {
-			agents = BROWSER_USER_AGENTS_DEFAULT;
-		}
-		parseBrowserUserAgents(agents);
-		LOG.info("Adding cross-site request forgery (CSRF) protection");
+	    if (customHeader != null) {
+	      headerName = customHeader;
+	    }
+	
+	    String customMethodsToIgnore = PropertiesUtil.getProperty(CUSTOM_METHODS_TO_IGNORE_PARAM, METHODS_TO_IGNORE_DEFAULT);
+        if (customMethodsToIgnore != null) {
+          parseMethodsToIgnore(customMethodsToIgnore);
+        } else {
+          parseMethodsToIgnore(METHODS_TO_IGNORE_DEFAULT);
+        }
+        String agents = PropertiesUtil.getProperty(BROWSER_USER_AGENT_PARAM, BROWSER_USER_AGENTS_DEFAULT);
+        if (agents == null) {
+          agents = BROWSER_USER_AGENTS_DEFAULT;
+        }
+        parseBrowserUserAgents(agents);
+        LOG.info("Adding cross-site request forgery (CSRF) protection");
 	}
-
+	
 	void parseMethodsToIgnore(String mti) {
-		String[] methods = mti.split(",");
-		methodsToIgnore = new HashSet<String>();
-		Collections.addAll(methodsToIgnore, methods);
+        String[] methods = mti.split(",");
+        methodsToIgnore = new HashSet<String>();
+        Collections.addAll(methodsToIgnore, methods);
 	}
-
+	
 	void parseBrowserUserAgents(String userAgents) {
 		browserUserAgents = userAgents.split(",");
 	}
-
+	
 	protected boolean isBrowser(String userAgent) {
 		boolean isWeb = false;
 		if (browserUserAgents != null && browserUserAgents.length > 0 && userAgent != null) {
@@ -99,36 +104,13 @@ public class RangerCSRFPreventionFilter implements Filter {
 		}
 		return isWeb;
 	}
-
-	public void handleHttpInteraction(HttpInteraction httpInteraction)
-			throws IOException, ServletException {
-		if (httpInteraction.getHeader(headerName) != null
-				|| !isBrowser(httpInteraction.getHeader(HEADER_USER_AGENT))
-				|| methodsToIgnore.contains(httpInteraction.getMethod())) {
-			httpInteraction.proceed();
-		} else {
-			httpInteraction.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing Required Header for CSRF Vulnerability Protection");
-		}
-	}
-
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if (IS_CSRF_ENABLED) {
-			final HttpServletRequest httpRequest = (HttpServletRequest) request;
-			final HttpServletResponse httpResponse = (HttpServletResponse) response;
-			handleHttpInteraction(new ServletFilterHttpInteraction(httpRequest, httpResponse, chain));
-		} else {
-			chain.doFilter(request, response);
-		}
-	}
-
-	public void destroy() {
-	}
-
+	
 	public interface HttpInteraction {
 		/**
 		 * Returns the value of a header.
 		 *
-		 * @param header name of header
+		 * @param header
+		 *            name of header
 		 * @return value of header
 		 */
 		String getHeader(String header);
@@ -143,9 +125,11 @@ public class RangerCSRFPreventionFilter implements Filter {
 		/**
 		 * Called by the filter after it decides that the request may proceed.
 		 *
-		 * @throws IOException      if there is an I/O error
-		 * @throws ServletException if the implementation relies on the servlet API and a
-		 *                          servlet API call has failed
+		 * @throws IOException
+		 *             if there is an I/O error
+		 * @throws ServletException
+		 *             if the implementation relies on the servlet API and a
+		 *             servlet API call has failed
 		 */
 		void proceed() throws IOException, ServletException;
 
@@ -153,13 +137,40 @@ public class RangerCSRFPreventionFilter implements Filter {
 		 * Called by the filter after it decides that the request is a potential
 		 * CSRF attack and therefore must be rejected.
 		 *
-		 * @param code    status code to send
-		 * @param message response message
-		 * @throws IOException if there is an I/O error
+		 * @param code
+		 *            status code to send
+		 * @param message
+		 *            response message
+		 * @throws IOException
+		 *             if there is an I/O error
 		 */
 		void sendError(int code, String message) throws IOException;
+	}	
+	
+	public void handleHttpInteraction(HttpInteraction httpInteraction)
+			throws IOException, ServletException {
+		if (httpInteraction.getHeader(headerName) != null
+				|| !isBrowser(httpInteraction.getHeader(HEADER_USER_AGENT))
+				|| methodsToIgnore.contains(httpInteraction.getMethod())) {
+			httpInteraction.proceed();
+		}else {
+			httpInteraction.sendError(HttpServletResponse.SC_BAD_REQUEST,"Missing Required Header for CSRF Vulnerability Protection");
+		}
+	}
+	
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		if (IS_CSRF_ENABLED) {
+			final HttpServletRequest httpRequest = (HttpServletRequest)request;
+		    final HttpServletResponse httpResponse = (HttpServletResponse)response;
+		    handleHttpInteraction(new ServletFilterHttpInteraction(httpRequest, httpResponse, chain));
+		}else{
+			chain.doFilter(request, response);
+		}
 	}
 
+	public void destroy() {
+	}
+	
 	private static final class ServletFilterHttpInteraction implements
 			HttpInteraction {
 
@@ -170,12 +181,15 @@ public class RangerCSRFPreventionFilter implements Filter {
 		/**
 		 * Creates a new ServletFilterHttpInteraction.
 		 *
-		 * @param httpRequest  request to process
-		 * @param httpResponse response to process
-		 * @param chain        filter chain to forward to if HTTP interaction is allowed
+		 * @param httpRequest
+		 *            request to process
+		 * @param httpResponse
+		 *            response to process
+		 * @param chain
+		 *            filter chain to forward to if HTTP interaction is allowed
 		 */
 		public ServletFilterHttpInteraction(HttpServletRequest httpRequest,
-		                                    HttpServletResponse httpResponse, FilterChain chain) {
+				HttpServletResponse httpResponse, FilterChain chain) {
 			this.httpRequest = httpRequest;
 			this.httpResponse = httpResponse;
 			this.chain = chain;

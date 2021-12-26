@@ -32,15 +32,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class SearchUtil {
-	final static Logger logger = LogManager.getLogger(SearchUtil.class);
+	final static Logger logger = Logger.getLogger(SearchUtil.class);
 
 	@Autowired
 	RESTErrorUtil restErrorUtil;
@@ -123,7 +122,7 @@ public class SearchUtil {
 		return searchCriteria;
 	}
 
-
+	
 
 	public Long extractLong(HttpServletRequest request,
 			SearchCriteria searchCriteria, String paramName,
@@ -414,8 +413,8 @@ public class SearchUtil {
 					searchGroup.getWhereClause("" + groupCount));
 //			searchGroup.getJoinTableList(joinTableList, searchGroup);
 		}
-
-
+		
+	
 
 		for (SearchField searchField : searchFields) {
 			int startWhereLen = whereClause.length();
@@ -661,7 +660,7 @@ public class SearchUtil {
 						&& (((Collection) paramValue).size()) >=1) {
 					query.setParameter(searchField.getClientFieldName(),
 							paramValue);
-				}
+				}			
 			}
 			else if (searchField.getDataType() == SearchField.DATA_TYPE.INTEGER) {
 				Number intFieldValue = (Number) paramList.get(searchField
@@ -738,7 +737,7 @@ public class SearchUtil {
 
 		return query;
 	}
-
+	
 	public List<Integer> extractIntList(HttpServletRequest request,
 			SearchCriteria searchCriteria, String paramName,
 			String userFriendlyParamName, String listName) {
@@ -754,7 +753,7 @@ public class SearchUtil {
 		}
 		searchCriteria.getParamList().put(listName, valueList);
 		return valueList;
-	}
+	}		
 
 	public Boolean extractBoolean(HttpServletRequest request,
 			SearchCriteria searchCriteria, String paramName,
@@ -768,5 +767,5 @@ public class SearchUtil {
 		}
 		return value;
 	}
-
+	
 }

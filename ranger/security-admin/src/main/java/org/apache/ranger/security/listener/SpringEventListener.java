@@ -17,10 +17,10 @@
  * under the License.
  */
 
-package org.apache.ranger.security.listener;
+ package org.apache.ranger.security.listener;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Calendar;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.SessionMgr;
 import org.apache.ranger.entity.XXAuthSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,81 +32,81 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import java.util.Calendar;
 
+public class SpringEventListener implements
+	ApplicationListener<AbstractAuthenticationEvent> {
 
-public class SpringEventListener implements ApplicationListener<AbstractAuthenticationEvent> {
-	private static Logger logger = LogManager.getLogger(SpringEventListener.class);
+    private static final Logger logger = Logger.getLogger(SpringEventListener.class);
 
-	@Autowired
-	SessionMgr sessionMgr;
+    @Autowired
+    SessionMgr sessionMgr;
 
-	@Override
-	public void onApplicationEvent(AbstractAuthenticationEvent event) {
-		try {
-			if (event instanceof AuthenticationSuccessEvent) {
-				process((AuthenticationSuccessEvent) event);
-			} else if (event instanceof AuthenticationFailureBadCredentialsEvent) {
-				process((AuthenticationFailureBadCredentialsEvent) event);
-			} else if (event instanceof AuthenticationFailureDisabledEvent) {
-				process((AuthenticationFailureDisabledEvent) event);
-			}
-			// igonre all other events
+    @Override
+    public void onApplicationEvent(AbstractAuthenticationEvent event) {
+	try {
+	    if (event instanceof AuthenticationSuccessEvent) {
+		process((AuthenticationSuccessEvent) event);
+	    } else if (event instanceof AuthenticationFailureBadCredentialsEvent) {
+		process((AuthenticationFailureBadCredentialsEvent) event);
+	    } else if (event instanceof AuthenticationFailureDisabledEvent) {
+		process((AuthenticationFailureDisabledEvent) event);
+	    }
+	    // igonre all other events
 
-		} catch (Exception e) {
-			logger.error("Exception in Spring Event Listener.", e);
-		}
+	} catch (Exception e) {
+	    logger.error("Exception in Spring Event Listener.", e);
 	}
+    }
 
-	protected void process(AuthenticationSuccessEvent authSuccessEvent) {
-		Authentication auth = authSuccessEvent.getAuthentication();
-		WebAuthenticationDetails details = (WebAuthenticationDetails) auth
-				.getDetails();
-		String remoteAddress = details != null ? details.getRemoteAddress()
-				: "";
-		String sessionId = details != null ? details.getSessionId() : "";
+    protected void process(AuthenticationSuccessEvent authSuccessEvent) {
+	Authentication auth = authSuccessEvent.getAuthentication();
+	WebAuthenticationDetails details = (WebAuthenticationDetails) auth
+		.getDetails();
+	String remoteAddress = details != null ? details.getRemoteAddress()
+		: "";
+	String sessionId = details != null ? details.getSessionId() : "";
 
-		Calendar cal = Calendar.getInstance();
-		logger.info("Login Successful:" + auth.getName() + " | Ip Address:"
-				+ remoteAddress + " | sessionId=" + sessionId + " | Epoch=" + cal.getTimeInMillis());
+	Calendar cal = Calendar.getInstance();
+	logger.info("Login Successful:" + auth.getName() + " | Ip Address:"
+			+ remoteAddress + " | sessionId=" + sessionId +  " | Epoch=" +cal.getTimeInMillis() );
 
-		// success logins are processed further in
-		// AKASecurityContextFormationFilter
-	}
+	// success logins are processed further in
+	// AKASecurityContextFormationFilter
+    }
 
-	protected void process(
-			AuthenticationFailureBadCredentialsEvent authFailEvent) {
-		Authentication auth = authFailEvent.getAuthentication();
-		WebAuthenticationDetails details = (WebAuthenticationDetails) auth
-				.getDetails();
-		String remoteAddress = details != null ? details.getRemoteAddress()
-				: "";
-		String sessionId = details != null ? details.getSessionId() : "";
+    protected void process(
+	    AuthenticationFailureBadCredentialsEvent authFailEvent) {
+	Authentication auth = authFailEvent.getAuthentication();
+	WebAuthenticationDetails details = (WebAuthenticationDetails) auth
+		.getDetails();
+	String remoteAddress = details != null ? details.getRemoteAddress()
+		: "";
+	String sessionId = details != null ? details.getSessionId() : "";
 
-		logger.info("Login Unsuccessful:" + auth.getName() + " | Ip Address:"
-				+ remoteAddress + " | Bad Credentials");
+	logger.info("Login Unsuccessful:" + auth.getName() + " | Ip Address:"
+		+ remoteAddress + " | Bad Credentials");
 
-		sessionMgr.processFailureLogin(
-				XXAuthSession.AUTH_STATUS_WRONG_PASSWORD,
-				XXAuthSession.AUTH_TYPE_PASSWORD, auth.getName(),
-				remoteAddress, sessionId);
-	}
+	sessionMgr.processFailureLogin(
+		XXAuthSession.AUTH_STATUS_WRONG_PASSWORD,
+		XXAuthSession.AUTH_TYPE_PASSWORD, auth.getName(),
+		remoteAddress, sessionId);
+    }
 
-	protected void process(AuthenticationFailureDisabledEvent authFailEvent) {
-		Authentication auth = authFailEvent.getAuthentication();
-		WebAuthenticationDetails details = (WebAuthenticationDetails) auth
-				.getDetails();
-		String remoteAddress = details != null ? details.getRemoteAddress()
-				: "";
-		String sessionId = details != null ? details.getSessionId() : "";
+    protected void process(AuthenticationFailureDisabledEvent authFailEvent) {
+	Authentication auth = authFailEvent.getAuthentication();
+	WebAuthenticationDetails details = (WebAuthenticationDetails) auth
+		.getDetails();
+	String remoteAddress = details != null ? details.getRemoteAddress()
+		: "";
+	String sessionId = details != null ? details.getSessionId() : "";
 
-		logger.info("Login Unsuccessful:" + auth.getName() + " | Ip Address:"
-				+ remoteAddress);
+	logger.info("Login Unsuccessful:" + auth.getName() + " | Ip Address:"
+		+ remoteAddress);
 
-		sessionMgr.processFailureLogin(XXAuthSession.AUTH_STATUS_DISABLED,
-				XXAuthSession.AUTH_TYPE_PASSWORD, auth.getName(),
-				remoteAddress, sessionId);
+	sessionMgr.processFailureLogin(XXAuthSession.AUTH_STATUS_DISABLED,
+		XXAuthSession.AUTH_TYPE_PASSWORD, auth.getName(),
+		remoteAddress, sessionId);
 
-	}
+    }
 
 }

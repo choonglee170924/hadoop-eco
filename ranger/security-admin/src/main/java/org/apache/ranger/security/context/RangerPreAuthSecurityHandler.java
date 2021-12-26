@@ -19,9 +19,13 @@
 
 package org.apache.ranger.security.context;
 
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.SessionMgr;
 import org.apache.ranger.common.ContextUtil;
 import org.apache.ranger.common.RESTErrorUtil;
@@ -30,13 +34,9 @@ import org.apache.ranger.db.RangerDaoManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-
 @Component("rangerPreAuthSecurityHandler")
 public class RangerPreAuthSecurityHandler {
-	Logger logger = LogManager.getLogger(RangerPreAuthSecurityHandler.class);
+	Logger logger = Logger.getLogger(RangerPreAuthSecurityHandler.class);
 
 	@Autowired
 	RangerDaoManager daoManager;
@@ -46,7 +46,7 @@ public class RangerPreAuthSecurityHandler {
 
 	@Autowired
 	RangerAPIMapping rangerAPIMapping;
-
+	
 	@Autowired
 	SessionMgr sessionMgr;
 
@@ -74,9 +74,9 @@ public class RangerPreAuthSecurityHandler {
 		if (CollectionUtils.isEmpty(associatedTabs)) {
 			return true;
 		}
-		if (associatedTabs.contains(RangerAPIMapping.TAB_PERMISSIONS) && userSession.isAuditUserAdmin()) {
-			return true;
-		}
+                if(associatedTabs.contains(RangerAPIMapping.TAB_PERMISSIONS) && userSession.isAuditUserAdmin()){
+                        return true;
+                }
 		return isAPIAccessible(associatedTabs);
 	}
 
@@ -96,17 +96,17 @@ public class RangerPreAuthSecurityHandler {
 		throw restErrorUtil.createRESTException(HttpServletResponse.SC_FORBIDDEN, "User is not allowed to access the API", true);
 	}
 
-	public boolean isAPISpnegoAccessible() {
+	public boolean isAPISpnegoAccessible(){
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && (userSession.isSpnegoEnabled() || userSession.isUserAdmin())) {
 			return true;
-		} else if (userSession != null && (userSession.isUserAdmin() || userSession.isKeyAdmin())) {
+		}else if(userSession != null && (userSession.isUserAdmin() || userSession.isKeyAdmin())){
 			return true;
 		}
 		throw restErrorUtil.createRESTException(HttpServletResponse.SC_FORBIDDEN, "User is not allowed to access the API", true);
 	}
-
-	public boolean isAdminOrKeyAdminRole() {
+	
+	public boolean isAdminOrKeyAdminRole(){
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && (userSession.isKeyAdmin() || userSession.isUserAdmin())) {
 			return true;

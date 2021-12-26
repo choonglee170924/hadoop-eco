@@ -19,26 +19,6 @@
 
 package org.apache.ranger.services.kms.client;
 
-import com.google.common.base.Strings;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.security.HadoopKerberosName;
-import org.apache.hadoop.security.ProviderUtils;
-import org.apache.hadoop.security.SecureClientLogin;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.client.BaseClient;
-import org.apache.ranger.plugin.client.HadoopException;
-import org.apache.ranger.plugin.util.PasswordUtils;
-
-import javax.security.auth.Subject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -50,9 +30,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.Subject;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.security.HadoopKerberosName;
+import org.apache.hadoop.security.ProviderUtils;
+import org.apache.hadoop.security.SecureClientLogin;
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.client.BaseClient;
+import org.apache.ranger.plugin.util.PasswordUtils;
+import org.apache.ranger.plugin.client.HadoopException;
+
+import com.google.common.base.Strings;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+
 public class KMSClient {
 
-	private static final Logger LOG = LogManager.getLogger(KMSClient.class);
+	private static final Logger LOG = Logger.getLogger(KMSClient.class);
 
 	private static final String EXPECTED_MIME_TYPE = "application/json";
 
@@ -61,7 +62,7 @@ public class KMSClient {
 	private static final String errMessage = " You can still save the repository and start creating "
 			+ "policies, but you would not be able to use autocomplete for "
 			+ "resource names. Check ranger_admin.log for more info.";
-
+	
 	private static final String AUTH_TYPE_KERBEROS = "kerberos";
 
 	String provider;
@@ -80,114 +81,11 @@ public class KMSClient {
 		this.rangerKeytab = rangerKeytab;
 		this.nameRules = nameRules;
 		this.authType = authType;
-
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Kms Client is build with url [" + provider + "] user: ["
 					+ username + "]");
 		}
-	}
-
-	private static Path extractKMSPath(URI uri) throws MalformedURLException,
-			IOException {
-		return ProviderUtils.unnestUri(uri);
-	}
-
-	public static Map<String, Object> testConnection(String serviceName, //NOPMD
-	                                                 Map<String, String> configs) {
-
-		List<String> strList = new ArrayList<String>();
-		String errMsg = errMessage;
-		boolean connectivityStatus = false;
-		Map<String, Object> responseData = new HashMap<String, Object>();
-
-		KMSClient kmsClient = getKmsClient(serviceName, configs);
-		strList = getKmsKey(kmsClient, "", null);
-		if (strList != null) {
-			connectivityStatus = true;
-		}
-		if (connectivityStatus) {
-			String successMsg = "TestConnection Successful";
-			BaseClient.generateResponseDataMap(connectivityStatus, successMsg,
-					successMsg, null, null, responseData);
-		} else {
-			String failureMsg = "Unable to retrieve any Kms Key using given URL.";
-			BaseClient.generateResponseDataMap(connectivityStatus, failureMsg,
-					failureMsg + errMsg, null, null, responseData);
-		}
-
-		return responseData;
-	}
-
-	public static KMSClient getKmsClient(String serviceName,
-	                                     Map<String, String> configs) {
-		KMSClient kmsClient = null;
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Getting KmsClient for datasource: " + serviceName);
-			LOG.debug("configMap: " + configs);
-		}
-		String errMsg = errMessage;
-		if (configs == null || configs.isEmpty()) {
-			String msgDesc = "Could not connect as Connection ConfigMap is empty.";
-			LOG.error(msgDesc);
-			HadoopException hdpException = new HadoopException(msgDesc);
-			hdpException.generateResponseDataMap(false, msgDesc, msgDesc
-					+ errMsg, null, null);
-			throw hdpException;
-		} else {
-			String kmsUrl = configs.get("provider");
-			String kmsUserName = configs.get("username");
-			String kmsPassWord = configs.get("password");
-			String rangerPrincipal = configs.get("rangerprincipal");
-			String rangerKeytab = configs.get("rangerkeytab");
-			String nameRules = configs.get("namerules");
-			String authType = configs.get("authtype");
-
-			kmsClient = new KMSClient(kmsUrl, kmsUserName, kmsPassWord, rangerPrincipal, rangerKeytab, nameRules, authType);
-
-		}
-		return kmsClient;
-	}
-
-	public static List<String> getKmsKey(final KMSClient kmsClient,
-	                                     String keyName, List<String> existingKeyName) {
-
-		List<String> resultList = new ArrayList<String>();
-		String errMsg = errMessage;
-
-		try {
-			if (kmsClient == null) {
-				String msgDesc = "Unable to get Kms Key : KmsClient is null.";
-				LOG.error(msgDesc);
-				HadoopException hdpException = new HadoopException(msgDesc);
-				hdpException.generateResponseDataMap(false, msgDesc, msgDesc
-						+ errMsg, null, null);
-				throw hdpException;
-			}
-
-			if (keyName != null) {
-				String finalkmsKeyName = keyName.trim();
-				resultList = kmsClient.getKeyList(finalkmsKeyName,
-						existingKeyName);
-				if (resultList != null) {
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Returning list of " + resultList.size()
-								+ " Kms Keys");
-					}
-				}
-			}
-		} catch (HadoopException he) {
-			resultList = null;
-			throw he;
-		} catch (Exception e) {
-			String msgDesc = "Unable to get a valid response from the provider : " + e.getMessage();
-			LOG.error(msgDesc, e);
-			HadoopException hdpException = new HadoopException(msgDesc);
-			hdpException.generateResponseDataMap(false, msgDesc, msgDesc
-					+ errMsg, null, null);
-			resultList = null;
-			throw hdpException;
-		}
-		return resultList;
 	}
 
 	private String[] createProvider(String uri) throws IOException,
@@ -217,8 +115,13 @@ public class KMSClient {
 		return createProvider(origUrl, port, hostsPart);
 	}
 
+	private static Path extractKMSPath(URI uri) throws MalformedURLException,
+			IOException {
+		return ProviderUtils.unnestUri(uri);
+	}
+
 	private String[] createProvider(URL origUrl, int port,
-	                                String hostsPart) throws IOException {
+			String hostsPart) throws IOException {
 		String[] hosts = hostsPart.split(";");
 		String[] providers = new String[hosts.length];
 		if (hosts.length == 1) {
@@ -238,8 +141,8 @@ public class KMSClient {
 	}
 
 	public List<String> getKeyList(final String keyNameMatching,
-	                               final List<String> existingKeyList) {
-
+			final List<String> existingKeyList) {
+		
 		String providers[] = null;
 		try {
 			providers = createProvider(provider);
@@ -249,7 +152,7 @@ public class KMSClient {
 		final String errMsg = errMessage;
 		List<String> lret = null;
 		for (int i = 0; i < providers.length; i++) {
-			lret = new ArrayList<String>();
+			lret  = new ArrayList<String>();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Getting Kms Key list for keyNameMatching : " + keyNameMatching);
 			}
@@ -261,33 +164,34 @@ public class KMSClient {
 				ClientConfig cc = new DefaultClientConfig();
 				cc.getProperties().put(ClientConfig.PROPERTY_FOLLOW_REDIRECTS, true);
 				client = Client.create(cc);
-
-				if (authType != null && authType.equalsIgnoreCase(AUTH_TYPE_KERBEROS)) {
+							
+				if(authType != null && authType.equalsIgnoreCase(AUTH_TYPE_KERBEROS)){
 					isKerberos = true;
 				}
-
+				
 				Subject sub = new Subject();
-				if (!isKerberos) {
-					uri = uri.concat("?user.name=" + username);
+				if(!isKerberos){
+					uri = uri.concat("?user.name="+username);
 					WebResource webResource = client.resource(uri);
 					response = webResource.accept(EXPECTED_MIME_TYPE).get(ClientResponse.class);
 					LOG.info("Init Login: security not enabled, using username");
-					sub = SecureClientLogin.login(username);
-				} else {
-					if (!StringUtils.isEmpty(rangerPrincipal) && !StringUtils.isEmpty(rangerKeytab)) {
+					sub = SecureClientLogin.login(username);					
+				}else{										
+					if(!StringUtils.isEmpty(rangerPrincipal) && !StringUtils.isEmpty(rangerKeytab)){
 						LOG.info("Init Lookup Login: security enabled, using rangerPrincipal/rangerKeytab");
-						if (StringUtils.isEmpty(nameRules)) {
+						if(StringUtils.isEmpty(nameRules)){
 							nameRules = "DEFAULT";
 						}
 						String shortName = new HadoopKerberosName(rangerPrincipal).getShortName();
-						uri = uri.concat("?doAs=" + shortName);
+						uri = uri.concat("?doAs="+shortName);						
 						sub = SecureClientLogin.loginUserFromKeytab(rangerPrincipal, rangerKeytab, nameRules);
-					} else {
+					}
+					else{
 						LOG.info("Init Login: using username/password");
 						String shortName = new HadoopKerberosName(username).getShortName();
-						uri = uri.concat("?doAs=" + shortName);
+						uri = uri.concat("?doAs="+shortName);
 						String decryptedPwd = PasswordUtils.decryptPassword(password);
-						sub = SecureClientLogin.loginUserWithPassword(username, decryptedPwd);
+						sub = SecureClientLogin.loginUserWithPassword(username, decryptedPwd);						
 					}
 				}
 				final WebResource webResource = client.resource(uri);
@@ -297,7 +201,7 @@ public class KMSClient {
 						return webResource.accept(EXPECTED_MIME_TYPE).get(ClientResponse.class);
 					}
 				});
-
+				
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("getKeyList():calling " + uri);
 				}
@@ -330,7 +234,7 @@ public class KMSClient {
 								}
 							}
 							return lret;
-						}
+						}						
 					} else if (response.getStatus() == 401) {
 						LOG.info("getKeyList():response.getStatus()= "
 								+ response.getStatus() + " for URL " + uri
@@ -390,13 +294,111 @@ public class KMSClient {
 				if (client != null) {
 					client.destroy();
 				}
-
-				if (lret == null) {
+				
+				if(lret == null){
 					if (i != providers.length - 1)
-						continue;
+						continue;					
 				}
-			}
+			}			
 		}
 		return lret;
+	}
+
+	public static Map<String, Object> testConnection(String serviceName, //NOPMD
+			Map<String, String> configs) {
+
+		List<String> strList = new ArrayList<String>();
+		String errMsg = errMessage;
+		boolean connectivityStatus = false;
+		Map<String, Object> responseData = new HashMap<String, Object>();
+
+		KMSClient kmsClient = getKmsClient(serviceName, configs);
+		strList = getKmsKey(kmsClient, "", null);
+		if (strList != null) {
+			connectivityStatus = true;
+		}
+		if (connectivityStatus) {
+			String successMsg = "TestConnection Successful";
+			BaseClient.generateResponseDataMap(connectivityStatus, successMsg,
+					successMsg, null, null, responseData);
+		} else {
+			String failureMsg = "Unable to retrieve any Kms Key using given URL.";
+			BaseClient.generateResponseDataMap(connectivityStatus, failureMsg,
+					failureMsg + errMsg, null, null, responseData);
+		}
+
+		return responseData;
+	}
+
+	public static KMSClient getKmsClient(String serviceName,
+			Map<String, String> configs) {
+		KMSClient kmsClient = null;
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Getting KmsClient for datasource: " + serviceName);
+			LOG.debug("configMap: " + configs);
+		}
+		String errMsg = errMessage;
+		if (configs == null || configs.isEmpty()) {
+			String msgDesc = "Could not connect as Connection ConfigMap is empty.";
+			LOG.error(msgDesc);
+			HadoopException hdpException = new HadoopException(msgDesc);
+			hdpException.generateResponseDataMap(false, msgDesc, msgDesc
+					+ errMsg, null, null);
+			throw hdpException;
+		} else {
+			String kmsUrl = configs.get("provider");
+			String kmsUserName = configs.get("username");
+			String kmsPassWord = configs.get("password");
+			String rangerPrincipal = configs.get("rangerprincipal");
+			String rangerKeytab = configs.get("rangerkeytab");
+			String nameRules = configs.get("namerules");
+			String authType = configs.get("authtype");
+			
+			kmsClient = new KMSClient(kmsUrl, kmsUserName, kmsPassWord, rangerPrincipal, rangerKeytab, nameRules, authType);
+
+		}
+		return kmsClient;
+	}
+
+	public static List<String> getKmsKey(final KMSClient kmsClient,
+			String keyName, List<String> existingKeyName) {
+
+		List<String> resultList = new ArrayList<String>();
+		String errMsg = errMessage;
+
+		try {
+			if (kmsClient == null) {
+				String msgDesc = "Unable to get Kms Key : KmsClient is null.";
+				LOG.error(msgDesc);
+				HadoopException hdpException = new HadoopException(msgDesc);
+				hdpException.generateResponseDataMap(false, msgDesc, msgDesc
+						+ errMsg, null, null);
+				throw hdpException;
+			}
+
+			if (keyName != null) {
+				String finalkmsKeyName = keyName.trim();
+				resultList = kmsClient.getKeyList(finalkmsKeyName,
+						existingKeyName);
+				if (resultList != null) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Returning list of " + resultList.size()
+								+ " Kms Keys");
+					}
+				}
+			}
+		} catch (HadoopException he) {
+			resultList = null;
+			throw he;
+		} catch (Exception e) {
+			String msgDesc = "Unable to get a valid response from the provider : "+e.getMessage();
+			LOG.error(msgDesc, e);
+			HadoopException hdpException = new HadoopException(msgDesc);
+			hdpException.generateResponseDataMap(false, msgDesc, msgDesc
+					+ errMsg, null, null);
+			resultList = null;
+			throw hdpException;
+		}
+		return resultList;
 	}
 }

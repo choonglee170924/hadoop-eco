@@ -70,13 +70,13 @@ public class RangerRESTClient {
 	public static final String RANGER_POLICYMGR_CLIENT_KEY_FILE_TYPE             = "xasecure.policymgr.clientssl.keystore.type";
 	public static final String RANGER_POLICYMGR_CLIENT_KEY_FILE_CREDENTIAL       = "xasecure.policymgr.clientssl.keystore.credential.file";
 	public static final String RANGER_POLICYMGR_CLIENT_KEY_FILE_CREDENTIAL_ALIAS = "sslKeyStore";
-	public static final String RANGER_POLICYMGR_CLIENT_KEY_FILE_TYPE_DEFAULT     = "jks";
+	public static final String RANGER_POLICYMGR_CLIENT_KEY_FILE_TYPE_DEFAULT     = "jks";	
 
 	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE                  = "xasecure.policymgr.clientssl.truststore";
-	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_TYPE             = "xasecure.policymgr.clientssl.truststore.type";
+	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_TYPE             = "xasecure.policymgr.clientssl.truststore.type";	
 	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_CREDENTIAL       = "xasecure.policymgr.clientssl.truststore.credential.file";
 	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_CREDENTIAL_ALIAS = "sslTrustStore";
-	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_TYPE_DEFAULT     = "jks";
+	public static final String RANGER_POLICYMGR_TRUSTSTORE_FILE_TYPE_DEFAULT     = "jks";	
 
 	public static final String RANGER_SSL_KEYMANAGER_ALGO_TYPE					 = KeyManagerFactory.getDefaultAlgorithm();
 	public static final String RANGER_SSL_TRUSTMANAGER_ALGO_TYPE				 = TrustManagerFactory.getDefaultAlgorithm();
@@ -154,14 +154,14 @@ public class RangerRESTClient {
 
 	public WebResource getResource(String relativeUrl) {
 		WebResource ret = getClient().resource(getUrl() + relativeUrl);
-
+		
 		return ret;
 	}
 
 	public String toJson(Object obj) {
-		return gsonBuilder.toJson(obj);
+		return gsonBuilder.toJson(obj);		
 	}
-
+	
 	public <T> T fromJson(String json, Class<T> cls) {
 		return gsonBuilder.fromJson(json, cls);
 	}
@@ -211,9 +211,6 @@ public class RangerRESTClient {
 			client = Client.create(config);
 		}
 
-		LOG.info("@@@@@@@@@@@@@@@@@@@@ -> mUsername :" + mUsername);
-		LOG.info("@@@@@@@@@@@@@@@@@@@@ -> mPassword :" + mPassword);
-
 		if(!StringUtils.isEmpty(mUsername) && !StringUtils.isEmpty(mPassword)) {
 			client.addFilter(new HTTPBasicAuthFilter(mUsername, mPassword));
 		}
@@ -237,9 +234,6 @@ public class RangerRESTClient {
 		}
 
 		mIsSSL = StringUtil.containsIgnoreCase(mUrl, "https");
-
-		LOG.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mUsername);
-		LOG.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mPassword);
 
 		if (mIsSSL) {
 
@@ -367,7 +361,7 @@ public class RangerRESTClient {
 				close(in, mTrustStoreFile);
 			}
 		}
-
+		
 		return tmList;
 	}
 

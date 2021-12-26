@@ -17,60 +17,62 @@
  * under the License.
  */
 
-/**
+ /**
  *
  */
 package org.apache.ranger.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 /**
  *
  *
  */
 public class SearchValue {
-	static final Logger logger = LogManager.getLogger(SearchValue.class);
+    static final Logger logger = Logger.getLogger(SearchValue.class);
 
-	SearchField searchField;
-	Object value = null;
-	List<?> valueList = null;
-	boolean isNull = false;
+    SearchField searchField;
+    Object value = null;
+    List<?> valueList = null;
+    boolean isNull = false;
 
-	/**
-	 * @return the value
-	 */
-	public Object getValue() {
-		if (value != null) {
-			return value;
-		}
-		if (valueList.size() == 1) {
-			return valueList.get(0);
-		}
-		logger.error("getValue() called for null.", new Throwable());
-		return value;
+   /**
+     * @return the value
+     */
+    public Object getValue() {
+	if (value != null) {
+	    return value;
 	}
-
-
-	/**
-	 * @return the valueList
-	 */
-	public List<?> getValueList() {
-		return valueList;
+	if (valueList.size() == 1) {
+	    return valueList.get(0);
 	}
-
-	/**
-	 * @return the searchField
-	 */
-	public SearchField getSearchField() {
-		return searchField;
-	}
+	logger.error("getValue() called for null.", new Throwable());
+	return value;
+    }
 
 
-	public boolean isList() {
-		return valueList != null && valueList.size() > 1;
-	}
+
+    /**
+     * @return the valueList
+     */
+    public List<?> getValueList() {
+	return valueList;
+    }
+
+    /**
+     * @return the searchField
+     */
+    public SearchField getSearchField() {
+	return searchField;
+    }
+
+
+
+
+    public boolean isList() {
+	return valueList != null && valueList.size() > 1;
+    }
 
 }

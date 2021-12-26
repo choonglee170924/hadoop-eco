@@ -17,19 +17,8 @@
  * under the License.
  */
 
-package org.apache.ranger.service.filter;
+ package org.apache.ranger.service.filter;
 
-import com.sun.jersey.api.container.filter.LoggingFilter;
-import com.sun.jersey.api.uri.UriTemplate;
-import com.sun.jersey.spi.container.ContainerRequest;
-import com.sun.jersey.spi.container.ContainerResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.common.PropertiesUtil;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-
-import javax.ws.rs.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,9 +27,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.common.PropertiesUtil;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+
+import com.sun.jersey.api.container.filter.LoggingFilter;
+import com.sun.jersey.api.uri.UriTemplate;
+import com.sun.jersey.spi.container.ContainerRequest;
+import com.sun.jersey.spi.container.ContainerResponse;
+
 public class RangerRESTAPIFilter extends LoggingFilter {
+	Logger logger = Logger.getLogger(RangerRESTAPIFilter.class);
 	static volatile boolean initDone = false;
-	Logger logger = LogManager.getLogger(RangerRESTAPIFilter.class);
+
 	boolean logStdOut = true;
 	HashMap<String, String> regexPathMap = new HashMap<String, String>();
 	HashMap<String, Pattern> regexPatternMap = new HashMap<String, Pattern>();
@@ -111,7 +117,7 @@ public class RangerRESTAPIFilter extends LoggingFilter {
 	 */
 	@Override
 	public ContainerResponse filter(ContainerRequest request,
-	                                ContainerResponse response) {
+			ContainerResponse response) {
 		if (logStdOut) {
 			// If it is image, then don't call super
 			if (response.getMediaType() == null) {
@@ -133,7 +139,7 @@ public class RangerRESTAPIFilter extends LoggingFilter {
 		@SuppressWarnings("rawtypes")
 		List<Class> cList = findClasses(pkg);
 		for (@SuppressWarnings("rawtypes")
-				Class klass : cList) {
+		Class klass : cList) {
 			Annotation[] annotations = klass.getAnnotations();
 			for (Annotation annotation : annotations) {
 				if (!(annotation instanceof Path)) {

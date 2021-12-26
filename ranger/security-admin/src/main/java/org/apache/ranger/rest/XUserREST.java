@@ -34,8 +34,7 @@ import javax.ws.rs.core.Context;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.biz.SessionMgr;
 import org.apache.ranger.biz.XUserMgr;
@@ -78,43 +77,61 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class XUserREST {
 
-	static final Logger logger = LogManager.getLogger(XUserMgr.class);
 	@Autowired
 	SearchUtil searchUtil;
+
 	@Autowired
 	XUserMgr xUserMgr;
+
 	@Autowired
 	XGroupService xGroupService;
+
 	@Autowired
 	XModuleDefService xModuleDefService;
+
 	@Autowired
 	XUserPermissionService xUserPermissionService;
+
 	@Autowired
 	XGroupPermissionService xGroupPermissionService;
+
 	@Autowired
 	XUserService xUserService;
+
 	@Autowired
 	XGroupUserService xGroupUserService;
+
 	@Autowired
 	XGroupGroupService xGroupGroupService;
+
 	@Autowired
 	XPermMapService xPermMapService;
+
 	@Autowired
 	XAuditMapService xAuditMapService;
+
 	@Autowired
 	RESTErrorUtil restErrorUtil;
+
 	@Autowired
 	RangerDaoManager rangerDaoManager;
+
 	@Autowired
 	SessionMgr sessionMgr;
+	
 	@Autowired
 	AuthSessionService authSessionService;
+
 	@Autowired
 	RangerBizUtil bizUtil;
+	
 	@Autowired
 	XResourceService xResourceService;
+	
 	@Autowired
 	StringUtil stringUtil;
+	
+	static final Logger logger = Logger.getLogger(XUserMgr.class);
 
 	// Handle XGroup
 	@GET
@@ -148,7 +165,7 @@ public class XUserREST {
 	public VXGroupUserInfo createXGroupUserFromMap(VXGroupUserInfo vXGroupUserInfo) {
 		return  xUserMgr.createXGroupUserFromMap(vXGroupUserInfo);
 	}
-
+	
 	@POST
 	@Path("/secure/groups")
 	@Produces({ "application/xml", "application/json" })
@@ -178,7 +195,7 @@ public class XUserREST {
 	public void modifyGroupsVisibility(HashMap<Long, Integer> groupVisibilityMap){
 		 xUserMgr.modifyGroupsVisibility(groupVisibilityMap);
 	}
-
+	
 	@DELETE
 	@Path("/groups/{id}")
 	@PreAuthorize("hasRole('ROLE_SYS_ADMIN')")
@@ -248,7 +265,7 @@ public class XUserREST {
 	public VXUser createXUser(VXUser vXUser) {
 		return xUserMgr.createXUserWithOutLogin(vXUser);
 	}
-
+	
 	@POST
 	@Path("/users/userinfo")
 	@Produces({ "application/xml", "application/json" })
@@ -256,7 +273,7 @@ public class XUserREST {
 	public VXUserGroupInfo createXUserGroupFromMap(VXUserGroupInfo vXUserGroupInfo) {
 		return  xUserMgr.createXUserGroupFromMap(vXUserGroupInfo);
 	}
-
+	
 	@POST
 	@Path("/secure/users")
 	@Produces({ "application/xml", "application/json" })
@@ -274,7 +291,7 @@ public class XUserREST {
                 bizUtil.checkUserAccessible(vXUser);
 		return xUserMgr.updateXUser(vXUser);
 	}
-
+	
 	@PUT
 	@Path("/secure/users/{id}")
 	@Produces({ "application/xml", "application/json" })
@@ -326,7 +343,7 @@ public class XUserREST {
 		}
 		searchUtil.extractString(request, searchCriteria, "name", "User name",null);
 		searchUtil.extractString(request, searchCriteria, "emailAddress", "Email Address",
-				null);
+				null);		
 		searchUtil.extractInt(request, searchCriteria, "userSource", "User Source");
 		searchUtil.extractInt(request, searchCriteria, "isVisible", "User Visibility");
 		searchUtil.extractInt(request, searchCriteria, "status", "User Status");
@@ -342,8 +359,8 @@ public class XUserREST {
 				searchCriteria.addParam("name", userName);
 			}
 		}
-
-
+		
+		
 		UserSessionBase userSession = ContextUtil.getCurrentUserSession();
 		if (userSession != null && userSession.getLoginId() != null) {
 			VXUser loggedInVXUser = xUserService.getXUserByUserName(userSession
@@ -360,7 +377,7 @@ public class XUserREST {
 							&& !searchCriteria.getParamValue("name").toString().equalsIgnoreCase(loggedInVXUser.getName())){
 						throw restErrorUtil.create403RESTException("Logged-In user is not allowed to access requested user data.");
 					}
-
+									
 				}
 			}
 		}
@@ -428,7 +445,7 @@ public class XUserREST {
 				request, xGroupUserService.sortFields);
 		return xUserMgr.searchXGroupUsers(searchCriteria);
 	}
-
+	
 	/**
 	 * Implements the traditional search functionalities for XGroupUsers by Group name
 	 *
@@ -746,7 +763,7 @@ public class XUserREST {
 			@Context HttpServletRequest request) {
 		xUserMgr.deleteXGroupAndXUser(groupName, userName);
 	}
-
+	
 	@GET
 	@Path("/{userId}/groups")
 	@Produces({ "application/xml", "application/json" })
@@ -789,7 +806,7 @@ public class XUserREST {
                 searchUtil.extractDate(request, searchCriteria, "endDate", "End Date", null);
 		return sessionMgr.searchAuthSessions(searchCriteria);
 	}
-
+	
 	@GET
 	@Path("/authSessions/info")
 	@Produces({ "application/xml", "application/json" })

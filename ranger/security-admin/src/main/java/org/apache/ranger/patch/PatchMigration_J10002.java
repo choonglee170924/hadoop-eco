@@ -17,20 +17,42 @@
 
 package org.apache.ranger.patch;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.biz.ServiceDBStore;
-import org.apache.ranger.common.*;
+import org.apache.ranger.common.AppConstants;
+import org.apache.ranger.common.JSONUtil;
+import org.apache.ranger.common.RangerCommonEnums;
+import org.apache.ranger.common.SearchCriteria;
+import org.apache.ranger.common.ServiceUtil;
+import org.apache.ranger.common.StringUtil;
 import org.apache.ranger.db.RangerDaoManager;
-import org.apache.ranger.entity.*;
+import org.apache.ranger.entity.XXAsset;
+import org.apache.ranger.entity.XXAuditMap;
+import org.apache.ranger.entity.XXGroup;
+import org.apache.ranger.entity.XXPolicy;
+import org.apache.ranger.entity.XXPolicyConditionDef;
+import org.apache.ranger.entity.XXPortalUser;
+import org.apache.ranger.entity.XXResource;
+import org.apache.ranger.entity.XXServiceConfigDef;
+import org.apache.ranger.entity.XXServiceDef;
+import org.apache.ranger.entity.XXUser;
 import org.apache.ranger.plugin.model.RangerPolicy;
+import org.apache.ranger.plugin.model.RangerService;
 import org.apache.ranger.plugin.model.RangerPolicy.RangerPolicyItem;
 import org.apache.ranger.plugin.model.RangerPolicy.RangerPolicyItemAccess;
 import org.apache.ranger.plugin.model.RangerPolicy.RangerPolicyResource;
-import org.apache.ranger.plugin.model.RangerService;
 import org.apache.ranger.plugin.store.EmbeddedServiceDefsUtil;
 import org.apache.ranger.service.RangerPolicyService;
 import org.apache.ranger.service.XPermMapService;
@@ -40,15 +62,38 @@ import org.apache.ranger.view.VXPermMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.Map.Entry;
-
 @Component
 public class PatchMigration_J10002 extends BaseLoader {
-	private static final Logger logger = LogManager.getLogger(PatchMigration_J10002.class);
-	static Set<String> unsupportedLegacyPermTypes = new HashSet<String>();
+	private static final Logger logger = Logger.getLogger(PatchMigration_J10002.class);
+
+	@Autowired
+	RangerDaoManager daoMgr;
+
+	@Autowired
+	ServiceDBStore svcDBStore;
+
+	@Autowired
+	JSONUtil jsonUtil;
+
+	@Autowired
+	RangerPolicyService policyService;
+
+	@Autowired
+	StringUtil stringUtil;
+
+	@Autowired
+	XPolicyService xPolService;
+
+	@Autowired
+	XPermMapService xPermMapService;
+	
+	@Autowired
+	RangerBizUtil bizUtil;
+
 	private static int policyCounter = 0;
 	private static int serviceCounter = 0;
+
+	static Set<String> unsupportedLegacyPermTypes = new HashSet<String>();
 
 	static {
 		unsupportedLegacyPermTypes.add("Unknown");
@@ -56,23 +101,6 @@ public class PatchMigration_J10002 extends BaseLoader {
 		unsupportedLegacyPermTypes.add("Obfuscate");
 		unsupportedLegacyPermTypes.add("Mask");
 	}
-
-	@Autowired
-	RangerDaoManager daoMgr;
-	@Autowired
-	ServiceDBStore svcDBStore;
-	@Autowired
-	JSONUtil jsonUtil;
-	@Autowired
-	RangerPolicyService policyService;
-	@Autowired
-	StringUtil stringUtil;
-	@Autowired
-	XPolicyService xPolService;
-	@Autowired
-	XPermMapService xPermMapService;
-	@Autowired
-	RangerBizUtil bizUtil;
 
 	public static void main(String[] args) {
 		logger.info("main()");
@@ -89,7 +117,7 @@ public class PatchMigration_J10002 extends BaseLoader {
 			System.exit(1);
 		}
 	}
-
+	
 	@Override
 	public void init() throws Exception {
 		// Do Nothing
@@ -178,7 +206,7 @@ public class PatchMigration_J10002 extends BaseLoader {
 				}
 
 				RangerService service = svcDBStore.getServiceByName(xAsset.getName());
-
+				
 				if (service == null) {
 					logger.error("No Service found for policy. Ignoring migration of such policy, policyName: "
 							+ xRes.getPolicyName());
@@ -194,7 +222,7 @@ public class PatchMigration_J10002 extends BaseLoader {
 				RangerPolicy policy = new RangerPolicy();
 				policy = mapXResourceToPolicy(policy, xRes, service);
 
-				if (policy != null) {
+				if(policy != null) {
 					policy = svcDBStore.createPolicy(policy);
 
 					policyCounter++;
@@ -266,23 +294,23 @@ public class PatchMigration_J10002 extends BaseLoader {
 
 		String defaultValue = "";
 		switch (dataType) {
-			case "int":
-				defaultValue = "0";
-				break;
-			case "string":
-				defaultValue = "unknown";
-				break;
-			case "bool":
-				defaultValue = "false";
-				break;
-			case "enum":
-				defaultValue = "0";
-				break;
-			case "password":
-				defaultValue = "password";
-				break;
-			default:
-				break;
+		case "int":
+			defaultValue = "0";
+			break;
+		case "string":
+			defaultValue = "unknown";
+			break;
+		case "bool":
+			defaultValue = "false";
+			break;
+		case "enum":
+			defaultValue = "0";
+			break;
+		case "password":
+			defaultValue = "password";
+			break;
+		default:
+			break;
 		}
 		return defaultValue;
 	}
@@ -298,8 +326,8 @@ public class PatchMigration_J10002 extends BaseLoader {
 		List<RangerPolicyItem> policyItems = new ArrayList<RangerPolicyItem>();
 
 		XXServiceDef svcDef = daoMgr.getXXServiceDef().findByName(serviceType);
-
-		if (svcDef == null) {
+		
+		if(svcDef == null) {
 			logger.error(serviceType + ": service-def not found. Skipping policy '" + name + "'");
 
 			return null;
@@ -313,8 +341,8 @@ public class PatchMigration_J10002 extends BaseLoader {
 			isEnabled = false;
 		}
 
-		Boolean isPathRecursive = xRes.getIsRecursive() == RangerCommonEnums.BOOL_TRUE;
-		Boolean isTableExcludes = xRes.getTableType() == RangerCommonEnums.POLICY_EXCLUSION;
+		Boolean isPathRecursive  = xRes.getIsRecursive() == RangerCommonEnums.BOOL_TRUE;
+		Boolean isTableExcludes  = xRes.getTableType() == RangerCommonEnums.POLICY_EXCLUSION;
 		Boolean isColumnExcludes = xRes.getColumnType() == RangerCommonEnums.POLICY_EXCLUSION;
 
 		if (StringUtils.equalsIgnoreCase(serviceType, "hdfs")) {
@@ -366,10 +394,10 @@ public class PatchMigration_J10002 extends BaseLoader {
 	private Map<String, RangerPolicy.RangerPolicyResource> toRangerResourceList(String resourceString, String resourceType, Boolean isExcludes, Boolean isRecursive, Map<String, RangerPolicy.RangerPolicyResource> resources) {
 		Map<String, RangerPolicy.RangerPolicyResource> ret = resources == null ? new HashMap<String, RangerPolicy.RangerPolicyResource>() : resources;
 
-		if (StringUtils.isNotBlank(resourceString)) {
+		if(StringUtils.isNotBlank(resourceString)) {
 			RangerPolicy.RangerPolicyResource resource = ret.get(resourceType);
 
-			if (resource == null) {
+			if(resource == null) {
 				resource = new RangerPolicy.RangerPolicyResource();
 				resource.setIsExcludes(isExcludes);
 				resource.setIsRecursive(isRecursive);
@@ -395,11 +423,11 @@ public class PatchMigration_J10002 extends BaseLoader {
 
 		// re-group the list with permGroup as the key
 		if (permMapList != null) {
-			for (VXPermMap permMap : permMapList) {
-				String permGrp = permMap.getPermGroup();
+			for(VXPermMap permMap : permMapList) {
+				String          permGrp    = permMap.getPermGroup();
 				List<VXPermMap> sortedList = sortedPermMap.get(permGrp);
 
-				if (sortedList == null) {
+				if(sortedList == null) {
 					sortedList = new ArrayList<VXPermMap>();
 					sortedPermMap.put(permGrp, sortedList);
 				}
@@ -409,37 +437,37 @@ public class PatchMigration_J10002 extends BaseLoader {
 		}
 
 		for (Entry<String, List<VXPermMap>> entry : sortedPermMap.entrySet()) {
-			List<String> userList = new ArrayList<String>();
-			List<String> groupList = new ArrayList<String>();
+			List<String>                 userList   = new ArrayList<String>();
+			List<String>                 groupList  = new ArrayList<String>();
 			List<RangerPolicyItemAccess> accessList = new ArrayList<RangerPolicyItemAccess>();
-			String ipAddress = null;
+			String                       ipAddress  = null;
 
 			RangerPolicy.RangerPolicyItem policyItem = new RangerPolicy.RangerPolicyItem();
 
-			for (VXPermMap permMap : entry.getValue()) {
-				if (permMap.getPermFor() == AppConstants.XA_PERM_FOR_USER) {
+			for(VXPermMap permMap : entry.getValue()) {
+				if(permMap.getPermFor() == AppConstants.XA_PERM_FOR_USER) {
 					String userName = getUserName(permMap);
 
-					if (!userList.contains(userName)) {
+					if (! userList.contains(userName)) {
 						userList.add(userName);
 					}
-				} else if (permMap.getPermFor() == AppConstants.XA_PERM_FOR_GROUP) {
+				} else if(permMap.getPermFor() == AppConstants.XA_PERM_FOR_GROUP) {
 					String groupName = getGroupName(permMap);
 
-					if (!groupList.contains(groupName)) {
+					if (! groupList.contains(groupName)) {
 						groupList.add(groupName);
 					}
 				}
 
 				String accessType = ServiceUtil.toAccessType(permMap.getPermType());
-				if (StringUtils.isBlank(accessType) || unsupportedLegacyPermTypes.contains(accessType)) {
+				if(StringUtils.isBlank(accessType) || unsupportedLegacyPermTypes.contains(accessType)) {
 					logger.info(accessType + ": is not a valid access-type, ignoring accesstype for policy: " + xRes.getPolicyName());
 					continue;
 				}
 
-				if (StringUtils.equalsIgnoreCase(accessType, "Admin")) {
+				if(StringUtils.equalsIgnoreCase(accessType, "Admin")) {
 					policyItem.setDelegateAdmin(Boolean.TRUE);
-					if (svcDef.getId() == EmbeddedServiceDefsUtil.instance().getHBaseServiceDefId()) {
+					if ( svcDef.getId() == EmbeddedServiceDefsUtil.instance().getHBaseServiceDefId()) {
 						addAccessType(accessType, accessList);
 					}
 				} else {
@@ -449,12 +477,12 @@ public class PatchMigration_J10002 extends BaseLoader {
 				ipAddress = permMap.getIpAddress();
 			}
 
-			if (CollectionUtils.isEmpty(accessList)) {
+			if(CollectionUtils.isEmpty(accessList)) {
 				logger.info("no access specified. ignoring policyItem for policy: " + xRes.getPolicyName());
 				continue;
 			}
 
-			if (CollectionUtils.isEmpty(userList) && CollectionUtils.isEmpty(groupList)) {
+			if(CollectionUtils.isEmpty(userList) && CollectionUtils.isEmpty(groupList)) {
 				logger.info("no user or group specified. ignoring policyItem for policy: " + xRes.getPolicyName());
 				continue;
 			}
@@ -463,10 +491,10 @@ public class PatchMigration_J10002 extends BaseLoader {
 			policyItem.setGroups(groupList);
 			policyItem.setAccesses(accessList);
 
-			if (ipAddress != null && !ipAddress.isEmpty()) {
+			if(ipAddress != null && !ipAddress.isEmpty()) {
 				XXPolicyConditionDef policyCond = daoMgr.getXXPolicyConditionDef().findByServiceDefIdAndName(svcDef.getId(), "ip-range");
 
-				if (policyCond != null) {
+				if(policyCond != null) {
 					RangerPolicy.RangerPolicyItemCondition ipCondition = new RangerPolicy.RangerPolicyItemCondition("ip-range", Collections.singletonList(ipAddress));
 
 					policyItem.getConditions().add(ipCondition);
@@ -482,15 +510,15 @@ public class PatchMigration_J10002 extends BaseLoader {
 	private void addAccessType(String accessType, List<RangerPolicyItemAccess> accessList) {
 		boolean alreadyExists = false;
 
-		for (RangerPolicyItemAccess access : accessList) {
-			if (StringUtils.equalsIgnoreCase(accessType, access.getType())) {
+		for(RangerPolicyItemAccess access : accessList) {
+			if(StringUtils.equalsIgnoreCase(accessType, access.getType())) {
 				alreadyExists = true;
 
 				break;
 			}
 		}
 
-		if (!alreadyExists) {
+		if(!alreadyExists) {
 			accessList.add(new RangerPolicyItemAccess(accessType));
 		}
 	}
@@ -504,13 +532,13 @@ public class PatchMigration_J10002 extends BaseLoader {
 	private String getUserName(VXPermMap permMap) {
 		String userName = permMap.getUserName();
 
-		if (userName == null || userName.isEmpty()) {
+		if(userName == null || userName.isEmpty()) {
 			Long userId = permMap.getUserId();
 
-			if (userId != null) {
+			if(userId != null) {
 				XXUser xxUser = daoMgr.getXXUser().getById(userId);
 
-				if (xxUser != null) {
+				if(xxUser != null) {
 					userName = xxUser.getName();
 				}
 			}
@@ -522,13 +550,13 @@ public class PatchMigration_J10002 extends BaseLoader {
 	private String getGroupName(VXPermMap permMap) {
 		String groupName = permMap.getGroupName();
 
-		if (groupName == null || groupName.isEmpty()) {
+		if(groupName == null || groupName.isEmpty()) {
 			Long groupId = permMap.getGroupId();
 
-			if (groupId != null) {
+			if(groupId != null) {
 				XXGroup xxGroup = daoMgr.getXXGroup().getById(groupId);
 
-				if (xxGroup != null) {
+				if(xxGroup != null) {
 					groupName = xxGroup.getName();
 				}
 			}

@@ -73,7 +73,6 @@ public abstract class BaseClient {
 
 
 	protected void login() {
-  	LOG.info("@@@@@@@@ BaseClient login");
 		ClassLoader prevCl = Thread.currentThread().getContextClassLoader();
 		try {
 			//Thread.currentThread().setContextClassLoader(configHolder.getClassLoader());

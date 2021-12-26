@@ -19,17 +19,16 @@
 
 package org.apache.ranger.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-
 /**
+ *
  *
  */
 @Component
 public class RangerConfigUtil {
-	private static final Logger logger = LogManager.getLogger(RangerConfigUtil.class);
+	private static final Logger logger = Logger.getLogger(RangerConfigUtil.class);
 
 	String webappRootURL;
 	int defaultMaxRows = 250;
@@ -52,7 +51,7 @@ public class RangerConfigUtil {
 		accessFilterEnabled = PropertiesUtil.getBooleanProperty("ranger.db.access.filter.enable", true);
 		isModerationEnabled = PropertiesUtil.getBooleanProperty("ranger.moderation.enabled", isModerationEnabled);
 		isUserPrefEnabled = PropertiesUtil.getBooleanProperty("ranger.userpref.enabled", isUserPrefEnabled);
-	}
+	}	
 
 	/**
 	 * @return the defaultMaxRows

@@ -19,68 +19,67 @@
 
 package org.apache.ranger.services.knox.client;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.ranger.plugin.service.ResourceLookupContext;
-
 import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.apache.ranger.plugin.service.ResourceLookupContext;
 
 
 public class KnoxResourceMgr {
 
-	private static final Logger LOG = LogManager.getLogger(KnoxResourceMgr.class);
-
-	private static final String TOPOLOGY = "topology";
-	private static final String SERVICE = "service";
+	private static final Logger LOG = Logger.getLogger(KnoxResourceMgr.class);
+	
+	private static final String TOPOLOGY	  	 = "topology";
+	private static final String SERVICE 	 	 = "service";
 
 	public static Map<String, Object> validateConfig(String serviceName, Map<String, String> configs) throws Exception {
 		Map<String, Object> ret = null;
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("==> KnoxResourceMgr.testConnection ServiceName: " + serviceName + "Configs" + configs);
+		   LOG.debug("==> KnoxResourceMgr.testConnection ServiceName: "+ serviceName + "Configs" + configs );
 		}
 		try {
 			ret = KnoxClient.connectionTest(serviceName, configs);
 		} catch (Exception e) {
-			LOG.error("<== KnoxResourceMgr.connectionTest Error: " + e);
-			throw e;
+		  LOG.error("<== KnoxResourceMgr.connectionTest Error: " + e);
+		  throw e;
 		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== KnoxResourceMgr.HdfsResourceMgr Result : " + ret);
+		
+		if(LOG.isDebugEnabled()) {
+			LOG.debug("<== KnoxResourceMgr.HdfsResourceMgr Result : "+ ret  );
 		}
 		return ret;
-	}
-
-	public static List<String> getKnoxResources(String serviceName, Map<String, String> configs, ResourceLookupContext context) throws Exception {
-
-
-		String userInput = context.getUserInput();
-		String resource = context.getResourceName();
+	 }
+	
+	public static List<String> getKnoxResources(String serviceName, Map<String, String> configs, ResourceLookupContext context) throws Exception  {
+		
+		
+		String 		 userInput 				  = context.getUserInput();
+		String 		 resource				  = context.getResourceName();
 		Map<String, List<String>> resourceMap = context.getResources();
-		List<String> resultList = null;
-		List<String> knoxTopologyList = null;
-		List<String> knoxServiceList = null;
-		String knoxTopologyName = null;
-		String knoxServiceName = null;
-
-		if (userInput != null && resource != null) {
-			if (resourceMap != null && !resourceMap.isEmpty()) {
+		List<String> resultList 			  = null;
+		List<String> knoxTopologyList		  = null;
+		List<String> knoxServiceList		  = null;
+		String  	 knoxTopologyName		  = null;
+		String  	 knoxServiceName		  = null;
+		
+		if ( userInput != null && resource != null) {
+			if ( resourceMap != null && !resourceMap.isEmpty() ) {
 				knoxTopologyList = resourceMap.get(TOPOLOGY);
-				knoxServiceList = resourceMap.get(SERVICE);
+				knoxServiceList  = resourceMap.get(SERVICE);
 			}
 			switch (resource.trim().toLowerCase()) {
-				case TOPOLOGY:
-					knoxTopologyName = userInput;
-					break;
-				case SERVICE:
-					knoxServiceName = userInput;
-					break;
-				default:
-					break;
+			 case TOPOLOGY:
+				 knoxTopologyName = userInput;
+				 break;
+			case SERVICE:
+				 knoxServiceName = userInput;
+				 break;
+			default:
+				 break;
 			}
 		}
-
+		
 		String knoxUrl = configs.get("knox.url");
 		String knoxAdminUser = configs.get("username");
 		String knoxAdminPassword = configs.get("password");
@@ -96,16 +95,16 @@ public class KnoxResourceMgr {
 			return resultList;
 		}
 
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("<== KnoxResourceMgr.getKnoxResources()  knoxUrl: " + knoxUrl + " knoxAdminUser: " + knoxAdminUser + " topologyName: " + knoxTopologyName + " KnoxServiceName: " + knoxServiceName);
+		if(LOG.isDebugEnabled()) {
+			LOG.debug("<== KnoxResourceMgr.getKnoxResources()  knoxUrl: "+ knoxUrl  + " knoxAdminUser: " + knoxAdminUser + " topologyName: "  + knoxTopologyName + " KnoxServiceName: " + knoxServiceName);
 		}
-
+		
 		final KnoxClient knoxClient = new KnoxConnectionMgr().getKnoxClient(knoxUrl, knoxAdminUser, knoxAdminPassword);
-		if (knoxClient != null) {
-			synchronized (knoxClient) {
-				resultList = KnoxClient.getKnoxResources(knoxClient, knoxTopologyName, knoxServiceName, knoxTopologyList, knoxServiceList);
+		if ( knoxClient != null) {
+			synchronized(knoxClient) {
+				resultList = KnoxClient.getKnoxResources(knoxClient, knoxTopologyName, knoxServiceName,knoxTopologyList,knoxServiceList);
 			}
 		}
-		return resultList;
+		return  resultList;
 	}
 }

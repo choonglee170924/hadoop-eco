@@ -80,36 +80,9 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">dataMaskDef</span>
-</td>
-          <td>  <span class="datatype-reference"><a href="json_RangerDataMaskDef.html">RangerDataMaskDef</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">description</span>
+          <td>  <span class="property-name">rbKeyLabel</span>
 </td>
           <td>  <span class="datatype-reference">string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">options</span>
-</td>
-          <td>  <span class="datatype-reference">map of string
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">configs</span>
-</td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerServiceConfigDef.html">RangerServiceConfigDef</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -125,6 +98,42 @@
 </td>
         </tr>
         <tr>
+          <td>  <span class="property-name">options</span>
+</td>
+          <td>  <span class="datatype-reference">map of string
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">contextEnrichers</span>
+</td>
+          <td>  <span class="datatype-reference">array of <a href="json_RangerContextEnricherDef.html">RangerContextEnricherDef</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">dataMaskDef</span>
+</td>
+          <td>  <span class="datatype-reference"><a href="json_RangerDataMaskDef.html">RangerDataMaskDef</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">enums</span>
+</td>
+          <td>  <span class="datatype-reference">array of <a href="json_RangerEnumDef.html">RangerEnumDef</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
           <td>  <span class="property-name">implClass</span>
 </td>
           <td>  <span class="datatype-reference">string
@@ -134,7 +143,7 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">rbKeyDescription</span>
+          <td>  <span class="property-name">label</span>
 </td>
           <td>  <span class="datatype-reference">string
 </span>
@@ -152,9 +161,9 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">enums</span>
+          <td>  <span class="property-name">rbKeyDescription</span>
 </td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerEnumDef.html">RangerEnumDef</a>
+          <td>  <span class="datatype-reference">string
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -170,7 +179,7 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">label</span>
+          <td>  <span class="property-name">description</span>
 </td>
           <td>  <span class="datatype-reference">string
 </span>
@@ -179,16 +188,7 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">contextEnrichers</span>
-</td>
-          <td>  <span class="datatype-reference">array of <a href="json_RangerContextEnricherDef.html">RangerContextEnricherDef</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">rbKeyLabel</span>
+          <td>  <span class="property-name">name</span>
 </td>
           <td>  <span class="datatype-reference">string
 </span>
@@ -206,9 +206,9 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">name</span>
+          <td>  <span class="property-name">configs</span>
 </td>
-          <td>  <span class="datatype-reference">string
+          <td>  <span class="datatype-reference">array of <a href="json_RangerServiceConfigDef.html">RangerServiceConfigDef</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -220,8 +220,20 @@
         </tr>
         <tbody>
         <tr>
-          <td><span class="property-name">createTime</span></td>
+          <td><span class="property-name">updatedBy</span></td>
+          <td><span class="datatype-reference">string
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">id</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">isEnabled</span></td>
+          <td><span class="datatype-reference">boolean
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -232,8 +244,14 @@
           <td><span class="property-description"></span></td>
         </tr>
         <tr>
-          <td><span class="property-name">id</span></td>
+          <td><span class="property-name">createTime</span></td>
           <td><span class="datatype-reference">number
+</span></td>
+          <td><span class="property-description"></span></td>
+        </tr>
+        <tr>
+          <td><span class="property-name">guid</span></td>
+          <td><span class="datatype-reference">string
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
@@ -249,381 +267,363 @@
 </span></td>
           <td><span class="property-description"></span></td>
         </tr>
-        <tr>
-          <td><span class="property-name">updatedBy</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">guid</span></td>
-          <td><span class="datatype-reference">string
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
-        <tr>
-          <td><span class="property-name">isEnabled</span></td>
-          <td><span class="datatype-reference">boolean
-</span></td>
-          <td><span class="property-description"></span></td>
-        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;dataMaskDef&quot; : {
-    &quot;resources&quot; : [ {
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;validationRegEx&quot; : &quot;...&quot;,
-      &quot;matcher&quot; : &quot;...&quot;,
-      &quot;matcherOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;mandatory&quot; : true,
-      &quot;level&quot; : 12345,
-      &quot;parent&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;uiHint&quot; : &quot;...&quot;,
-      &quot;lookupSupported&quot; : true,
-      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;validationMessage&quot; : &quot;...&quot;,
-      &quot;isValidLeaf&quot; : true,
-      &quot;recursiveSupported&quot; : true,
-      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;excludesSupported&quot; : true
-    }, {
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;validationRegEx&quot; : &quot;...&quot;,
-      &quot;matcher&quot; : &quot;...&quot;,
-      &quot;matcherOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;mandatory&quot; : true,
-      &quot;level&quot; : 12345,
-      &quot;parent&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;uiHint&quot; : &quot;...&quot;,
-      &quot;lookupSupported&quot; : true,
-      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;validationMessage&quot; : &quot;...&quot;,
-      &quot;isValidLeaf&quot; : true,
-      &quot;recursiveSupported&quot; : true,
-      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;excludesSupported&quot; : true
-    } ],
-    &quot;maskTypes&quot; : [ {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;transformer&quot; : &quot;...&quot;,
-      &quot;dataMaskOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;itemId&quot; : 12345,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
-    }, {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;transformer&quot; : &quot;...&quot;,
-      &quot;dataMaskOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;itemId&quot; : 12345,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
-    } ],
-    &quot;accessTypes&quot; : [ {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;itemId&quot; : 12345,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
-    }, {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;itemId&quot; : 12345,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
-    } ]
-  },
-  &quot;description&quot; : &quot;...&quot;,
+  &quot;rbKeyLabel&quot; : &quot;...&quot;,
+  &quot;policyConditions&quot; : [ {
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;evaluatorOptions&quot; : {
+      &quot;property1&quot; : &quot;...&quot;,
+      &quot;property2&quot; : &quot;...&quot;
+    },
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;evaluator&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;label&quot; : &quot;...&quot;
+  }, {
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;evaluatorOptions&quot; : {
+      &quot;property1&quot; : &quot;...&quot;,
+      &quot;property2&quot; : &quot;...&quot;
+    },
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;evaluator&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;label&quot; : &quot;...&quot;
+  } ],
   &quot;options&quot; : {
     &quot;property1&quot; : &quot;...&quot;,
     &quot;property2&quot; : &quot;...&quot;
   },
-  &quot;configs&quot; : [ {
-    &quot;mandatory&quot; : true,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;defaultValue&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;,
-    &quot;subType&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;,
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;rbKeyDescription&quot; : &quot;...&quot;
-  }, {
-    &quot;mandatory&quot; : true,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;defaultValue&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;,
-    &quot;subType&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;,
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;rbKeyDescription&quot; : &quot;...&quot;
-  } ],
-  &quot;policyConditions&quot; : [ {
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;evaluatorOptions&quot; : {
-      &quot;property1&quot; : &quot;...&quot;,
-      &quot;property2&quot; : &quot;...&quot;
-    },
-    &quot;rbKeyDescription&quot; : &quot;...&quot;,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;evaluator&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;
-  }, {
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;evaluatorOptions&quot; : {
-      &quot;property1&quot; : &quot;...&quot;,
-      &quot;property2&quot; : &quot;...&quot;
-    },
-    &quot;rbKeyDescription&quot; : &quot;...&quot;,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;evaluator&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;
-  } ],
-  &quot;implClass&quot; : &quot;...&quot;,
-  &quot;rbKeyDescription&quot; : &quot;...&quot;,
-  &quot;accessTypes&quot; : [ {
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;itemId&quot; : 12345,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;
-  }, {
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;itemId&quot; : 12345,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;
-  } ],
-  &quot;enums&quot; : [ {
-    &quot;elements&quot; : [ {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;name&quot; : &quot;...&quot;
-    }, {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;name&quot; : &quot;...&quot;
-    } ],
-    &quot;itemId&quot; : 12345,
-    &quot;defaultIndex&quot; : 12345,
-    &quot;name&quot; : &quot;...&quot;
-  }, {
-    &quot;elements&quot; : [ {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;name&quot; : &quot;...&quot;
-    }, {
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;name&quot; : &quot;...&quot;
-    } ],
-    &quot;itemId&quot; : 12345,
-    &quot;defaultIndex&quot; : 12345,
-    &quot;name&quot; : &quot;...&quot;
-  } ],
-  &quot;resources&quot; : [ {
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;,
-    &quot;matcher&quot; : &quot;...&quot;,
-    &quot;matcherOptions&quot; : {
-      &quot;property1&quot; : &quot;...&quot;,
-      &quot;property2&quot; : &quot;...&quot;
-    },
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;rbKeyDescription&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;mandatory&quot; : true,
-    &quot;level&quot; : 12345,
-    &quot;parent&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;lookupSupported&quot; : true,
-    &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;isValidLeaf&quot; : true,
-    &quot;recursiveSupported&quot; : true,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;,
-    &quot;excludesSupported&quot; : true
-  }, {
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
-    &quot;validationRegEx&quot; : &quot;...&quot;,
-    &quot;matcher&quot; : &quot;...&quot;,
-    &quot;matcherOptions&quot; : {
-      &quot;property1&quot; : &quot;...&quot;,
-      &quot;property2&quot; : &quot;...&quot;
-    },
-    &quot;label&quot; : &quot;...&quot;,
-    &quot;rbKeyDescription&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
-    &quot;mandatory&quot; : true,
-    &quot;level&quot; : 12345,
-    &quot;parent&quot; : &quot;...&quot;,
-    &quot;rbKeyLabel&quot; : &quot;...&quot;,
-    &quot;uiHint&quot; : &quot;...&quot;,
-    &quot;lookupSupported&quot; : true,
-    &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;validationMessage&quot; : &quot;...&quot;,
-    &quot;isValidLeaf&quot; : true,
-    &quot;recursiveSupported&quot; : true,
-    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-    &quot;type&quot; : &quot;...&quot;,
-    &quot;excludesSupported&quot; : true
-  } ],
-  &quot;label&quot; : &quot;...&quot;,
   &quot;contextEnrichers&quot; : [ {
+    &quot;enricher&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
     &quot;enricherOptions&quot; : {
       &quot;property1&quot; : &quot;...&quot;,
       &quot;property2&quot; : &quot;...&quot;
     },
-    &quot;enricher&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
     &quot;name&quot; : &quot;...&quot;
   }, {
+    &quot;enricher&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
     &quot;enricherOptions&quot; : {
       &quot;property1&quot; : &quot;...&quot;,
       &quot;property2&quot; : &quot;...&quot;
     },
-    &quot;enricher&quot; : &quot;...&quot;,
-    &quot;itemId&quot; : 12345,
     &quot;name&quot; : &quot;...&quot;
   } ],
-  &quot;rbKeyLabel&quot; : &quot;...&quot;,
-  &quot;rowFilterDef&quot; : {
-    &quot;resources&quot; : [ {
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;validationRegEx&quot; : &quot;...&quot;,
-      &quot;matcher&quot; : &quot;...&quot;,
-      &quot;matcherOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;mandatory&quot; : true,
-      &quot;level&quot; : 12345,
-      &quot;parent&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;uiHint&quot; : &quot;...&quot;,
-      &quot;lookupSupported&quot; : true,
-      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;validationMessage&quot; : &quot;...&quot;,
-      &quot;isValidLeaf&quot; : true,
-      &quot;recursiveSupported&quot; : true,
-      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;excludesSupported&quot; : true
-    }, {
-      &quot;description&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;validationRegEx&quot; : &quot;...&quot;,
-      &quot;matcher&quot; : &quot;...&quot;,
-      &quot;matcherOptions&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;label&quot; : &quot;...&quot;,
-      &quot;rbKeyDescription&quot; : &quot;...&quot;,
-      &quot;itemId&quot; : 12345,
-      &quot;mandatory&quot; : true,
-      &quot;level&quot; : 12345,
-      &quot;parent&quot; : &quot;...&quot;,
-      &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;uiHint&quot; : &quot;...&quot;,
-      &quot;lookupSupported&quot; : true,
-      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;validationMessage&quot; : &quot;...&quot;,
-      &quot;isValidLeaf&quot; : true,
-      &quot;recursiveSupported&quot; : true,
-      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;excludesSupported&quot; : true
-    } ],
+  &quot;dataMaskDef&quot; : {
     &quot;accessTypes&quot; : [ {
-      &quot;label&quot; : &quot;...&quot;,
       &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;itemId&quot; : 12345,
+      &quot;label&quot; : &quot;...&quot;,
       &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345
+    }, {
+      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345
+    } ],
+    &quot;maskTypes&quot; : [ {
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;dataMaskOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;itemId&quot; : 12345,
+      &quot;transformer&quot; : &quot;...&quot;,
+      &quot;rbKeyDescription&quot; : &quot;...&quot;
     }, {
       &quot;label&quot; : &quot;...&quot;,
-      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;itemId&quot; : 12345,
+      &quot;name&quot; : &quot;...&quot;,
       &quot;rbKeyLabel&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;dataMaskOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;itemId&quot; : 12345,
+      &quot;transformer&quot; : &quot;...&quot;,
+      &quot;rbKeyDescription&quot; : &quot;...&quot;
+    } ],
+    &quot;resources&quot; : [ {
+      &quot;rbKeyDescription&quot; : &quot;...&quot;,
+      &quot;validationRegEx&quot; : &quot;...&quot;,
+      &quot;lookupSupported&quot; : true,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validationMessage&quot; : &quot;...&quot;,
+      &quot;excludesSupported&quot; : true,
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;parent&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;uiHint&quot; : &quot;...&quot;,
+      &quot;level&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;mandatory&quot; : true,
+      &quot;matcher&quot; : &quot;...&quot;,
+      &quot;matcherOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;isValidLeaf&quot; : true,
+      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+      &quot;recursiveSupported&quot; : true
+    }, {
+      &quot;rbKeyDescription&quot; : &quot;...&quot;,
+      &quot;validationRegEx&quot; : &quot;...&quot;,
+      &quot;lookupSupported&quot; : true,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validationMessage&quot; : &quot;...&quot;,
+      &quot;excludesSupported&quot; : true,
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;parent&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;uiHint&quot; : &quot;...&quot;,
+      &quot;level&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;mandatory&quot; : true,
+      &quot;matcher&quot; : &quot;...&quot;,
+      &quot;matcherOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;isValidLeaf&quot; : true,
+      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+      &quot;recursiveSupported&quot; : true
     } ]
   },
+  &quot;enums&quot; : [ {
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;elements&quot; : [ {
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;label&quot; : &quot;...&quot;
+    }, {
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;label&quot; : &quot;...&quot;
+    } ],
+    &quot;itemId&quot; : 12345,
+    &quot;defaultIndex&quot; : 12345
+  }, {
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;elements&quot; : [ {
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;label&quot; : &quot;...&quot;
+    }, {
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;label&quot; : &quot;...&quot;
+    } ],
+    &quot;itemId&quot; : 12345,
+    &quot;defaultIndex&quot; : 12345
+  } ],
+  &quot;implClass&quot; : &quot;...&quot;,
+  &quot;label&quot; : &quot;...&quot;,
+  &quot;accessTypes&quot; : [ {
+    &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345
+  }, {
+    &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345
+  } ],
+  &quot;rbKeyDescription&quot; : &quot;...&quot;,
+  &quot;resources&quot; : [ {
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;lookupSupported&quot; : true,
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;excludesSupported&quot; : true,
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;parent&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;level&quot; : 12345,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;mandatory&quot; : true,
+    &quot;matcher&quot; : &quot;...&quot;,
+    &quot;matcherOptions&quot; : {
+      &quot;property1&quot; : &quot;...&quot;,
+      &quot;property2&quot; : &quot;...&quot;
+    },
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;isValidLeaf&quot; : true,
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;recursiveSupported&quot; : true
+  }, {
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;lookupSupported&quot; : true,
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;excludesSupported&quot; : true,
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;parent&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;level&quot; : 12345,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;mandatory&quot; : true,
+    &quot;matcher&quot; : &quot;...&quot;,
+    &quot;matcherOptions&quot; : {
+      &quot;property1&quot; : &quot;...&quot;,
+      &quot;property2&quot; : &quot;...&quot;
+    },
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;isValidLeaf&quot; : true,
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;recursiveSupported&quot; : true
+  } ],
+  &quot;description&quot; : &quot;...&quot;,
   &quot;name&quot; : &quot;...&quot;,
-  &quot;createTime&quot; : 12345,
-  &quot;createdBy&quot; : &quot;...&quot;,
-  &quot;id&quot; : 12345,
-  &quot;version&quot; : 12345,
-  &quot;updateTime&quot; : 12345,
+  &quot;rowFilterDef&quot; : {
+    &quot;resources&quot; : [ {
+      &quot;rbKeyDescription&quot; : &quot;...&quot;,
+      &quot;validationRegEx&quot; : &quot;...&quot;,
+      &quot;lookupSupported&quot; : true,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validationMessage&quot; : &quot;...&quot;,
+      &quot;excludesSupported&quot; : true,
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;parent&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;uiHint&quot; : &quot;...&quot;,
+      &quot;level&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;mandatory&quot; : true,
+      &quot;matcher&quot; : &quot;...&quot;,
+      &quot;matcherOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;isValidLeaf&quot; : true,
+      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+      &quot;recursiveSupported&quot; : true
+    }, {
+      &quot;rbKeyDescription&quot; : &quot;...&quot;,
+      &quot;validationRegEx&quot; : &quot;...&quot;,
+      &quot;lookupSupported&quot; : true,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validationMessage&quot; : &quot;...&quot;,
+      &quot;excludesSupported&quot; : true,
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;description&quot; : &quot;...&quot;,
+      &quot;parent&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345,
+      &quot;accessTypeRestrictions&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;uiHint&quot; : &quot;...&quot;,
+      &quot;level&quot; : 12345,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;mandatory&quot; : true,
+      &quot;matcher&quot; : &quot;...&quot;,
+      &quot;matcherOptions&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;isValidLeaf&quot; : true,
+      &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+      &quot;recursiveSupported&quot; : true
+    } ],
+    &quot;accessTypes&quot; : [ {
+      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345
+    }, {
+      &quot;impliedGrants&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;label&quot; : &quot;...&quot;,
+      &quot;rbKeyLabel&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;itemId&quot; : 12345
+    } ]
+  },
+  &quot;configs&quot; : [ {
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;subType&quot; : &quot;...&quot;,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;mandatory&quot; : true,
+    &quot;defaultValue&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;
+  }, {
+    &quot;rbKeyDescription&quot; : &quot;...&quot;,
+    &quot;rbKeyValidationMessage&quot; : &quot;...&quot;,
+    &quot;rbKeyLabel&quot; : &quot;...&quot;,
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;itemId&quot; : 12345,
+    &quot;type&quot; : &quot;...&quot;,
+    &quot;uiHint&quot; : &quot;...&quot;,
+    &quot;label&quot; : &quot;...&quot;,
+    &quot;subType&quot; : &quot;...&quot;,
+    &quot;validationRegEx&quot; : &quot;...&quot;,
+    &quot;validationMessage&quot; : &quot;...&quot;,
+    &quot;mandatory&quot; : true,
+    &quot;defaultValue&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;
+  } ],
   &quot;updatedBy&quot; : &quot;...&quot;,
+  &quot;id&quot; : 12345,
+  &quot;isEnabled&quot; : true,
+  &quot;createdBy&quot; : &quot;...&quot;,
+  &quot;createTime&quot; : 12345,
   &quot;guid&quot; : &quot;...&quot;,
-  &quot;isEnabled&quot; : true
+  &quot;version&quot; : 12345,
+  &quot;updateTime&quot; : 12345
 }</pre>
 
         <footer class="footer">

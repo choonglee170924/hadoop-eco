@@ -17,25 +17,25 @@
  * under the License.
  */
 
-package org.apache.ranger.db;
+ package org.apache.ranger.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXAuditMap;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class XXAuditMapDao extends BaseDao<XXAuditMap> {
-	private static final Logger logger = LogManager.getLogger(XXAssetDao.class);
+	private static final Logger logger = Logger.getLogger(XXAssetDao.class);
 
-	public XXAuditMapDao(RangerDaoManagerBase daoManager) {
+    public XXAuditMapDao( RangerDaoManagerBase daoManager ) {
 		super(daoManager);
-	}
+    }
 
 	public List<XXAuditMap> findByResourceId(Long resourceId) {
 		if (resourceId != null) {

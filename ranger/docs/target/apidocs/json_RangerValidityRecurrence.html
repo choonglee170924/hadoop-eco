@@ -80,18 +80,18 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">interval</span>
+          <td>  <span class="property-name">schedule</span>
 </td>
-          <td>  <span class="datatype-reference"><a href="json_ValidityInterval.html">ValidityInterval</a>
+          <td>  <span class="datatype-reference"><a href="json_RecurrenceSchedule.html">RecurrenceSchedule</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">schedule</span>
+          <td>  <span class="property-name">interval</span>
 </td>
-          <td>  <span class="datatype-reference"><a href="json_RecurrenceSchedule.html">RecurrenceSchedule</a>
+          <td>  <span class="datatype-reference"><a href="json_ValidityInterval.html">ValidityInterval</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -103,18 +103,18 @@
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;interval&quot; : {
-    &quot;hours&quot; : 12345,
-    &quot;minutes&quot; : 12345,
-    &quot;days&quot; : 12345
-  },
   &quot;schedule&quot; : {
-    &quot;dayOfMonth&quot; : &quot;...&quot;,
-    &quot;month&quot; : &quot;...&quot;,
-    &quot;minute&quot; : &quot;...&quot;,
     &quot;year&quot; : &quot;...&quot;,
     &quot;hour&quot; : &quot;...&quot;,
-    &quot;dayOfWeek&quot; : &quot;...&quot;
+    &quot;dayOfMonth&quot; : &quot;...&quot;,
+    &quot;minute&quot; : &quot;...&quot;,
+    &quot;dayOfWeek&quot; : &quot;...&quot;,
+    &quot;month&quot; : &quot;...&quot;
+  },
+  &quot;interval&quot; : {
+    &quot;minutes&quot; : 12345,
+    &quot;hours&quot; : 12345,
+    &quot;days&quot; : 12345
   }
 }</pre>
 

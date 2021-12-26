@@ -150,259 +150,259 @@
       
       <pre class="prettyprint language-js example">{
   &quot;policies&quot; : [ {
-    &quot;denyExceptions&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;resourceSignature&quot; : &quot;...&quot;,
-    &quot;policyType&quot; : 12345,
     &quot;resources&quot; : {
       &quot;property1&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       },
       &quot;property2&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       }
     },
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
+    &quot;resourceSignature&quot; : &quot;...&quot;,
+    &quot;policyPriority&quot; : 12345,
+    &quot;dataMaskPolicyItems&quot; : [ {
+      &quot;dataMaskInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;dataMaskInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;policyType&quot; : 12345,
     &quot;serviceType&quot; : &quot;...&quot;,
+    &quot;rowFilterPolicyItems&quot; : [ {
+      &quot;rowFilterInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;rowFilterInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;policyItems&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;validitySchedules&quot; : [ {
+      &quot;startTime&quot; : &quot;...&quot;,
+      &quot;timeZone&quot; : &quot;...&quot;,
+      &quot;endTime&quot; : &quot;...&quot;,
+      &quot;recurrences&quot; : [ { }, { } ]
+    }, {
+      &quot;startTime&quot; : &quot;...&quot;,
+      &quot;timeZone&quot; : &quot;...&quot;,
+      &quot;endTime&quot; : &quot;...&quot;,
+      &quot;recurrences&quot; : [ { }, { } ]
+    } ],
+    &quot;service&quot; : &quot;...&quot;,
+    &quot;isAuditEnabled&quot; : true,
+    &quot;allowExceptions&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;denyPolicyItems&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;denyExceptions&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
     &quot;options&quot; : {
       &quot;property1&quot; : { },
       &quot;property2&quot; : { }
     },
-    &quot;rowFilterPolicyItems&quot; : [ {
-      &quot;rowFilterInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;rowFilterInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;policyItems&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;allowExceptions&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;dataMaskPolicyItems&quot; : [ {
-      &quot;dataMaskInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;dataMaskInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;policyPriority&quot; : 12345,
-    &quot;isAuditEnabled&quot; : true,
-    &quot;validitySchedules&quot; : [ {
-      &quot;endTime&quot; : &quot;...&quot;,
-      &quot;recurrences&quot; : [ { }, { } ],
-      &quot;timeZone&quot; : &quot;...&quot;,
-      &quot;startTime&quot; : &quot;...&quot;
-    }, {
-      &quot;endTime&quot; : &quot;...&quot;,
-      &quot;recurrences&quot; : [ { }, { } ],
-      &quot;timeZone&quot; : &quot;...&quot;,
-      &quot;startTime&quot; : &quot;...&quot;
-    } ],
-    &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;service&quot; : &quot;...&quot;,
-    &quot;denyPolicyItems&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;createTime&quot; : 12345,
-    &quot;createdBy&quot; : &quot;...&quot;,
-    &quot;id&quot; : 12345,
-    &quot;version&quot; : 12345,
-    &quot;updateTime&quot; : 12345,
     &quot;updatedBy&quot; : &quot;...&quot;,
+    &quot;id&quot; : 12345,
+    &quot;isEnabled&quot; : true,
+    &quot;createdBy&quot; : &quot;...&quot;,
+    &quot;createTime&quot; : 12345,
     &quot;guid&quot; : &quot;...&quot;,
-    &quot;isEnabled&quot; : true
+    &quot;version&quot; : 12345,
+    &quot;updateTime&quot; : 12345
   }, {
-    &quot;denyExceptions&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;resourceSignature&quot; : &quot;...&quot;,
-    &quot;policyType&quot; : 12345,
     &quot;resources&quot; : {
       &quot;property1&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       },
       &quot;property2&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       }
     },
-    &quot;description&quot; : &quot;...&quot;,
-    &quot;name&quot; : &quot;...&quot;,
+    &quot;resourceSignature&quot; : &quot;...&quot;,
+    &quot;policyPriority&quot; : 12345,
+    &quot;dataMaskPolicyItems&quot; : [ {
+      &quot;dataMaskInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;dataMaskInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;policyType&quot; : 12345,
     &quot;serviceType&quot; : &quot;...&quot;,
+    &quot;rowFilterPolicyItems&quot; : [ {
+      &quot;rowFilterInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;rowFilterInfo&quot; : { },
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;policyItems&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;description&quot; : &quot;...&quot;,
+    &quot;validitySchedules&quot; : [ {
+      &quot;startTime&quot; : &quot;...&quot;,
+      &quot;timeZone&quot; : &quot;...&quot;,
+      &quot;endTime&quot; : &quot;...&quot;,
+      &quot;recurrences&quot; : [ { }, { } ]
+    }, {
+      &quot;startTime&quot; : &quot;...&quot;,
+      &quot;timeZone&quot; : &quot;...&quot;,
+      &quot;endTime&quot; : &quot;...&quot;,
+      &quot;recurrences&quot; : [ { }, { } ]
+    } ],
+    &quot;service&quot; : &quot;...&quot;,
+    &quot;isAuditEnabled&quot; : true,
+    &quot;allowExceptions&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;denyPolicyItems&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
+    &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+    &quot;denyExceptions&quot; : [ {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    }, {
+      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;accesses&quot; : [ { }, { } ],
+      &quot;delegateAdmin&quot; : true,
+      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
+      &quot;conditions&quot; : [ { }, { } ]
+    } ],
     &quot;options&quot; : {
       &quot;property1&quot; : { },
       &quot;property2&quot; : { }
     },
-    &quot;rowFilterPolicyItems&quot; : [ {
-      &quot;rowFilterInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;rowFilterInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;policyItems&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;allowExceptions&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;dataMaskPolicyItems&quot; : [ {
-      &quot;dataMaskInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;dataMaskInfo&quot; : { },
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;policyPriority&quot; : 12345,
-    &quot;isAuditEnabled&quot; : true,
-    &quot;validitySchedules&quot; : [ {
-      &quot;endTime&quot; : &quot;...&quot;,
-      &quot;recurrences&quot; : [ { }, { } ],
-      &quot;timeZone&quot; : &quot;...&quot;,
-      &quot;startTime&quot; : &quot;...&quot;
-    }, {
-      &quot;endTime&quot; : &quot;...&quot;,
-      &quot;recurrences&quot; : [ { }, { } ],
-      &quot;timeZone&quot; : &quot;...&quot;,
-      &quot;startTime&quot; : &quot;...&quot;
-    } ],
-    &quot;policyLabels&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-    &quot;service&quot; : &quot;...&quot;,
-    &quot;denyPolicyItems&quot; : [ {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    }, {
-      &quot;accesses&quot; : [ { }, { } ],
-      &quot;groups&quot; : [ &quot;...&quot;, &quot;...&quot; ],
-      &quot;delegateAdmin&quot; : true,
-      &quot;conditions&quot; : [ { }, { } ],
-      &quot;users&quot; : [ &quot;...&quot;, &quot;...&quot; ]
-    } ],
-    &quot;createTime&quot; : 12345,
-    &quot;createdBy&quot; : &quot;...&quot;,
-    &quot;id&quot; : 12345,
-    &quot;version&quot; : 12345,
-    &quot;updateTime&quot; : 12345,
     &quot;updatedBy&quot; : &quot;...&quot;,
+    &quot;id&quot; : 12345,
+    &quot;isEnabled&quot; : true,
+    &quot;createdBy&quot; : &quot;...&quot;,
+    &quot;createTime&quot; : 12345,
     &quot;guid&quot; : &quot;...&quot;,
-    &quot;isEnabled&quot; : true
+    &quot;version&quot; : 12345,
+    &quot;updateTime&quot; : 12345
   } ],
   &quot;listSize&quot; : 12345,
   &quot;list&quot; : [ { }, { } ],

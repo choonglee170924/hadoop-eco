@@ -33,8 +33,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.biz.RangerBizUtil;
 import org.apache.ranger.credentialapi.CredentialReader;
 import org.springframework.beans.BeansException;
@@ -44,104 +43,13 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 
 public class PropertiesUtil extends PropertyPlaceholderConfigurer {
-	private static final Logger logger = LogManager.getLogger(PropertiesUtil.class);
     private static Map<String, String> propertiesMap = new HashMap<String, String>();
+    private static final Logger logger = Logger.getLogger(PropertiesUtil.class);
     protected List<String> xmlPropertyConfigurer  = new ArrayList<String>();
 
     private PropertiesUtil() {
 
     }
-
-    public static String getProperty(String key, String defaultValue) {
-	if (key == null) {
-	    return null;
-	}
-	String rtrnVal = propertiesMap.get(key);
-	if (rtrnVal == null) {
-	    rtrnVal = defaultValue;
-	}
-	return rtrnVal;
-    }
-
-    public static String getProperty(String key) {
-	if (key == null) {
-	    return null;
-	}
-	return propertiesMap.get(key);
-    }
-
-    public static String[] getPropertyStringList(String key) {
-	if (key == null) {
-	    return null;
-	}
-	String value = propertiesMap.get(key);
-	if (value != null) {
-	    String[] splitValues = value.split(",");
-	    String[] returnValues = new String[splitValues.length];
-	    for (int i = 0; i < splitValues.length; i++) {
-		returnValues[i] = splitValues[i].trim();
-	    }
-	    return returnValues;
-	} else {
-	    return new String[0];
-	}
-    }
-
-    public static Integer getIntProperty(String key, int defaultValue) {
-	if (key == null) {
-	    return defaultValue;
-	}
-	String rtrnVal = propertiesMap.get(key);
-	if (rtrnVal == null) {
-	    return defaultValue;
-	}
-	return Integer.valueOf(rtrnVal);
-    }
-
-    public static long getLongProperty(String key, long defaultValue) {
-		if (key == null) {
-		    return defaultValue;
-		}
-		String rtrnVal = propertiesMap.get(key);
-		if (rtrnVal == null) {
-		    return defaultValue;
-		}
-		return Long.valueOf(rtrnVal);
-    }
-
-    public static Integer getIntProperty(String key) {
-	if (key == null) {
-	    return null;
-	}
-	String rtrnVal = propertiesMap.get(key);
-	if (rtrnVal == null) {
-	    return null;
-	}
-	return Integer.valueOf(rtrnVal);
-    }
-
-    public static boolean getBooleanProperty(String key, boolean defaultValue) {
-	if (key == null) {
-	    return defaultValue;
-	}
-	String value = getProperty(key);
-	if (value == null) {
-	    return defaultValue;
-	}
-	return Boolean.parseBoolean(value);
-    }
-
-	public static Map<String, String> getPropertiesMap() {
-		return propertiesMap;
-	}
-
-	public static Properties getProps() {
-		Properties ret = new Properties();
-		if (propertiesMap != null) {
-			ret.putAll(propertiesMap);
-		}
-		return ret;
-	}
 
     @Override
     protected void processProperties(
@@ -162,7 +70,7 @@ public class PropertiesUtil extends PropertyPlaceholderConfigurer {
 	    String keyStr = key.toString();
 	    propertiesMap.put(keyStr, props.getProperty(keyStr).trim());
 	}
-
+	
 	// update system trust store path with custom trust store.
 	if (propertiesMap!=null && propertiesMap.containsKey("ranger.truststore.file")) {
 		if(!StringUtils.isEmpty(propertiesMap.get("ranger.truststore.file"))){
@@ -396,4 +304,93 @@ public class PropertiesUtil extends PropertyPlaceholderConfigurer {
 	}
 	super.processProperties(beanFactory, props);
     }
+
+    public static String getProperty(String key, String defaultValue) {
+	if (key == null) {
+	    return null;
+	}
+	String rtrnVal = propertiesMap.get(key);
+	if (rtrnVal == null) {
+	    rtrnVal = defaultValue;
+	}
+	return rtrnVal;
+    }
+
+    public static String getProperty(String key) {
+	if (key == null) {
+	    return null;
+	}
+	return propertiesMap.get(key);
+    }
+
+    public static String[] getPropertyStringList(String key) {
+	if (key == null) {
+	    return null;
+	}
+	String value = propertiesMap.get(key);
+	if (value != null) {
+	    String[] splitValues = value.split(",");
+	    String[] returnValues = new String[splitValues.length];
+	    for (int i = 0; i < splitValues.length; i++) {
+		returnValues[i] = splitValues[i].trim();
+	    }
+	    return returnValues;
+	} else {
+	    return new String[0];
+	}
+    }
+
+    public static Integer getIntProperty(String key, int defaultValue) {
+	if (key == null) {
+	    return defaultValue;
+	}
+	String rtrnVal = propertiesMap.get(key);
+	if (rtrnVal == null) {
+	    return defaultValue;
+	}
+	return Integer.valueOf(rtrnVal);
+    }
+
+    public static long getLongProperty(String key, long defaultValue) {
+		if (key == null) {
+		    return defaultValue;
+		}
+		String rtrnVal = propertiesMap.get(key);
+		if (rtrnVal == null) {
+		    return defaultValue;
+		}
+		return Long.valueOf(rtrnVal);
+    }
+
+    public static Integer getIntProperty(String key) {
+	if (key == null) {
+	    return null;
+	}
+	String rtrnVal = propertiesMap.get(key);
+	if (rtrnVal == null) {
+	    return null;
+	}
+	return Integer.valueOf(rtrnVal);
+    }
+
+    public static boolean getBooleanProperty(String key, boolean defaultValue) {
+	if (key == null) {
+	    return defaultValue;
+	}
+	String value = getProperty(key);
+	if (value == null) {
+	    return defaultValue;
+	}
+	return Boolean.parseBoolean(value);
+    }
+	public static Map<String, String> getPropertiesMap() {
+		return propertiesMap;
+	}
+	public static Properties getProps() {
+		Properties ret = new Properties();
+		if (propertiesMap != null) {
+			ret.putAll(propertiesMap);
+		}
+		return ret;
+	}
 }

@@ -80,24 +80,6 @@
         </thead>
         <tbody>
         <tr>
-          <td>  <span class="property-name">tags</span>
-</td>
-          <td>  <span class="datatype-reference">map of <a href="json_RangerTag.html">RangerTag</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
-          <td>  <span class="property-name">tagDefinitions</span>
-</td>
-          <td>  <span class="datatype-reference">map of <a href="json_RangerTagDef.html">RangerTagDef</a>
-</span>
-</td>
-          <td>  <span class="property-description"></span>
-</td>
-        </tr>
-        <tr>
           <td>  <span class="property-name">tagVersion</span>
 </td>
           <td>  <span class="datatype-reference">number
@@ -125,18 +107,18 @@
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">tagUpdateTime</span>
+          <td>  <span class="property-name">resourceToTagIds</span>
 </td>
-          <td>  <span class="datatype-reference">number
+          <td>  <span class="datatype-reference">map of array of number
 </span>
 </td>
           <td>  <span class="property-description"></span>
 </td>
         </tr>
         <tr>
-          <td>  <span class="property-name">resourceToTagIds</span>
+          <td>  <span class="property-name">tagDefinitions</span>
 </td>
-          <td>  <span class="datatype-reference">map of array of number
+          <td>  <span class="datatype-reference">map of <a href="json_RangerTagDef.html">RangerTagDef</a>
 </span>
 </td>
           <td>  <span class="property-description"></span>
@@ -151,171 +133,189 @@
           <td>  <span class="property-description"></span>
 </td>
         </tr>
+        <tr>
+          <td>  <span class="property-name">tagUpdateTime</span>
+</td>
+          <td>  <span class="datatype-reference">number
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
+        <tr>
+          <td>  <span class="property-name">tags</span>
+</td>
+          <td>  <span class="datatype-reference">map of <a href="json_RangerTag.html">RangerTag</a>
+</span>
+</td>
+          <td>  <span class="property-description"></span>
+</td>
+        </tr>
         </tbody>
       </table>
 
       <p class="lead">Example</p>
       
       <pre class="prettyprint language-js example">{
-  &quot;tags&quot; : {
-    &quot;property1&quot; : {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;options&quot; : {
-        &quot;property1&quot; : { },
-        &quot;property2&quot; : { }
-      },
-      &quot;attributes&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;owner&quot; : 12345,
-      &quot;validityPeriods&quot; : [ {
-        &quot;endTime&quot; : &quot;...&quot;,
-        &quot;recurrences&quot; : [ { }, { } ],
-        &quot;timeZone&quot; : &quot;...&quot;,
-        &quot;startTime&quot; : &quot;...&quot;
-      }, {
-        &quot;endTime&quot; : &quot;...&quot;,
-        &quot;recurrences&quot; : [ { }, { } ],
-        &quot;timeZone&quot; : &quot;...&quot;,
-        &quot;startTime&quot; : &quot;...&quot;
-      } ],
-      &quot;createTime&quot; : 12345,
-      &quot;createdBy&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345,
-      &quot;version&quot; : 12345,
-      &quot;updateTime&quot; : 12345,
-      &quot;updatedBy&quot; : &quot;...&quot;,
-      &quot;guid&quot; : &quot;...&quot;,
-      &quot;isEnabled&quot; : true
-    },
-    &quot;property2&quot; : {
-      &quot;type&quot; : &quot;...&quot;,
-      &quot;options&quot; : {
-        &quot;property1&quot; : { },
-        &quot;property2&quot; : { }
-      },
-      &quot;attributes&quot; : {
-        &quot;property1&quot; : &quot;...&quot;,
-        &quot;property2&quot; : &quot;...&quot;
-      },
-      &quot;owner&quot; : 12345,
-      &quot;validityPeriods&quot; : [ {
-        &quot;endTime&quot; : &quot;...&quot;,
-        &quot;recurrences&quot; : [ { }, { } ],
-        &quot;timeZone&quot; : &quot;...&quot;,
-        &quot;startTime&quot; : &quot;...&quot;
-      }, {
-        &quot;endTime&quot; : &quot;...&quot;,
-        &quot;recurrences&quot; : [ { }, { } ],
-        &quot;timeZone&quot; : &quot;...&quot;,
-        &quot;startTime&quot; : &quot;...&quot;
-      } ],
-      &quot;createTime&quot; : 12345,
-      &quot;createdBy&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345,
-      &quot;version&quot; : 12345,
-      &quot;updateTime&quot; : 12345,
-      &quot;updatedBy&quot; : &quot;...&quot;,
-      &quot;guid&quot; : &quot;...&quot;,
-      &quot;isEnabled&quot; : true
-    }
-  },
-  &quot;tagDefinitions&quot; : {
-    &quot;property1&quot; : {
-      &quot;attributeDefs&quot; : [ {
-        &quot;name&quot; : &quot;...&quot;,
-        &quot;type&quot; : &quot;...&quot;
-      }, {
-        &quot;name&quot; : &quot;...&quot;,
-        &quot;type&quot; : &quot;...&quot;
-      } ],
-      &quot;source&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;createTime&quot; : 12345,
-      &quot;createdBy&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345,
-      &quot;version&quot; : 12345,
-      &quot;updateTime&quot; : 12345,
-      &quot;updatedBy&quot; : &quot;...&quot;,
-      &quot;guid&quot; : &quot;...&quot;,
-      &quot;isEnabled&quot; : true
-    },
-    &quot;property2&quot; : {
-      &quot;attributeDefs&quot; : [ {
-        &quot;name&quot; : &quot;...&quot;,
-        &quot;type&quot; : &quot;...&quot;
-      }, {
-        &quot;name&quot; : &quot;...&quot;,
-        &quot;type&quot; : &quot;...&quot;
-      } ],
-      &quot;source&quot; : &quot;...&quot;,
-      &quot;name&quot; : &quot;...&quot;,
-      &quot;createTime&quot; : 12345,
-      &quot;createdBy&quot; : &quot;...&quot;,
-      &quot;id&quot; : 12345,
-      &quot;version&quot; : 12345,
-      &quot;updateTime&quot; : 12345,
-      &quot;updatedBy&quot; : &quot;...&quot;,
-      &quot;guid&quot; : &quot;...&quot;,
-      &quot;isEnabled&quot; : true
-    }
-  },
   &quot;tagVersion&quot; : 12345,
   &quot;op&quot; : &quot;...&quot;,
   &quot;serviceName&quot; : &quot;...&quot;,
-  &quot;tagUpdateTime&quot; : 12345,
   &quot;resourceToTagIds&quot; : {
     &quot;property1&quot; : [ 12345, 12345 ],
     &quot;property2&quot; : [ 12345, 12345 ]
+  },
+  &quot;tagDefinitions&quot; : {
+    &quot;property1&quot; : {
+      &quot;source&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;attributeDefs&quot; : [ {
+        &quot;type&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;
+      }, {
+        &quot;type&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;
+      } ],
+      &quot;updatedBy&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345,
+      &quot;isEnabled&quot; : true,
+      &quot;createdBy&quot; : &quot;...&quot;,
+      &quot;createTime&quot; : 12345,
+      &quot;guid&quot; : &quot;...&quot;,
+      &quot;version&quot; : 12345,
+      &quot;updateTime&quot; : 12345
+    },
+    &quot;property2&quot; : {
+      &quot;source&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;attributeDefs&quot; : [ {
+        &quot;type&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;
+      }, {
+        &quot;type&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;
+      } ],
+      &quot;updatedBy&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345,
+      &quot;isEnabled&quot; : true,
+      &quot;createdBy&quot; : &quot;...&quot;,
+      &quot;createTime&quot; : 12345,
+      &quot;guid&quot; : &quot;...&quot;,
+      &quot;version&quot; : 12345,
+      &quot;updateTime&quot; : 12345
+    }
   },
   &quot;serviceResources&quot; : [ {
     &quot;resourceSignature&quot; : &quot;...&quot;,
     &quot;serviceName&quot; : &quot;...&quot;,
     &quot;resourceElements&quot; : {
       &quot;property1&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       },
       &quot;property2&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       }
     },
-    &quot;createTime&quot; : 12345,
-    &quot;createdBy&quot; : &quot;...&quot;,
-    &quot;id&quot; : 12345,
-    &quot;version&quot; : 12345,
-    &quot;updateTime&quot; : 12345,
     &quot;updatedBy&quot; : &quot;...&quot;,
+    &quot;id&quot; : 12345,
+    &quot;isEnabled&quot; : true,
+    &quot;createdBy&quot; : &quot;...&quot;,
+    &quot;createTime&quot; : 12345,
     &quot;guid&quot; : &quot;...&quot;,
-    &quot;isEnabled&quot; : true
+    &quot;version&quot; : 12345,
+    &quot;updateTime&quot; : 12345
   }, {
     &quot;resourceSignature&quot; : &quot;...&quot;,
     &quot;serviceName&quot; : &quot;...&quot;,
     &quot;resourceElements&quot; : {
       &quot;property1&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       },
       &quot;property2&quot; : {
+        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ],
         &quot;isRecursive&quot; : true,
-        &quot;isExcludes&quot; : true,
-        &quot;values&quot; : [ &quot;...&quot;, &quot;...&quot; ]
+        &quot;isExcludes&quot; : true
       }
     },
-    &quot;createTime&quot; : 12345,
-    &quot;createdBy&quot; : &quot;...&quot;,
-    &quot;id&quot; : 12345,
-    &quot;version&quot; : 12345,
-    &quot;updateTime&quot; : 12345,
     &quot;updatedBy&quot; : &quot;...&quot;,
+    &quot;id&quot; : 12345,
+    &quot;isEnabled&quot; : true,
+    &quot;createdBy&quot; : &quot;...&quot;,
+    &quot;createTime&quot; : 12345,
     &quot;guid&quot; : &quot;...&quot;,
-    &quot;isEnabled&quot; : true
-  } ]
+    &quot;version&quot; : 12345,
+    &quot;updateTime&quot; : 12345
+  } ],
+  &quot;tagUpdateTime&quot; : 12345,
+  &quot;tags&quot; : {
+    &quot;property1&quot; : {
+      &quot;attributes&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;options&quot; : {
+        &quot;property1&quot; : { },
+        &quot;property2&quot; : { }
+      },
+      &quot;owner&quot; : 12345,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validityPeriods&quot; : [ {
+        &quot;startTime&quot; : &quot;...&quot;,
+        &quot;timeZone&quot; : &quot;...&quot;,
+        &quot;endTime&quot; : &quot;...&quot;,
+        &quot;recurrences&quot; : [ { }, { } ]
+      }, {
+        &quot;startTime&quot; : &quot;...&quot;,
+        &quot;timeZone&quot; : &quot;...&quot;,
+        &quot;endTime&quot; : &quot;...&quot;,
+        &quot;recurrences&quot; : [ { }, { } ]
+      } ],
+      &quot;updatedBy&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345,
+      &quot;isEnabled&quot; : true,
+      &quot;createdBy&quot; : &quot;...&quot;,
+      &quot;createTime&quot; : 12345,
+      &quot;guid&quot; : &quot;...&quot;,
+      &quot;version&quot; : 12345,
+      &quot;updateTime&quot; : 12345
+    },
+    &quot;property2&quot; : {
+      &quot;attributes&quot; : {
+        &quot;property1&quot; : &quot;...&quot;,
+        &quot;property2&quot; : &quot;...&quot;
+      },
+      &quot;options&quot; : {
+        &quot;property1&quot; : { },
+        &quot;property2&quot; : { }
+      },
+      &quot;owner&quot; : 12345,
+      &quot;type&quot; : &quot;...&quot;,
+      &quot;validityPeriods&quot; : [ {
+        &quot;startTime&quot; : &quot;...&quot;,
+        &quot;timeZone&quot; : &quot;...&quot;,
+        &quot;endTime&quot; : &quot;...&quot;,
+        &quot;recurrences&quot; : [ { }, { } ]
+      }, {
+        &quot;startTime&quot; : &quot;...&quot;,
+        &quot;timeZone&quot; : &quot;...&quot;,
+        &quot;endTime&quot; : &quot;...&quot;,
+        &quot;recurrences&quot; : [ { }, { } ]
+      } ],
+      &quot;updatedBy&quot; : &quot;...&quot;,
+      &quot;id&quot; : 12345,
+      &quot;isEnabled&quot; : true,
+      &quot;createdBy&quot; : &quot;...&quot;,
+      &quot;createTime&quot; : 12345,
+      &quot;guid&quot; : &quot;...&quot;,
+      &quot;version&quot; : 12345,
+      &quot;updateTime&quot; : 12345
+    }
+  }
 }</pre>
 
         <footer class="footer">

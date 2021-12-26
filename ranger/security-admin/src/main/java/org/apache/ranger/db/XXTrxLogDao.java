@@ -17,31 +17,31 @@
  * under the License.
  */
 
-package org.apache.ranger.db;
+ package org.apache.ranger.db;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.apache.log4j.Logger;
 import org.apache.ranger.common.db.BaseDao;
 import org.apache.ranger.entity.XXTrxLog;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class XXTrxLogDao extends BaseDao<XXTrxLog> {
-	private static final Logger logger = LogManager.getLogger(XXTrxLogDao.class);
-
-	public XXTrxLogDao(RangerDaoManagerBase daoManager) {
+	private static final Logger logger = Logger.getLogger(XXTrxLogDao.class);
+	
+    public XXTrxLogDao( RangerDaoManagerBase daoManager ) {
 		super(daoManager);
-	}
+    }
 
-	public List<XXTrxLog> findByTransactionId(String transactionId) {
-		if (transactionId == null) {
-			return null;
-		}
-
+    public List<XXTrxLog> findByTransactionId(String transactionId){
+    	if(transactionId == null){
+    		return null;
+    	}
+    	
 		List<XXTrxLog> xTrxLogList = new ArrayList<XXTrxLog>();
 		try {
 			xTrxLogList = getEntityManager()
@@ -51,12 +51,12 @@ public class XXTrxLogDao extends BaseDao<XXTrxLog> {
 		} catch (NoResultException e) {
 			logger.debug(e.getMessage());
 		}
-
+		
 		return xTrxLogList;
 	}
 
 	public Long findMaxObjIdOfClassType(int classType) {
-
+		
 		try {
 			return (Long) getEntityManager().createNamedQuery("XXTrxLog.findLogForMaxIdOfClassType")
 					.setParameter("classType", classType)
@@ -65,38 +65,37 @@ public class XXTrxLogDao extends BaseDao<XXTrxLog> {
 			return null;
 		}
 	}
-
-	public Long getMaxIdOfXXTrxLog() {
-		Long maxXTrxLogID = Long.valueOf(0);
+	public Long getMaxIdOfXXTrxLog(){
+		Long maxXTrxLogID=Long.valueOf(0);
 		try {
 			maxXTrxLogID = (Long) getEntityManager()
 					.createNamedQuery("XXTrxLog.getMaxIdOfXXTrxLog", Long.class)
 					.getSingleResult();
 		} catch (NoResultException e) {
 			logger.debug(e.getMessage());
-		} finally {
-			if (maxXTrxLogID == null) {
-				maxXTrxLogID = Long.valueOf(0);
+		}finally{
+			if(maxXTrxLogID==null){
+				maxXTrxLogID=Long.valueOf(0);
 			}
 		}
 		return maxXTrxLogID;
 	}
 
-	public int updateXTrxLog(long idFrom, long idTo, int objClassType, String attrName, String newValue) {
-		int rowAffected = -1;
-		if (objClassType == 0 || attrName == null || newValue == null) {
+	public int updateXTrxLog(long idFrom,long idTo,int objClassType,String attrName,String newValue){
+		int rowAffected=-1;
+		if(objClassType == 0 ||attrName==null || newValue==null){
 			return rowAffected;
 		}
 		try {
-			//idFrom and idTo both exclusive
-			rowAffected = getEntityManager().createNamedQuery("XXTrxLog.updateLogAttr", tClass)
-					.setParameter("idFrom", idFrom)
-					.setParameter("idTo", idTo)
-					.setParameter("objClassType", objClassType)
-					.setParameter("attrName", attrName)
-					.setParameter("newValue", newValue)
-					.executeUpdate();
-		} catch (NoResultException e) {
+		//idFrom and idTo both exclusive
+		rowAffected=getEntityManager().createNamedQuery("XXTrxLog.updateLogAttr", tClass)
+	        .setParameter("idFrom", idFrom)
+	        .setParameter("idTo", idTo)
+	        .setParameter("objClassType", objClassType)
+	        .setParameter("attrName", attrName)
+	        .setParameter("newValue", newValue)
+	        .executeUpdate();
+		}catch (NoResultException e) {
 			logger.debug(e.getMessage());
 		}
 		return rowAffected;

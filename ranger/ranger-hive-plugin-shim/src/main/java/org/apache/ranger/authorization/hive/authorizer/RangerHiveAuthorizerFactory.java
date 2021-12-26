@@ -30,17 +30,18 @@ import org.apache.hadoop.hive.ql.security.authorization.plugin.HiveMetastoreClie
 import org.apache.hadoop.hive.ql.security.authorization.plugin.HiveAuthzSessionContext;
 import org.apache.ranger.plugin.classloader.RangerPluginClassLoader;
 
+
 public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
-
+	
 	private static final Log LOG  = LogFactory.getLog(RangerHiveAuthorizerFactory.class);
-
+	
 	private static final String   RANGER_PLUGIN_TYPE                      = "hive";
 	private static final String   RANGER_HIVE_AUTHORIZER_IMPL_CLASSNAME   = "org.apache.ranger.authorization.hive.authorizer.RangerHiveAuthorizerFactory";
 
 	private HiveAuthorizerFactory 	rangerHiveAuthorizerFactoryImpl		  = null;
 	private RangerPluginClassLoader rangerPluginClassLoader 			  = null;
 
-
+	
 	public RangerHiveAuthorizerFactory() {
 
 		if(LOG.isDebugEnabled()) {
@@ -53,7 +54,7 @@ public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
 			LOG.debug("<== RangerHiveAuthorizerFactory.RangerHiveAuthorizerFactory()");
 		}
 	}
-
+	
 	public void init(){
 		if(LOG.isDebugEnabled()) {
 			LOG.debug("==> RangerHiveAuthorizerFactory.init()");
@@ -67,7 +68,7 @@ public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
 			Class<HiveAuthorizerFactory> cls = (Class<HiveAuthorizerFactory>) Class.forName(RANGER_HIVE_AUTHORIZER_IMPL_CLASSNAME, true, rangerPluginClassLoader);
 
 			activatePluginClassLoader();
-
+			
 			rangerHiveAuthorizerFactoryImpl  = cls.newInstance();
 
 		} catch (Exception e) {
@@ -81,7 +82,7 @@ public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
 			LOG.debug("<== RangerHiveAuthorizerFactory.init()");
 		}
 	}
-
+	
 	@Override
 	public HiveAuthorizer createHiveAuthorizer(HiveMetastoreClientFactory metastoreClientFactory,
 											   HiveConf                   conf,
@@ -94,20 +95,10 @@ public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
 		if(LOG.isDebugEnabled()) {
 			LOG.debug("==> RangerHiveAuthorizerFactory.createHiveAuthorizer()");
 		}
-
+		
 		try {
 			activatePluginClassLoader();
 			ret = rangerHiveAuthorizerFactoryImpl.createHiveAuthorizer(metastoreClientFactory, conf, hiveAuthenticator, sessionContext);
-			try {
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() :" + conf.getUser());
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() conf :" + conf.toString());
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() sessionContext:" + sessionContext.toString());
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() hiveAuthenticator:" + hiveAuthenticator.toString());
-
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() :" + hiveAuthenticator.getConf().getPassword(conf.getUser()));
-			} catch (Exception e) {
-				LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> RangerHiveAuthorizerFactory.createHiveAuthorizer() : ERROR ");
-			}
 		} finally {
 			deactivatePluginClassLoader();
 		}
@@ -117,7 +108,7 @@ public class RangerHiveAuthorizerFactory implements HiveAuthorizerFactory {
 
 		return ret;
 	}
-
+	
   	private void activatePluginClassLoader() {
 		if(rangerPluginClassLoader != null) {
 			rangerPluginClassLoader.activate();

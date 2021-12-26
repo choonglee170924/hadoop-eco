@@ -29,8 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.google.common.annotations.VisibleForTesting;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.apache.ranger.unixusersync.config.UserGroupSyncConfig;
 import org.apache.ranger.unixusersync.model.UgsyncAuditInfo;
 import org.apache.ranger.unixusersync.model.UnixSyncSourceInfo;
@@ -38,15 +37,19 @@ import org.apache.ranger.usergroupsync.UserGroupSink;
 import org.apache.ranger.usergroupsync.UserGroupSource;
 
 public class UnixUserGroupBuilder implements UserGroupSource {
-
-	/** Shell commands to get users and groups */
-	static final String LINUX_GET_ALL_USERS_CMD = "getent passwd";
-	static final String LINUX_GET_ALL_GROUPS_CMD = "getent group";
+	
+	private static final Logger LOG = Logger.getLogger(UnixUserGroupBuilder.class);
+	private final static String OS = System.getProperty("os.name");
 
 	// kept for legacy support
 	//public static final String UNIX_USER_PASSWORD_FILE = "/etc/passwd";
 	//public static final String UNIX_GROUP_FILE = "/etc/group";
+
+	/** Shell commands to get users and groups */
+	static final String LINUX_GET_ALL_USERS_CMD = "getent passwd";
+	static final String LINUX_GET_ALL_GROUPS_CMD = "getent group";
 	static final String LINUX_GET_GROUP_CMD = "getent group %s";
+
 	// mainly for testing purposes
 	// there might be a better way
 	static final String MAC_GET_ALL_USERS_CMD = "dscl . -readall /Users UniqueID PrimaryGroupID | " +
@@ -59,15 +62,16 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 	static final String MAC_GET_GROUP_CMD = "dscl . -read /Groups/%1$s | paste -d, -s - | sed -e 's/:/|/g' | " +
 			"awk -v OFS=\":\" -v ORS=\"\\n\" -F, '{print \"%1$s\",\"*\",$6,$4}' | " +
 			"sed -e 's/:[^:]*| /:/g' | sed -e 's/ /,/g'";
+
 	static final String BACKEND_PASSWD = "passwd";
-	private static final Logger LOG = LogManager.getLogger(UnixUserGroupBuilder.class);
-	private final static String OS = System.getProperty("os.name");
-	Set<String> allGroups = new HashSet<>();
+
 	private boolean isUpdateSinkSucc = true;
 	private boolean enumerateGroupMembers = false;
 	private boolean useNss = false;
+
 	private long lastUpdateTime = 0; // Last time maps were updated
 	private long timeout = 0;
+
 	private UserGroupSyncConfig config = UserGroupSyncConfig.getInstance();
 	private Map<String,List<String>> user2GroupListMap = new HashMap<String,List<String>>();
 	private Map<String,List<String>>  	internalUser2GroupListMap = new HashMap<String,List<String>>();
@@ -76,13 +80,21 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 	private int							minimumGroupId = 0;
 	private String unixPasswordFile;
 	private String unixGroupFile;
+
 	private long passwordFileModifiedAt = 0;
 	private long groupFileModifiedAt = 0;
 	private UgsyncAuditInfo ugsyncAuditInfo;
 	private UnixSyncSourceInfo unixSyncSourceInfo;
 	private boolean isStartupFlag = false;
+	Set<String> allGroups = new HashSet<>();
 
 
+	public static void main(String[] args) throws Throwable {
+		UnixUserGroupBuilder ugbuilder = new UnixUserGroupBuilder();
+		ugbuilder.init();
+		ugbuilder.print();
+	}
+	
 	public UnixUserGroupBuilder() {
 		isStartupFlag = true;
 		minimumUserId = Integer.parseInt(config.getMinUserId());
@@ -113,12 +125,6 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 
 	}
 
-	public static void main(String[] args) throws Throwable {
-		UnixUserGroupBuilder ugbuilder = new UnixUserGroupBuilder();
-		ugbuilder.init();
-		ugbuilder.print();
-	}
-
 	@Override
 	public void init() throws Throwable {
 		buildUserGroupInfo();
@@ -126,13 +132,13 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 
 	@Override
 	public boolean isChanged() {
-		// If previous update to Ranger admin fails,
+		// If previous update to Ranger admin fails, 
 		// we want to retry the sync process even if there are no changes to the sync files
 		if (!isUpdateSinkSucc) {
 			LOG.info("Previous updateSink failed and hence retry!!");
 			return true;
 		}
-
+		
 		if (useNss)
 			return System.currentTimeMillis() - lastUpdateTime > timeout;
 
@@ -183,8 +189,8 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 		}
 		isStartupFlag = false;
 	}
-
-
+	
+	
 	private void buildUserGroupInfo() throws Throwable {
 		user2GroupListMap = new HashMap<String,List<String>>();
 		groupId2groupNameMap = new HashMap<String, String>();
@@ -207,7 +213,7 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 			print();
 		}
 	}
-
+	
 	private void print() {
 		for(String user : user2GroupListMap.keySet()) {
 			LOG.debug("USER:" + user);
@@ -219,7 +225,7 @@ public class UnixUserGroupBuilder implements UserGroupSource {
 			}
 		}
 	}
-
+	
 	private void buildUnixUserList(String command) throws Throwable {
 		BufferedReader reader = null;
 		Map<String, String> userName2uid = new HashMap<String, String>();
