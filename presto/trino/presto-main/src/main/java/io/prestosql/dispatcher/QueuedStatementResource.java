@@ -188,12 +188,23 @@ public class QueuedStatementResource
 
     private Connection getConnection() throws Exception
     {
-        // Class.forName("com.mysql.jdbc.Driver");
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://hadoop-3:3306/ranger";
-        String id = "root";
-        String pw = "exntu123!";
-        Connection conn = DriverManager.getConnection(url, id, pw);
+        String exntuRangerMysqlDriver = System.getenv("EXNTU_RANGER_MYSQL_DRIVER");
+        String exntuRangerMysqlUrl = System.getenv("EXNTU_RANGER_MYSQL_URL");
+        String exntuRangerMysqlId = System.getenv("EXNTU_RANGER_MYSQL_ID");
+        String exntuRangerMysqlPassword = System.getenv("EXNTU_RANGER_MYSQL_PASSWORD");
+        if (exntuRangerMysqlDriver == null) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        if (exntuRangerMysqlUrl == null) {
+            exntuRangerMysqlUrl = "jdbc:mysql://localhost:3306/ranger";
+        }
+        if (exntuRangerMysqlId == null) {
+            exntuRangerMysqlId = "root";
+        }
+        if (exntuRangerMysqlPassword == null) {
+            exntuRangerMysqlPassword = "bdpibk!1";
+        }
+        Connection conn = DriverManager.getConnection(exntuRangerMysqlUrl, exntuRangerMysqlId, exntuRangerMysqlPassword);
         return conn;
     }
 
@@ -203,6 +214,7 @@ public class QueuedStatementResource
         ArrayList<Map> resultList = new ArrayList<>();
         Date date = new Date();
         try {
+            log.debug("Ranger Authentication DB getConnection()");
             Connection conn = getConnection();
             String sql = "select id, login_id, password from x_portal_user where login_id=? and password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);

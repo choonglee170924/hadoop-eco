@@ -1,5 +1,15 @@
 # CUSTOMIZED
 
+- 2022-01-03
+    - QueuedStatementResource.java
+      - connection 수정
+        - ```
+            export EXNTU_RANGER_MYSQL_DRIVER='com.mysql.cj.jdbc.Driver'
+                   mysql client version 8.x 이하 'com.mysql.jdbc.Driver'
+            export EXNTU_RANGER_MYSQL_URL='jdbc:mysql://localhost:3306/ranger'
+            export EXNTU_RANGER_MYSQL_ID='root'
+            export EXNTU_RANGER_MYSQL_PASSWORD='password'
+          ```
 - 2021-12-20 
     - QueuedStatementResource.java 
       - postStatement(...)
