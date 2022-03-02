@@ -192,19 +192,20 @@ public class QueuedStatementResource
         String exntuRangerMysqlUrl = System.getenv("EXNTU_RANGER_MYSQL_URL");
         String exntuRangerMysqlId = System.getenv("EXNTU_RANGER_MYSQL_ID");
         String exntuRangerMysqlPassword = System.getenv("EXNTU_RANGER_MYSQL_PASSWORD");
-        if (exntuRangerMysqlDriver == null) {
+        if (exntuRangerMysqlDriver == null || exntuRangerMysqlDriver.trim().equals("")) {
             Class.forName("com.mysql.cj.jdbc.Driver");
         }
-        if (exntuRangerMysqlUrl == null) {
-            exntuRangerMysqlUrl = "jdbc:mysql://localhost:3306/ranger";
+        if (exntuRangerMysqlUrl == null || exntuRangerMysqlUrl.trim().equals("")) {
+            exntuRangerMysqlUrl = "jdbc:mysql://pbdpce05:6033/ranger";
         }
-        if (exntuRangerMysqlId == null) {
+        if (exntuRangerMysqlId == null || exntuRangerMysqlId.trim().equals("")) {
             exntuRangerMysqlId = "root";
         }
-        if (exntuRangerMysqlPassword == null) {
+        if (exntuRangerMysqlPassword == null || exntuRangerMysqlPassword.trim().equals("")) {
             exntuRangerMysqlPassword = "bdpibk!1";
         }
         Connection conn = DriverManager.getConnection(exntuRangerMysqlUrl, exntuRangerMysqlId, exntuRangerMysqlPassword);
+        log.info("Ranger Authentication DB getConnection() : " + conn.getCatalog());
         return conn;
     }
 
@@ -214,7 +215,6 @@ public class QueuedStatementResource
         ArrayList<Map> resultList = new ArrayList<>();
         Date date = new Date();
         try {
-            log.debug("Ranger Authentication DB getConnection()");
             Connection conn = getConnection();
             String sql = "select id, login_id, password from x_portal_user where login_id=? and password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -234,10 +234,10 @@ public class QueuedStatementResource
         catch (ClassNotFoundException | SQLException e) {
             log.error(date.toString() + "ExntuAuthenticator - unable to get JDBC connection -> " + e.getMessage());
         }
-        log.error(date.toString() + "ExntuAuthenticator - resultList size: " + resultList.size());
         if (resultList.size() == 1) {
             return;
         }
+        log.error(date.toString() + "ExntuAuthenticator - resultList size: " + resultList.size());
         throw new Exception("ExntuAuthenticator: Error validating user");
     }
 
